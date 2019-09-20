@@ -4,8 +4,6 @@
 #include "ModuleRenderer3D.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -102,41 +100,12 @@ bool ModuleRenderer3D::Init()
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	glewInit();
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
-
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, context);
-	ImGui_ImplOpenGL3_Init();
 
 	return ret;
 }
-bool demo = false;
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
-	ImGui::NewFrame();
-
-	if (ImGui::BeginMainMenuBar())
-	{
-		if (ImGui::BeginMenu("File"))
-		{
-			if (ImGui::MenuItem("Exit")) { return UPDATE_STOP; }
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Demo"))
-		{
-			ImGui::Checkbox("Demo Window", &demo);
-			ImGui::EndMenu();
-		}
-		ImGui::EndMainMenuBar();
-	}
-	if(demo)
-		ImGui::ShowDemoWindow(&demo);
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -155,8 +124,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
