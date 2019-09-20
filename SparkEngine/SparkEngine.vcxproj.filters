@@ -75,8 +75,12 @@
     <ClInclude Include="imstb_truetype.h">
       <Filter>Sources\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="imgui_impl_opengl2.h" />
-    <ClInclude Include="imgui_impl_sdl.h" />
+    <ClInclude Include="imgui_impl_sdl.h">
+      <Filter>Sources\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_opengl3.h">
+      <Filter>Sources\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -127,7 +131,11 @@
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>Sources\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_impl_opengl2.cpp" />
-    <ClCompile Include="imgui_impl_sdl.cpp" />
+    <ClCompile Include="imgui_impl_sdl.cpp">
+      <Filter>Sources\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_opengl3.cpp">
+      <Filter>Sources\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
