@@ -6,6 +6,7 @@ public:
 	ModuleEditor(Application* app, bool start_enabled = true);
 	~ModuleEditor();
 	bool Init();
+	bool CleanUp();
 	update_status PostUpdate(float dt);
 	update_status Update(float dt);
 

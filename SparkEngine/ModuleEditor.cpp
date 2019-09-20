@@ -29,6 +29,15 @@ bool ModuleEditor::Init()
 	return true;
 }
 
+bool ModuleEditor::CleanUp()
+{
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
+	return true;
+}
+
 update_status ModuleEditor::Update(float dt)
 {
 	ImGui_ImplOpenGL3_NewFrame();
