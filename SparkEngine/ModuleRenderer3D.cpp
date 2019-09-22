@@ -1,13 +1,17 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
 
+#include "MathGeoLib\Geometry\Sphere.h"
+#include "MathGeoLib\Geometry\AABB.h"
+
+#include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -111,6 +115,18 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
+
+	Sphere sphere({ 0.0f, 0.0f, 0.0f }, 5);
+	Sphere sphere2({ 0.0f, 0.0f, 0.0f }, 5);
+	AABB sphere_col(sphere);
+	AABB sphere2_col(sphere2);
+
+	if (sphere_col.Contains(sphere2_col))
+	{
+		LOG("collision");
+	}
+	else
+		LOG("no collision");
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
