@@ -267,6 +267,9 @@
     <ClInclude Include="MathGeoLib\Algorithm\Random\LCG.h">
       <Filter>Sources\MathGeoLib\Algorithm</Filter>
     </ClInclude>
+    <ClInclude Include="pcg_random.hpp">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">

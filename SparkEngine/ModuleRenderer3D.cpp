@@ -3,7 +3,8 @@
 #include "ModuleWindow.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
-
+#include <random>
+#include "pcg_random.hpp"
 #include "MathGeoLib\Geometry\Sphere.h"
 #include "MathGeoLib\Geometry\AABB.h"
 
@@ -111,6 +112,17 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	// Seed with a real random value, if available
+	pcg_extras::seed_seq_from<std::random_device> seed_source;
+	// Make a random number engine
+	pcg32 rng(seed_source);
+
+	// Choose a random mean between 1 and 6
+	std::uniform_real_distribution<float> uniform_dist(0, 1);
+	float mean = uniform_dist(rng);
+	LOG("number is: %f", mean);
+
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
