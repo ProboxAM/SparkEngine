@@ -11,6 +11,10 @@
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	for (int i = 0; i < 4; i++)
+	{
+		window_settings[i] = false;
+	}
 }
 
 
@@ -27,6 +31,9 @@ bool ModuleEditor::Init()
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
+
+	refresh_rate = App->window->GetRefreshRate();
+	brightness = App->window->GetBrightness();
 
 	return true;
 }
@@ -73,10 +80,40 @@ update_status ModuleEditor::Update(float dt)
 		{
 			ImGui::InputText("Name", &app_name);
 		}
+		
+		if (ImGui::CollapsingHeader("Window"))
+		{
+			if (ImGui::SliderInt("Width", &width, 0, 1920))	App->window->SetWindowWidth(width);
+			if (ImGui::SliderInt("Height", &height, 0, 1080)) App->window->SetWindowHeight(height);
+			if (ImGui::SliderFloat("Brightness", &brightness, 0, 1)) App->window->SetWindowBrightness(brightness);
+
+			ImGui::Text("Refresh rate");
+			ImGui::SameLine();
+			std::string temp = std::to_string(refresh_rate);
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+
+			if (ImGui::Checkbox("Fullscreen", &window_settings[FULLSCREEN])) {
+				App->window->SetScreenMode(FULLSCREEN, window_settings[FULLSCREEN]);
+			}
+	
+			ImGui::SameLine();
+			
+			if (ImGui::Checkbox("Resizable", &window_settings[RESIZABLE])) {
+				App->window->SetScreenMode(RESIZABLE, window_settings[RESIZABLE]);
+			}
+			if (ImGui::Checkbox("Borderless", &window_settings[BORDERLESS])) {
+				App->window->SetScreenMode(BORDERLESS, window_settings[BORDERLESS]);
+			}
+		
+			ImGui::SameLine();
+		
+			if (ImGui::Checkbox("Full Desktop", &window_settings[FSDESKTOP])) {
+				App->window->SetScreenMode(FSDESKTOP, window_settings[FSDESKTOP]);
+			}
+		}
 
 		ImGui::End();
 	}
-
 
 	return UPDATE_CONTINUE;
 }
