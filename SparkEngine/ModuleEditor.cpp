@@ -1,12 +1,15 @@
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
-#include "imgui.h"
+#include "ModuleEditor.h"
+
+
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_stdlib.h"
 
-#include "ModuleEditor.h"
+
 
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -34,6 +37,7 @@ bool ModuleEditor::Init()
 
 	refresh_rate = App->window->GetRefreshRate();
 	brightness = App->window->GetBrightness();
+	SDL_VERSION(&compiled_version);
 
 	return true;
 }
@@ -68,8 +72,6 @@ update_status ModuleEditor::Update(float dt)
 		}
 		ImGui::EndMainMenuBar();
 	}
-
-
 
 	if (show_demo)
 		ImGui::ShowDemoWindow(&show_demo);
@@ -112,10 +114,70 @@ update_status ModuleEditor::Update(float dt)
 			}
 		}
 
+		if (ImGui::CollapsingHeader("Input"))
+		{
+			ImGui::Text("Mouse position:");
+			ImGui::SameLine();
+			std::string temp_string = "(" + std::to_string(App->input->GetMouseX()) + ", " + std::to_string(App->input->GetMouseY()) + ")";
+			ImGui::TextColored({ 0,255,255,255 }, temp_string.c_str());
+
+			ImGui::Text("Mouse motion:");
+			ImGui::SameLine();
+			temp_string = "(" + std::to_string(App->input->GetMouseXMotion()) + ", " + std::to_string(App->input->GetMouseYMotion()) + ")";
+			ImGui::TextColored({ 0,255,255,255 }, temp_string.c_str());
+
+			ImGui::Text("Mouse wheel:");
+			ImGui::SameLine();
+			temp_string = std::to_string(App->input->GetMouseZ());
+			ImGui::TextColored({ 0,255,255,255 }, temp_string.c_str());
+			ImGui::Separator();
+
+			ImGui::BeginChild("Log");
+			ImGui::TextUnformatted(input_buff.begin());
+			if (move_scroll)
+			{
+				ImGui::SetScrollHere(1.0f);
+				move_scroll = false;
+			}
+			ImGui::EndChild();
+		}
+
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+			ImGui::Text("SDL Version:");
+			ImGui::SameLine();
+			std::string temp = std::to_string(compiled_version.major) + "." + std::to_string(compiled_version.minor) + "." + std::to_string(compiled_version.patch);
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+
+			ImGui::Text("CPU cores:");
+			ImGui::SameLine();
+			temp = std::to_string(SDL_GetCPUCount()) + "(Cache: " + std::to_string(SDL_GetCPUCacheLineSize()) + ")";
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+
+			ImGui::Text("System RAM:");
+			ImGui::SameLine();
+			temp = std::to_string(SDL_GetSystemRAM());
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+		}
+
 		ImGui::End();
 	}
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleEditor::LogInput(int key, KEY_STATE state, bool mouse)
+{
+	std::string temp_string;
+	std::string states[] = { "IDLE","DOWN","REPEAT","UP" };
+
+	if (mouse)
+		temp_string = "Mouse: " + std::to_string(key) + " " + states[state] + "\n";	
+	else
+		temp_string = "Keyboard: " + std::to_string(key) + " " + states[state] + "\n";
+
+	input_buff.appendf(temp_string.c_str());
+	move_scroll = true;
 }
 
 update_status ModuleEditor::PostUpdate(float dt)

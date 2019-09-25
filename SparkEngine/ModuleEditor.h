@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include <string>
+#include "imgui.h"
 
 
 
@@ -15,6 +16,8 @@ public:
 	update_status PostUpdate(float dt);
 	update_status Update(float dt);
 
+	void LogInput(int key, KEY_STATE state, bool mouse = false);
+
 private:
 
 	std::string app_name = "";
@@ -28,5 +31,13 @@ private:
 	float brightness = 0;
 	int refresh_rate = 0;
 	bool window_settings[4];
+
+	//Input window
+	bool move_scroll = false;
+	ImGuiTextBuffer input_buff;
+
+	//Hardware window
+	SDL_version compiled_version;
+
 };
 
