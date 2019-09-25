@@ -46,15 +46,21 @@ update_status ModuleInput::PreUpdate(float dt)
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
+			if (keyboard[i] == KEY_IDLE)
+			{
 				keyboard[i] = KEY_DOWN;
+				App->editor->LogInput(i, KEY_DOWN);
+			}			
 			else
 				keyboard[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			{
 				keyboard[i] = KEY_UP;
+				App->editor->LogInput(i, KEY_UP);
+			}
 			else
 				keyboard[i] = KEY_IDLE;
 		}
@@ -68,17 +74,23 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	for(int i = 0; i < 5; ++i)
 	{
-		if(buttons & SDL_BUTTON(i))
+		if(buttons & SDL_BUTTON(i+1))
 		{
-			if(mouse_buttons[i] == KEY_IDLE)
+			if (mouse_buttons[i] == KEY_IDLE)
+			{
 				mouse_buttons[i] = KEY_DOWN;
+				App->editor->LogInput(i + 1, KEY_DOWN, true);
+			}
 			else
 				mouse_buttons[i] = KEY_REPEAT;
 		}
 		else
 		{
 			if(mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
+			{
 				mouse_buttons[i] = KEY_UP;
+				App->editor->LogInput(i + 1, KEY_UP, true);
+			}
 			else
 				mouse_buttons[i] = KEY_IDLE;
 		}
