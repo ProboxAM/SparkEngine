@@ -1,5 +1,7 @@
 #pragma once
 #include "Module.h"
+#include <string>
+
 class ModuleEditor : public Module
 {
 public:
@@ -11,6 +13,10 @@ public:
 	update_status Update(float dt);
 
 private:
-	bool demo = false;
+
+	std::string app_name = "";
+
+	bool show_demo = false;
+	bool show_config = false;
 };
 

@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include "imgui_stdlib.h"
 
 #include "ModuleEditor.h"
 
@@ -52,15 +53,30 @@ update_status ModuleEditor::Update(float dt)
 			if (ImGui::MenuItem("Exit")) { return UPDATE_STOP; }
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Demo"))
+		if (ImGui::BeginMenu("View"))
 		{
-			ImGui::Checkbox("Demo Window", &demo);
+			ImGui::Checkbox("Configuration", &show_config);
+			ImGui::Checkbox("Demo", &show_demo);
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
-	if (demo)
-		ImGui::ShowDemoWindow(&demo);
+
+
+
+	if (show_demo)
+		ImGui::ShowDemoWindow(&show_demo);
+	if (show_config)
+	{
+		ImGui::Begin("Configuration", &show_config);
+		if (ImGui::CollapsingHeader("Application"))
+		{
+			ImGui::InputText("Name", &app_name);
+		}
+
+		ImGui::End();
+	}
+
 
 	return UPDATE_CONTINUE;
 }

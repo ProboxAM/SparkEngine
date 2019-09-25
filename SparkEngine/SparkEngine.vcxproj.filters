@@ -270,6 +270,9 @@
     <ClInclude Include="pcg_random.hpp">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="imgui_stdlib.h">
+      <Filter>Sources\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -415,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp">
       <Filter>Sources\MathGeoLib\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_stdlib.cpp">
+      <Filter>Sources\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
