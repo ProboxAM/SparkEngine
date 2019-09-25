@@ -12,7 +12,7 @@
 
 
 
-ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleEditor::ModuleEditor(bool start_enabled) : Module(start_enabled)
 {
 }
 
@@ -59,6 +59,7 @@ update_status ModuleEditor::Update(float dt)
 		if (ImGui::BeginMenu("View"))
 		{
 			ImGui::Checkbox("Configuration", &show_config);
+			ImGui::Checkbox("Debug", &show_debug);
 			ImGui::Checkbox("Demo", &show_demo);
 			ImGui::EndMenu();
 		}
@@ -94,14 +95,25 @@ update_status ModuleEditor::Update(float dt)
 
 			ImGui::BeginChild("Log");
 			ImGui::TextUnformatted(input_buff.begin());
-			if (move_scroll)
+			if (move_input_scroll)
 			{
 				ImGui::SetScrollHere(1.0f);
-				move_scroll = false;
+				move_input_scroll = false;
 			}
 			ImGui::EndChild();
 		}
 		ImGui::End();
+	}
+	if (show_debug)
+	{
+		ImGui::BeginChild("Log");
+		ImGui::TextUnformatted(debug_buff.begin());
+		if (move_debug_scroll)
+		{
+			ImGui::SetScrollHere(1.0f);
+			move_debug_scroll = false;
+		}
+		ImGui::EndChild();
 	}
 
 	return UPDATE_CONTINUE;
@@ -118,7 +130,13 @@ void ModuleEditor::LogInput(int key, KEY_STATE state, bool mouse)
 		temp_string = "Keyboard: " + std::to_string(key) + " " + states[state] + "\n";
 
 	input_buff.appendf(temp_string.c_str());
-	move_scroll = true;
+	move_input_scroll = true;
+}
+
+void ModuleEditor::Log(const char* text)
+{
+	debug_buff.appendf(text);
+	move_debug_scroll = true;
 }
 
 update_status ModuleEditor::PostUpdate(float dt)
