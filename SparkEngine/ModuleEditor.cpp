@@ -150,15 +150,28 @@ update_status ModuleEditor::Update(float dt)
 			std::string temp = std::to_string(compiled_version.major) + "." + std::to_string(compiled_version.minor) + "." + std::to_string(compiled_version.patch);
 			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
 
+			ImGui::Separator();
+
 			ImGui::Text("CPU cores:");
 			ImGui::SameLine();
-			temp = std::to_string(SDL_GetCPUCount()) + "(Cache: " + std::to_string(SDL_GetCPUCacheLineSize()) + ")";
+			temp = std::to_string(SDL_GetCPUCount()) + " (Cache: " + std::to_string(SDL_GetCPUCacheLineSize()) + "Kb)";
 			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
 
 			ImGui::Text("System RAM:");
 			ImGui::SameLine();
-			temp = std::to_string(SDL_GetSystemRAM());
-			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+			temp = std::to_string(SDL_GetSystemRAM()) + "Mb";
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());			
+			
+			ImGui::Text("Caps:");
+			ImGui::SameLine();
+			ImGui::TextColored({ 0, 255, 255, 255 }, GetCpuInfo().c_str());
+
+			ImGui::Separator();
+
+			ImGui::Text("GPU:");
+			ImGui::SameLine();
+			ImGui::TextColored(glGetString(GL_VENDOR));
+			
 		}
 
 		ImGui::End();
@@ -196,6 +209,25 @@ void ModuleEditor::Log(const char* text)
 {
 	debug_buff.appendf(text);
 	move_debug_scroll = true;
+}
+
+std::string ModuleEditor::GetCpuInfo()
+{
+
+	std::string info;
+
+	if (SDL_Has3DNow())info.append("3DNow, ");
+	if (SDL_HasAVX())info.append("AVX, ");
+	if (SDL_HasAVX2())info.append("AVX2, ");
+	if (SDL_HasMMX())info.append("MMX, ");
+	if (SDL_HasRDTSC())info.append("RDTSC, ");
+	if (SDL_HasSSE())info.append("SSE, ");
+	if (SDL_HasSSE2())info.append("SSE2, ");
+	if (SDL_HasSSE3())info.append("SSE3, ");
+	if (SDL_HasSSE41())info.append("SSE41, ");
+	if (SDL_HasSSE42())info.append("SSE42, ");
+
+	return info;
 }
 
 update_status ModuleEditor::PostUpdate(float dt)
