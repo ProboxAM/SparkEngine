@@ -9,7 +9,7 @@
 class ModuleEditor : public Module
 {
 public:
-	ModuleEditor(Application* app, bool start_enabled = true);
+	ModuleEditor(bool start_enabled = true);
 	~ModuleEditor();
 	bool Init();
 	bool CleanUp();
@@ -17,6 +17,7 @@ public:
 	update_status Update(float dt);
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
+	void Log(const char* text);
 
 private:
 
@@ -24,6 +25,7 @@ private:
 
 	bool show_demo = false;
 	bool show_config = false;
+	bool show_debug = false;
 
 	//Window Config
 	int width = SCREEN_WIDTH * SCREEN_SIZE;
@@ -33,11 +35,14 @@ private:
 	bool window_settings[4];
 
 	//Input window
-	bool move_scroll = false;
+	bool move_input_scroll = false;
+	bool move_debug_scroll = false;
 	ImGuiTextBuffer input_buff;
 
 	//Hardware window
 	SDL_version compiled_version;
+	std::string GetCpuInfo();
 
+	ImGuiTextBuffer debug_buff;
 };
 
