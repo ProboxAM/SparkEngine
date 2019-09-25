@@ -167,10 +167,6 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::TextColored({ 0, 255, 255, 255 }, GetCpuInfo().c_str());
 
 			ImGui::Separator();
-
-			ImGui::Text("GPU:");
-			ImGui::SameLine();
-			ImGui::TextColored(glGetString(GL_VENDOR));
 			
 		}
 
