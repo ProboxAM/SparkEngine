@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "nlohmann\json.hpp"
+#include <fstream>
 
 Application::Application()
 {
@@ -39,10 +41,16 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	std::ifstream i("Settings/Config.json");
+	nlohmann::json j = nlohmann::json::parse(i);
+
+	SetName(j["Application"]["Title"]);
+	SetOrganization(j["Application"]["Organization"]);
+
 	// Call Init() in all modules
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
 	{
-		ret = (*it)->Init();
+		ret = (*it)->Init(j.find((*it)->name));
 	}
 
 	// After all Init calls we call Start() in all modules

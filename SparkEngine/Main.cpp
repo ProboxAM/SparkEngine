@@ -19,8 +19,6 @@ Application* App = nullptr;
 
 int main(int argc, char ** argv)
 {
-	LOG("Starting game '%s'...", TITLE);
-
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
 
@@ -83,8 +81,9 @@ int main(int argc, char ** argv)
 		}
 	}
 
+	std::string name = App->GetName();
 	delete App;
 	App = nullptr;
-	LOG("Exiting %s\n", TITLE);
+	LOG("Exiting %s\n", name.c_str());
 	return main_return;
 }

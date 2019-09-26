@@ -15,10 +15,7 @@
 
 ModuleEditor::ModuleEditor(bool start_enabled) : Module(start_enabled)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		window_settings[i] = false;
-	}
+	name = "Editor";
 }
 
 
@@ -26,7 +23,7 @@ ModuleEditor::~ModuleEditor()
 {
 }
 
-bool ModuleEditor::Init()
+bool ModuleEditor::Init(nlohmann::json::iterator it)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -40,7 +37,14 @@ bool ModuleEditor::Init()
 	org_name = App->GetOrganization();
 	refresh_rate = App->window->GetRefreshRate();
 	brightness = App->window->GetBrightness();
+	width = App->window->GetWindowWidth();
+	height = App->window->GetWindowHeight();
 	SDL_VERSION(&compiled_version);
+
+	for (int i = 0; i < 4; i++)
+	{
+		window_settings[i] = false;
+	}
 
 	return true;
 }

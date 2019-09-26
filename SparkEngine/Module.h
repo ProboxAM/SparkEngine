@@ -1,4 +1,5 @@
 #pragma once
+#include "nlohmann\json.hpp"
 
 class Module
 {
@@ -12,7 +13,7 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init() 
+	virtual bool Init(nlohmann::json::iterator it) 
 	{
 		return true; 
 	}
@@ -41,4 +42,6 @@ public:
 	{ 
 		return true; 
 	}
+
+	std::string name;
 };

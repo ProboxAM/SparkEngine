@@ -1,0 +1,18 @@
+{
+  "Application": {
+    "Title": "Spark Engine",
+    "Organization": "ProBoxAM"
+  },
+  "Window": {
+    "width": 1024,
+    "height": 720,
+    "size": 1,
+    "fullscreen": false,
+    "resizable": true,
+    "borderless": false,
+    "fullDesktop": false
+  },
+  "Render": {
+    "vsync": false
+  }
+}

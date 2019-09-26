@@ -8,6 +8,7 @@
 
 ModuleInput::ModuleInput(bool start_enabled) : Module(start_enabled)
 {
+	name = "Input";
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
@@ -20,7 +21,7 @@ ModuleInput::~ModuleInput()
 }
 
 // Called before render is available
-bool ModuleInput::Init()
+bool ModuleInput::Init(nlohmann::json::iterator it)
 {
 	LOG("Init SDL input event system");
 	bool ret = true;
@@ -68,8 +69,8 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
 
-	mouse_x /= SCREEN_SIZE;
-	mouse_y /= SCREEN_SIZE;
+	mouse_x /= App->window->GetScreenSize();
+	mouse_y /= App->window->GetScreenSize();
 	mouse_z = 0;
 
 	for(int i = 0; i < 5; ++i)
@@ -110,11 +111,11 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_MOUSEMOTION:
-			mouse_x = e.motion.x / SCREEN_SIZE;
-			mouse_y = e.motion.y / SCREEN_SIZE;
+			mouse_x = e.motion.x / App->window->GetScreenSize();
+			mouse_y = e.motion.y / App->window->GetScreenSize();
 
-			mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
-			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
+			mouse_x_motion = e.motion.xrel / App->window->GetScreenSize();
+			mouse_y_motion = e.motion.yrel / App->window->GetScreenSize();
 			break;
 
 			case SDL_QUIT:

@@ -16,7 +16,7 @@ public:
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init();
+	bool Init(nlohmann::json::iterator it);
 	bool CleanUp();
 
 	void SetTitle(const char* title);
@@ -29,6 +29,7 @@ public:
 
 	int GetRefreshRate();
 	float GetBrightness();
+	int GetScreenSize();
 	
 	void SetWindowBrightness(float value);
 	void SetScreenMode(WINDOWSETTINGS mode, bool active);
@@ -43,7 +44,9 @@ public:
 private:
 	int width, height = 0;
 	int refresh_rate = 0;
+	int size = 0;
 	float brightness = .0f;
+
 
 	SDL_DisplayMode current_displaymode;
 };

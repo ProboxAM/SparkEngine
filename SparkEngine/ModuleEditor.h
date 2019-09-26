@@ -11,7 +11,7 @@ class ModuleEditor : public Module
 public:
 	ModuleEditor(bool start_enabled = true);
 	~ModuleEditor();
-	bool Init();
+	bool Init(nlohmann::json::iterator it);
 	bool CleanUp();
 	update_status PostUpdate(float dt);
 	update_status Update(float dt);
@@ -35,8 +35,8 @@ private:
 	std::vector<float> ms_log;
 
 	//Window Config
-	int width = SCREEN_WIDTH * SCREEN_SIZE;
-	int height = SCREEN_HEIGHT * SCREEN_SIZE;
+	int width;
+	int height;
 	float brightness = 0;
 	int refresh_rate = 0;
 	bool window_settings[4];

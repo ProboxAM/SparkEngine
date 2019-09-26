@@ -6,6 +6,7 @@ ModuleWindow::ModuleWindow(bool start_enabled) : Module(start_enabled)
 {
 	window = NULL;
 	screen_surface = NULL;
+	name = "Window";
 }
 
 // Destructor
@@ -14,7 +15,7 @@ ModuleWindow::~ModuleWindow()
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool ModuleWindow::Init(nlohmann::json::iterator it)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
@@ -26,37 +27,37 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
+		size = (*it)["size"];
 		//Create window
-		width = SCREEN_WIDTH * SCREEN_SIZE;
-		height = SCREEN_HEIGHT * SCREEN_SIZE;
+		width = (int)(*it)["width"] * size;
+		height = (int)(*it)["height"] * size;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
-		if(WIN_FULLSCREEN == true)
+		if((*it)["fullscreen"] == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(WIN_RESIZABLE == true)
+		if((*it)["resizable"] == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 		
-		if(WIN_BORDERLESS == true)
+		if((*it)["borderless"] == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(WIN_FULLSCREEN_DESKTOP == true)
+		if((*it)["fullDesktop"] == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
-		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-		App->SetName(TITLE);
+		window = SDL_CreateWindow(App->GetName().c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
 		if(window == NULL)
 		{
@@ -132,6 +133,11 @@ int ModuleWindow::GetRefreshRate()
 			// On success, return the refresh rate.
 			return current_displaymode.refresh_rate;
 	}
+}
+
+int ModuleWindow::GetScreenSize()
+{
+	return size;
 }
 
 float ModuleWindow::GetBrightness()
