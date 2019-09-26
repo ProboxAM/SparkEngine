@@ -71,6 +71,16 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	last_frame_ms = ms_timer.Read();
+
+	if (capped_ms > 0 && (last_frame_ms < capped_ms))
+	{
+		SDL_Delay(capped_ms - last_frame_ms);
+		last_frame_ms += capped_ms - last_frame_ms;
+	}
+	fps = 1000.0 / last_frame_ms;
+
+	App->editor->LogFrame((float)fps, (float)last_frame_ms);
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -100,6 +110,8 @@ update_status Application::Update()
 		}
 	}
 
+	FinishUpdate();
+
 	return ret;
 }
 
@@ -115,6 +127,41 @@ bool Application::CleanUp()
 	}
 
 	return ret;
+}
+
+void Application::SetName(std::string name)
+{
+	app_name = name;
+	App->window->SetTitle(app_name.c_str());
+}
+
+void Application::SetOrganization(std::string org)
+{
+	organization = org;
+}
+
+void Application::SetFPSCap(int cap)
+{
+	fps_cap = cap;
+	if (fps_cap > 0)
+		capped_ms = 1000 / fps_cap;
+	else
+		capped_ms = 0;
+}
+
+std::string Application::GetName()
+{
+	return app_name;
+}
+
+std::string Application::GetOrganization()
+{
+	return organization;
+}
+
+int Application::GetFPSCap()
+{
+	return fps_cap;
 }
 
 void Application::AddModule(Module* mod)

@@ -1,7 +1,10 @@
 #pragma once
 #include "Module.h"
 #include <string>
+#include <vector>
 #include "imgui.h"
+
+#define MAX_LOG 50
 
 class ModuleEditor : public Module
 {
@@ -14,16 +17,21 @@ public:
 	update_status Update(float dt);
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
-	void Log(const char* text);
+	void LogDebug(const char* text);
+	void LogFrame(float fps, float ms);
 
 private:
-
-	std::string app_name = "";
 
 	bool show_demo = false;
 	bool show_config = false;
 	bool show_debug = false;
 
+	//Application window
+	std::string app_name = "";
+	std::string org_name = "";
+	int max_fps = 0;
+	std::vector<float> fps_log;
+	std::vector<float> ms_log;
 
 	//Input window
 	bool move_input_scroll = false;

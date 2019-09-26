@@ -19,9 +19,17 @@ public:
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 private:
+	std::string		app_name;
+	std::string		organization;
 
 	Timer	ms_timer;
+	Timer	fps_timer;
 	float	dt;
+	int		fps_cap = 0;
+	int		fps = 0;
+	int		fps_count = 0;
+	int		capped_ms = 0;
+	int		last_frame_ms = 0;
 	std::list<Module*> list_modules;
 
 public:
@@ -32,6 +40,14 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
+	void SetName(std::string name);
+	void SetOrganization(std::string org);
+	void SetFPSCap(int cap);
+
+	std::string GetName();
+	std::string GetOrganization();
+	int GetFPSCap();
 
 private:
 

@@ -31,6 +31,9 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init();
 
+	app_name = App->GetName();
+	org_name = App->GetOrganization();
+
 	return true;
 }
 
@@ -73,7 +76,22 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::Begin("Configuration", &show_config);
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			ImGui::InputText("Name", &app_name);
+			if (ImGui::InputText("Name", &app_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+				App->SetName(app_name);
+			if (ImGui::InputText("Organization", &org_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+				App->SetOrganization(org_name);
+			if (ImGui::SliderInt("Cap FPS", &max_fps, 0, 140))
+				App->SetFPSCap(max_fps);
+
+			ImGui::Text("Framerate Cap:");
+			ImGui::SameLine();
+			ImGui::TextColored({ 0,255,255,255 }, std::to_string(App->GetFPSCap()).c_str());
+
+			char title[25];
+			sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
+			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
@@ -133,10 +151,29 @@ void ModuleEditor::LogInput(int key, KEY_STATE state, bool mouse)
 	move_input_scroll = true;
 }
 
-void ModuleEditor::Log(const char* text)
+void ModuleEditor::LogDebug(const char* text)
 {
 	debug_buff.appendf(text);
 	move_debug_scroll = true;
+}
+
+void ModuleEditor::LogFrame(float fps, float ms)
+{
+	if (fps_log.size() == MAX_LOG)
+	{
+		for (uint i = 1; i < MAX_LOG; ++i)
+		{
+			fps_log[i] = fps_log[i - 1];
+			ms_log[i] = ms_log[i - 1];
+		}
+		fps_log[0] = fps;
+		ms_log[0] = ms;
+	}
+	else
+	{
+		fps_log.insert(fps_log.begin(), fps);
+		ms_log.insert(ms_log.begin(), ms);
+	}
 }
 
 update_status ModuleEditor::PostUpdate(float dt)
