@@ -49,6 +49,8 @@ public:
 	std::string GetOrganization();
 	int GetFPSCap();
 
+	void OpenWebURL(std::string path);
+
 private:
 
 	void AddModule(Module* mod);

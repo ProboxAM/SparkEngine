@@ -25,6 +25,7 @@ private:
 	bool show_demo = false;
 	bool show_config = false;
 	bool show_debug = false;
+	bool  show_about = false;
 
 	//Application window
 	std::string app_name = "";

@@ -164,6 +164,11 @@ int Application::GetFPSCap()
 	return fps_cap;
 }
 
+void Application::OpenWebURL(std::string path)
+{
+	ShellExecute(0, 0, path.c_str(), 0, 0, SW_SHOW);
+}
+
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
