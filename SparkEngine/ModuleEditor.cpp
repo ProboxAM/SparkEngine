@@ -14,6 +14,10 @@
 
 ModuleEditor::ModuleEditor(bool start_enabled) : Module(start_enabled)
 {
+	for (int i = 0; i < 4; i++)
+	{
+		window_settings[i] = false;
+	}
 }
 
 
@@ -33,6 +37,9 @@ bool ModuleEditor::Init()
 
 	app_name = App->GetName();
 	org_name = App->GetOrganization();
+	refresh_rate = App->window->GetRefreshRate();
+	brightness = App->window->GetBrightness();
+	SDL_VERSION(&compiled_version);
 
 	return true;
 }
@@ -93,6 +100,38 @@ update_status ModuleEditor::Update(float dt)
 			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 		}
+		
+		if (ImGui::CollapsingHeader("Window"))
+		{
+			if (ImGui::SliderInt("Width", &width, 0, 1920))	App->window->SetWindowWidth(width);
+			if (ImGui::SliderInt("Height", &height, 0, 1080)) App->window->SetWindowHeight(height);
+			if (ImGui::SliderFloat("Brightness", &brightness, 0, 1)) App->window->SetWindowBrightness(brightness);
+
+			ImGui::Text("Refresh rate");
+			ImGui::SameLine();
+			std::string temp = std::to_string(refresh_rate);
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+
+			if (ImGui::Checkbox("Fullscreen", &window_settings[FULLSCREEN])) {
+				App->window->SetScreenMode(FULLSCREEN, window_settings[FULLSCREEN]);
+			}
+	
+			ImGui::SameLine();
+			
+			if (ImGui::Checkbox("Resizable", &window_settings[RESIZABLE])) {
+				App->window->SetScreenMode(RESIZABLE, window_settings[RESIZABLE]);
+			}
+			if (ImGui::Checkbox("Borderless", &window_settings[BORDERLESS])) {
+				App->window->SetScreenMode(BORDERLESS, window_settings[BORDERLESS]);
+			}
+		
+			ImGui::SameLine();
+		
+			if (ImGui::Checkbox("Full Desktop", &window_settings[FSDESKTOP])) {
+				App->window->SetScreenMode(FSDESKTOP, window_settings[FSDESKTOP]);
+			}
+		}
+
 		if (ImGui::CollapsingHeader("Input"))
 		{
 			ImGui::Text("Mouse position:");
@@ -120,6 +159,34 @@ update_status ModuleEditor::Update(float dt)
 			}
 			ImGui::EndChild();
 		}
+
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+			ImGui::Text("SDL Version:");
+			ImGui::SameLine();
+			std::string temp = std::to_string(compiled_version.major) + "." + std::to_string(compiled_version.minor) + "." + std::to_string(compiled_version.patch);
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+
+			ImGui::Separator();
+
+			ImGui::Text("CPU cores:");
+			ImGui::SameLine();
+			temp = std::to_string(SDL_GetCPUCount()) + " (Cache: " + std::to_string(SDL_GetCPUCacheLineSize()) + "Kb)";
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+
+			ImGui::Text("System RAM:");
+			ImGui::SameLine();
+			temp = std::to_string(SDL_GetSystemRAM()) + "Mb";
+			ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());			
+			
+			ImGui::Text("Caps:");
+			ImGui::SameLine();
+			ImGui::TextColored({ 0, 255, 255, 255 }, GetCpuInfo().c_str());
+
+			ImGui::Separator();
+			
+		}
+
 		ImGui::End();
 	}
 	if (show_debug)
@@ -174,6 +241,25 @@ void ModuleEditor::LogFrame(float fps, float ms)
 		fps_log.insert(fps_log.begin(), fps);
 		ms_log.insert(ms_log.begin(), ms);
 	}
+}
+
+std::string ModuleEditor::GetCpuInfo()
+{
+
+	std::string info;
+
+	if (SDL_Has3DNow())info.append("3DNow, ");
+	if (SDL_HasAVX())info.append("AVX, ");
+	if (SDL_HasAVX2())info.append("AVX2, ");
+	if (SDL_HasMMX())info.append("MMX, ");
+	if (SDL_HasRDTSC())info.append("RDTSC, ");
+	if (SDL_HasSSE())info.append("SSE, ");
+	if (SDL_HasSSE2())info.append("SSE2, ");
+	if (SDL_HasSSE3())info.append("SSE3, ");
+	if (SDL_HasSSE41())info.append("SSE41, ");
+	if (SDL_HasSSE42())info.append("SSE42, ");
+
+	return info;
 }
 
 update_status ModuleEditor::PostUpdate(float dt)

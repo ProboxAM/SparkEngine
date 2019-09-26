@@ -27,8 +27,8 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+		width = SCREEN_WIDTH * SCREEN_SIZE;
+		height = SCREEN_HEIGHT * SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
@@ -44,7 +44,7 @@ bool ModuleWindow::Init()
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
-
+		
 		if(WIN_BORDERLESS == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
@@ -68,6 +68,8 @@ bool ModuleWindow::Init()
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
 		}
+
+		brightness = SDL_GetWindowBrightness(window);
 	}
 
 	return ret;
@@ -93,3 +95,77 @@ void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
+
+int ModuleWindow::GetWindowWidth()
+{
+	return width;
+}
+
+int ModuleWindow::GetWindowHeight()
+{
+	return height;
+}
+
+void ModuleWindow::SetWindowWidth(int width)
+{
+	this->width = width;
+	SDL_SetWindowSize(window, width, height);
+}
+
+void ModuleWindow::SetWindowHeight(int height)
+{
+	this->height = height;
+	SDL_SetWindowSize(window, width, height);
+}
+
+int ModuleWindow::GetRefreshRate()
+{
+	for (int i = 0; i < SDL_GetNumVideoDisplays(); ++i) {
+
+		int ret = SDL_GetCurrentDisplayMode(i, &current_displaymode);
+
+		if (ret != 0)
+			// In case of error...
+			SDL_Log("Could not get display mode for video display #%d: %s", i, SDL_GetError());
+
+		else
+			// On success, return the refresh rate.
+			return current_displaymode.refresh_rate;
+	}
+}
+
+float ModuleWindow::GetBrightness()
+{
+	return brightness;
+}
+
+void ModuleWindow::SetWindowBrightness(float value)
+{
+	SDL_SetWindowBrightness(window, value);
+}
+
+void ModuleWindow::SetScreenMode(WINDOWSETTINGS mode, bool active)
+{
+	switch (mode)
+	{
+	case FULLSCREEN: 
+		if(active) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		else SDL_SetWindowFullscreen(window, 0); break;
+
+	case FSDESKTOP: 
+		if (active) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		else SDL_SetWindowFullscreen(window, 0); break;
+	
+	case RESIZABLE: 
+		if(active) SDL_SetWindowResizable(window, SDL_TRUE);
+		else SDL_SetWindowResizable(window, SDL_FALSE);	break;
+	
+	case BORDERLESS: 
+		if(active) SDL_SetWindowBordered(window, SDL_FALSE);
+		else SDL_SetWindowBordered(window, SDL_TRUE); break;
+
+	default:
+		break;
+	}
+}
+
