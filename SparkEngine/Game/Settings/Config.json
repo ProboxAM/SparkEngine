@@ -13,6 +13,6 @@
     "fullDesktop": false
   },
   "Render": {
-    "vsync": false
+    "vsync": true
   }
 }

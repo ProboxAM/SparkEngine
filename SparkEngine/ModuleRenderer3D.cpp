@@ -40,7 +40,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	if(ret == true)
 	{
 		//Use Vsync
-		if((*it)["vsync"] && SDL_GL_SetSwapInterval(1) < 0)
+		if((*it)["vsync"] && SDL_GL_SetSwapInterval((*it)["vsync"]) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
@@ -101,6 +101,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+	
 	}
 
 	// Projection matrix for
