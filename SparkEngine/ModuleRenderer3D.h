@@ -19,6 +19,7 @@ public:
 
 	void OnResize(int width, int height);
 	bool Save(nlohmann::json &it);
+	void GLEnable(unsigned int flag, bool active);
 
 public:
 

@@ -13,7 +13,7 @@ public:
 	~ModuleEditor();
 	bool Init(nlohmann::json::iterator it);
 	bool CleanUp();
-	update_status PostUpdate(float dt);
+	void Draw();
 	update_status Update(float dt);
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
@@ -25,7 +25,7 @@ private:
 	bool show_demo = false;
 	bool show_config = false;
 	bool show_debug = false;
-	bool  show_about = false;
+	bool show_about = false;
 
 	//Application window
 	std::string app_name = "";
@@ -51,5 +51,11 @@ private:
 	std::string GetCpuInfo();
 
 	ImGuiTextBuffer debug_buff;
+
+	bool depth_test = false;
+	bool cull_face = false;
+	bool lighting = false;
+	bool color_material = false;
+	bool texture_2D = false;
 };
 

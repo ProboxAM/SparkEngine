@@ -63,6 +63,12 @@ bool ModuleEditor::CleanUp()
 	return true;
 }
 
+void ModuleEditor::Draw()
+{
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
 update_status ModuleEditor::Update(float dt)
 {
 	ImGui_ImplOpenGL3_NewFrame();
@@ -204,7 +210,31 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::TextColored({ 0, 255, 255, 255 }, GetCpuInfo().c_str());
 
 			ImGui::Separator();
-			
+
+			ImGui::Text("Vendor:");
+			ImGui::SameLine();
+			ImGui::TextColored({ 0, 255, 255, 255 }, (const char*)glGetString(GL_VENDOR));
+
+			ImGui::Text("GPU Model");
+			ImGui::SameLine();
+			ImGui::TextColored({ 0, 255, 255, 255 }, (const char*)glGetString(GL_RENDERER));			
+		}
+		if (ImGui::CollapsingHeader("Renderer"))
+		{
+			if (ImGui::Checkbox("Depth Test", &depth_test))
+				App->renderer3D->GLEnable(GL_DEPTH_TEST, depth_test);
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Cull Face", &cull_face))
+				App->renderer3D->GLEnable(GL_CULL_FACE, cull_face);
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Lighting", &lighting))
+				App->renderer3D->GLEnable(GL_LIGHTING, lighting);
+
+			if (ImGui::Checkbox("Color Material", &color_material))
+				App->renderer3D->GLEnable(GL_COLOR_MATERIAL, color_material);
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Texture 2D", &texture_2D))
+				App->renderer3D->GLEnable(GL_TEXTURE_2D, texture_2D);
 		}
 
 		ImGui::End();
@@ -348,10 +378,3 @@ std::string ModuleEditor::GetCpuInfo()
 	return info;
 }
 
-update_status ModuleEditor::PostUpdate(float dt)
-{
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-	return UPDATE_CONTINUE;
-}

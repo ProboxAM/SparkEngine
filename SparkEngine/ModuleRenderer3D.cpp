@@ -108,32 +108,33 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	// Projection matrix for
 	OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
 
-	glewInit();
+	GLenum err = glewInit();
+	// … check for errors
+	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	return ret;
 }
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	// Seed with a real random value, if available
-	pcg_extras::seed_seq_from<std::random_device> seed_source;
-	// Make a random number engine
-	pcg32 rng(seed_source);
+	//// Seed with a real random value, if available
+	//pcg_extras::seed_seq_from<std::random_device> seed_source;
+	//// Make a random number engine
+	//pcg32 rng(seed_source);
 
-	// Choose a random mean between 1 and 6
-	std::uniform_real_distribution<float> uniform_dist(0, 1);
-	float mean = uniform_dist(rng);
+	//// Choose a random mean between 1 and 6
+	//std::uniform_real_distribution<float> uniform_dist(0, 1);
+	//float mean = uniform_dist(rng);
 
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
-
-	Sphere sphere({ 0.0f, 0.0f, 0.0f }, 5);
-	Sphere sphere2({ 0.0f, 0.0f, 0.0f }, 5);
-	AABB sphere_col(sphere);
-	AABB sphere2_col(sphere2);
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -147,6 +148,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	App->editor->Draw();
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -182,4 +184,12 @@ bool ModuleRenderer3D::Save(nlohmann::json &it)
 	};
 
 	return true;
+}
+
+void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
+{
+	if (active)
+		glEnable(flag);
+	else
+		glDisable(flag);
 }
