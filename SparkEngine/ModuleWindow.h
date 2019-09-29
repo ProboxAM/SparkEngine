@@ -30,9 +30,16 @@ public:
 	int GetRefreshRate();
 	float GetBrightness();
 	int GetScreenSize();
+	bool GetFullscreen();
+	bool GetBorderless();
+	bool GetResizable();
+	bool GetFullDesktop();
 	
 	void SetWindowBrightness(float value);
 	void SetScreenMode(WINDOWSETTINGS mode, bool active);
+
+	bool Load(nlohmann::json::iterator it);
+	bool Save(nlohmann::json &it);
 
 public:
 	//The window we'll be rendering to
@@ -46,7 +53,7 @@ private:
 	int refresh_rate = 0;
 	int size = 0;
 	float brightness = .0f;
-
+	bool borderless = false, fullscreen = false, full_desktop = false, resizable = false;
 
 	SDL_DisplayMode current_displaymode;
 };

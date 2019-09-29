@@ -40,21 +40,25 @@ bool ModuleWindow::Init(nlohmann::json::iterator it)
 		if((*it)["fullscreen"] == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
+			fullscreen = true;
 		}
 
 		if((*it)["resizable"] == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
+			resizable = true;
 		}
 		
 		if((*it)["borderless"] == true)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
+			borderless = true;
 		}
 
 		if((*it)["fullDesktop"] == true)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+			full_desktop = true;
 		}
 
 		window = SDL_CreateWindow(App->GetName().c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
@@ -69,8 +73,7 @@ bool ModuleWindow::Init(nlohmann::json::iterator it)
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
 		}
-
-		brightness = SDL_GetWindowBrightness(window);
+		SetWindowBrightness((*it)["brightness"]);
 	}
 
 	return ret;
@@ -147,6 +150,7 @@ float ModuleWindow::GetBrightness()
 
 void ModuleWindow::SetWindowBrightness(float value)
 {
+	brightness = value;
 	SDL_SetWindowBrightness(window, value);
 }
 
@@ -156,22 +160,68 @@ void ModuleWindow::SetScreenMode(WINDOWSETTINGS mode, bool active)
 	{
 	case FULLSCREEN: 
 		if(active) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-		else SDL_SetWindowFullscreen(window, 0); break;
+		else SDL_SetWindowFullscreen(window, 0); 
+		fullscreen = active; break;
 
 	case FSDESKTOP: 
 		if (active) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		else SDL_SetWindowFullscreen(window, 0); break;
+		else SDL_SetWindowFullscreen(window, 0); 
+		full_desktop = active; break;
 	
 	case RESIZABLE: 
 		if(active) SDL_SetWindowResizable(window, SDL_TRUE);
-		else SDL_SetWindowResizable(window, SDL_FALSE);	break;
+		else SDL_SetWindowResizable(window, SDL_FALSE);	
+		resizable = active; break;
 	
 	case BORDERLESS: 
 		if(active) SDL_SetWindowBordered(window, SDL_FALSE);
-		else SDL_SetWindowBordered(window, SDL_TRUE); break;
+		else SDL_SetWindowBordered(window, SDL_TRUE); 
+		borderless = active; break;
 
 	default:
 		break;
 	}
+}
+
+bool ModuleWindow::GetFullscreen() {
+	return fullscreen;
+}
+bool ModuleWindow::GetBorderless() {
+	return borderless;
+}
+bool ModuleWindow::GetResizable() {
+	return resizable;
+}
+bool ModuleWindow::GetFullDesktop() {
+	return full_desktop;
+}
+
+bool ModuleWindow::Load(nlohmann::json::iterator it)
+{
+	SetWindowHeight((*it)["height"]);
+	SetWindowWidth((*it)["width"]);
+	SetWindowBrightness((*it)["brightness"]);
+	SetScreenMode(FULLSCREEN, (*it)["fullscreen"]);
+	SetScreenMode(FSDESKTOP, (*it)["fullDesktop"]);
+	SetScreenMode(RESIZABLE, (*it)["resizable"]);
+	SetScreenMode(BORDERLESS, (*it)["borderless"]);
+
+	return true;
+}
+
+bool ModuleWindow::Save(nlohmann::json &it)
+{
+	it[name] = {
+		{ "width",width },
+		{ "height",height },
+		{ "brightness",brightness },
+		{ "size",size },
+		{ "fullscreen", fullscreen },
+		{ "fullDesktop", full_desktop },
+		{ "resizable", resizable },
+		{ "borderless", borderless },
+	};
+
+	return true;
 }
 

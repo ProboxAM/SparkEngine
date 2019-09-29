@@ -39,6 +39,11 @@ bool ModuleEditor::Init(nlohmann::json::iterator it)
 	brightness = App->window->GetBrightness();
 	width = App->window->GetWindowWidth();
 	height = App->window->GetWindowHeight();
+	window_settings[FULLSCREEN] = App->window->GetFullscreen();
+	window_settings[BORDERLESS] = App->window->GetBorderless();
+	window_settings[RESIZABLE] = App->window->GetResizable();
+	window_settings[FSDESKTOP] = App->window->GetFullDesktop();
+
 	SDL_VERSION(&compiled_version);
 
 	for (int i = 0; i < 4; i++)
@@ -92,6 +97,10 @@ update_status ModuleEditor::Update(float dt)
 	if (show_config)
 	{
 		ImGui::Begin("Configuration", &show_config);
+
+		if (ImGui::Button("Save"))
+			App->SaveSettings();
+
 		if (ImGui::CollapsingHeader("Application"))
 		{
 			if (ImGui::InputText("Name", &app_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))

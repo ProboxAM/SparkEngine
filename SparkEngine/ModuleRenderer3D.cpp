@@ -40,7 +40,8 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	if(ret == true)
 	{
 		//Use Vsync
-		if((*it)["vsync"] && SDL_GL_SetSwapInterval((*it)["vsync"]) < 0)
+		vsync = (*it)["vsync"];
+		if(vsync && SDL_GL_SetSwapInterval(vsync) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
@@ -122,7 +123,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	// Choose a random mean between 1 and 6
 	std::uniform_real_distribution<float> uniform_dist(0, 1);
 	float mean = uniform_dist(rng);
-	LOG("number is: %f", mean);
 
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -134,13 +134,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	Sphere sphere2({ 0.0f, 0.0f, 0.0f }, 5);
 	AABB sphere_col(sphere);
 	AABB sphere2_col(sphere2);
-
-	if (sphere_col.Contains(sphere2_col))
-	{
-		LOG("collision");
-	}
-	else
-		LOG("no collision");
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -180,4 +173,13 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+bool ModuleRenderer3D::Save(nlohmann::json &it)
+{
+	it[name] = {
+		{"vsync",vsync}
+	};
+
+	return true;
 }

@@ -44,6 +44,8 @@ public:
 	void SetName(std::string name);
 	void SetOrganization(std::string org);
 	void SetFPSCap(int cap);
+	void SaveSettings();
+	void LoadSettings();
 
 	std::string GetName();
 	std::string GetOrganization();

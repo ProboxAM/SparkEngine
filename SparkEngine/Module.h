@@ -43,5 +43,17 @@ public:
 		return true; 
 	}
 
+	virtual bool Load(nlohmann::json::iterator it)
+	{
+		return true;
+	}
+
+	virtual bool Save(nlohmann::json &it)
+	{
+		return true;
+	}
+
+public:
+
 	std::string name;
 };

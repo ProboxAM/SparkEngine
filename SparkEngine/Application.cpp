@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "nlohmann\json.hpp"
 #include <fstream>
+#include <iomanip>
 
 Application::Application()
 {
@@ -63,7 +64,6 @@ bool Application::Init()
 			ret = (*it)->Start();
 		}
 	}
-
 	ms_timer.Start();
 
 	return ret;
@@ -180,4 +180,33 @@ void Application::OpenWebURL(std::string path)
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+void Application::SaveSettings()
+{
+	nlohmann::json j;
+
+	j["Application"] = {
+		{"Title", app_name},
+		{"Organization", organization}
+	};
+
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+	{
+		(*it)->Save(j);
+	}
+
+	std::ofstream o("Settings/Config.json");
+	o << std::setw(4) << j << std::endl;
+}
+
+void Application::LoadSettings()
+{
+	std::ifstream i("Settings/Config.json");
+	nlohmann::json j = nlohmann::json::parse(i);
+
+	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)
+	{
+		(*it)->Load(j.find((*it)->name));
+	}
 }
