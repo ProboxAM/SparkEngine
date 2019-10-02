@@ -75,7 +75,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	for(int i = 0; i < 5; ++i)
 	{
-		if(buttons & SDL_BUTTON(i+1))
+		if(buttons & SDL_BUTTON(i))
 		{
 			if (mouse_buttons[i] == KEY_IDLE)
 			{

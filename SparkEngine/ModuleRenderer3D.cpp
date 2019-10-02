@@ -136,11 +136,72 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
+
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
+
+
+	//CUBO
+	glBegin(GL_TRIANGLES);
+	// front face =================
+	glVertex3f(0.f, 0.f, 0.f);    // v0-v1-v2
+	glVertex3f(-5.f, 0.f, 0.f);
+	glVertex3f(-5.f, -5.f, 0.f);
+
+	glVertex3f(-5.f, -5.f, 0);    // v2-v3-v0
+	glVertex3f(0, -5.f, 0);
+	glVertex3f(0, 0.f, 0);
+
+	// right face =================
+	glVertex3f(0, 0, 0);    // v0-v3-v4
+	glVertex3f(0, -5, 0);
+	glVertex3f(0, -5, -5);
+
+	glVertex3f(0, -5, -5);    // v4-v5-v0
+	glVertex3f(0, 0, -5);
+	glVertex3f(0, 0, 0);
+
+	// top face ===================
+	glVertex3f(0, 0, 0);    // v0-v5-v6
+	glVertex3f(0, 0, -5);
+	glVertex3f(-5, 0, -5);
+
+	glVertex3f(-5, 0, -5);    // v6-v1-v0
+	glVertex3f(-5, 0, 0);
+	glVertex3f(0, 0, 0);
+
+	// left face
+	glVertex3f(-5, 0, 0);    // v0-v5-v6
+	glVertex3f(-5, 0, -5);
+	glVertex3f(-5, -5, -5);
+
+	glVertex3f(-5, -5, -5);    // v0-v5-v6
+	glVertex3f(-5, -5, 0);
+	glVertex3f(-5, 0, 0);
+
+	// bottom face
+	glVertex3f(-5, -5, 0);    // v0-v5-v6
+	glVertex3f(-5, -5, -5);
+	glVertex3f(0, -5, -5);
+
+	glVertex3f(0, -5, -5);    // v0-v5-v6
+	glVertex3f(0, -5, 0);
+	glVertex3f(-5, -5, 0);
+
+	// back face
+	glVertex3f(-5, 0.f, -5);    // v0-v1-v2
+	glVertex3f(0, 0.f, -5);
+	glVertex3f(0, -5, -5);
+
+	glVertex3f(0, -5, -5);
+	glVertex3f(-5.f, -5.f, -5);    // v2-v3-v0
+	glVertex3f(-5, 0.f, -5);
+
+	glRotatef(45.f, 10.0f, 5.0f, 0.0f);
+	glEnd();
 
 	return UPDATE_CONTINUE;
 }
