@@ -144,8 +144,41 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		lights[i].Render();
 
 
-	//CUBO
+
+	float vertices[] = {
+		0.f, 0.f, 0.f,
+		-5.f, 0.f, 0.f,
+		-5.f, -5.f, 0.f,
+		0, -5.f, 0,
+		0, -5, -5,
+		0, 0, -5,
+		-5, 0, -5,
+		-5, -5, -5 };
+	int indices[] = { 0,1,2, 2,3,0,   // 36 of indices
+					 0,3,4, 4,5,0,
+					 0,5,6, 6,1,0,
+					 1,6,7, 7,2,1,
+					 7,4,3, 3,2,7,
+					 4,7,6, 6,5,4 };
+	uint my_id = 0;
+	glGenBuffers(1, (GLuint*) &(my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*8 * 3, vertices, GL_STATIC_DRAW);
+	uint my_indices = 0;
+	glGenBuffers(1, (GLuint*) &(my_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*36, indices, GL_STATIC_DRAW);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	// … draw other buffers
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	/*//CUBO
 	glBegin(GL_TRIANGLES);
+	glColor3f(255, 0, 0);
+
 	// front face =================
 	glVertex3f(0.f, 0.f, 0.f);    // v0-v1-v2
 	glVertex3f(-5.f, 0.f, 0.f);
@@ -198,10 +231,11 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glVertex3f(0, -5, -5);
 	glVertex3f(-5.f, -5.f, -5);    // v2-v3-v0
-	glVertex3f(-5, 0.f, -5);
+	glVertex3f(-5, 0.f, -5);*/
 
-	glRotatef(45.f, 10.0f, 5.0f, 0.0f);
-	glEnd();
+	/*glRotatef(45.f, 10.0f, 5.0f, 0.0f);
+
+	glEnd();*/
 
 	return UPDATE_CONTINUE;
 }
