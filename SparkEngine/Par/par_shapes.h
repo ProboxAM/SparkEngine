@@ -195,7 +195,7 @@ void par_shapes_compute_normals(par_shapes_mesh* m);
 // END PUBLIC API
 // -----------------------------------------------------------------------------
 
-#ifdef PAR_SHAPES_IMPLEMENTATION
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -2076,7 +2076,6 @@ void par_shapes_remove_degenerate(par_shapes_mesh* mesh, float mintriarea)
     mesh->triangles = triangles;
 }
 
-#endif // PAR_SHAPES_IMPLEMENTATION
 #endif // PAR_SHAPES_H
 
 // par_shapes is distributed under the MIT license:

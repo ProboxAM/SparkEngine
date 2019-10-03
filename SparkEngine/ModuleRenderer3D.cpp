@@ -4,8 +4,8 @@
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <random>
-#include "pcg_random.hpp"
 #include "Par/par_shapes.h"
+#include "pcg_random.hpp"
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
@@ -100,14 +100,6 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-
-		int n_subd = 10;
-		my_sphere = par_shapes_create_subdivided_sphere(n_subd);
-
-		my_id = 0;
-		glGenBuffers(1, (GLuint*) &(my_id));
-		glBindBuffer(GL_ARRAY_BUFFER, my_id);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*my_sphere->npoints, my_sphere->points, GL_STATIC_DRAW);
 	
 	}
 
@@ -121,6 +113,17 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	LOG("Renderer: %s", glGetString(GL_RENDERER));
 	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	my_sphere = par_shapes_create_parametric_sphere(20, 20);
+
+	my_id = 0;
+	glGenBuffers(1, (GLuint*) &(my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*my_sphere->npoints, my_sphere->points, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*) &(my_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_sphere->ntriangles, my_sphere->tcoords, GL_STATIC_DRAW);
 
 	return ret;
 }
@@ -156,7 +159,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	//// … draw other buffers
-	glDrawArrays(GL_TRIANGLES, 0, my_sphere->npoints);
+	glDrawElements(GL_TRIANGLES, my_sphere->ntriangles, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 

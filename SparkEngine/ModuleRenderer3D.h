@@ -5,7 +5,7 @@
 #include "Light.h"
 #define MAX_LIGHTS 8
 
-struct par_shapes_mesh;
+typedef struct par_shapes_mesh_s par_shapes_mesh;
 
 class ModuleRenderer3D : public Module
 {
@@ -33,5 +33,6 @@ private:
 	bool vsync;
 
 	uint my_id = 0;
+	uint my_indices = 0;
 	par_shapes_mesh* my_sphere = nullptr;
 };
