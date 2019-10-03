@@ -5,9 +5,7 @@
 #include "SDL\include\SDL_opengl.h"
 #include <random>
 #include "pcg_random.hpp"
-#include "MathGeoLib\Geometry\Sphere.h"
-#include "MathGeoLib\Geometry\AABB.h"
-
+#include "Par/par_shapes.h"
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
@@ -102,6 +100,14 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+
+		int n_subd = 10;
+		my_sphere = par_shapes_create_subdivided_sphere(n_subd);
+
+		my_id = 0;
+		glGenBuffers(1, (GLuint*) &(my_id));
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*my_sphere->npoints, my_sphere->points, GL_STATIC_DRAW);
 	
 	}
 
@@ -144,37 +150,51 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		lights[i].Render();
 
 
-
-	float vertices[] = {
-		0.f, 0.f, 0.f,
-		-5.f, 0.f, 0.f,
-		-5.f, -5.f, 0.f,
-		0, -5.f, 0,
-		0, -5, -5,
-		0, 0, -5,
-		-5, 0, -5,
-		-5, -5, -5 };
-	int indices[] = { 0,1,2, 2,3,0,   // 36 of indices
-					 0,3,4, 4,5,0,
-					 0,5,6, 6,1,0,
-					 1,6,7, 7,2,1,
-					 7,4,3, 3,2,7,
-					 4,7,6, 6,5,4 };
-	uint my_id = 0;
-	glGenBuffers(1, (GLuint*) &(my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*8 * 3, vertices, GL_STATIC_DRAW);
-	uint my_indices = 0;
-	glGenBuffers(1, (GLuint*) &(my_indices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*36, indices, GL_STATIC_DRAW);
+	//Par_shapes--------------------------------------------------------------------------------------------------------------------//
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	// … draw other buffers
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
+	//// … draw other buffers
+	glDrawArrays(GL_TRIANGLES, 0, my_sphere->npoints);
 	glDisableClientState(GL_VERTEX_ARRAY);
+
+
+
+	//Index Mode--------------------------------------------------------------------------------------------------------------------//
+
+	//float vertices[] = {
+	//	0.f, 0.f, 0.f,
+	//	-5.f, 0.f, 0.f,
+	//	-5.f, -5.f, 0.f,
+	//	0, -5.f, 0,
+	//	0, -5, -5,
+	//	0, 0, -5,
+	//	-5, 0, -5,
+	//	-5, -5, -5 };
+	//int indices[] = { 0,1,2, 2,3,0,   // 36 of indices
+	//				 0,3,4, 4,5,0,
+	//				 0,5,6, 6,1,0,
+	//				 1,6,7, 7,2,1,
+	//				 7,4,3, 3,2,7,
+	//				 4,7,6, 6,5,4 };
+	//uint my_id = 0;
+	//glGenBuffers(1, (GLuint*) &(my_id));
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float)*8 * 3, vertices, GL_STATIC_DRAW);
+	//uint my_indices = 0;
+	//glGenBuffers(1, (GLuint*) &(my_indices));
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*36, indices, GL_STATIC_DRAW);
+
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//// … draw other buffers
+	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+
+	//Direct Mode--------------------------------------------------------------------------------------------------------------------//
+
 	/*//CUBO
 	glBegin(GL_TRIANGLES);
 	glColor3f(255, 0, 0);

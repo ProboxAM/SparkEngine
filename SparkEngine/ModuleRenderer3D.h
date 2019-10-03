@@ -3,8 +3,9 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-
 #define MAX_LIGHTS 8
+
+struct par_shapes_mesh;
 
 class ModuleRenderer3D : public Module
 {
@@ -30,4 +31,7 @@ public:
 
 private:
 	bool vsync;
+
+	uint my_id = 0;
+	par_shapes_mesh* my_sphere = nullptr;
 };

@@ -31,6 +31,9 @@
     <Filter Include="Sources\MathGeoLib\Algorithm">
       <UniqueIdentifier>{81e8805a-4c74-4414-8f6a-e785603128b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Par">
+      <UniqueIdentifier>{b3f1ba5d-8142-454f-a17a-330e5d5ebbff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="imgui_stdlib.h">
       <Filter>Sources\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Par\par_shapes.h">
+      <Filter>Sources\Par</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
