@@ -32,7 +32,7 @@ public:
 private:
 	bool vsync;
 
-	uint my_id = 0;
+	uint my_vertex = 0;
 	uint my_indices = 0;
 	par_shapes_mesh* my_sphere = nullptr;
 };
