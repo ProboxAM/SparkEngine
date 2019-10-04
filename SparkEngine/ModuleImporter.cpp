@@ -28,7 +28,8 @@ bool ModuleImporter::Init(nlohmann::json::iterator it)
 	callback = LogCallback;
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);	stream.callback = callback;
+	aiAttachLogStream(&stream);
+	stream.callback = callback;
 
 	return true;
 }
