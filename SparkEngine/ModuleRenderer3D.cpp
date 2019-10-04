@@ -3,10 +3,10 @@
 #include "ModuleWindow.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
-#include <random>
 #define PAR_SHAPES_IMPLEMENTATION
 #include "Par/par_shapes.h"
-#include "pcg_random.hpp"
+#include "ModuleImporter.h"
+#include "Mesh.h"
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
@@ -126,6 +126,19 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T)*my_sphere->ntriangles*3, my_sphere->triangles, GL_STATIC_DRAW);
 
+	test_meshes = App->importer->LoadFBXFile("warrior.FBX");
+	for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
+	{
+		glGenBuffers(1, &((*it).id_vertices));
+		glBindBuffer(GL_ARRAY_BUFFER, (*it).id_vertices);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*(*it).total_vertices, (*it).vertices, GL_STATIC_DRAW);
+
+		glGenBuffers(1, &((*it).id_indices));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*it).id_indices);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T)*(*it).total_indices, (*it).indices, GL_STATIC_DRAW);
+	}
+
+
 	return ret;
 }
 // PreUpdate: clear buffer
@@ -156,15 +169,20 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	//Par_shapes--------------------------------------------------------------------------------------------------------------------//
 
-	glEnableClientState(GL_VERTEX_ARRAY);
+	/*glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, my_vertex);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	//// … draw other buffers
 	glDrawElements(GL_TRIANGLES, my_sphere->ntriangles * 3, GL_UNSIGNED_SHORT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);*/
 
+	//Meshes Test--------------------------------------------------------------------------------------------------------------------//
 
+	for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
+	{
+		DrawMesh(*it);
+	}
 
 	//Index Mode--------------------------------------------------------------------------------------------------------------------//
 
@@ -312,4 +330,15 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 		glEnable(flag);
 	else
 		glDisable(flag);
+}
+
+void ModuleRenderer3D::DrawMesh(Mesh m)
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m.id_vertices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m.id_indices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//// … draw other buffers
+	glDrawElements(GL_TRIANGLES, m.total_indices, GL_UNSIGNED_INT, NULL);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }

@@ -6,6 +6,7 @@
 #define MAX_LIGHTS 8
 
 typedef struct par_shapes_mesh_s par_shapes_mesh;
+class Mesh;
 
 class ModuleRenderer3D : public Module
 {
@@ -21,6 +22,7 @@ public:
 	void OnResize(int width, int height);
 	bool Save(nlohmann::json &it);
 	void GLEnable(unsigned int flag, bool active);
+	void DrawMesh(Mesh m);
 
 public:
 
@@ -32,7 +34,10 @@ public:
 private:
 	bool vsync;
 
+
+	//TESTING STUFF
 	uint my_vertex = 0;
 	uint my_indices = 0;
 	par_shapes_mesh* my_sphere = nullptr;
+	std::vector<Mesh> test_meshes;
 };

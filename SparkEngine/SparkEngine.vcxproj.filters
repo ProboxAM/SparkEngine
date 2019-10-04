@@ -300,6 +300,9 @@
     <ClInclude Include="PanelAbout.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">

@@ -63,6 +63,8 @@ void PanelAbout::Draw()
 	if (ImGui::Button("JSON for modern C++")) { App->OpenWebURL("https://github.com/nlohmann/json"); }
 	ImGui::SameLine(); ImGui::TextWrapped("3.7.0");
 
+	if (ImGui::Button("Open-Asset-Importer-Lib")) { App->OpenWebURL("http://www.assimp.org/"); }
+	ImGui::SameLine(); ImGui::TextWrapped("5.0.0");
 
 	ImGui::Spacing();
 	ImGui::Separator();

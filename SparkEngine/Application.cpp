@@ -5,12 +5,12 @@
 
 Application::Application()
 {
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	editor = new ModuleEditor(this);
-
+	window = new ModuleWindow(true);
+	input = new ModuleInput(true);
+	renderer3D = new ModuleRenderer3D(true);
+	camera = new ModuleCamera3D(true);
+	editor = new ModuleEditor(true);
+	importer = new ModuleImporter(true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -21,6 +21,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(editor);
 	AddModule(input);
+	AddModule(importer);
 	// Renderer last!
 	AddModule(renderer3D);
 }
