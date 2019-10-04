@@ -6,6 +6,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -26,3 +27,37 @@ enum update_status
 	UPDATE_STOP,
 	UPDATE_ERROR
 };
+
+// Deletes a buffer
+#define RELEASE( x )\
+    {\
+       if( x != nullptr )\
+       {\
+         delete x;\
+	     x = nullptr;\
+       }\
+    }
+
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }
+
+// Configuration -----------
+#define VERSION "0.4-alpha"
+#define ASSETS_FOLDER "/Assets/"
+#define SETTINGS_FOLDER "/Settings/"
+#define LIBRARY_FOLDER "/Library/"
+#define LIBRARY_AUDIO_FOLDER "/Library/Audio/"
+#define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
+#define LIBRARY_MESH_FOLDER "/Library/Meshes/"
+#define LIBRARY_ANIMATION_FOLDER "/Library/Animations/"
+#define LIBRARY_SCENE_FOLDER "/Library/Scenes/"
+#define LIBRARY_MODEL_FOLDER "/Library/Models/"
+#define LIBRARY_MATERIAL_FOLDER "/Library/Materials/"
+#define LIBRARY_STATE_MACHINE_FOLDER "/Library/StateMachines/"
