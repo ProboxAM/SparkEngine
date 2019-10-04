@@ -54,9 +54,6 @@ bool Application::Init()
 		ret = (*it)->Init(j.find((*it)->name));
 	}
 
-	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
-
 	if (ret)
 	{
 		for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end(); it++)

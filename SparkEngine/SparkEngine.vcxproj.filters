@@ -31,8 +31,11 @@
     <Filter Include="Sources\MathGeoLib\Algorithm">
       <UniqueIdentifier>{81e8805a-4c74-4414-8f6a-e785603128b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Par">
-      <UniqueIdentifier>{b3f1ba5d-8142-454f-a17a-330e5d5ebbff}</UniqueIdentifier>
+    <Filter Include="Sources\Panels">
+      <UniqueIdentifier>{bdaecfda-5873-4039-9c55-a20efa744058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Externals">
+      <UniqueIdentifier>{1e377c1e-d1cd-4747-bad2-4ac5e5787c68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -270,14 +273,32 @@
     <ClInclude Include="MathGeoLib\Algorithm\Random\LCG.h">
       <Filter>Sources\MathGeoLib\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="pcg_random.hpp">
-      <Filter>Sources</Filter>
-    </ClInclude>
     <ClInclude Include="imgui_stdlib.h">
       <Filter>Sources\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleImporter.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
     <ClInclude Include="Par\par_shapes.h">
-      <Filter>Sources\Par</Filter>
+      <Filter>Sources\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="pcg_random.hpp">
+      <Filter>Sources\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelConfiguration.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelDebug.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelAbout.h">
+      <Filter>Sources\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +448,21 @@
     </ClCompile>
     <ClCompile Include="imgui_stdlib.cpp">
       <Filter>Sources\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleImporter.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelConfiguration.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelDebug.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelAbout.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
