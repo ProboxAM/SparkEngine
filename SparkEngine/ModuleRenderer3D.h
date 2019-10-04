@@ -23,6 +23,7 @@ public:
 	bool Save(nlohmann::json &it);
 	void GLEnable(unsigned int flag, bool active);
 	void DrawMesh(Mesh m);
+	void SetWireframeMode(bool on);
 
 public:
 

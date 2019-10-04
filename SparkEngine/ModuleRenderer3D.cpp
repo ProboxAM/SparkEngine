@@ -332,6 +332,7 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 		glDisable(flag);
 }
 
+
 void ModuleRenderer3D::DrawMesh(Mesh m)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -341,4 +342,12 @@ void ModuleRenderer3D::DrawMesh(Mesh m)
 	//// … draw other buffers
 	glDrawElements(GL_TRIANGLES, m.total_indices, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void ModuleRenderer3D::SetWireframeMode(bool on)
+{
+	if(on)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
