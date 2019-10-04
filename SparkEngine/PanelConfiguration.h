@@ -41,6 +41,7 @@ private:
 	bool lighting = false;
 	bool color_material = false;
 	bool texture_2D = false;
+	bool wireframe = false;
 };
 
 #endif // !_PANEL_CONFIG_H_

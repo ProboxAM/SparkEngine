@@ -313,3 +313,9 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 	else
 		glDisable(flag);
 }
+
+void ModuleRenderer3D::SetWireframeMode(bool on)
+{
+	if(on)glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
