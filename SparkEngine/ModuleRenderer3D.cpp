@@ -127,20 +127,6 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T)*my_sphere->ntriangles*3, my_sphere->triangles, GL_STATIC_DRAW);
 
 	test_meshes = App->importer->LoadFBXFile("warrior.FBX");
-	for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
-	{
-		glGenBuffers(1, &((*it).id_vertices));
-		glBindBuffer(GL_ARRAY_BUFFER, (*it).id_vertices);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*(*it).total_vertices, (*it).vertices, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &((*it).id_normals));
-		glBindBuffer(GL_NORMAL_ARRAY, (*it).id_normals);
-		glBufferData(GL_NORMAL_ARRAY, sizeof(float)*(*it).total_normals, (*it).normals, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &((*it).id_indices));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*it).id_indices);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*(*it).total_indices, (*it).indices, GL_STATIC_DRAW);
-	}
 	return ret;
 }
 // PreUpdate: clear buffer
@@ -338,13 +324,9 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 
 void ModuleRenderer3D::DrawMesh(Mesh m)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m.id_vertices);
-	glBindBuffer(GL_NORMAL_ARRAY, m.id_normals);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m.id_indices);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawElements(GL_TRIANGLES, m.total_indices, GL_UNSIGNED_INT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindVertexArray(m.vao);
+	glDrawElements(GL_TRIANGLES, m.indices.size(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
 }
 
 void ModuleRenderer3D::SetWireframeMode(bool on)
@@ -357,12 +339,5 @@ void ModuleRenderer3D::SetWireframeMode(bool on)
 
 void ModuleRenderer3D::DebugNormals(Mesh m)
 {
-	/*vertice-normal-vertice-normal
-	xyz-xyz-xyz-xyz*/
-	float* n = new float[m.total_vertices * 2];
 
-	for (int i = 0; i < m.total_vertices * 2; i + 6)
-	{
-		n[i] = m.vertices[i];
-	}
 }

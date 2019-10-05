@@ -54,34 +54,9 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 	{
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
-			Mesh new_mesh;
-			new_mesh.total_vertices = scene->mMeshes[i]->mNumVertices * 3;
-			new_mesh.vertices = new float[new_mesh.total_vertices];
-			memcpy(new_mesh.vertices, scene->mMeshes[i]->mVertices, sizeof(float) * new_mesh.total_vertices);
-
-			if (scene->mMeshes[i]->HasFaces())
-			{
-				new_mesh.total_indices = scene->mMeshes[i]->mNumFaces * 3;
-				new_mesh.indices = new uint[new_mesh.total_indices]; // assume each face is a triangle
-				for (uint y = 0; y < scene->mMeshes[i]->mNumFaces; ++y)
-				{
-					if (scene->mMeshes[i]->mFaces[y].mNumIndices != 3)
-					{
-						LOG("WARNING, geometry face with != 3 indices!");
-					}			
-					else
-						memcpy(&new_mesh.indices[y * 3], scene->mMeshes[i]->mFaces[y].mIndices, 3 * sizeof(uint));
-				}
-			}
-			if (scene->mMeshes[i]->HasNormals())
-			{
-				new_mesh.total_normals = new_mesh.total_vertices;
-				new_mesh.normals = new float[new_mesh.total_vertices];
-				memcpy(new_mesh.normals, scene->mMeshes[i]->mNormals, sizeof(float) * new_mesh.total_normals);
-			}
-
+			Mesh new_mesh = LoadMesh(scene->mMeshes[i]);
+			new_mesh.PrepareMesh();
 			meshes.push_back(new_mesh);
-			LOG("New mesh with %d vertices", new_mesh.total_vertices);
 		}
 		aiReleaseImport(scene);
 	}
@@ -89,4 +64,32 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 		LOG("Error loading file %s", file);
 
 	return meshes;
+}
+
+
+Mesh ModuleImporter::LoadMesh(aiMesh* mesh)
+{
+	Mesh new_mesh;
+	for (uint i = 0; i < mesh->mNumVertices; i++)
+	{
+		Vertex vertex;
+		vertex.position.x = mesh->mVertices[i].x;
+		vertex.position.y = mesh->mVertices[i].y;
+		vertex.position.z = mesh->mVertices[i].z;
+
+		vertex.normal.x = mesh->mNormals[i].x;
+		vertex.normal.y = mesh->mNormals[i].y;
+		vertex.normal.z = mesh->mNormals[i].z;
+
+		new_mesh.vertices.push_back(vertex);
+	}
+	for (uint i = 0; i < mesh->mNumFaces; i++)
+	{
+		aiFace face = mesh->mFaces[i];
+		for (uint j = 0; j < face.mNumIndices; j++)
+			new_mesh.indices.push_back(face.mIndices[j]);
+	}
+	LOG("New mesh with %d vertices", new_mesh.vertices.size());
+
+	return new_mesh;
 }

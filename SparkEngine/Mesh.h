@@ -1,22 +1,24 @@
 #ifndef _MESH_H_
 #define _MESH_H_
 
+#include "MathGeoLib\Math\float3.h"
+#include <vector>
 #include "Globals.h"
+
+struct Vertex
+{
+	float3 position;
+	float3 normal;
+};
 
 class Mesh
 {
 public:
-	float* vertices;
-	uint* indices;
-	float* normals;
+	std::vector<Vertex> vertices;
+	std::vector<uint> indices;
 
-	uint total_vertices;
-	uint total_indices;
-	uint total_normals;
-
-	uint id_indices;
-	uint id_vertices;
-	uint id_normals;
+	unsigned int vao, vbo, ebo;
+	void PrepareMesh();
 };
 
 #endif // !_MESH_H_

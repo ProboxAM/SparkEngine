@@ -5,6 +5,7 @@
 #include "Module.h"
 
 class Mesh;
+class aiMesh;
 typedef void(*aiLogStreamCallback)(const char*, char*);
 
 class ModuleImporter : public Module
@@ -19,6 +20,7 @@ public:
 	std::vector<Mesh> LoadFBXFile(const char* file);
 
 private:
+	Mesh LoadMesh(aiMesh* mesh);
 	aiLogStreamCallback callback;
 };
 
