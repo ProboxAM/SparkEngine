@@ -49,7 +49,7 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 {
 	std::vector<Mesh> meshes;
 
-	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = aiImportFile(file, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		for (int i = 0; i < scene->mNumMeshes; i++)
@@ -72,8 +72,14 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 					else
 						memcpy(&new_mesh.indices[y * 3], scene->mMeshes[i]->mFaces[y].mIndices, 3 * sizeof(uint));
 				}
-				LOG("New mesh with %d indices", new_mesh.total_indices);
 			}
+			if (scene->mMeshes[i]->HasNormals())
+			{
+				new_mesh.total_normals = new_mesh.total_vertices;
+				new_mesh.normals = new float[new_mesh.total_vertices];
+				memcpy(new_mesh.normals, scene->mMeshes[i]->mNormals, sizeof(float) * new_mesh.total_normals);
+			}
+
 			meshes.push_back(new_mesh);
 			LOG("New mesh with %d vertices", new_mesh.total_vertices);
 		}

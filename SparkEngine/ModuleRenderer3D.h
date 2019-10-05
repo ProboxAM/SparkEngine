@@ -24,6 +24,7 @@ public:
 	void GLEnable(unsigned int flag, bool active);
 	void DrawMesh(Mesh m);
 	void SetWireframeMode(bool on);
+	void DebugNormals(Mesh m);
 
 public:
 
