@@ -81,6 +81,25 @@ Mesh ModuleImporter::LoadMesh(aiMesh* mesh)
 		vertex.normal.y = mesh->mNormals[i].y;
 		vertex.normal.z = mesh->mNormals[i].z;
 
+		if (mesh->mTextureCoords[0]) //Only take in count first texture
+		{
+			vertex.uv.x = mesh->mTextureCoords[0][i].x;
+			vertex.uv.y = mesh->mTextureCoords[0][i].y;
+		}
+		else
+			vertex.uv = float2(0.0f, 0.0f); //Default to 0,0
+
+		if (mesh->mColors[0]) //Only take in count first vertex color
+		{
+			vertex.color.x = mesh->mColors[0][i].r;
+			vertex.color.y = mesh->mColors[0][i].g;
+			vertex.color.z = mesh->mColors[0][i].b;
+			vertex.color.w = mesh->mColors[0][i].a;
+		}
+		else
+			vertex.color = float4(255.0f, 0.0f, 0.0f, 255.0f); //Default color red
+
+
 		new_mesh.vertices.push_back(vertex);
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++)

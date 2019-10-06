@@ -7,6 +7,9 @@
 #include <windows.h>
 #include <stdio.h>
 #include <ctype.h>
+#include "MathGeoLib\Math\float4.h"
+#include "MathGeoLib\Math\float3.h"
+#include "MathGeoLib\Math\float2.h"
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 

@@ -6,6 +6,7 @@
 
 class Mesh;
 class aiMesh;
+
 typedef void(*aiLogStreamCallback)(const char*, char*);
 
 class ModuleImporter : public Module
