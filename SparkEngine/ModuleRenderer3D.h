@@ -24,7 +24,7 @@ public:
 	void GLEnable(unsigned int flag, bool active);
 	void DrawMesh(Mesh m);
 	void SetWireframeMode(bool on);
-	void DebugNormals(Mesh m);
+	void DebugVertexNormals(Mesh m);
 
 public:
 
@@ -35,7 +35,6 @@ public:
 
 private:
 	bool vsync;
-
 
 	//TESTING STUFF
 	uint my_vertex = 0;

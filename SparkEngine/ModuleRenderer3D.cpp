@@ -115,18 +115,18 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	my_sphere = par_shapes_create_subdivided_sphere(5);
+	//my_sphere = par_shapes_create_subdivided_sphere(5);
 
-	my_vertex = 0;
+	/*my_vertex = 0;
 	glGenBuffers(1, &(my_vertex));
 	glBindBuffer(GL_ARRAY_BUFFER, my_vertex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*my_sphere->npoints * 3, my_sphere->points, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &(my_indices));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T)*my_sphere->ntriangles*3, my_sphere->triangles, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T)*my_sphere->ntriangles*3, my_sphere->triangles, GL_STATIC_DRAW);*/
 
-	test_meshes = App->importer->LoadFBXFile("warrior.FBX");
+	test_meshes = App->importer->LoadFBXFile("Chair.fbx");
 	return ret;
 }
 // PreUpdate: clear buffer
@@ -170,7 +170,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
 	{
 		DrawMesh(*it);
-		DebugNormals(*it);
+		DebugVertexNormals(*it);
 	}
 
 	//Index Mode--------------------------------------------------------------------------------------------------------------------//
@@ -337,7 +337,11 @@ void ModuleRenderer3D::SetWireframeMode(bool on)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void ModuleRenderer3D::DebugNormals(Mesh m)
+void ModuleRenderer3D::DebugVertexNormals(Mesh m)
 {
-
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m.dg_nm_vbo); 
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawArrays(GL_LINES, 0, m.debug_normals.size());
+	glDisableClientState(GL_VERTEX_ARRAY);
 }

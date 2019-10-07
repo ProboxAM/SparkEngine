@@ -49,7 +49,7 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 {
 	std::vector<Mesh> meshes;
 
-	const aiScene* scene = aiImportFile(file, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
+	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		for (int i = 0; i < scene->mNumMeshes; i++)
@@ -97,8 +97,11 @@ Mesh ModuleImporter::LoadMesh(aiMesh* mesh)
 			vertex.color.w = mesh->mColors[0][i].a;
 		}
 		else
-			vertex.color = float4(255.0f, 0.0f, 0.0f, 255.0f); //Default color red
+			vertex.color = float4(255.0f, 255.0f, 255.0f, 255.0f); //Default color white
 
+		//DEBUG NORMAL VERTEX
+		new_mesh.debug_normals.push_back(vertex.position);
+		new_mesh.debug_normals.push_back(vertex.position + vertex.normal);
 
 		new_mesh.vertices.push_back(vertex);
 	}

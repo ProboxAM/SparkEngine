@@ -17,8 +17,9 @@ class Mesh
 public:
 	std::vector<Vertex> vertices;
 	std::vector<uint> indices;
+	std::vector<float3> debug_normals;
 
-	unsigned int vao, vbo, ebo;
+	uint vao, vbo, ebo, dg_nm_vbo;
 	void PrepareMesh();
 };
 

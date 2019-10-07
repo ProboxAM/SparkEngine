@@ -29,4 +29,15 @@ void Mesh::PrepareMesh()
 	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 
 	glBindVertexArray(0);
+
+
+	glGenBuffers(1, &dg_nm_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, dg_nm_vbo);
+	glBufferData(GL_ARRAY_BUFFER, debug_normals.size() * sizeof(float3), &debug_normals[0], GL_STATIC_DRAW);
+
+	// debug vertex normals
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+	glBindVertexArray(0);
 }
