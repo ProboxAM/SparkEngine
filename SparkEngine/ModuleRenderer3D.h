@@ -40,5 +40,8 @@ private:
 	uint my_vertex = 0;
 	uint my_indices = 0;
 	par_shapes_mesh* my_sphere = nullptr;
+	
+public:
 	std::vector<Mesh> test_meshes;
+	std::vector<Mesh> test_meshes_dropped;
 };

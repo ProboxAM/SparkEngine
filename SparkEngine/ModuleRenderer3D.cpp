@@ -173,6 +173,12 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		DebugVertexNormals(*it);
 	}
 
+	for (std::vector<Mesh>::iterator it = test_meshes_dropped.begin(); it != test_meshes_dropped.end(); ++it)
+	{
+		DrawMesh(*it);
+		DebugNormals(*it);
+	}
+
 	//Index Mode--------------------------------------------------------------------------------------------------------------------//
 
 	//float vertices[] = {
