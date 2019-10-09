@@ -176,7 +176,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for (std::vector<Mesh>::iterator it = test_meshes_dropped.begin(); it != test_meshes_dropped.end(); ++it)
 	{
 		DrawMesh(*it);
-		DebugNormals(*it);
+		DebugVertexNormals(*it);
 	}
 
 	//Index Mode--------------------------------------------------------------------------------------------------------------------//
