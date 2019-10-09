@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "Texture.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
 
@@ -8,6 +9,7 @@
 #include "Par/par_shapes.h"
 #include "ModuleImporter.h"
 #include "Mesh.h"
+
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
@@ -102,6 +104,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -126,7 +129,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PAR_SHAPES_T)*my_sphere->ntriangles*3, my_sphere->triangles, GL_STATIC_DRAW);*/
 
-	test_meshes = App->importer->LoadFBXFile("Chair.fbx");
+	test_meshes = App->importer->LoadFBXFile("Assets/Warrior.fbx");
 	return ret;
 }
 // PreUpdate: clear buffer
@@ -330,9 +333,14 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 
 void ModuleRenderer3D::DrawMesh(Mesh m)
 {
+	if (m.tex)
+	{
+		glBindTexture(GL_TEXTURE_2D, m.tex->id);
+	}
 	glBindVertexArray(m.vao);
 	glDrawElements(GL_TRIANGLES, m.indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void ModuleRenderer3D::SetWireframeMode(bool on)
@@ -345,9 +353,10 @@ void ModuleRenderer3D::SetWireframeMode(bool on)
 
 void ModuleRenderer3D::DebugVertexNormals(Mesh m)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
+/*	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m.dg_nm_vbo); 
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glDrawArrays(GL_LINES, 0, m.debug_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 }

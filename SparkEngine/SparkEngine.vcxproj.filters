@@ -37,6 +37,9 @@
     <Filter Include="Sources\Externals">
       <UniqueIdentifier>{1e377c1e-d1cd-4747-bad2-4ac5e5787c68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\DevIL">
+      <UniqueIdentifier>{6185854f-4e6c-42d6-9cd9-6e93faa6bfb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -303,6 +306,33 @@
     <ClInclude Include="Mesh.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\devil_cpp_wrapper.hpp">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\devil_internal_exports.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\il.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\il_wrap.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\ilu.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\ilu_region.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\ilut.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviL\include\ilut_config.h">
+      <Filter>Sources\DevIL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -468,6 +498,9 @@
       <Filter>Sources\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>

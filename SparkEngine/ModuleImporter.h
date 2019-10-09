@@ -6,6 +6,7 @@
 
 class Mesh;
 class aiMesh;
+class aiScene;
 
 typedef void(*aiLogStreamCallback)(const char*, char*);
 
@@ -21,7 +22,7 @@ public:
 	std::vector<Mesh> LoadFBXFile(const char* file);
 
 private:
-	Mesh LoadMesh(aiMesh* mesh);
+	Mesh LoadMesh(const aiScene* scene, aiMesh* mesh);
 	aiLogStreamCallback callback;
 };
 

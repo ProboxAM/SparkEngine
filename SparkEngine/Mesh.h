@@ -4,6 +4,8 @@
 #include <vector>
 #include "Globals.h"
 
+class Texture;
+
 struct Vertex
 {
 	float3 position;
@@ -18,6 +20,9 @@ public:
 	std::vector<Vertex> vertices;
 	std::vector<uint> indices;
 	std::vector<float3> debug_normals;
+
+	Texture* tex;
+	uint tex_id;
 
 	uint vao, vbo, ebo, dg_nm_vbo;
 	void PrepareMesh();
