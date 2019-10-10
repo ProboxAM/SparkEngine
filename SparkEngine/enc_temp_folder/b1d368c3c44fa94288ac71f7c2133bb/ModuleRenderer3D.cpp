@@ -339,9 +339,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);  // Top Right Of The Texture and Quad
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);  // Top Left Of The Texture and Quad
 	//glEnd();
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
 
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return UPDATE_CONTINUE;
 }
 

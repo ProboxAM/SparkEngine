@@ -44,4 +44,7 @@ private:
 public:
 	std::vector<Mesh> test_meshes;
 	std::vector<Mesh> test_meshes_dropped;
+
+	uint test_texture_id;
+	uint test_texture_lena_id;
 };
