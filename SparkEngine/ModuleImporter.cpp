@@ -101,8 +101,6 @@ Mesh ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh)
 		//DEBUG NORMAL VERTEX
 		//new_mesh.debug_normals.push_back(vertex.position);
 		//new_mesh.debug_normals.push_back(vertex.position + vertex.normal);
-
-		//new_mesh.vertices.push_back(vertex);
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++)
 	{
@@ -111,11 +109,11 @@ Mesh ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh)
 			new_mesh.indices.push_back(face.mIndices[j]);
 	}
 
-	/*if (mesh->mMaterialIndex >= 0)
+	if (mesh->mMaterialIndex >= 0)
 	{
 		new_mesh.tex = new Texture();
 		new_mesh.tex->LoadTexture(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE);
-	}*/
+	}
 
 
 	LOG("New mesh with %d vertices", new_mesh.vertices.size());

@@ -4,37 +4,22 @@
 
 void Mesh::PrepareMesh()
 {
-	//glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-	glGenBuffers(1, &ebo);
-	glGenBuffers(1, &nbo);
-	glGenBuffers(1, &uvbo);
-
-	//glBindVertexArray(vao);
+	glGenBuffers(4, buffers);
 
 	// vertex positions
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_VERT]);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float3), &vertices[0], GL_STATIC_DRAW);
-	/*glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glEnableVertexAttribArray(0);*/
 
 	// vertex normals
-	glBindBuffer(GL_ARRAY_BUFFER, nbo);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_NORM]);
 	glBufferData(GL_ARRAY_BUFFER, normal.size() * sizeof(float3), &normal[0], GL_STATIC_DRAW);
-	/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glEnableVertexAttribArray(1);*/
 
 	// vertex texture coords
-	glBindBuffer(GL_ARRAY_BUFFER, uvbo);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_UV]);
 	glBufferData(GL_ARRAY_BUFFER, uv.size() * sizeof(float2), &uv[0], GL_STATIC_DRAW);
-/*	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-	glEnableVertexAttribArray(2);*/
 
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[BUFF_IND]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint), &indices[0], GL_STATIC_DRAW);
-
-
 
 	//glBindVertexArray(0);
 

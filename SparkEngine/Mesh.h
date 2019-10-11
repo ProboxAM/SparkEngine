@@ -6,11 +6,13 @@
 
 class Texture;
 
-struct Vertex
+enum BUFFER_TYPE
 {
-	float3 position;
-	float3 normal;
-	float2 uv;
+	BUFF_VERT,
+	BUFF_UV,
+	BUFF_NORM,
+	BUFF_IND,
+	BUFF_TOTAL
 };
 
 class Mesh
@@ -19,14 +21,12 @@ public:
 	std::vector<float3> vertices;
 	std::vector<float2> uv;
 	std::vector<float3> normal;
-
 	std::vector<uint> indices;
-	std::vector<float3> debug_normals;
+	//std::vector<float3> debug_normals;
 
 	Texture* tex;
-	uint tex_id;
 
-	uint vao, vbo, ebo, nbo, uvbo;
+	uint buffers[BUFF_TOTAL];
 	void PrepareMesh();
 };
 
