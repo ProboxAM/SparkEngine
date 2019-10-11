@@ -16,10 +16,11 @@
 #pragma comment (lib,"DeviL/lib/ILUT.lib")
 #pragma comment (lib,"DeviL/lib/ILU.lib")
 
-
-void LogCallback(const char* text, char*)
+void LogCallback(const char* text, char* data)
 {
-	LOG(text);
+	std::string temp_string = text;
+	temp_string.erase(std::remove(temp_string.begin(), temp_string.end(), '%'), temp_string.end());
+	LOG(temp_string.c_str());
 }
 
 
@@ -33,18 +34,17 @@ ModuleImporter::~ModuleImporter()
 
 bool ModuleImporter::Init(nlohmann::json::iterator it)
 {
-	callback = LogCallback;
-	struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
-	stream.callback = callback;
-
 	ilInit();
 	iluInit();
 	ilutInit();
 	ilEnable(IL_CONV_PAL);
 	ilutEnable(ILUT_OPENGL_CONV);
 	ilutRenderer(ILUT_OPENGL);
+
+	aiLogStream stream;
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	stream.callback = LogCallback;
+	aiAttachLogStream(&stream);
 
 	return true;
 }
