@@ -12,6 +12,7 @@ Application::Application()
 	editor = new ModuleEditor(true);
 	importer = new ModuleImporter(true);
 	fsystem = new ModuleFileSystem(ASSETS_FOLDER);
+	scene = new ModuleScene(true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -24,6 +25,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(fsystem);
 	AddModule(importer);
+	AddModule(scene);
 	// Renderer last!
 	AddModule(renderer3D);
 }

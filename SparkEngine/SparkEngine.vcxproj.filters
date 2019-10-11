@@ -40,6 +40,9 @@
     <Filter Include="Sources\DevIL">
       <UniqueIdentifier>{6185854f-4e6c-42d6-9cd9-6e93faa6bfb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Components">
+      <UniqueIdentifier>{0bb646af-a4e1-43f1-a88f-6d62d5266d1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -333,6 +336,18 @@
     <ClInclude Include="DeviL\include\ilut_config.h">
       <Filter>Sources\DevIL</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -502,6 +517,18 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

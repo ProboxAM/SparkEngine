@@ -11,6 +11,7 @@
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
 #include "ModuleFileSystem.h"
+#include "ModuleScene.h"
 
 
 class Application
@@ -23,6 +24,7 @@ public:
 	ModuleEditor* editor;
 	ModuleImporter* importer;
 	ModuleFileSystem* fsystem;
+	ModuleScene* scene;
 
 private:
 	std::string		app_name;
