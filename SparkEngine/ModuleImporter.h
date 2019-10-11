@@ -8,8 +8,6 @@ class Mesh;
 class aiMesh;
 class aiScene;
 
-typedef void(*aiLogStreamCallback)(const char*, char*);
-
 class ModuleImporter : public Module
 {
 public:
@@ -23,7 +21,6 @@ public:
 
 private:
 	Mesh LoadMesh(const aiScene* scene, aiMesh* mesh);
-	aiLogStreamCallback callback;
 };
 
 #endif
