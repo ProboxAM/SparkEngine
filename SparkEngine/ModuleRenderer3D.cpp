@@ -397,14 +397,32 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 
 void ModuleRenderer3D::DrawMesh(Mesh m)
 {
-	if (m.tex)
-	{
-		glBindTexture(GL_TEXTURE_2D, m.tex->id);
-	}
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m.vbo);
+	glVertexPointer(3, GL_FLOAT, 0, nullptr);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m.ebo);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m.nbo);
+	glNormalPointer(GL_FLOAT, 0, nullptr);
+
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m.uvbo);
+	glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+
+	glBindTexture(GL_TEXTURE_2D, test_texture_lena_id);
+
+	glDrawElements(GL_TRIANGLES, m.indices.size(), GL_UNSIGNED_INT, nullptr);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	/*glBindTexture(GL_TEXTURE_2D, test_texture_lena_id);
 	glBindVertexArray(m.vao);
 	glDrawElements(GL_TRIANGLES, m.indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 }
 
 void ModuleRenderer3D::SetWireframeMode(bool on)
