@@ -1,9 +1,10 @@
-#include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "Texture.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
+#include "ModuleCamera3D.h"
+#include "ModuleEditor.h"
 
 #define PAR_SHAPES_IMPLEMENTATION
 #include "Par/par_shapes.h"

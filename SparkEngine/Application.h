@@ -1,18 +1,19 @@
-#pragma once
+#ifndef _APPLICATION_H_
+#define _APPLICATION_H_
 
 #include <list>
 #include "Globals.h"
 #include "Timer.h"
-#include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModuleEditor.h"
-#include "ModuleImporter.h"
-#include "ModuleFileSystem.h"
-#include "ModuleScene.h"
 
+class Module;
+class ModuleWindow;
+class ModuleInput;
+class ModuleRenderer3D;
+class ModuleCamera3D;
+class ModuleEditor;
+class ModuleImporter;
+class ModuleFileSystem;
+class ModuleScene;
 
 class Application
 {
@@ -69,3 +70,5 @@ private:
 };
 
 extern Application* App;
+
+#endif

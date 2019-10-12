@@ -4,7 +4,6 @@
 #include "Module.h"
 #include "SDL/include/SDL.h"
 
-class Application;
 enum WINDOWSETTINGS { FULLSCREEN, FSDESKTOP, RESIZABLE, BORDERLESS};
 
 class ModuleWindow : public Module

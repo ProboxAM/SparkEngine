@@ -1,11 +1,11 @@
-#pragma once
+#ifndef _MODULE_H_
+#define _MODULE_H_
+
+#include "Globals.h"
 #include "nlohmann\json.hpp"
 
 class Module
 {
-private :
-	bool enabled;
-
 public:
 	Module(bool start_enabled = true)
 	{}
@@ -13,9 +13,9 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init(nlohmann::json::iterator it) 
+	virtual bool Init(nlohmann::json::iterator it)
 	{
-		return true; 
+		return true;
 	}
 
 	virtual bool Start()
@@ -38,9 +38,9 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual bool CleanUp() 
-	{ 
-		return true; 
+	virtual bool CleanUp()
+	{
+		return true;
 	}
 
 	virtual bool Load(nlohmann::json::iterator it)
@@ -56,4 +56,13 @@ public:
 public:
 
 	std::string name;
+
+private:
+	bool enabled;
+
 };
+
+
+#endif // !_MODULE_H_
+
+

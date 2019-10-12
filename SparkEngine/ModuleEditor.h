@@ -4,6 +4,7 @@
 #include <vector>
 
 class Panel;
+enum KEY_STATE;
 
 enum Panel_Type {
 	CONFIG,

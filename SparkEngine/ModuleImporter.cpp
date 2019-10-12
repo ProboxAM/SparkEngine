@@ -1,4 +1,3 @@
-#include "Globals.h"
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
@@ -44,7 +43,8 @@ bool ModuleImporter::Init(nlohmann::json::iterator it)
 	aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	stream.callback = LogCallback;
-	aiAttachLogStream(&stream);
+	aiAttachLogStream(&stream);
+
 
 	return true;
 }

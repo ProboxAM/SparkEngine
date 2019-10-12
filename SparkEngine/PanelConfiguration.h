@@ -2,6 +2,8 @@
 #define _PANEL_CONFIG_H_
 
 #include "Panel.h"
+enum KEY_STATE;
+
 class PanelConfiguration : public Panel
 {
 public:

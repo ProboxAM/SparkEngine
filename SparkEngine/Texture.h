@@ -5,15 +5,14 @@
 class aiMaterial;
 enum aiTextureType;
 
-class Texture
+struct Texture
 {
 public:
-	Texture();
-	~Texture();
-
 	void LoadTexture(aiMaterial* mat, aiTextureType type);
 
 public:
 	uint id;
+	uint width, height;
+	std::string path;
 };
 

@@ -1,3 +1,13 @@
+#include "Timer.h"
+#include "Module.h"
+#include "ModuleWindow.h"
+#include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
+#include "ModuleEditor.h"
+#include "ModuleImporter.h"
+#include "ModuleFileSystem.h"
+#include "ModuleScene.h"
 #include "Application.h"
 #include "nlohmann\json.hpp"
 #include <fstream>

@@ -16,10 +16,10 @@ public:
 	~ModuleFileSystem();
 
 	// Called before render is available
-	bool Init(nlohmann::json::iterator it) override;
+	bool Init(nlohmann::json::iterator it);
 
 	// Called before quitting
-	bool CleanUp() override;
+	bool CleanUp();
 
 	// Utility functions
 	bool AddPath(const char* path_or_zip);

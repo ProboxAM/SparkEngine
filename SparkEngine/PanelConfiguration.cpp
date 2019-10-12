@@ -1,4 +1,7 @@
 #include "Application.h"
+#include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleInput.h"
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
 #include "imgui_stdlib.h"

@@ -1,10 +1,12 @@
-#include "Globals.h"
 #include "Application.h"
-#include "ModuleInput.h"
+#include "ModuleWindow.h"
 #include "imgui.h"
-#include "Mesh.h"
 #include "imgui_impl_sdl.h"
-
+#include "ModuleEditor.h"
+#include "ModuleImporter.h"
+#include "ModuleRenderer3D.h"
+#include "Mesh.h"
+#include "ModuleInput.h"
 #define MAX_KEYS 300
 
 ModuleInput::ModuleInput(bool start_enabled) : Module(start_enabled)
