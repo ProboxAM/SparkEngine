@@ -11,15 +11,15 @@ void ComponentTransform::SetParent(ComponentTransform* parent)
 	if (parent != nullptr)
 	{
 		this->parent = parent;
-		//transform_matrix = parent->transform_matrix * local_transform_matrix;
+		transform_matrix = parent->transform_matrix * local_transform_matrix;
 	}
 	else {
-		//transform_matrix = {
-		//{ 1.0f, 0.0f, 0.0f, 0.0f },
-		//{ 0.0f, 1.0f, 0.0f, 0.0f },
-		//{ 0.0f, 0.0f, 1.0f, 0.0f },
-		//{ 0.0f, 0.0f, 0.0f, 0.0f }
-		//};
+		transform_matrix = {
+		{ 1.0f, 0.0f, 0.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f, 0.0f },
+		{ 0.0f, 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f }
+		};
 	}
 }
 
@@ -35,12 +35,12 @@ float3 ComponentTransform::EulerAngles()
 
 ComponentTransform::ComponentTransform():Component(gameobject)
 {
-	//local_transform_matrix = {
-	//	{ 1.0f, 0.0f, 0.0f, 0.0f },
-	//	{ 0.0f, 1.0f, 0.0f, 0.0f },
-	//	{ 0.0f, 0.0f, 1.0f, 0.0f },
-	//	{ 0.0f, 0.0f, 0.0f, 0.0f }
-	//};
+	local_transform_matrix = {
+		{ 1.0f, 0.0f, 0.0f, 0.0f },
+		{ 0.0f, 1.0f, 0.0f, 0.0f },
+		{ 0.0f, 0.0f, 1.0f, 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f }
+	};
 
 	position = { 0.0f, 0.0f, 0.0f };
 	rotation = { 0.0f, 0.0f, 0.0f, 0.0f };
