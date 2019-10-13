@@ -4,14 +4,14 @@
 #include <vector>
 #include "Globals.h"
 
-class Texture;
-
 enum BUFFER_TYPE
 {
 	BUFF_VERT,
 	BUFF_UV,
 	BUFF_NORM,
 	BUFF_IND,
+	BUFF_DEBUG_VERT_NORM,
+	BUFF_DEBUG_FACE_NORM,
 	BUFF_TOTAL
 };
 
@@ -22,12 +22,11 @@ public:
 	std::vector<float2> uv;
 	std::vector<float3> normal;
 	std::vector<uint> indices;
-	//std::vector<float3> debug_normals;
 
-	Texture* tex;
+	std::vector<float3> debug_vertex_normals;
 
 	uint buffers[BUFF_TOTAL];
-	void PrepareMesh();
+	void PrepareBuffers();
 };
 
 #endif // !_MESH_H_

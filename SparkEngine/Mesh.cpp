@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "Mesh.h"
 
-void Mesh::PrepareMesh()
+void Mesh::PrepareBuffers()
 {
 	glGenBuffers(4, buffers);
 
@@ -18,18 +18,13 @@ void Mesh::PrepareMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_UV]);
 	glBufferData(GL_ARRAY_BUFFER, uv.size() * sizeof(float2), &uv[0], GL_STATIC_DRAW);
 
+	//faces
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[BUFF_IND]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint), &indices[0], GL_STATIC_DRAW);
 
-	//glBindVertexArray(0);
-
-	/*glGenBuffers(1, &dg_nm_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, dg_nm_vbo);
-	glBufferData(GL_ARRAY_BUFFER, debug_normals.size() * sizeof(float3), &debug_normals[0], GL_STATIC_DRAW);
-
 	// debug vertex normals
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_DEBUG_VERT_NORM]);
+	glBufferData(GL_ARRAY_BUFFER, debug_vertex_normals.size() * sizeof(float3), &debug_vertex_normals[0], GL_STATIC_DRAW);
 
-	glBindVertexArray(0);*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
