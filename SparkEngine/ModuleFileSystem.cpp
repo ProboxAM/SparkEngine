@@ -123,7 +123,7 @@ void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::str
 	PHYSFS_freeList(rc);
 }
 
-bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * destination)
+bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * destination, std::string& final_path)
 {
 	// Only place we acces non virtual filesystem
 	bool ret = false;
@@ -133,7 +133,12 @@ bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * de
 
 	FILE* source = nullptr;
 	fopen_s(&source, full_path, "rb");
-	PHYSFS_file* dest = PHYSFS_openWrite(destination);
+
+	std::string file;
+	SplitFilePath(full_path, nullptr, &file, nullptr);
+	final_path = destination + file;
+
+	PHYSFS_file* dest = PHYSFS_openWrite(final_path.c_str());
 
 	if (source && dest)
 	{
@@ -144,10 +149,12 @@ bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * de
 		PHYSFS_close(dest);
 		ret = true;
 
-		LOG("File System copied file [%s] to [%s]", full_path, destination);
+		LOG("File System copied file [%s] to [%s]", full_path, final_path.c_str());
 	}
 	else
-		LOG("File System error while copy from [%s] to [%s]", full_path, destination);
+		LOG("File System error while copy from [%s] to [%s]", full_path, final_path.c_str());
+
+	final_path.erase(final_path.begin());
 
 	return ret;
 }

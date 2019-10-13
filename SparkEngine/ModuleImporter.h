@@ -18,6 +18,7 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 	std::vector<Mesh> LoadFBXFile(const char* file);
+	void ImportFile(const char* path);
 
 private:
 	Mesh LoadMesh(const aiScene* scene, aiMesh* mesh);

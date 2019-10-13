@@ -1,9 +1,13 @@
+#include "Application.h"
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "ModuleFileSystem.h"
+
+#include "ModuleRenderer3D.h"
 
 #define ILUT_USE_OPENGL
 #include "DeviL/include/ilut.h"
@@ -79,6 +83,29 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 		LOG("Error loading file %s", file);
 
 	return meshes;
+}
+
+void ModuleImporter::ImportFile(const char * path)
+{
+	//App->renderer3D->test_meshes_dropped = LoadFBXFile(path);
+	std::string normalized_path = path;
+	App->fsystem->NormalizePath(normalized_path);
+	std::string final_path;
+
+	if (App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), LIBRARY_MESH_FOLDER, final_path))
+	{
+		std::string extension;
+		App->fsystem->SplitFilePath(final_path.c_str(), nullptr, nullptr, &extension);
+
+		if (extension == "fbx")
+		{
+			App->renderer3D->test_meshes_dropped = LoadFBXFile(final_path.c_str());
+		}
+		else if (extension == "png" || extension == "dds")
+		{
+			//TODO: IMPORT TEXTURE AND APPLY TO SELECTED GAMEOBJECT
+		}
+	}
 }
 
 
