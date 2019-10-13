@@ -74,7 +74,7 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			Mesh new_mesh = LoadMesh(scene, scene->mMeshes[i]);
-			new_mesh.PrepareMesh();
+			new_mesh.PrepareBuffers();
 			meshes.push_back(new_mesh);
 		}
 		aiReleaseImport(scene);
@@ -87,27 +87,49 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 
 void ModuleImporter::ImportFile(const char * path)
 {
-	//App->renderer3D->test_meshes_dropped = LoadFBXFile(path);
 	std::string normalized_path = path;
 	App->fsystem->NormalizePath(normalized_path);
-	std::string final_path;
 
-	if (App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), LIBRARY_MESH_FOLDER, final_path))
+	std::string extension, final_path, file;
+	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
+
+	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str())) //if file doesnt exist we copy it
+		App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER, final_path);
+	else
+		final_path = ASSETS_FOLDER + file;
+
+	if (extension == "fbx")
 	{
-		std::string extension;
-		App->fsystem->SplitFilePath(final_path.c_str(), nullptr, nullptr, &extension);
-
-		if (extension == "fbx")
-		{
-			App->renderer3D->test_meshes_dropped = LoadFBXFile(final_path.c_str());
-		}
-		else if (extension == "png" || extension == "dds")
-		{
-			//TODO: IMPORT TEXTURE AND APPLY TO SELECTED GAMEOBJECT
-		}
+		App->renderer3D->test_meshes_dropped = LoadFBXFile(final_path.c_str());
 	}
+	else if (extension == "png" || extension == "dds")
+	{
+		//TODO: IMPORT TEXTURE AND APPLY TO SELECTED GAMEOBJECT
+		App->renderer3D->test_texture = LoadTexture(final_path.c_str());
+	}	
 }
 
+Texture ModuleImporter::LoadTexture(const char* path)
+{
+	Texture tex;
+	uint image_id;
+
+	std::string final_path = ASSETS_FOLDER + std::string(path);
+
+	ilGenImages(1, &image_id); // Grab a new image name.
+	ilBindImage(image_id);
+	ilLoadImage(path);
+	tex.id = ilutGLBindTexImage();
+	tex.width = ilGetInteger(IL_IMAGE_WIDTH);
+	tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
+	tex.path = path;
+	glBindTexture(GL_TEXTURE_2D, 0);
+	ilDeleteImages(1, &image_id);
+
+	LOG("Loaded Texture %s", path);
+
+	return tex;
+}
 
 Mesh ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh)
 {
@@ -126,8 +148,8 @@ Mesh ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh)
 			new_mesh.uv.push_back(float2(0.0f, 0.0f)); //Default to 0,0
 
 		//DEBUG NORMAL VERTEX
-		//new_mesh.debug_normals.push_back(vertex.position);
-		//new_mesh.debug_normals.push_back(vertex.position + vertex.normal);
+		new_mesh.debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+		new_mesh.debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z) + float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++)
 	{
@@ -138,10 +160,11 @@ Mesh ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh)
 
 	if (mesh->mMaterialIndex >= 0)
 	{
-		new_mesh.tex = new Texture();
-		new_mesh.tex->LoadTexture(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE);
+		aiString texture_path;
+		scene->mMaterials[mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+		if (texture_path.length > 0)
+			App->renderer3D->test_texture = LoadTexture(texture_path.C_Str());
 	}
-
 
 	LOG("New mesh with %d vertices", new_mesh.vertices.size());
 

@@ -52,7 +52,7 @@ enum update_status
 
 // Configuration -----------
 #define VERSION "0.4-alpha"
-#define ASSETS_FOLDER "/Assets/"
+#define ASSETS_FOLDER "Assets/"
 #define SETTINGS_FOLDER "/Settings/"
 #define LIBRARY_FOLDER "/Library/"
 #define LIBRARY_AUDIO_FOLDER "/Library/Audio/"

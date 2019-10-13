@@ -5,6 +5,7 @@
 #include "Module.h"
 
 class Mesh;
+struct Texture;
 class aiMesh;
 class aiScene;
 
@@ -19,6 +20,7 @@ public:
 	bool CleanUp();
 	std::vector<Mesh> LoadFBXFile(const char* file);
 	void ImportFile(const char* path);
+	Texture LoadTexture(const char* path);
 
 private:
 	Mesh LoadMesh(const aiScene* scene, aiMesh* mesh);

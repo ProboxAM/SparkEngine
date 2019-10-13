@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "glmath.h"
 #include "Light.h"
+#include "Texture.h"
 #define MAX_LIGHTS 8
 
 typedef struct par_shapes_mesh_s par_shapes_mesh;
@@ -44,6 +45,6 @@ public:
 	std::vector<Mesh> test_meshes;
 	std::vector<Mesh> test_meshes_dropped;
 
-	uint test_texture_id;
-	uint test_texture_lena_id;
+	Texture test_texture;
+	Texture test_texture_lena;
 };

@@ -154,8 +154,6 @@ bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * de
 	else
 		LOG("File System error while copy from [%s] to [%s]", full_path, final_path.c_str());
 
-	final_path.erase(final_path.begin());
-
 	return ret;
 }
 
