@@ -134,7 +134,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE: 
 			{			
 				drop_filepath = e.drop.file;
-				App->renderer3D->test_meshes_dropped = App->importer->LoadFBXFile(drop_filepath.c_str());
+				App->importer->ImportFile(drop_filepath.c_str());
 				SDL_free(e.drop.file);
 			}break;
 		}
