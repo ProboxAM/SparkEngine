@@ -22,6 +22,13 @@ public:
 	Component* AddComponent(COMPONENT_TYPE type);
 	Component* GetComponent(COMPONENT_TYPE type);
 	std::vector<Component*> GetComponents(COMPONENT_TYPE type);
+
+	void SetName(std::string name);
+	std::string GetName();
+
+	void SetTag(std::string tag);
+	std::string GetTag();
+
 	bool isActive();
 	bool isStatic();
 	void SetActive(bool active);

@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include <vector>
 
 class GameObject;
 
@@ -8,6 +9,7 @@ class ModuleScene :
 {
 private:
 	GameObject* root = nullptr;
+	std::vector<GameObject*> gameobjects;
 public:
 	ModuleScene(bool start_enabled = true);
 	~ModuleScene();
@@ -17,6 +19,6 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	GameObject* CreateGameObject();
+	GameObject* CreateGameObject(GameObject* parent);
 };
 

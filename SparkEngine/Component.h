@@ -2,7 +2,7 @@
 
 class GameObject;
 
-enum COMPONENT_TYPE { TRANSFORM, MESH, MATERIAL, LIGHT };
+enum COMPONENT_TYPE { TRANSFORM, MESH, TEXTURE, LIGHT };
 
 class Component
 {
@@ -15,7 +15,7 @@ public:
 	~Component();
 
 	virtual void Enable() { active = true; }
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual void Disable() { active = false; }
 };
 

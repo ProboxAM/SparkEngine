@@ -24,11 +24,16 @@ public:
 	float3 local_scale;
 
 	int GetChildCount();
+	void SetParent(ComponentTransform* parent);
 	ComponentTransform* GetParent();
 	
 	float3 EulerAngles();
+
+
 public:
 	ComponentTransform();
 	~ComponentTransform();
+
+	void Update(float dt);
 };
 
