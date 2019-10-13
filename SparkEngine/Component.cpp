@@ -1,9 +1,9 @@
 #include "Component.h"
 #include "GameObject.h"
 
-Component::Component(GameObject* my_go)
+Component::Component(GameObject* gameobject)
 {
-	this->my_go = my_go;
+	this->gameobject = gameobject;
 }
 
 Component::~Component()

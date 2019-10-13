@@ -6,12 +6,12 @@ enum COMPONENT_TYPE { TRANSFORM, MESH, MATERIAL, LIGHT };
 
 class Component
 {
-protected:
+public:
 	COMPONENT_TYPE type;
 	bool active;
-	GameObject* my_go;
+	GameObject* gameobject;
 public:
-	Component(GameObject* my_go);
+	Component(GameObject* gameobject);
 	~Component();
 
 	virtual void Enable() { active = true; }

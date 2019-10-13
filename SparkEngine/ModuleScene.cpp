@@ -14,6 +14,12 @@ ModuleScene::~ModuleScene()
 {
 }
 
+bool ModuleScene::Init(nlohmann::json::iterator it)
+{
+	root = new GameObject();
+	return true;
+}
+
 bool ModuleScene::Start()
 {
 	return false;
@@ -21,6 +27,8 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update(float dt)
 {
+	root->Update(dt);
+
 	return UPDATE_CONTINUE;
 }
 
