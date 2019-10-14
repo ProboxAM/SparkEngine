@@ -59,10 +59,13 @@ std::vector<Component*> GameObject::GetComponents(COMPONENT_TYPE type)
 
 	for (int i = 0; i < components.size(); i++)
 	{
-		if (components[i]->type == type)
+		if (type != NONE)
 		{
-			aux.push_back(components[i]);
-		}
+			if (components[i]->type == type)
+			{
+				aux.push_back(components[i]);
+			}
+		}else aux.push_back(components[i]);
 	}
 
 	return aux;
