@@ -95,7 +95,9 @@ void ModuleImporter::ImportFile(const char * path)
 	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
 
 	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str())) //if file doesnt exist we copy it
+	{
 		App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER);
+	}
 
 	if (extension == "fbx")
 	{
@@ -107,6 +109,7 @@ void ModuleImporter::ImportFile(const char * path)
 		{
 			ComponentTexture* c_tex = (ComponentTexture*)App->scene->selected_gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 			c_tex->AddTexture(App->textures->LoadTexture(file.c_str()));
+			LOG("Applied texture: %s to GameObject: %s", file.c_str(), App->scene->selected_gameobject->GetName().c_str());
 		}	
 	}	
 }
@@ -146,11 +149,16 @@ Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* o
 		ComponentTexture* c_text = (ComponentTexture*)object->AddComponent(COMPONENT_TYPE::TEXTURE);
 
 		if (texture_path.length > 0)
+		{
 			c_text->AddTexture(App->textures->LoadTexture(texture_path.C_Str()));
+		}
 		else
+		{
 			c_text->AddTexture(App->textures->GetDefaultTexture());
+			LOG("Default texture applied to %s", object->GetName().c_str());
+		}
+			
 	}
-
 	LOG("New mesh with %d vertices", new_mesh->vertices.size());
 	new_mesh->PrepareBuffers();
 

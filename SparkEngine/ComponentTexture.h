@@ -11,7 +11,10 @@ public:
 
 	Texture* GetTexture();
 	void AddTexture(Texture* tex);
+	void SetDebugMode();
+
 private:
-	Texture* tex;
+	bool debug_texture = false;
+	Texture* tex = nullptr;
 };
 
