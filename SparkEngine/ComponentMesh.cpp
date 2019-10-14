@@ -2,6 +2,7 @@
 #include "ModuleRenderer3D.h"
 #include "ComponentTexture.h"
 #include "GameObject.h"
+#include "Mesh.h"
 #include "Texture.h"
 #include "ComponentMesh.h"
 
@@ -41,4 +42,24 @@ void ComponentMesh::SetDebugVertexNormal()
 void ComponentMesh::SetDebugFaceNormal()
 {
 	debug_face_normal = !debug_face_normal;
+}
+
+int ComponentMesh::GetVerticesAmount()
+{
+	return mesh->vertices.size();
+}
+
+int ComponentMesh::GetNormalsAmount()
+{
+	return mesh->normal.size();
+}
+
+int ComponentMesh::GetUVAmount()
+{
+	return mesh->uv.size();
+}
+
+int ComponentMesh::GetIndicesAmount()
+{
+	return mesh->indices.size();
 }

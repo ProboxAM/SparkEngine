@@ -15,6 +15,11 @@ public:
 	void SetDebugVertexNormal();
 	void SetDebugFaceNormal();
 
+	int GetVerticesAmount();
+	int GetNormalsAmount();
+	int GetUVAmount();
+	int GetIndicesAmount();
+
 private:
 	Mesh* mesh;
 	bool debug_vertex_normal = false, debug_face_normal = false;
