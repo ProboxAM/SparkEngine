@@ -42,6 +42,8 @@ Texture* ModuleTextures::CreateDefaultTexture()
 	Texture* tex = new Texture();
 
 	tex->path = "CheckersTexture";
+	tex->width = 128;
+	tex->height = 128;
 	GLubyte checkImage[128][128][4];
 	for (int i = 0; i < 128; i++)
 	{

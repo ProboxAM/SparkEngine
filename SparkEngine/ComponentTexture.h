@@ -13,6 +13,10 @@ public:
 	void AddTexture(Texture* tex);
 	void SetDebugMode();
 
+	std::string GetTexturePath();
+	uint GetTextureWidth();
+	uint GetTextureHeight();
+
 private:
 	bool debug_texture = false;
 	Texture* tex = nullptr;

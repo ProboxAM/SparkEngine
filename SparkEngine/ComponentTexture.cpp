@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleTextures.h"
+#include "Texture.h"
 #include "ComponentTexture.h"
 
 
@@ -31,4 +32,17 @@ void ComponentTexture::AddTexture(Texture * tex)
 void ComponentTexture::SetDebugMode()
 {
 	debug_texture = !debug_texture;
+}
+
+std::string ComponentTexture::GetTexturePath()
+{
+	return tex->path;
+}
+uint ComponentTexture::GetTextureWidth()
+{
+	return tex->width;
+}
+uint ComponentTexture::GetTextureHeight()
+{
+	return tex->height;
 }

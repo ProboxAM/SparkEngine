@@ -135,12 +135,25 @@ Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* o
 		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i] + new_mesh->normal[i]);
 
 		//DEBUG NORMAL FACE
+		//sacar centro triangulo 
+
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		for (uint j = 0; j < face.mNumIndices; j++)
+		{
 			new_mesh->indices.push_back(face.mIndices[j]);
+		}
+		float3 U = (new_mesh->vertices[face.mIndices[1]] - new_mesh->vertices[face.mIndices[0]]);
+		float3 V = (new_mesh->vertices[face.mIndices[2]] - new_mesh->vertices[face.mIndices[0]]);
+
+		float3 normal;
+		normal.x = (U.y * V.z) - (U.z * V.y);
+		normal.y = (U.z * V.x) - (U.x * V.z);
+		normal.z = (U.x * V.y) - (U.y * V.x);
+
+		new_mesh->debug_face_normals.push_back(normal);
 	}
 
 	if (mesh->mMaterialIndex >= 0)
