@@ -8,6 +8,7 @@ class Mesh;
 struct Texture;
 class aiMesh;
 class aiScene;
+class GameObject;
 
 class ModuleImporter : public Module
 {
@@ -18,12 +19,13 @@ public:
 	bool Init(nlohmann::json::iterator it);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
-	std::vector<Mesh> LoadFBXFile(const char* file);
+	void LoadFBXFile(const char* file);
 	void ImportFile(const char* path);
-	Texture LoadTexture(const char* path);
+
 
 private:
-	Mesh LoadMesh(const aiScene* scene, aiMesh* mesh);
+	Mesh* LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* object);
+	Texture* LoadTexture(const char* path);
 };
 
 #endif

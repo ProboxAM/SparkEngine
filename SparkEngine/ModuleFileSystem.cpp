@@ -123,7 +123,7 @@ void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::str
 	PHYSFS_freeList(rc);
 }
 
-bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * destination, std::string& final_path)
+bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * destination)
 {
 	// Only place we acces non virtual filesystem
 	bool ret = false;
@@ -136,7 +136,7 @@ bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * de
 
 	std::string file;
 	SplitFilePath(full_path, nullptr, &file, nullptr);
-	final_path = destination + file;
+	std::string final_path = destination + file;
 
 	PHYSFS_file* dest = PHYSFS_openWrite(final_path.c_str());
 

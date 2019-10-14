@@ -126,7 +126,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	//my_sphere = par_shapes_create_subdivided_sphere(5);
 
 
-	test_meshes = App->importer->LoadFBXFile("Assets/BakerHouse.fbx");
+	//test_meshes = App->importer->LoadFBXFile("BakerHouse.fbx");
 
 	/*GLubyte checkImage[48][48][4];
 	for (int i = 0; i < 48; i++)
@@ -149,7 +149,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 48, 48, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);*/
 
-	test_texture_lena = App->importer->LoadTexture("Assets/Lenna_test_image.png");
+	//test_texture_lena = App->importer->LoadTexture("Lenna_test_image.png");
 
 	return ret;
 }
@@ -191,7 +191,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	//Meshes Test--------------------------------------------------------------------------------------------------------------------//
 
-	for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
+	/*for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
 	{
 		DrawMesh(*it);
 		DebugVertexNormals(*it);
@@ -201,7 +201,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	{
 		DrawMesh(*it);
 		DebugVertexNormals(*it);
-	}
+	}*/
 
 	return UPDATE_CONTINUE;
 }
@@ -256,23 +256,23 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 }
 
 
-void ModuleRenderer3D::DrawMesh(Mesh m)
+void ModuleRenderer3D::DrawMesh(Mesh* m, Texture* tex)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m.buffers[BUFF_VERT]);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
 	glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m.buffers[BUFF_IND]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m.buffers[BUFF_NORM]);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
 	glNormalPointer(GL_FLOAT, 0, nullptr);
 
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m.buffers[BUFF_UV]);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
 	glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
-	glBindTexture(GL_TEXTURE_2D, test_texture.id);
+	glBindTexture(GL_TEXTURE_2D, tex->id);
 
-	glDrawElements(GL_TRIANGLES, m.indices.size(), GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, m->indices.size(), GL_UNSIGNED_INT, nullptr);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -287,10 +287,20 @@ void ModuleRenderer3D::SetWireframeMode(bool on)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void ModuleRenderer3D::DebugVertexNormals(Mesh m)
+void ModuleRenderer3D::DebugVertexNormals(Mesh* m)
 {
 /*	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m.dg_nm_vbo); 
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawArrays(GL_LINES, 0, m.debug_normals.size());
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
+}
+
+void ModuleRenderer3D::DebugFaceNormals(Mesh* m)
+{
+	/*	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m.dg_nm_vbo);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glDrawArrays(GL_LINES, 0, m.debug_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);

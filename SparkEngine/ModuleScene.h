@@ -20,6 +20,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	GameObject* CreateGameObject(GameObject* parent, std::string name);
+	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");
+	GameObject* CreateRootGameObject();
 };
 
