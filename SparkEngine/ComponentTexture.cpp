@@ -2,8 +2,10 @@
 
 
 
-ComponentTexture::ComponentTexture()
+
+ComponentTexture::ComponentTexture():Component(gameobject)
 {
+
 }
 
 

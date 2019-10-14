@@ -6,7 +6,7 @@
 
 
 
-ComponentMesh::ComponentMesh()
+ComponentMesh::ComponentMesh() : Component(gameobject)
 {
 }
 

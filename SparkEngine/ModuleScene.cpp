@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "GameObject.h"
 #include "ModuleScene.h"
+#include "Component.h"
+#include "ComponentTransform.h"
 
 
 
@@ -14,22 +16,36 @@ ModuleScene::~ModuleScene()
 {
 }
 
+bool ModuleScene::Init(nlohmann::json::iterator it)
+{
+	root = CreateGameObject(nullptr);
+	return true;
+}
+
 bool ModuleScene::Start()
 {
-	return false;
+	return true;
 }
 
 update_status ModuleScene::Update(float dt)
 {
+	for (int i = 0; i < gameobjects.size(); i++)
+	{
+		gameobjects[i]->Update(dt);
+	}
+
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleScene::CleanUp()
 {
-	return false;
+	return true;
 }
 
-GameObject * ModuleScene::CreateGameObject()
+GameObject * ModuleScene::CreateGameObject(GameObject* parent)
 {
-	return nullptr;
+	GameObject* go = new GameObject();
+	go->transform->SetParent(nullptr);
+	gameobjects.push_back(go);
+	return go;
 }

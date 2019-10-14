@@ -2,20 +2,20 @@
 
 class GameObject;
 
-enum COMPONENT_TYPE { TRANSFORM, MESH, MATERIAL, LIGHT };
+enum COMPONENT_TYPE { TRANSFORM, MESH, TEXTURE, LIGHT };
 
 class Component
 {
-protected:
+public:
 	COMPONENT_TYPE type;
 	bool active;
-	GameObject* my_go;
+	GameObject* gameobject;
 public:
-	Component(GameObject* my_go);
+	Component(GameObject* gameobject);
 	~Component();
 
 	virtual void Enable() { active = true; }
-	virtual void Update();
+	virtual void Update(float dt);
 	virtual void Disable() { active = false; }
 };
 

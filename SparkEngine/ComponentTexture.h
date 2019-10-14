@@ -1,5 +1,8 @@
 #pragma once
-class ComponentTexture
+
+#include "Component.h"
+
+class ComponentTexture : public Component
 {
 public:
 	ComponentTexture();
