@@ -8,5 +8,9 @@ public:
 	~PanelInspector();
 
 	void Draw();
+private:
+
+	bool vertex_normals_enabled = false;
+	bool face_normals_enabled = false;
 };
 

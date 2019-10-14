@@ -56,7 +56,15 @@ void PanelInspector::Draw()
 
 				if (ImGui::CollapsingHeader("Mesh")) 
 				{
-					
+					//if (ImGui::Text(c_mesh->))
+					if (ImGui::Checkbox("Vertex normals: ", &vertex_normals_enabled))
+					{
+						c_mesh->SetDebugVertexNormal();
+					}
+					if (ImGui::Checkbox("Face normals: ", &face_normals_enabled))
+					{
+						c_mesh->SetDebugVertexNormal();
+					}
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::TEXTURE)
