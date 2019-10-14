@@ -103,8 +103,11 @@ void ModuleImporter::ImportFile(const char * path)
 	}
 	else if (extension == "png" || extension == "dds")
 	{
-		//TODO: IMPORT TEXTURE AND APPLY TO SELECTED GAMEOBJECT
-		//App->renderer3D->test_texture = LoadTexture(file.c_str());
+		if (App->scene->selected_gameobject)
+		{
+			ComponentTexture* c_tex = (ComponentTexture*)App->scene->selected_gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
+			c_tex->AddTexture(App->textures->LoadTexture(file.c_str()));
+		}	
 	}	
 }
 
