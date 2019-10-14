@@ -22,9 +22,12 @@ public:
 	void OnResize(int width, int height);
 	bool Save(nlohmann::json &it);
 	void GLEnable(unsigned int flag, bool active);
-	void DrawMesh(Mesh m);
 	void SetWireframeMode(bool on);
-	void DebugVertexNormals(Mesh m);
+
+
+	void DrawMesh(Mesh* m);
+	void DebugVertexNormals(Mesh* m);
+	void DebugFaceNormals(Mesh* m);
 
 public:
 

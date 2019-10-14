@@ -68,7 +68,9 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 {
 	std::vector<Mesh> meshes;
 
-	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
+	std::string final_path = ASSETS_FOLDER + std::string(file);
+
+	const aiScene* scene = aiImportFile(final_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		for (int i = 0; i < scene->mNumMeshes; i++)
@@ -90,22 +92,20 @@ void ModuleImporter::ImportFile(const char * path)
 	std::string normalized_path = path;
 	App->fsystem->NormalizePath(normalized_path);
 
-	std::string extension, final_path, file;
+	std::string extension, file;
 	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
 
 	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str())) //if file doesnt exist we copy it
-		App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER, final_path);
-	else
-		final_path = ASSETS_FOLDER + file;
+		App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER);
 
 	if (extension == "fbx")
 	{
-		App->renderer3D->test_meshes_dropped = LoadFBXFile(final_path.c_str());
+		App->renderer3D->test_meshes_dropped = LoadFBXFile(file.c_str());
 	}
 	else if (extension == "png" || extension == "dds")
 	{
 		//TODO: IMPORT TEXTURE AND APPLY TO SELECTED GAMEOBJECT
-		App->renderer3D->test_texture = LoadTexture(final_path.c_str());
+		App->renderer3D->test_texture = LoadTexture(file.c_str());
 	}	
 }
 
@@ -118,12 +118,13 @@ Texture ModuleImporter::LoadTexture(const char* path)
 
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
-	ilLoadImage(path);
+	ilLoadImage(final_path.c_str());
 	tex.id = ilutGLBindTexImage();
 	tex.width = ilGetInteger(IL_IMAGE_WIDTH);
 	tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
 	tex.path = path;
 	glBindTexture(GL_TEXTURE_2D, 0);
+
 	ilDeleteImages(1, &image_id);
 
 	LOG("Loaded Texture %s", path);
