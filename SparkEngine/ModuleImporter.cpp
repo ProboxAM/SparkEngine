@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
 #include "ModuleScene.h"
+#include "ModuleTextures.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -19,15 +20,10 @@
 
 #include "ModuleRenderer3D.h"
 
-#define ILUT_USE_OPENGL
-#include "DeviL/include/ilut.h"
-
 #include "ModuleImporter.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
-#pragma comment (lib,"DeviL/lib/DevIL.lib")
-#pragma comment (lib,"DeviL/lib/ILUT.lib")
-#pragma comment (lib,"DeviL/lib/ILU.lib")
+
 
 void LogCallback(const char* text, char* data)
 {
@@ -47,12 +43,6 @@ ModuleImporter::~ModuleImporter()
 
 bool ModuleImporter::Init(nlohmann::json::iterator it)
 {
-	ilInit();
-	iluInit();
-	ilutInit();
-	ilEnable(IL_CONV_PAL);
-	ilutEnable(ILUT_OPENGL_CONV);
-	ilutRenderer(ILUT_OPENGL);
 
 	aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
@@ -116,29 +106,6 @@ void ModuleImporter::ImportFile(const char * path)
 	}	
 }
 
-Texture* ModuleImporter::LoadTexture(const char* path)
-{
-	Texture* tex = new Texture();
-	uint image_id;
-
-	std::string final_path = ASSETS_FOLDER + std::string(path);
-
-	ilGenImages(1, &image_id); // Grab a new image name.
-	ilBindImage(image_id);
-	ilLoadImage(final_path.c_str());
-	tex->id = ilutGLBindTexImage();
-	tex->width = ilGetInteger(IL_IMAGE_WIDTH);
-	tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
-	tex->path = path;
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	ilDeleteImages(1, &image_id);
-
-	LOG("Loaded Texture %s", path);
-
-	return tex;
-}
-
 Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* object)
 {
 	Mesh* new_mesh = new Mesh();
@@ -174,7 +141,9 @@ Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* o
 		ComponentTexture* c_text = (ComponentTexture*)object->AddComponent(COMPONENT_TYPE::TEXTURE);
 
 		if (texture_path.length > 0)
-			c_text->AddTexture(LoadTexture(texture_path.C_Str()));
+			c_text->AddTexture(App->textures->LoadTexture(texture_path.C_Str()));
+		else
+			c_text->AddTexture(App->textures->GetDefaultTexture());
 	}
 
 	LOG("New mesh with %d vertices", new_mesh->vertices.size());

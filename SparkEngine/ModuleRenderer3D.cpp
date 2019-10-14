@@ -125,32 +125,6 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 
 	//my_sphere = par_shapes_create_subdivided_sphere(5);
 
-
-	//test_meshes = App->importer->LoadFBXFile("BakerHouse.fbx");
-
-	/*GLubyte checkImage[48][48][4];
-	for (int i = 0; i < 48; i++)
-	{ 
-		for (int j = 0; j < 48; j++)
-		{ 
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;  
-			checkImage[i][j][0] = (GLubyte)c;  
-			checkImage[i][j][1] = (GLubyte)c;  
-			checkImage[i][j][2] = (GLubyte)c;  
-			checkImage[i][j][3] = (GLubyte)255; 
-		} 
-	}
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &test_texture.id);
-	glBindTexture(GL_TEXTURE_2D, test_texture.id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 48, 48, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);*/
-
-	//test_texture_lena = App->importer->LoadTexture("Lenna_test_image.png");
-
 	return ret;
 }
 // PreUpdate: clear buffer
@@ -189,19 +163,27 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glDrawElements(GL_TRIANGLES, my_sphere->ntriangles * 3, GL_UNSIGNED_SHORT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);*/
 
-	//Meshes Test--------------------------------------------------------------------------------------------------------------------//
-
-	/*for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
+	/*GLubyte checkImage[48][48][4];
+	for (int i = 0; i < 48; i++)
 	{
-		DrawMesh(*it);
-		DebugVertexNormals(*it);
+		for (int j = 0; j < 48; j++)
+		{
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
 	}
-
-	for (std::vector<Mesh>::iterator it = test_meshes_dropped.begin(); it != test_meshes_dropped.end(); ++it)
-	{
-		DrawMesh(*it);
-		DebugVertexNormals(*it);
-	}*/
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &checkers);
+	glBindTexture(GL_TEXTURE_2D, checkers);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 48, 48, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	return UPDATE_CONTINUE;
 }

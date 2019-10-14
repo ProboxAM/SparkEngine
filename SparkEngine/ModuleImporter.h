@@ -25,7 +25,6 @@ public:
 
 private:
 	Mesh* LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* object);
-	Texture* LoadTexture(const char* path);
 };
 
 #endif
