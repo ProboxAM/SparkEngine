@@ -16,12 +16,16 @@ void PanelHierarchy::Draw()
 {
 	ImGui::Begin("Hierarchy");
 	static int selected = -1;
-	for (int i = 0; i < App->scene->gameobjects.size(); i++)
+	for (int i = 0; i < App->scene->gameobjects.size(); ++i)
 	{
-		if (ImGui::Selectable(App->scene->gameobjects[i]->GetName().c_str()), selected == i)
+		if (App->scene->gameobjects[i]->GetName() != "root")
 		{
-			selected = i;
-			App->scene->selected_gameobject = App->scene->gameobjects[i];
+			if (ImGui::Selectable(App->scene->gameobjects[i]->GetName().c_str(), selected == i))
+			{
+				selected = i;
+				App->scene->selected_gameobject = App->scene->gameobjects[i];
+				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+			}
 		}
 	}
 

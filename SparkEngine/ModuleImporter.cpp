@@ -81,9 +81,11 @@ void ModuleImporter::LoadFBXFile(const char * file)
 	const aiScene* scene = aiImportFile(final_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
+		std::string file;
+		App->fsystem->SplitFilePath(final_path.c_str(), nullptr, &file);
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
-			GameObject* new_object = App->scene->CreateGameObject();
+			GameObject* new_object = App->scene->CreateGameObject(nullptr, file + std::to_string(i));
 
 			ComponentMesh* c_mesh = (ComponentMesh*) new_object->AddComponent(COMPONENT_TYPE::MESH);
 			c_mesh->AddMesh(LoadMesh(scene, scene->mMeshes[i], new_object));
