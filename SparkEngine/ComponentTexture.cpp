@@ -3,7 +3,7 @@
 
 
 
-ComponentTexture::ComponentTexture():Component(gameobject)
+ComponentTexture::ComponentTexture(GameObject* gameobject):Component(gameobject)
 {
 
 }
@@ -11,4 +11,14 @@ ComponentTexture::ComponentTexture():Component(gameobject)
 
 ComponentTexture::~ComponentTexture()
 {
+}
+
+Texture* ComponentTexture::GetTexture()
+{
+	return tex;
+}
+
+void ComponentTexture::AddTexture(Texture * tex)
+{
+	this->tex = tex;
 }

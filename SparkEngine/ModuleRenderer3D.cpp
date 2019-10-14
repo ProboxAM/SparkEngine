@@ -126,7 +126,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	//my_sphere = par_shapes_create_subdivided_sphere(5);
 
 
-	test_meshes = App->importer->LoadFBXFile("BakerHouse.fbx");
+	//test_meshes = App->importer->LoadFBXFile("BakerHouse.fbx");
 
 	/*GLubyte checkImage[48][48][4];
 	for (int i = 0; i < 48; i++)
@@ -149,7 +149,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 48, 48, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);*/
 
-	test_texture_lena = App->importer->LoadTexture("Lenna_test_image.png");
+	//test_texture_lena = App->importer->LoadTexture("Lenna_test_image.png");
 
 	return ret;
 }
@@ -191,7 +191,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	//Meshes Test--------------------------------------------------------------------------------------------------------------------//
 
-	for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
+	/*for (std::vector<Mesh>::iterator it = test_meshes.begin(); it != test_meshes.end(); ++it)
 	{
 		DrawMesh(*it);
 		DebugVertexNormals(*it);
@@ -201,7 +201,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	{
 		DrawMesh(*it);
 		DebugVertexNormals(*it);
-	}
+	}*/
 
 	return UPDATE_CONTINUE;
 }

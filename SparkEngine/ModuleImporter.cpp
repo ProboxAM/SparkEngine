@@ -1,11 +1,21 @@
 #include "Application.h"
+#include "ModuleFileSystem.h"
+#include "ModuleScene.h"
+
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
+
+
+
+#include "GameObject.h"
+#include "Component.h"
+#include "ComponentMesh.h"
+#include "ComponentTexture.h"
 #include "Mesh.h"
 #include "Texture.h"
-#include "ModuleFileSystem.h"
+
 
 #include "ModuleRenderer3D.h"
 
@@ -64,10 +74,8 @@ bool ModuleImporter::CleanUp()
 	return true;
 }
 
-std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
+void ModuleImporter::LoadFBXFile(const char * file)
 {
-	std::vector<Mesh> meshes;
-
 	std::string final_path = ASSETS_FOLDER + std::string(file);
 
 	const aiScene* scene = aiImportFile(final_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
@@ -75,16 +83,15 @@ std::vector<Mesh> ModuleImporter::LoadFBXFile(const char * file)
 	{
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
-			Mesh new_mesh = LoadMesh(scene, scene->mMeshes[i]);
-			new_mesh.PrepareBuffers();
-			meshes.push_back(new_mesh);
+			GameObject* new_object = App->scene->CreateGameObject();
+
+			ComponentMesh* c_mesh = (ComponentMesh*) new_object->AddComponent(COMPONENT_TYPE::MESH);
+			c_mesh->AddMesh(LoadMesh(scene, scene->mMeshes[i], new_object));
 		}
 		aiReleaseImport(scene);
 	}
 	else
 		LOG("Error loading file %s", file);
-
-	return meshes;
 }
 
 void ModuleImporter::ImportFile(const char * path)
@@ -100,18 +107,18 @@ void ModuleImporter::ImportFile(const char * path)
 
 	if (extension == "fbx")
 	{
-		App->renderer3D->test_meshes_dropped = LoadFBXFile(file.c_str());
+		LoadFBXFile(file.c_str());
 	}
 	else if (extension == "png" || extension == "dds")
 	{
 		//TODO: IMPORT TEXTURE AND APPLY TO SELECTED GAMEOBJECT
-		App->renderer3D->test_texture = LoadTexture(file.c_str());
+		//App->renderer3D->test_texture = LoadTexture(file.c_str());
 	}	
 }
 
-Texture ModuleImporter::LoadTexture(const char* path)
+Texture* ModuleImporter::LoadTexture(const char* path)
 {
-	Texture tex;
+	Texture* tex = new Texture();
 	uint image_id;
 
 	std::string final_path = ASSETS_FOLDER + std::string(path);
@@ -119,10 +126,10 @@ Texture ModuleImporter::LoadTexture(const char* path)
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
 	ilLoadImage(final_path.c_str());
-	tex.id = ilutGLBindTexImage();
-	tex.width = ilGetInteger(IL_IMAGE_WIDTH);
-	tex.height = ilGetInteger(IL_IMAGE_HEIGHT);
-	tex.path = path;
+	tex->id = ilutGLBindTexImage();
+	tex->width = ilGetInteger(IL_IMAGE_WIDTH);
+	tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
+	tex->path = path;
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	ilDeleteImages(1, &image_id);
@@ -132,42 +139,46 @@ Texture ModuleImporter::LoadTexture(const char* path)
 	return tex;
 }
 
-Mesh ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh)
+Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* object)
 {
-	Mesh new_mesh;
+	Mesh* new_mesh = new Mesh();
 	for (uint i = 0; i < mesh->mNumVertices; i++)
 	{
 		//Vertex vertex;
-		new_mesh.vertices.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		new_mesh.normal.push_back(float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		new_mesh->vertices.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+		new_mesh->normal.push_back(float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
 
 		if (mesh->mTextureCoords[0]) //Only take in count first texture
 		{
-			new_mesh.uv.push_back(float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
+			new_mesh->uv.push_back(float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 		}
 		else
-			new_mesh.uv.push_back(float2(0.0f, 0.0f)); //Default to 0,0
+			new_mesh->uv.push_back(float2(0.0f, 0.0f)); //Default to 0,0
 
 		//DEBUG NORMAL VERTEX
-		new_mesh.debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		new_mesh.debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z) + float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		new_mesh->debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+		new_mesh->debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z) + float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		for (uint j = 0; j < face.mNumIndices; j++)
-			new_mesh.indices.push_back(face.mIndices[j]);
+			new_mesh->indices.push_back(face.mIndices[j]);
 	}
 
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiString texture_path;
 		scene->mMaterials[mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+
+		ComponentTexture* c_text = (ComponentTexture*)object->AddComponent(COMPONENT_TYPE::TEXTURE);
+
 		if (texture_path.length > 0)
-			App->renderer3D->test_texture = LoadTexture(texture_path.C_Str());
+			c_text->AddTexture(LoadTexture(texture_path.C_Str()));
 	}
 
-	LOG("New mesh with %d vertices", new_mesh.vertices.size());
+	LOG("New mesh with %d vertices", new_mesh->vertices.size());
+	new_mesh->PrepareBuffers();
 
 	return new_mesh;
 }

@@ -6,11 +6,11 @@ class Mesh;
 class ComponentMesh : public Component
 {
 public:
-	ComponentMesh();
+	ComponentMesh(GameObject* gameobject);
 	~ComponentMesh();
 
-	void Update();
-
+	void Update(float dt);
+	void AddMesh(Mesh* tex);
 private:
 	Mesh* mesh;
 	bool debug_vertex_normal, debug_face_normal;

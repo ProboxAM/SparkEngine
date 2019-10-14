@@ -19,6 +19,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	GameObject* CreateGameObject(GameObject* parent);
+	GameObject* CreateGameObject(GameObject* parent = nullptr);
+	GameObject* CreateRootGameObject();
 };
 

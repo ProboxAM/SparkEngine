@@ -33,7 +33,7 @@ float3 ComponentTransform::EulerAngles()
 	return rotation.ToEulerXYZ();
 }
 
-ComponentTransform::ComponentTransform():Component(gameobject)
+ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobject)
 {
 	local_transform_matrix = {
 		{ 1.0f, 0.0f, 0.0f, 0.0f },

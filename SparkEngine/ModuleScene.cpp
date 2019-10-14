@@ -1,10 +1,14 @@
 #include "Application.h"
+#include "ModuleImporter.h"
+
 #include "GameObject.h"
-#include "ModuleScene.h"
+
 #include "Component.h"
+#include "ComponentMesh.h"
+#include "ComponentTexture.h"
 #include "ComponentTransform.h"
 
-
+#include "ModuleScene.h"
 
 ModuleScene::ModuleScene(bool start_enabled) : Module(start_enabled)
 {
@@ -18,12 +22,14 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init(nlohmann::json::iterator it)
 {
-	root = CreateGameObject(nullptr);
+	root = CreateRootGameObject();
 	return true;
 }
 
 bool ModuleScene::Start()
 {
+	App->importer->ImportFile("Assets/Bakerhouse.fbx");
+
 	return true;
 }
 
@@ -43,6 +49,17 @@ bool ModuleScene::CleanUp()
 }
 
 GameObject * ModuleScene::CreateGameObject(GameObject* parent)
+{
+	if (!parent)
+		parent = root;
+
+	GameObject* go = new GameObject();
+	go->transform->SetParent(parent->transform);
+	gameobjects.push_back(go);
+	return go;
+}
+
+GameObject * ModuleScene::CreateRootGameObject()
 {
 	GameObject* go = new GameObject();
 	go->transform->SetParent(nullptr);

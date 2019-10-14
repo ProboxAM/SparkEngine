@@ -25,7 +25,7 @@ public:
 	void SetWireframeMode(bool on);
 
 
-	void DrawMesh(Mesh* m);
+	void DrawMesh(Mesh* m, Texture* tex);
 	void DebugVertexNormals(Mesh* m);
 	void DebugFaceNormals(Mesh* m);
 

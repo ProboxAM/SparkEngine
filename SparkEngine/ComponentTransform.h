@@ -11,6 +11,7 @@ private:
 	float4x4 local_transform_matrix;
 	ComponentTransform* parent = nullptr;
 	std::vector<ComponentTransform*> children;
+
 public:
 
 	//global
@@ -31,7 +32,7 @@ public:
 
 
 public:
-	ComponentTransform();
+	ComponentTransform(GameObject* gameobject);
 	~ComponentTransform();
 
 	void Update(float dt);

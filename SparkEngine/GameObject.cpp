@@ -1,6 +1,7 @@
-#include "GameObject.h"
 #include "ComponentTransform.h"
-
+#include "ComponentMesh.h"
+#include "ComponentTexture.h"
+#include "GameObject.h"
 
 
 void GameObject::Update(float dt)
@@ -18,17 +19,20 @@ Component* GameObject::AddComponent(COMPONENT_TYPE type)
 	switch (type)
 	{
 	case COMPONENT_TYPE::TRANSFORM:
-		c = new ComponentTransform();
+		c = new ComponentTransform(this);
 		break;
 	case COMPONENT_TYPE::MESH:
+		c = new ComponentMesh(this);
 		break;
 	case COMPONENT_TYPE::TEXTURE:
+		c = new ComponentTexture(this);
 		break;
 	case COMPONENT_TYPE::LIGHT:
 		break;
 	default:
 		break;
 	}
+	c->type = type;
 
 	components.push_back(c);
 	return c;
