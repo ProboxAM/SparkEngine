@@ -271,20 +271,20 @@ void ModuleRenderer3D::SetWireframeMode(bool on)
 
 void ModuleRenderer3D::DebugVertexNormals(Mesh* m)
 {
-/*	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m.dg_nm_vbo); 
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_VERT_NORM]); 
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_LINES, 0, m.debug_normals.size());
+	glDrawArrays(GL_LINES, 0, m->debug_vertex_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void ModuleRenderer3D::DebugFaceNormals(Mesh* m)
 {
-	/*	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m.dg_nm_vbo);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_FACE_NORM]);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_LINES, 0, m.debug_normals.size());
+	glDrawArrays(GL_LINES, 0, m->debug_face_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

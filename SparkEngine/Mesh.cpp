@@ -4,7 +4,7 @@
 
 void Mesh::PrepareBuffers()
 {
-	glGenBuffers(4, buffers);
+	glGenBuffers(BUFF_TOTAL, buffers);
 
 	// vertex positions
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_VERT]);
@@ -25,6 +25,10 @@ void Mesh::PrepareBuffers()
 	// debug vertex normals
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_DEBUG_VERT_NORM]);
 	glBufferData(GL_ARRAY_BUFFER, debug_vertex_normals.size() * sizeof(float3), &debug_vertex_normals[0], GL_STATIC_DRAW);
+
+	// debug face normals
+	/*glBindBuffer(GL_ARRAY_BUFFER, buffers[BUFF_DEBUG_FACE_NORM]);
+	glBufferData(GL_ARRAY_BUFFER, debug_face_normals.size() * sizeof(float3), &debug_face_normals[0], GL_STATIC_DRAW);*/
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

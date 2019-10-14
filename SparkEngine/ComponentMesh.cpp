@@ -32,3 +32,13 @@ void ComponentMesh::AddMesh(Mesh * mesh)
 {
 	this->mesh = mesh;
 }
+
+void ComponentMesh::SetDebugVertexNormal()
+{
+	debug_vertex_normal = !debug_vertex_normal;
+}
+
+void ComponentMesh::SetDebugFaceNormal()
+{
+	debug_face_normal = !debug_face_normal;
+}

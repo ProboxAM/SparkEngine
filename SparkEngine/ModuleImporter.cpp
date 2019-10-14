@@ -131,8 +131,10 @@ Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* o
 			new_mesh->uv.push_back(float2(0.0f, 0.0f)); //Default to 0,0
 
 		//DEBUG NORMAL VERTEX
-		new_mesh->debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		new_mesh->debug_vertex_normals.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z) + float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i]);
+		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i] + new_mesh->normal[i]);
+
+		//DEBUG NORMAL FACE
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++)
 	{
