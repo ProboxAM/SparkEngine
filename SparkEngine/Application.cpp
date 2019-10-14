@@ -8,6 +8,7 @@
 #include "ModuleImporter.h"
 #include "ModuleFileSystem.h"
 #include "ModuleScene.h"
+#include "ModuleTextures.h"
 #include "Application.h"
 #include "nlohmann\json.hpp"
 #include <fstream>
@@ -20,10 +21,10 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(true);
 	camera = new ModuleCamera3D(true);
 	editor = new ModuleEditor(true);
+	textures = new ModuleTextures(true);
 	importer = new ModuleImporter(true);
 	fsystem = new ModuleFileSystem(ASSETS_FOLDER);
 	scene = new ModuleScene(true);
-
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -31,6 +32,7 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
+	AddModule(textures);
 	AddModule(editor);
 	AddModule(input);
 	AddModule(fsystem);

@@ -14,6 +14,7 @@ class ModuleEditor;
 class ModuleImporter;
 class ModuleFileSystem;
 class ModuleScene;
+class ModuleTextures;
 
 class Application
 {
@@ -26,6 +27,7 @@ public:
 	ModuleImporter* importer;
 	ModuleFileSystem* fsystem;
 	ModuleScene* scene;
+	ModuleTextures* textures;
 
 private:
 	std::string		app_name;

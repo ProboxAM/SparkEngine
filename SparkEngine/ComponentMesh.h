@@ -11,6 +11,10 @@ public:
 
 	void Update(float dt);
 	void AddMesh(Mesh* tex);
+
+	void SetDebugVertexNormal();
+	void SetDebugFaceNormal();
+
 private:
 	Mesh* mesh;
 	bool debug_vertex_normal, debug_face_normal;

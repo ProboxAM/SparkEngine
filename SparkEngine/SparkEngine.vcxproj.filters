@@ -348,13 +348,15 @@
     <ClInclude Include="ModuleScene.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ComponentMesh.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTexture.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Sources\Modules</Filter>
+	</ClInclude>
     <ClInclude Include="PanelHierarchy.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
@@ -543,13 +545,15 @@
     <ClCompile Include="ModuleScene.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ComponentMesh.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTexture.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Sources\Modules</Filter>
+	</ClCompile>
     <ClCompile Include="PanelHierarchy.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
