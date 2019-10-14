@@ -18,7 +18,7 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init(nlohmann::json::iterator it)
 {
-	root = CreateGameObject(nullptr);
+	root = CreateGameObject(nullptr, "root");
 	return true;
 }
 
@@ -42,10 +42,11 @@ bool ModuleScene::CleanUp()
 	return true;
 }
 
-GameObject * ModuleScene::CreateGameObject(GameObject* parent)
+GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name)
 {
 	GameObject* go = new GameObject();
 	go->transform->SetParent(nullptr);
+	go->SetName(name);
 	gameobjects.push_back(go);
 	return go;
 }

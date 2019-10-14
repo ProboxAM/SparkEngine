@@ -10,6 +10,8 @@ enum Panel_Type {
 	CONFIG,
 	DEBUG,
 	ABOUT,
+	HIERARCHY,
+	INSPECTOR,
 	TOTAL
 };
 

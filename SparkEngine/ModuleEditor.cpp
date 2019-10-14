@@ -7,6 +7,8 @@
 #include "PanelConfiguration.h"
 #include "PanelAbout.h"
 #include "PanelDebug.h"
+#include "PanelHierarchy.h"
+#include "PanelInspector.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
@@ -42,6 +44,8 @@ bool ModuleEditor::Init(nlohmann::json::iterator it)
 	panels[CONFIG] = new PanelConfiguration(false);
 	panels[DEBUG] = new PanelDebug(true);
 	panels[ABOUT] = new PanelAbout(false);
+	panels[HIERARCHY] = new PanelHierarchy(true);
+	panels[INSPECTOR] = new PanelInspector(true);
 
 	return true;
 }
@@ -80,6 +84,11 @@ update_status ModuleEditor::Update(float dt)
 				panels[CONFIG]->Activate();
 			if (ImGui::MenuItem("Debug"))
 				panels[DEBUG]->Activate();
+			if (ImGui::MenuItem("Hierarchy"))
+				panels[HIERARCHY]->Activate();
+			if (ImGui::MenuItem("Inspector"))
+				panels[INSPECTOR]->Activate();
+
 			ImGui::EndMenu();
 		}
 
