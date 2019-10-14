@@ -21,7 +21,7 @@ public:
 	int GetIndicesAmount();
 
 private:
-	Mesh* mesh;
-	bool debug_vertex_normal, debug_face_normal;
+	Mesh* mesh = nullptr;
+	bool debug_vertex_normal = false, debug_face_normal = false;
 };
 
