@@ -356,6 +356,12 @@
     </ClInclude>
     <ClInclude Include="ModuleTextures.h">
       <Filter>Sources\Modules</Filter>
+	</ClInclude>
+    <ClInclude Include="PanelHierarchy.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInspector.h">
+      <Filter>Sources\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -547,6 +553,12 @@
     </ClCompile>
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Sources\Modules</Filter>
+	</ClCompile>
+    <ClCompile Include="PanelHierarchy.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelInspector.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -48,13 +48,14 @@ bool ModuleScene::CleanUp()
 	return true;
 }
 
-GameObject * ModuleScene::CreateGameObject(GameObject* parent)
+GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name)
 {
 	if (!parent)
 		parent = root;
 
 	GameObject* go = new GameObject();
 	go->transform->SetParent(parent->transform);
+	go->SetName(name);
 	gameobjects.push_back(go);
 	return go;
 }
@@ -63,6 +64,7 @@ GameObject * ModuleScene::CreateRootGameObject()
 {
 	GameObject* go = new GameObject();
 	go->transform->SetParent(nullptr);
+	go->SetName("root");
 	gameobjects.push_back(go);
 	return go;
 }
