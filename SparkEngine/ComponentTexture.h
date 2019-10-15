@@ -2,6 +2,7 @@
 
 struct Texture;
 #include "Component.h"
+#include "Globals.h"
 
 class ComponentTexture : public Component
 {
@@ -18,7 +19,9 @@ public:
 	uint GetTextureHeight();
 
 private:
-	bool debug_texture = false;
 	Texture* tex = nullptr;
+public:
+	bool debug_texture = false;
+
 };
 

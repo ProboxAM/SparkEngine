@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
+#include "ComponentTexture.h"
 
 
 PanelInspector::PanelInspector(bool a) : Panel(a)
@@ -63,19 +64,22 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("UV amount: " + std::to_string(c_mesh->GetUVAmount())).c_str());
 
-					if (ImGui::Checkbox("Vertex normals: ", &vertex_normals_enabled))
-					{
-						c_mesh->SetDebugVertexNormal();
-					}
-					if (ImGui::Checkbox("Face normals: ", &face_normals_enabled))
-					{
-						c_mesh->SetDebugVertexNormal();
-					}
+					ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
+					ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::TEXTURE)
 			{
-				ImGui::CollapsingHeader("Texture");
+				ComponentTexture* c_texture = (ComponentTexture*)go->GetComponent(COMPONENT_TYPE::TEXTURE);
+				if (ImGui::CollapsingHeader("Texture"))
+				{
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("With: " + std::to_string(c_texture->GetTextureWidth()) + " |").c_str());
+					ImGui::SameLine();
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("Height: " + std::to_string(c_texture->GetTextureHeight())).c_str());
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("Path: " + c_texture->GetTexturePath()).c_str());
+
+					ImGui::Checkbox("Checkers texture: ", &c_texture->debug_texture);
+				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::LIGHT)
 			{

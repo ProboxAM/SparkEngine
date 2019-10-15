@@ -22,6 +22,8 @@ public:
 
 private:
 	Mesh* mesh = nullptr;
+
+public:
 	bool debug_vertex_normal = false, debug_face_normal = false;
 };
 
