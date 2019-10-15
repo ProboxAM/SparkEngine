@@ -132,15 +132,38 @@ Mesh* ModuleImporter::LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* o
 
 		//DEBUG NORMAL VERTEX
 		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i]);
-		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i] + new_mesh->normal[i]);
+		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i] + (new_mesh->normal[i].Normalized() * DEBUG_NORMAL_LENGTH));
 
 		//DEBUG NORMAL FACE
+		//sacar centro triangulo 
+
 	}
-	for (uint i = 0; i < mesh->mNumFaces; i++)
+	for (uint i = 0; i < mesh->mNumFaces; i++) //ASSUME FACE IS TRIANGLE
 	{
 		aiFace face = mesh->mFaces[i];
 		for (uint j = 0; j < face.mNumIndices; j++)
+		{
 			new_mesh->indices.push_back(face.mIndices[j]);
+		}
+
+		//Calculate center of face
+		float center_x = (new_mesh->vertices[face.mIndices[0]].x + new_mesh->vertices[face.mIndices[1]].x + new_mesh->vertices[face.mIndices[2]].x) / 3;
+		float center_y = (new_mesh->vertices[face.mIndices[0]].y + new_mesh->vertices[face.mIndices[1]].y + new_mesh->vertices[face.mIndices[2]].y) / 3;
+		float center_z = (new_mesh->vertices[face.mIndices[0]].z + new_mesh->vertices[face.mIndices[1]].z + new_mesh->vertices[face.mIndices[2]].z) / 3;
+
+		float3 center = float3(center_x, center_y, center_z);	
+
+		//Calculate normal of face. Create 2 vector from face edges and calculate normal with cross product
+		float3 edge_1 = (new_mesh->vertices[face.mIndices[1]] - new_mesh->vertices[face.mIndices[0]]);
+		float3 edge_2 = (new_mesh->vertices[face.mIndices[2]] - new_mesh->vertices[face.mIndices[0]]);
+
+		float3 normal;
+		normal.x = (edge_1.y * edge_2.z) - (edge_1.z * edge_2.y);
+		normal.y = (edge_1.z * edge_2.x) - (edge_1.x * edge_2.z);
+		normal.z = (edge_1.x * edge_2.y) - (edge_1.y * edge_2.x);
+
+		new_mesh->debug_face_normals.push_back(center);
+		new_mesh->debug_face_normals.push_back(center + (normal.Normalized() * DEBUG_NORMAL_LENGTH));
 	}
 
 	if (mesh->mMaterialIndex >= 0)
