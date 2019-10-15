@@ -3,6 +3,7 @@
 struct Texture;
 typedef unsigned int uint;
 #include "Component.h"
+#include "Globals.h"
 
 class ComponentTexture : public Component
 {
@@ -24,7 +25,9 @@ public:
 	uint GetTextureDepth();
 
 private:
-	bool debug_texture = false;
 	Texture* tex = nullptr;
+public:
+	bool debug_texture = false;
+
 };
 

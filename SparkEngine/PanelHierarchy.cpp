@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "GameObject.h"
+#include "ComponentTransform.h"
 
 PanelHierarchy::PanelHierarchy(bool a) : Panel(a)
 {
@@ -24,7 +25,7 @@ void PanelHierarchy::Draw()
 			{
 				selected = i;
 				App->scene->selected_gameobject = App->scene->gameobjects[i];
-				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+				//LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 			}
 		}
 	}

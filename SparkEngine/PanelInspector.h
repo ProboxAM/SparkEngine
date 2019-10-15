@@ -8,5 +8,6 @@ public:
 	~PanelInspector();
 
 	void Draw();
+private:
 };
 
