@@ -42,7 +42,7 @@ std::string ComponentTexture::GetTextureFormat()
 {
 	return tex->format;
 }
-float ComponentTexture::GetTextureSize()
+int ComponentTexture::GetTextureSize()
 {
 	return tex->size;
 }
