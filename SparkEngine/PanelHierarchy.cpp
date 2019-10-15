@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "GameObject.h"
+#include "ModuleCamera3D.h"
+#include "ComponentTransform.h"
 
 PanelHierarchy::PanelHierarchy(bool a) : Panel(a)
 {

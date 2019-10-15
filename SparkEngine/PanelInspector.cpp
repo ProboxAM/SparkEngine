@@ -56,7 +56,13 @@ void PanelInspector::Draw()
 
 				if (ImGui::CollapsingHeader("Mesh")) 
 				{
-					//if (ImGui::Text(c_mesh->))
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("Index amount: " + std::to_string(c_mesh->GetIndicesAmount()) + " |").c_str());
+					ImGui::SameLine();
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("Vertex amount: " + std::to_string(c_mesh->GetVerticesAmount())).c_str());
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("Normal amount: " + std::to_string(c_mesh->GetNormalsAmount()) + " |").c_str());
+					ImGui::SameLine();
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("UV amount: " + std::to_string(c_mesh->GetUVAmount())).c_str());
+
 					if (ImGui::Checkbox("Vertex normals: ", &vertex_normals_enabled))
 					{
 						c_mesh->SetDebugVertexNormal();
