@@ -38,6 +38,14 @@ std::string ComponentTexture::GetTexturePath()
 {
 	return tex->path;
 }
+std::string ComponentTexture::GetTextureFormat()
+{
+	return tex->format;
+}
+float ComponentTexture::GetTextureSize()
+{
+	return tex->size;
+}
 uint ComponentTexture::GetTextureWidth()
 {
 	return tex->width;
@@ -45,4 +53,19 @@ uint ComponentTexture::GetTextureWidth()
 uint ComponentTexture::GetTextureHeight()
 {
 	return tex->height;
+}
+
+uint ComponentTexture::GetTextureBPP()
+{
+	return tex->bpp;
+}
+
+uint ComponentTexture::GetTextureMIP()
+{
+	return tex->mips;
+}
+
+uint ComponentTexture::GetTextureDepth()
+{
+	return tex->depth;
 }

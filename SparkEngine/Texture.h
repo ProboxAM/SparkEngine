@@ -1,12 +1,14 @@
 #pragma once
 
-#include "Globals.h"
+#include <string>
+typedef unsigned int uint;
 
 struct Texture
 {
 public:
 	uint id;
-	uint width, height;
-	std::string path;
+	uint width, height, depth, bpp, mips;
+	int size;
+	std::string path, format;
 };
 
