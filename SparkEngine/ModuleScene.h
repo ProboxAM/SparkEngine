@@ -5,6 +5,8 @@
 class GameObject;
 enum PRIMITIVE_TYPE;
 
+#define GRID_SIZE 40
+
 class ModuleScene :
 	public Module
 {
@@ -24,5 +26,10 @@ public:
 	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
+
+	std::vector<float3> grid_points;
+	uint grid_id;
+	void GenerateGrid();
+	void DrawGrid();
 };
 
