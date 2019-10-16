@@ -33,8 +33,6 @@ bool ModuleScene::Start()
 {
 	App->importer->ImportFile("Assets/Bakerhouse.fbx");
 
-	CreatePrimitiveGameObject(P_CUBE);
-
 	return true;
 }
 

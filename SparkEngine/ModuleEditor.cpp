@@ -3,6 +3,8 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleEditor.h"
+#include "ModuleScene.h"
+#include "ModuleMeshes.h"
 #include "Panel.h"
 #include "PanelConfiguration.h"
 #include "PanelAbout.h"
@@ -91,7 +93,24 @@ update_status ModuleEditor::Update(float dt)
 
 			ImGui::EndMenu();
 		}
-
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			if (ImGui::BeginMenu("3D Object"))
+			{
+				if (ImGui::MenuItem("Cube"))
+					App->scene->CreatePrimitiveGameObject(P_CUBE);
+				if (ImGui::MenuItem("Sphere"))
+					App->scene->CreatePrimitiveGameObject(P_SPHERE);
+				if (ImGui::MenuItem("Cylinder"))
+					App->scene->CreatePrimitiveGameObject(P_CYLINDER);
+				if (ImGui::MenuItem("Plane"))
+					App->scene->CreatePrimitiveGameObject(P_PLANE);
+				if (ImGui::MenuItem("Cone"))
+					App->scene->CreatePrimitiveGameObject(P_CONE);
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("About"))
