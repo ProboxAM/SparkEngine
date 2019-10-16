@@ -42,7 +42,7 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update(float dt)
 {
-	DrawGrid();
+	if(show_grid)DrawGrid();
 
 	for (int i = 0; i < gameobjects.size(); i++)
 	{

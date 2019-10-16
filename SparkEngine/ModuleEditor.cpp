@@ -93,6 +93,7 @@ update_status ModuleEditor::Update(float dt)
 
 			ImGui::EndMenu();
 		}
+
 		if (ImGui::BeginMenu("GameObject"))
 		{
 			if (ImGui::BeginMenu("3D Object"))
@@ -117,6 +118,9 @@ update_status ModuleEditor::Update(float dt)
 				panels[ABOUT]->Activate();
 			ImGui::EndMenu();
 		}
+
+
+		ImGui::Checkbox("Show Grid", &App->scene->show_grid);
 		ImGui::EndMainMenuBar();
 	}
 
