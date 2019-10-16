@@ -139,7 +139,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//std::uniform_real_distribution<float> uniform_dist(0, 1);
 	//float mean = uniform_dist(rng);
 
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
@@ -153,38 +152,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		lights[i].Render();
 
 
-	//Par_shapes--------------------------------------------------------------------------------------------------------------------//
-
-	/*glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_vertex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//// … draw other buffers
-	glDrawElements(GL_TRIANGLES, my_sphere->ntriangles * 3, GL_UNSIGNED_SHORT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);*/
-
-	/*GLubyte checkImage[48][48][4];
-	for (int i = 0; i < 48; i++)
-	{
-		for (int j = 0; j < 48; j++)
-		{
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checkImage[i][j][0] = (GLubyte)c;
-			checkImage[i][j][1] = (GLubyte)c;
-			checkImage[i][j][2] = (GLubyte)c;
-			checkImage[i][j][3] = (GLubyte)255;
-		}
-	}
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &checkers);
-	glBindTexture(GL_TEXTURE_2D, checkers);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 48, 48, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-	glBindTexture(GL_TEXTURE_2D, 0);*/
-
 	return UPDATE_CONTINUE;
 }
 
@@ -192,6 +159,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->editor->Draw();
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

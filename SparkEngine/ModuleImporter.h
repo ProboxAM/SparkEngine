@@ -22,9 +22,6 @@ public:
 	void LoadFBXFile(const char* file);
 	void ImportFile(const char* path);
 
-
-private:
-	Mesh* LoadMesh(const aiScene* scene, aiMesh* mesh, GameObject* object);
 };
 
 #endif

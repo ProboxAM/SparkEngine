@@ -15,6 +15,7 @@ class ModuleImporter;
 class ModuleFileSystem;
 class ModuleScene;
 class ModuleTextures;
+class ModuleMeshes;
 
 class Application
 {
@@ -28,6 +29,7 @@ public:
 	ModuleFileSystem* fsystem;
 	ModuleScene* scene;
 	ModuleTextures* textures;
+	ModuleMeshes* meshes;
 
 private:
 	std::string		app_name;
