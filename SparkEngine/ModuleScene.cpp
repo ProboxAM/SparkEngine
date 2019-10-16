@@ -33,11 +33,10 @@ bool ModuleScene::Start()
 {
 	App->importer->ImportFile("Assets/Bakerhouse.fbx");
 
-	Mesh* mesh = App->meshes->CreateSphereMesh();
+	Mesh* mesh = App->meshes->CreatePrimitiveMesh(P_CUBE);
 	GameObject* obj = CreateGameObject(nullptr, "Sphere");
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
 	c_mesh->AddMesh(mesh);
-
 	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
 	c_text->AddTexture(App->textures->GetDefaultTexture());
 

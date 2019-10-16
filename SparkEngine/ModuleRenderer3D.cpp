@@ -206,12 +206,17 @@ void ModuleRenderer3D::DrawMesh(Mesh* m, Texture* tex)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
-	glNormalPointer(GL_FLOAT, 0, nullptr);
-
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
-	glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+	if (m->normal.size() > 0)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
+		glNormalPointer(GL_FLOAT, 0, nullptr);
+	}
+	if (m->uv.size() > 0)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
+		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+	}
 	glBindTexture(GL_TEXTURE_2D, tex->id);
 
 	glDrawElements(GL_TRIANGLES, m->indices.size(), GL_UNSIGNED_INT, nullptr);

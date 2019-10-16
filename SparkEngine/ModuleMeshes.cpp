@@ -81,55 +81,83 @@ Mesh* ModuleMeshes::LoadMesh(const aiScene* scene, aiMesh* mesh)
 	return new_mesh;
 }
 
-Mesh * ModuleMeshes::CreateSphereMesh()
+Mesh * ModuleMeshes::CreatePrimitiveMesh(PRIMITIVE_TYPE type)
 {
 	Mesh* new_mesh = new Mesh();
-	par_shapes_mesh* sphere = par_shapes_create_parametric_sphere(10, 10);
+	par_shapes_mesh* primitive_mesh = nullptr;
+
+	switch (type)
+	{
+	case P_CUBE:
+		primitive_mesh = par_shapes_create_cube();
+		break;
+	case P_SPHERE:
+		primitive_mesh = par_shapes_create_parametric_sphere(10, 10);
+		break;
+	case P_CYLINDER:
+		primitive_mesh = par_shapes_create_cylinder(10, 10);
+		break;
+	case P_PLANE:
+		primitive_mesh = par_shapes_create_plane(10, 10);
+		break;
+	case P_CONE:
+		primitive_mesh = par_shapes_create_cone(10, 10);
+		break;
+	default:
+		break;
+	}
 	
-	for (int i = 0; i < sphere->npoints * 3;)
+	for (int i = 0; i < primitive_mesh->npoints * 3;)
 	{
 		float3 vertex;
-		vertex.x = sphere->points[i];
-		vertex.y = sphere->points[i + 1];
-		vertex.z = sphere->points[i + 2];
+		vertex.x = primitive_mesh->points[i];
+		vertex.y = primitive_mesh->points[i + 1];
+		vertex.z = primitive_mesh->points[i + 2];
 		new_mesh->vertices.push_back(vertex);
 
-		float3 normal;
-		normal.x = sphere->normals[i];
-		normal.y = sphere->normals[i + 1];
-		normal.z = sphere->normals[i + 2];
-		new_mesh->normal.push_back(normal);
+		if (primitive_mesh->normals)
+		{
+			float3 normal;
+			normal.x = primitive_mesh->normals[i];
+			normal.y = primitive_mesh->normals[i + 1];
+			normal.z = primitive_mesh->normals[i + 2];
+			new_mesh->normal.push_back(normal);
 
-		new_mesh->debug_vertex_normals.push_back(vertex);
-		new_mesh->debug_vertex_normals.push_back(vertex + (normal.Normalized() * DEBUG_NORMAL_LENGTH));
+			new_mesh->debug_vertex_normals.push_back(vertex);
+			new_mesh->debug_vertex_normals.push_back(vertex + (normal.Normalized() * DEBUG_NORMAL_LENGTH));
+		}
 
 		i += 3;
 	}
-	for (int i = 0; i < sphere->npoints * 2;)
-	{
-		float2 uv;
-		uv.x = sphere->tcoords[i];
-		uv.y = sphere->tcoords[i + 1];
-		new_mesh->uv.push_back(uv);
 
-		i += 2;
+	if (primitive_mesh->tcoords)
+	{
+		for (int i = 0; i < primitive_mesh->npoints * 2;)
+		{
+			float2 uv;
+			uv.x = primitive_mesh->tcoords[i];
+			uv.y = primitive_mesh->tcoords[i + 1];
+			new_mesh->uv.push_back(uv);
+
+			i += 2;
+		}
 	}
 
-	new_mesh->indices.insert(new_mesh->indices.end(), &sphere->triangles[0], &sphere->triangles[sphere->ntriangles*3]);
+	new_mesh->indices.insert(new_mesh->indices.end(), &primitive_mesh->triangles[0], &primitive_mesh->triangles[primitive_mesh->ntriangles*3]);
 
 	//DEBUG	
-	for (int i = 0; i < sphere->ntriangles * 3;)
+	for (int i = 0; i < primitive_mesh->ntriangles * 3;)
 	{
 		//Calculate center of face
-		float center_x = (new_mesh->vertices[sphere->triangles[i]].x + new_mesh->vertices[sphere->triangles[i+1]].x + new_mesh->vertices[sphere->triangles[i+2]].x) / 3;
-		float center_y = (new_mesh->vertices[sphere->triangles[i]].y + new_mesh->vertices[sphere->triangles[i+1]].y + new_mesh->vertices[sphere->triangles[i+2]].y) / 3;
-		float center_z = (new_mesh->vertices[sphere->triangles[i]].z + new_mesh->vertices[sphere->triangles[i+1]].z + new_mesh->vertices[sphere->triangles[i+2]].z) / 3;
+		float center_x = (new_mesh->vertices[primitive_mesh->triangles[i]].x + new_mesh->vertices[primitive_mesh->triangles[i+1]].x + new_mesh->vertices[primitive_mesh->triangles[i+2]].x) / 3;
+		float center_y = (new_mesh->vertices[primitive_mesh->triangles[i]].y + new_mesh->vertices[primitive_mesh->triangles[i+1]].y + new_mesh->vertices[primitive_mesh->triangles[i+2]].y) / 3;
+		float center_z = (new_mesh->vertices[primitive_mesh->triangles[i]].z + new_mesh->vertices[primitive_mesh->triangles[i+1]].z + new_mesh->vertices[primitive_mesh->triangles[i+2]].z) / 3;
 
 		float3 center = float3(center_x, center_y, center_z);
 
 		//Calculate normal of face. Create 2 vector from face edges and calculate normal with cross product
-		float3 edge_1 = (new_mesh->vertices[sphere->triangles[i+1]] - new_mesh->vertices[sphere->triangles[i]]);
-		float3 edge_2 = (new_mesh->vertices[sphere->triangles[i+2]] - new_mesh->vertices[sphere->triangles[i]]);
+		float3 edge_1 = (new_mesh->vertices[primitive_mesh->triangles[i+1]] - new_mesh->vertices[primitive_mesh->triangles[i]]);
+		float3 edge_2 = (new_mesh->vertices[primitive_mesh->triangles[i+2]] - new_mesh->vertices[primitive_mesh->triangles[i]]);
 
 		float3 normal;
 		normal.x = (edge_1.y * edge_2.z) - (edge_1.z * edge_2.y);
@@ -142,15 +170,8 @@ Mesh * ModuleMeshes::CreateSphereMesh()
 		i += 3;
 	}
 
-	par_shapes_free_mesh(sphere);
+	par_shapes_free_mesh(primitive_mesh);
 	new_mesh->PrepareBuffers();
-
-	return new_mesh;
-}
-
-Mesh * ModuleMeshes::CreateSquareMesh()
-{
-	Mesh* new_mesh = new Mesh();
 
 	return new_mesh;
 }

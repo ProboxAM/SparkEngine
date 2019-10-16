@@ -4,6 +4,14 @@ class Mesh;
 struct aiScene;
 struct aiMesh;
 
+enum PRIMITIVE_TYPE {
+	P_CUBE,
+	P_SPHERE,
+	P_CYLINDER,
+	P_PLANE,
+	P_CONE
+};
+
 class ModuleMeshes : public Module
 {
 public:
@@ -11,7 +19,6 @@ public:
 	~ModuleMeshes();
 
 	Mesh* LoadMesh(const aiScene* scene, aiMesh* mesh);
-	Mesh* CreateSphereMesh();
-	Mesh* CreateSquareMesh();
+	Mesh* CreatePrimitiveMesh(PRIMITIVE_TYPE type);
 };
 
