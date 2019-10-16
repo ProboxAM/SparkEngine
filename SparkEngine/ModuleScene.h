@@ -3,6 +3,7 @@
 #include <vector>
 
 class GameObject;
+enum PRIMITIVE_TYPE;
 
 class ModuleScene :
 	public Module
@@ -21,6 +22,7 @@ public:
 	bool CleanUp();
 
 	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");
+	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
 };
 

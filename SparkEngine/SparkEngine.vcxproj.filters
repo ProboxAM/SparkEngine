@@ -363,7 +363,9 @@
     <ClInclude Include="PanelInspector.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleMeshes.h" />
+    <ClInclude Include="ModuleMeshes.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -561,7 +563,9 @@
     <ClCompile Include="PanelInspector.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleMeshes.cpp" />
+    <ClCompile Include="ModuleMeshes.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">
