@@ -5,16 +5,8 @@
 #include "SDL\include\SDL_opengl.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
-
-#define PAR_SHAPES_IMPLEMENTATION
-#include "Par/par_shapes.h"
 #include "ModuleImporter.h"
 #include "Mesh.h"
-
-#define ILUT_USE_OPENGL
-#include "DeviL/include/ilut.h"
-
-
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */

@@ -11,5 +11,7 @@ public:
 	~ModuleMeshes();
 
 	Mesh* LoadMesh(const aiScene* scene, aiMesh* mesh);
+	Mesh* CreateSphereMesh();
+	Mesh* CreateSquareMesh();
 };
 

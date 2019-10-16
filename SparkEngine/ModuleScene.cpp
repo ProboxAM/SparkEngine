@@ -8,6 +8,9 @@
 #include "ComponentTexture.h"
 #include "ComponentTransform.h"
 
+#include "ModuleMeshes.h"
+#include "ModuleTextures.h"
+
 #include "ModuleScene.h"
 
 ModuleScene::ModuleScene(bool start_enabled) : Module(start_enabled)
@@ -29,6 +32,14 @@ bool ModuleScene::Init(nlohmann::json::iterator it)
 bool ModuleScene::Start()
 {
 	App->importer->ImportFile("Assets/Bakerhouse.fbx");
+
+	Mesh* mesh = App->meshes->CreateSphereMesh();
+	GameObject* obj = CreateGameObject(nullptr, "Sphere");
+	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
+	c_mesh->AddMesh(mesh);
+
+	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
+	c_text->AddTexture(App->textures->GetDefaultTexture());
 
 	return true;
 }
