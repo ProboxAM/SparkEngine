@@ -48,7 +48,7 @@ int ComponentTexture::GetTextureSize()
 }
 int ComponentTexture::GetTextureID()
 {
-	return tex->id;
+	return GetTexture()->id;
 }
 uint ComponentTexture::GetTextureWidth()
 {
