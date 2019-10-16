@@ -33,10 +33,10 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
+	AddModule(editor);
 	AddModule(camera);
 	AddModule(textures);
 	AddModule(meshes);
-	AddModule(editor);
 	AddModule(input);
 	AddModule(fsystem);
 	AddModule(importer);
