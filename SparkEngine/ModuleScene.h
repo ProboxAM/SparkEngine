@@ -3,6 +3,7 @@
 #include <vector>
 
 class GameObject;
+enum PRIMITIVE_TYPE;
 
 #define GRID_SIZE 40
 
@@ -23,6 +24,7 @@ public:
 	bool CleanUp();
 
 	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");
+	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
 
 	std::vector<float3> grid_points;

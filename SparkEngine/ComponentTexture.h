@@ -18,6 +18,7 @@ public:
 	std::string GetTexturePath();
 	std::string GetTextureFormat();
 	int GetTextureSize();
+	int GetTextureID();
 	uint GetTextureWidth();
 	uint GetTextureHeight();
 	uint GetTextureBPP();

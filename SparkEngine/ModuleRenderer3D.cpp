@@ -5,16 +5,8 @@
 #include "SDL\include\SDL_opengl.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
-
-#define PAR_SHAPES_IMPLEMENTATION
-#include "Par/par_shapes.h"
 #include "ModuleImporter.h"
 #include "Mesh.h"
-
-#define ILUT_USE_OPENGL
-#include "DeviL/include/ilut.h"
-
-
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
@@ -139,7 +131,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//std::uniform_real_distribution<float> uniform_dist(0, 1);
 	//float mean = uniform_dist(rng);
 
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
@@ -153,38 +144,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		lights[i].Render();
 
 
-	//Par_shapes--------------------------------------------------------------------------------------------------------------------//
-
-	/*glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_vertex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//// … draw other buffers
-	glDrawElements(GL_TRIANGLES, my_sphere->ntriangles * 3, GL_UNSIGNED_SHORT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);*/
-
-	/*GLubyte checkImage[48][48][4];
-	for (int i = 0; i < 48; i++)
-	{
-		for (int j = 0; j < 48; j++)
-		{
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checkImage[i][j][0] = (GLubyte)c;
-			checkImage[i][j][1] = (GLubyte)c;
-			checkImage[i][j][2] = (GLubyte)c;
-			checkImage[i][j][3] = (GLubyte)255;
-		}
-	}
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &checkers);
-	glBindTexture(GL_TEXTURE_2D, checkers);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 48, 48, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-	glBindTexture(GL_TEXTURE_2D, 0);*/
-
 	return UPDATE_CONTINUE;
 }
 
@@ -192,6 +151,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	App->editor->Draw();
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -246,12 +206,17 @@ void ModuleRenderer3D::DrawMesh(Mesh* m, Texture* tex)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
-	glNormalPointer(GL_FLOAT, 0, nullptr);
-
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
-	glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+	if (m->normal.size() > 0)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
+		glNormalPointer(GL_FLOAT, 0, nullptr);
+	}
+	if (m->uv.size() > 0)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
+		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
+	}
 	glBindTexture(GL_TEXTURE_2D, tex->id);
 
 	glDrawElements(GL_TRIANGLES, m->indices.size(), GL_UNSIGNED_INT, nullptr);

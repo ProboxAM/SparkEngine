@@ -86,8 +86,10 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("BPP: " + std::to_string(c_texture->GetTextureBPP())).c_str());
 
+					ImGui::Image((void*)(intptr_t)c_texture->GetTextureID(), ImVec2(256, 256));
 
-					ImGui::Checkbox("Checkers texture: ", &c_texture->debug_texture);
+
+					ImGui::Checkbox("Checkers texture", &c_texture->debug_texture);
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::LIGHT)

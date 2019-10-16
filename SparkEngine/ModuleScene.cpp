@@ -8,6 +8,9 @@
 #include "ComponentTexture.h"
 #include "ComponentTransform.h"
 
+#include "ModuleMeshes.h"
+#include "ModuleTextures.h"
+
 #include "ModuleScene.h"
 
 #include "glew/glew.h"
@@ -64,6 +67,41 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name)
 	go->SetName(name);
 	gameobjects.push_back(go);
 	return go;
+}
+
+GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject * parent)
+{
+	std::string name;
+	switch (type)
+	{
+	case P_CUBE:
+		name = "Cube";
+		break;
+	case P_SPHERE:
+		name = "Sphere";
+		break;
+	case P_CYLINDER:
+		name = "Cylinder";
+		break;
+	case P_PLANE:
+		name = "Plane";
+		break;
+	case P_CONE:
+		name = "Cone";
+		break;
+	default:
+		name = "GameObject";
+		break;
+	}
+
+	GameObject* obj = CreateGameObject(parent,name);
+	Mesh* mesh = App->meshes->CreatePrimitiveMesh(type);
+	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
+	c_mesh->AddMesh(mesh);
+	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
+	c_text->AddTexture(App->textures->GetDefaultTexture());
+
+	return obj;
 }
 
 GameObject * ModuleScene::CreateRootGameObject()
