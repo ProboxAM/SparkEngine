@@ -4,6 +4,8 @@
 
 class GameObject;
 
+#define GRID_SIZE 40
+
 class ModuleScene :
 	public Module
 {
@@ -22,5 +24,10 @@ public:
 
 	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");
 	GameObject* CreateRootGameObject();
+
+	std::vector<float3> grid_points;
+	uint grid_id;
+	void GenerateGrid();
+	void DrawGrid();
 };
 

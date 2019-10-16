@@ -28,7 +28,6 @@ public:
 	void DrawMesh(Mesh* m, Texture* tex);
 	void DebugVertexNormals(Mesh* m);
 	void DebugFaceNormals(Mesh* m);
-
 public:
 
 	Light lights[MAX_LIGHTS];
