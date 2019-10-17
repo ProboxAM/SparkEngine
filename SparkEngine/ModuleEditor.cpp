@@ -55,6 +55,15 @@ bool ModuleEditor::Init(nlohmann::json::iterator it)
 	return true;
 }
 
+bool ModuleEditor::Start()
+{
+	for (std::vector<Panel*>::iterator it = panels.begin(); it != panels.end(); ++it)
+	{
+		(*it)->Start();
+	}
+	return true;
+}
+
 bool ModuleEditor::CleanUp()
 {
 	ImGui_ImplOpenGL3_Shutdown();

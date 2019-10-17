@@ -6,6 +6,7 @@ public:
 	PanelScene(bool active);
 	~PanelScene();
 	void Draw();
+	void Start();
 
 private:
 	bool depth_test = false;

@@ -28,23 +28,17 @@ void PanelScene::Draw()
 		ImVec2(1, 0));
 	if (ImGui::BeginMenuBar())
 	{
-		if(ImGui::BeginMenu("Renderer"))
-		{
-			if (ImGui::Checkbox("Cull Face", &cull_face))
-				App->renderer3D->GLEnable(GL_CULL_FACE, cull_face);
-			if (ImGui::Checkbox("Lighting", &lighting))
-				App->renderer3D->GLEnable(GL_LIGHTING, lighting);
-			if (ImGui::Checkbox("Color Material", &color_material))
-				App->renderer3D->GLEnable(GL_COLOR_MATERIAL, color_material);
-			if (ImGui::Checkbox("Texture 2D", &texture_2D))
-				App->renderer3D->GLEnable(GL_TEXTURE_2D, texture_2D);
-
-			ImGui::EndMenu();
-		}
+		if (ImGui::Checkbox("Lighting", &lighting))
+			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
 		ImGui::Checkbox("Show Grid", &App->scene->show_grid);
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
 		ImGui::EndMenuBar();
 	}
 	ImGui::End();
+}
+
+void PanelScene::Start()
+{
+	lighting = true;
 }

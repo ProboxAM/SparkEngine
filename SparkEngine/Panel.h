@@ -16,6 +16,11 @@ public:
 		active = !active;
 	}
 
+	virtual void Start()
+	{
+
+	}
+
 	bool IsActive() {
 		return active;
 	}

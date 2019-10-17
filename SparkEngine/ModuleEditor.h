@@ -24,6 +24,7 @@ public:
 	bool Init(nlohmann::json::iterator it);
 	bool CleanUp();
 	void Draw();
+	bool Start();
 	update_status Update(float dt);
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
