@@ -6,6 +6,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
 
+#include <iomanip>
 
 PanelInspector::PanelInspector(bool a) : Panel(a)
 {
@@ -31,23 +32,42 @@ void PanelInspector::Draw()
 					ImGui::Text("Position: ");
 					ImGui::SameLine();
 					std::string x, y, z;
-					x = std::to_string(go->transform->position.x);
-					y = std::to_string(go->transform->position.y);
-					z = std::to_string(go->transform->position.z);
+					std::stringstream stream;
+					stream << std::fixed << std::setprecision(2) << go->transform->position.x;
+					x = stream.str();
+					stream.str("");
+					stream << std::fixed << std::setprecision(2) << go->transform->position.y;
+					y = stream.str();
+					stream.str("");
+					stream << std::fixed << std::setprecision(2) << go->transform->position.z;
+					z = stream.str();
+					stream.str("");
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("X: " + x + " Y: " + y + " Z: " + z).c_str());
 
 					ImGui::Text("Rotation: ");
 					ImGui::SameLine();
-					x = std::to_string(go->transform->EulerAngles().x);
-					y = std::to_string(go->transform->EulerAngles().y);
-					z = std::to_string(go->transform->EulerAngles().z);
+					stream << std::fixed << std::setprecision(2) << go->transform->EulerAngles().x;
+					x = stream.str();
+					stream.str("");
+					stream << std::fixed << std::setprecision(2) << go->transform->EulerAngles().y;
+					y = stream.str();
+					stream.str("");
+					stream << std::fixed << std::setprecision(2) << go->transform->EulerAngles().z;
+					z = stream.str();
+					stream.str("");
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("X: " + x + " Y: " + y + " Z: " + z).c_str());
 
 					ImGui::Text("Scale: ");
 					ImGui::SameLine();
-					x = std::to_string(go->transform->scale.x);
-					y = std::to_string(go->transform->scale.y);
-					z = std::to_string(go->transform->scale.z);
+					stream << std::fixed << std::setprecision(2) << go->transform->scale.x;
+					x = stream.str();
+					stream.str("");
+					stream << std::fixed << std::setprecision(2) << go->transform->scale.y;
+					y = stream.str();
+					stream.str("");
+					stream << std::fixed << std::setprecision(2) << go->transform->scale.z;
+					z = stream.str();
+					stream.str("");
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("   X: " + x + " Y: " + y + " Z: " + z).c_str());
 				}
 			}
