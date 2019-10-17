@@ -19,7 +19,6 @@
 
 
 
-
 ModuleEditor::ModuleEditor(bool start_enabled) : Module(start_enabled)
 {
 	name = "Editor";
@@ -39,6 +38,7 @@ bool ModuleEditor::Init(nlohmann::json::iterator it)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
@@ -120,16 +120,18 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::EndMenu();
 		}
 
-
 		ImGui::Checkbox("Show Grid", &App->scene->show_grid);
 		ImGui::EndMainMenuBar();
 	}
 
+	ImGui::Begin("Console");
 	for (std::vector<Panel*>::iterator it = panels.begin(); it != panels.end(); ++it)
 	{
 		if ((*it)->IsActive())
 			(*it)->Draw();
 	}
+	ImGui::End();
+
 
 	return UPDATE_CONTINUE;
 }
