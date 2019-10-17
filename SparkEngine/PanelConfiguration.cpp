@@ -4,7 +4,7 @@
 #include "ModuleInput.h"
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
-#include "imgui_stdlib.h"
+#include "ImGui/misc/cpp/imgui_stdlib.h"
 
 #define MAX_LOG 50
 
