@@ -1,7 +1,7 @@
 #ifndef _PANEL_H_
 #define _PANEL_H_
 
-#include "imgui.h"
+#include "ImGui/imgui.h"
 
 class Panel
 {

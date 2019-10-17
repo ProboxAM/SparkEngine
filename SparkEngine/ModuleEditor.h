@@ -31,5 +31,7 @@ public:
 
 private:
 	std::vector<Panel*> panels;
+
+	void BeginDockSpace();
 };
 

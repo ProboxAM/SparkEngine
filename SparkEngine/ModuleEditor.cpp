@@ -12,10 +12,10 @@
 #include "PanelHierarchy.h"
 #include "PanelInspector.h"
 
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_stdlib.h"
 
+#include "ImGui/examples/imgui_impl_sdl.h"
+#include "ImGui/examples/imgui_impl_opengl3.h"
+#include "ImGui/misc/cpp/imgui_stdlib.h"
 
 
 
@@ -38,6 +38,7 @@ bool ModuleEditor::Init(nlohmann::json::iterator it)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
@@ -65,6 +66,8 @@ void ModuleEditor::Draw()
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	ImGui::EndFrame();
 }
 
 update_status ModuleEditor::Update(float dt)
@@ -72,6 +75,8 @@ update_status ModuleEditor::Update(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+
+	BeginDockSpace();
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -119,7 +124,6 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::EndMenu();
 		}
 
-
 		ImGui::Checkbox("Show Grid", &App->scene->show_grid);
 		ImGui::EndMainMenuBar();
 	}
@@ -129,6 +133,9 @@ update_status ModuleEditor::Update(float dt)
 		if ((*it)->IsActive())
 			(*it)->Draw();
 	}
+
+	//End Dockspace
+	ImGui::End();
 
 	return UPDATE_CONTINUE;
 }
@@ -149,4 +156,28 @@ void ModuleEditor::LogFrame(float fps, float ms)
 {
 	if (panels[CONFIG] != nullptr)
 		((PanelConfiguration*)panels[CONFIG])->LogFrame(fps, ms);
+}
+
+
+void ModuleEditor::BeginDockSpace()
+{
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::SetNextWindowBgAlpha(0.0f);
+
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace Demo", NULL, window_flags);
+	ImGui::PopStyleVar(3);
+
+	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 }

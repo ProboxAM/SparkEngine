@@ -11,14 +11,14 @@ PanelDebug::~PanelDebug()
 
 void PanelDebug::Draw()
 {
-	ImGui::BeginChild("Log");
+	ImGui::Begin("Console");
 	ImGui::TextUnformatted(debug_buff.begin());
 	if (move_debug_scroll)
 	{
 		ImGui::SetScrollHere(1.0f);
 		move_debug_scroll = false;
 	}
-	ImGui::EndChild();
+	ImGui::End();
 }
 
 void PanelDebug::LogDebug(const char * text)
