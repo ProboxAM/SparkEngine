@@ -24,24 +24,26 @@ public:
 	void GLEnable(unsigned int flag, bool active);
 	void SetWireframeMode(bool on);
 
-
 	void DrawMesh(Mesh* m, Texture* tex);
 	void DebugVertexNormals(Mesh* m);
 	void DebugFaceNormals(Mesh* m);
-public:
 
+	void ResizeScene(float w, float h);
+
+private:
+	void CreateSceneBuffer();
+
+public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
+	uint scene_buffer_id = -1;
+	uint scene_texture_id;
 private:
 	bool vsync;
 
-	//TESTING STUFF
-	uint my_vertex = 0;
-	uint my_indices = 0;
-	par_shapes_mesh* my_sphere = nullptr;
+	uint scene_depth_id;
 
-	uint checkers;
 };

@@ -12,6 +12,7 @@ enum Panel_Type {
 	ABOUT,
 	HIERARCHY,
 	INSPECTOR,
+	SCENE,
 	TOTAL
 };
 

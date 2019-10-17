@@ -104,9 +104,6 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		glEnable(GL_TEXTURE_2D);
 	}
 
-	// Projection matrix for
-	OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
-
 	GLenum err = glewInit();
 	// … check for errors
 	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
@@ -115,7 +112,9 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	//my_sphere = par_shapes_create_subdivided_sphere(5);
+	CreateSceneBuffer();
+	// Projection matrix for
+	OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
 
 	return ret;
 }
@@ -130,8 +129,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//// Choose a random mean between 1 and 6
 	//std::uniform_real_distribution<float> uniform_dist(0, 1);
 	//float mean = uniform_dist(rng);
-
+	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
@@ -150,6 +151,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	App->editor->Draw();
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -170,6 +174,8 @@ bool ModuleRenderer3D::CleanUp()
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
+
+	ResizeScene(width, height);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -252,4 +258,34 @@ void ModuleRenderer3D::DebugFaceNormals(Mesh* m)
 	glDrawArrays(GL_LINES, 0, m->debug_face_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void ModuleRenderer3D::ResizeScene(float w, float h)
+{
+	glBindTexture(GL_TEXTURE_2D, scene_texture_id);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, scene_depth_id);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, w, h);
+}
+
+void ModuleRenderer3D::CreateSceneBuffer()
+{
+	glGenFramebuffers(1, &scene_buffer_id);
+	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id);
+
+	glGenTextures(1, &scene_texture_id);
+	glBindTexture(GL_TEXTURE_2D, scene_texture_id);
+	float2 size = float2(App->window->GetWindowWidth(), App->window->GetWindowHeight());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, scene_texture_id, 0);
+
+	glGenRenderbuffers(1, &scene_depth_id);
+	glBindRenderbuffer(GL_RENDERBUFFER, scene_depth_id);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, size.x, size.y);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, scene_depth_id);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

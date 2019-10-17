@@ -162,7 +162,6 @@ void PanelConfiguration::Draw()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Lighting", &lighting))
 			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
-
 		if (ImGui::Checkbox("Color Material", &color_material))
 			App->renderer3D->GLEnable(GL_COLOR_MATERIAL, color_material);
 		ImGui::SameLine();
