@@ -58,7 +58,7 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::Update(float dt)
 {
-	//transform_matrix = parent->transform_matrix * local_transform_matrix;
+	if(parent)transform_matrix = parent->transform_matrix * local_transform_matrix;
 
-	//transform_matrix.Decompose(position, rotation, scale);
+	transform_matrix.Decompose(position, rotation, scale);
 }

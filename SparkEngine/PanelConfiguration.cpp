@@ -168,8 +168,6 @@ void PanelConfiguration::Draw()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Texture 2D", &texture_2D))
 			App->renderer3D->GLEnable(GL_TEXTURE_2D, texture_2D);
-		if (ImGui::Checkbox("Wireframe", &wireframe))
-			App->renderer3D->SetWireframeMode(wireframe);
 	}
 
 	ImGui::End();
