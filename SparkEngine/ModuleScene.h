@@ -31,5 +31,6 @@ public:
 	uint grid_id;
 	void GenerateGrid();
 	void DrawGrid();
+	bool show_grid = true;
 };
 
