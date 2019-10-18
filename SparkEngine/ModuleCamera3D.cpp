@@ -69,6 +69,7 @@ update_status ModuleCamera3D::Update(float dt)
 		float3 end_position = { Reference.x, Reference.y, Reference.z};
 		float3 position = { Position.x, Position.y, Position.z };
 		float distance = position.Distance(end_position);
+		speed = speed * distance * dt;
 		if (distance < min_distance) {
 			focusing = false;
 			camera_inputs_active = true;
