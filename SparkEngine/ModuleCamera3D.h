@@ -17,6 +17,12 @@ public:
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 
+	bool focusing = false;
+	float focus_distance = 5.f;
+	float min_distance = 15.f;
+
+	bool GOSelectedAsReference();
+
 private:
 
 	void CalculateViewMatrix();

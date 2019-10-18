@@ -49,8 +49,28 @@ update_status ModuleCamera3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 800.0f * dt;
 
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		if (GOSelectedAsReference()) {
+			LookAt(Reference);
+			focusing = true;
+		}
+	}
+
+
+	if (focusing)
+	{
+		GOSelectedAsReference();
+		float3 end_position = { Reference.x, Reference.y, Reference.z};
+		float3 position = { Position.x, Position.y, Position.z };
+		float distance = position.Distance(end_position);
+		if (distance < min_distance) {
+			focusing = false;
+		}
+		else newPos -= Z * speed;
+		LOG("Distance %f", distance);
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
@@ -66,6 +86,46 @@ update_status ModuleCamera3D::Update(float dt)
 	Reference += newPos;
 
 	// Mouse motion ----------------
+
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	{
+		if (App->scene->selected_gameobject)LookAt({ App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z });
+		else LookAt({ App->scene->root->transform->position.x,  App->scene->root->transform->position.y, App->scene->root->transform->position.z });
+
+
+		int dx = -App->input->GetMouseXMotion();
+		int dy = -App->input->GetMouseYMotion();
+
+		float Sensitivity = 0.25f;
+
+		Position -= Reference;
+
+		if (dx != 0)
+		{
+			float DeltaX = (float)dx * Sensitivity;
+
+			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (dy != 0)
+		{
+			float DeltaY = (float)dy * Sensitivity;
+
+			Y = rotate(Y, DeltaY, X);
+			Z = rotate(Z, DeltaY, X);
+
+			if (Y.y < 0.0f)
+			{
+				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = cross(Z, X);
+			}
+		}
+
+		Position = Reference + Z * length(Position);
+	}
+
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -101,46 +161,6 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position = Reference + Z * length(Position);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-	{
-		if (App->scene->selected_gameobject)LookAt({ App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z });
-		else LookAt({ App->scene->root->transform->position.x,  App->scene->root->transform->position.y, App->scene->root->transform->position.z });
-		
-
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
-
-		float Sensitivity = 0.25f;
-
-		Position -= Reference;
-
-		if (dx != 0)
-		{
-			float DeltaX = (float)dx * Sensitivity;
-
-			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-		}
-
-		if (dy != 0)
-		{
-			float DeltaY = (float)dy * Sensitivity;
-
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
-
-			if (Y.y < 0.0f)
-			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-			}
-		}
-
-		Position = Reference + Z * length(Position);
-	}
-
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
@@ -193,6 +213,15 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 float* ModuleCamera3D::GetViewMatrix()
 {
 	return &ViewMatrix;
+}
+
+bool ModuleCamera3D::GOSelectedAsReference()
+{
+	if (App->scene->selected_gameobject) {
+		Reference = { App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z };
+		return true;
+	}
+	else return false;
 }
 
 // -----------------------------------------------------------------
