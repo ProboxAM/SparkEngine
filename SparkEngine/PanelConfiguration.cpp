@@ -10,6 +10,19 @@
 
 PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 {
+	for (int i = 0; i < 4; i++)
+	{
+		window_settings[i] = false;
+	}
+}
+
+
+PanelConfiguration::~PanelConfiguration()
+{
+}
+
+void PanelConfiguration::Start()
+{
 	app_name = App->GetName();
 	org_name = App->GetOrganization();
 	refresh_rate = App->window->GetRefreshRate();
@@ -20,17 +33,12 @@ PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 	window_settings[BORDERLESS] = App->window->GetBorderless();
 	window_settings[RESIZABLE] = App->window->GetResizable();
 	window_settings[FSDESKTOP] = App->window->GetFullDesktop();
+	lighting = true;
+	depth_test = true;
+	cull_face = true;
+	color_material = true;
+	texture_2D = true;
 	SDL_VERSION(&compiled_version);
-
-	for (int i = 0; i < 4; i++)
-	{
-		window_settings[i] = false;
-	}
-}
-
-
-PanelConfiguration::~PanelConfiguration()
-{
 }
 
 void PanelConfiguration::Draw()
@@ -162,7 +170,6 @@ void PanelConfiguration::Draw()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Lighting", &lighting))
 			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
-
 		if (ImGui::Checkbox("Color Material", &color_material))
 			App->renderer3D->GLEnable(GL_COLOR_MATERIAL, color_material);
 		ImGui::SameLine();

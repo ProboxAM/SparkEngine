@@ -9,6 +9,7 @@
 #include "PanelConfiguration.h"
 #include "PanelAbout.h"
 #include "PanelDebug.h"
+#include "PanelScene.h"
 #include "PanelHierarchy.h"
 #include "PanelInspector.h"
 
@@ -49,7 +50,17 @@ bool ModuleEditor::Init(nlohmann::json::iterator it)
 	panels[ABOUT] = new PanelAbout(false);
 	panels[HIERARCHY] = new PanelHierarchy(true);
 	panels[INSPECTOR] = new PanelInspector(true);
+	panels[SCENE] = new PanelScene(true);
 
+	return true;
+}
+
+bool ModuleEditor::Start()
+{
+	for (std::vector<Panel*>::iterator it = panels.begin(); it != panels.end(); ++it)
+	{
+		(*it)->Start();
+	}
 	return true;
 }
 
@@ -123,8 +134,6 @@ update_status ModuleEditor::Update(float dt)
 				panels[ABOUT]->Activate();
 			ImGui::EndMenu();
 		}
-
-		ImGui::Checkbox("Show Grid", &App->scene->show_grid);
 		ImGui::EndMainMenuBar();
 	}
 

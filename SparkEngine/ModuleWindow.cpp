@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
 
 ModuleWindow::ModuleWindow(bool start_enabled) : Module(start_enabled)
@@ -113,12 +114,14 @@ void ModuleWindow::SetWindowWidth(int width)
 {
 	this->width = width;
 	SDL_SetWindowSize(window, width, height);
+	App->renderer3D->OnResize(width, height);
 }
 
 void ModuleWindow::SetWindowHeight(int height)
 {
 	this->height = height;
 	SDL_SetWindowSize(window, width, height);
+	App->renderer3D->OnResize(width, height);
 }
 
 int ModuleWindow::GetRefreshRate()

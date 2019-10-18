@@ -11,6 +11,7 @@ public:
 	~PanelConfiguration();
 
 	void Draw();
+	void Start();
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
 	void LogFrame(float fps, float ms);

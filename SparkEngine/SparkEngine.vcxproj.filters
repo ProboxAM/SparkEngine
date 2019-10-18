@@ -366,6 +366,9 @@
     <ClInclude Include="ImGui\misc\cpp\imgui_stdlib.h">
       <Filter>Sources\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="PanelScene.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -565,6 +568,9 @@
     </ClCompile>
     <ClCompile Include="ImGui\misc\cpp\imgui_stdlib.cpp">
       <Filter>Sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelScene.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

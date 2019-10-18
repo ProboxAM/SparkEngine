@@ -14,8 +14,12 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 5.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
+	Position = vec3(0.0f, 3.0f, 5.0f);
+	Reference = vec3(0.0f, 3.0f, 5.0f);
+
+	Y = rotate(Y, -20, X);
+	Z = rotate(Z, -20, X);
+	Position = Reference + Z * length(Position);
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -188,7 +192,7 @@ void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool Rota
 }
 
 // -----------------------------------------------------------------
-void ModuleCamera3D::LookAt( const vec3 &Spot)
+void ModuleCamera3D::LookAt(const vec3 &Spot)
 {
 	Reference = Spot;
 
