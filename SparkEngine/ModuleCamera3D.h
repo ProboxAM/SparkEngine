@@ -22,6 +22,9 @@ public:
 	float min_distance = 15.f;
 
 	bool GOSelectedAsReference();
+	void CameraInputs();
+
+	bool camera_inputs_active = true;
 
 private:
 
@@ -29,7 +32,8 @@ private:
 
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	vec3 X, Y, Z, Position, Reference, newPos;
+	float speed;
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;

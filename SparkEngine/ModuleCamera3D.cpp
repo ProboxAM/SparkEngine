@@ -47,9 +47,8 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
-
-	vec3 newPos(0,0,0);
-	float speed = 300.0f * dt;
+	newPos = { 0, 0, 0 };
+	speed = 300.0f * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 800.0f * dt;
 
@@ -59,6 +58,7 @@ update_status ModuleCamera3D::Update(float dt)
 		if (GOSelectedAsReference()) {
 			LookAt(Reference);
 			focusing = true;
+			camera_inputs_active = false;
 		}
 	}
 
@@ -71,20 +71,13 @@ update_status ModuleCamera3D::Update(float dt)
 		float distance = position.Distance(end_position);
 		if (distance < min_distance) {
 			focusing = false;
+			camera_inputs_active = true;
 		}
 		else newPos -= Z * speed;
 		LOG("Distance %f", distance);
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-	if (App->input->GetMouseZ() > 0) newPos -= Z * speed;
-	if (App->input->GetMouseZ() < 0) newPos += Z * speed;
+	CameraInputs();
 
 	Position += newPos;
 	Reference += newPos;
@@ -226,6 +219,22 @@ bool ModuleCamera3D::GOSelectedAsReference()
 		return true;
 	}
 	else return false;
+}
+
+void ModuleCamera3D::CameraInputs()
+{
+	if (camera_inputs_active)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+		if (App->input->GetMouseZ() > 0) newPos -= Z * speed;
+		if (App->input->GetMouseZ() < 0) newPos += Z * speed;
+	}
 }
 
 // -----------------------------------------------------------------
