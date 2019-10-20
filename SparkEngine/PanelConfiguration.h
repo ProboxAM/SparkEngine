@@ -43,14 +43,6 @@ private:
 	GPUinfo gpu_info;
 
 	void UpdateGpuInfo();
-
-
-	bool depth_test = false;
-	bool cull_face = false;
-	bool lighting = false;
-	bool color_material = false;
-	bool texture_2D = false;
-	bool wireframe = false;
 };
 
 #endif // !_PANEL_CONFIG_H_

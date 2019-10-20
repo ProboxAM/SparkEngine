@@ -15,11 +15,6 @@
 
 PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		window_settings[i] = false;
-	}
-
 	unsigned int vendor_id;
 	unsigned int device_id;
 	std::wstring gfx_brand;
