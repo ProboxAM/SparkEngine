@@ -21,7 +21,10 @@ public:
 
 	void OnResize(int width, int height);
 	bool Save(nlohmann::json &it);
+	bool Load(nlohmann::json::iterator it);
 	void GLEnable(unsigned int flag, bool active);
+	bool IsEnabled(unsigned int flag);
+
 	void SetWireframeMode(bool on);
 
 	void DrawMesh(Mesh* m, Texture* tex);
@@ -29,6 +32,10 @@ public:
 	void DebugFaceNormals(Mesh* m);
 
 	void ResizeScene(float w, float h);
+
+	bool IsWireframeEnabled();
+	bool GetVsync();
+	void SetVsync(bool active);
 
 private:
 	void CreateSceneBuffer();
@@ -42,8 +49,9 @@ public:
 	uint scene_buffer_id = -1;
 	uint scene_texture_id;
 private:
+	bool wireframe;
 	bool vsync;
-
+	bool depth_test, cull_face, lighting, color_material, texture2d;
 	uint scene_depth_id;
 
 };

@@ -23,6 +23,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	bool Load(nlohmann::json::iterator it);
+	bool Save(nlohmann::json &it);
+
 	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();

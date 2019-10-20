@@ -11,6 +11,7 @@
 
 ModuleTextures::ModuleTextures(bool active) : Module(active)
 {
+	name = "Textures";
 }
 
 

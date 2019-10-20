@@ -20,7 +20,7 @@ ComponentMesh::~ComponentMesh()
 void ComponentMesh::Update(float dt)
 {
 	Texture* tex = ((ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE))->GetTexture();
-	if (mesh && tex)
+	if (mesh)
 		App->renderer3D->DrawMesh(mesh, tex);
 
 	if (debug_vertex_normal)

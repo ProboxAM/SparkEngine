@@ -96,12 +96,27 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+		depth_test = (*it)["depth_test"];
+		cull_face = (*it)["cull_face"];
+		lighting = (*it)["lighting"];
+		color_material = (*it)["color_material"];
+		texture2d = (*it)["texture2d"];
+		wireframe = (*it)["wireframe"];
+
+		if(depth_test)
+			glEnable(GL_DEPTH_TEST);
+		if(cull_face)
+			glEnable(GL_CULL_FACE);
+		if(lighting)
+			glEnable(GL_LIGHTING);
+		if(color_material)
+			glEnable(GL_COLOR_MATERIAL);
+		if(texture2d)
+			glEnable(GL_TEXTURE_2D);
+
+		SetWireframeMode(wireframe);
+
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
 	}
 
 	GLenum err = glewInit();
@@ -189,18 +204,82 @@ void ModuleRenderer3D::OnResize(int width, int height)
 bool ModuleRenderer3D::Save(nlohmann::json &it)
 {
 	it[name] = {
-		{"vsync",vsync}
+		{ "vsync",vsync },
+		{ "depth_test",depth_test },
+		{ "cull_face",cull_face },
+		{ "lighting",lighting },
+		{ "color_material",color_material },
+		{ "texture2d",texture2d }
 	};
+
+	return true;
+}
+
+bool ModuleRenderer3D::Load(nlohmann::json::iterator it)
+{
+	vsync = (*it)["vsync"];
+	depth_test = (*it)["depth_test"];
+	cull_face = (*it)["cull_face"];
+	lighting = (*it)["lighting"];
+	color_material = (*it)["color_material"];
+	texture2d = (*it)["texture2d"];
+	wireframe = (*it)["wireframe"];
+
+	SetVsync(vsync);
+	if (depth_test)
+		glEnable(GL_DEPTH_TEST);
+	if (cull_face)
+		glEnable(GL_CULL_FACE);
+	if (lighting)
+		glEnable(GL_LIGHTING);
+	if (color_material)
+		glEnable(GL_COLOR_MATERIAL);
+	if (texture2d)
+		glEnable(GL_TEXTURE_2D);
+	SetWireframeMode(wireframe);
 
 	return true;
 }
 
 void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 {
+	switch (flag)
+	{
+	case GL_DEPTH_TEST: depth_test = active;
+		break;
+	case GL_CULL_FACE: cull_face = active;
+		break;
+	case GL_LIGHTING: lighting = active;
+		break;
+	case GL_COLOR_MATERIAL: color_material = active;
+		break;
+	case GL_TEXTURE_2D: texture2d = active;
+		break;
+	}
+
 	if (active)
 		glEnable(flag);
 	else
 		glDisable(flag);
+}
+
+bool ModuleRenderer3D::IsEnabled(unsigned int flag)
+{
+	bool ret = false;
+	switch (flag)
+	{
+	case GL_DEPTH_TEST: ret = depth_test;
+		break;
+	case GL_CULL_FACE: ret = cull_face;
+		break;
+	case GL_LIGHTING: ret = lighting;
+		break;
+	case GL_COLOR_MATERIAL: ret = color_material;
+		break;
+	case GL_TEXTURE_2D: ret = texture2d;
+		break;
+	}
+	return ret;
 }
 
 
@@ -223,7 +302,8 @@ void ModuleRenderer3D::DrawMesh(Mesh* m, Texture* tex)
 		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
 		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
 	}
-	glBindTexture(GL_TEXTURE_2D, tex->id);
+	if(tex)
+		glBindTexture(GL_TEXTURE_2D, tex->id);
 
 	glDrawElements(GL_TRIANGLES, m->indices.size(), GL_UNSIGNED_INT, nullptr);
 
@@ -234,10 +314,15 @@ void ModuleRenderer3D::DrawMesh(Mesh* m, Texture* tex)
 
 void ModuleRenderer3D::SetWireframeMode(bool on)
 {
+	wireframe = on;
 	if(on)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+bool ModuleRenderer3D::IsWireframeEnabled() {
+	return wireframe;
 }
 
 void ModuleRenderer3D::DebugVertexNormals(Mesh* m)
@@ -289,3 +374,14 @@ void ModuleRenderer3D::CreateSceneBuffer()
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+bool ModuleRenderer3D::GetVsync()
+{
+	return vsync;
+}
+void ModuleRenderer3D::SetVsync(bool active)
+{
+	vsync = active;
+	SDL_GL_SetSwapInterval(vsync);
+}
+

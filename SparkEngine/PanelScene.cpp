@@ -28,9 +28,11 @@ void PanelScene::Draw()
 		ImVec2(1, 0));
 	if (ImGui::BeginMenuBar())
 	{
+		bool lighting = App->renderer3D->IsEnabled(GL_LIGHTING);
 		if (ImGui::Checkbox("Lighting", &lighting))
 			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
 		ImGui::Checkbox("Show Grid", &App->scene->show_grid);
+		bool wireframe = App->renderer3D->IsWireframeEnabled();
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
 		ImGui::EndMenuBar();
@@ -40,5 +42,4 @@ void PanelScene::Draw()
 
 void PanelScene::Start()
 {
-	lighting = true;
 }
