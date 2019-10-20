@@ -5,6 +5,10 @@
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
 #include "ImGui/misc/cpp/imgui_stdlib.h"
+#include "gpudetect/DeviceId.h"
+
+#include <sstream>
+#include <iomanip>
 
 #define MAX_LOG 50
 
@@ -14,6 +18,25 @@ PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 	{
 		window_settings[i] = false;
 	}
+
+	unsigned int vendor_id;
+	unsigned int device_id;
+	std::wstring gfx_brand;
+	unsigned __int64 memory_budget;
+	unsigned __int64 memory_usage;
+	unsigned __int64 memory_available;
+	unsigned __int64 memory_reserved;
+
+	if (getGraphicsDeviceInfo(&vendor_id, &device_id, &gfx_brand, &memory_budget, &memory_usage, &memory_available, &memory_reserved)) {
+		gpu_info.vendor_id = vendor_id;
+		gpu_info.device_id = device_id;
+		gpu_info.gfx_brand = ws2s(gfx_brand);
+		gpu_info.memory_budget = float(memory_budget) / 1073741824.0f;
+		gpu_info.memory_usage = float(memory_usage) / (1024.f * 1024.f * 1024.f);
+		gpu_info.memory_available = float(memory_available) / (1024.f * 1024.f * 1024.f);
+		gpu_info.memory_reserved = float(memory_reserved) / (1024.f * 1024.f * 1024.f);
+	}else LOG("Something went wrong while getting graphics device info");
+
 }
 
 
@@ -152,13 +175,37 @@ void PanelConfiguration::Draw()
 
 		ImGui::Separator();
 
-		ImGui::Text("Vendor:");
-		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, (const char*)glGetString(GL_VENDOR));
+		UpdateGpuInfo();
 
-		ImGui::Text("GPU Model");
+		ImGui::Text("GPU Vendor id:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, (const char*)glGetString(GL_RENDERER));
+		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(gpu_info.vendor_id).c_str());
+
+		ImGui::Text("GPU Device id:");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(gpu_info.device_id).c_str());
+
+		ImGui::Text("GPU Brand");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, gpu_info.gfx_brand.c_str());
+
+		ImGui::Text("VRAM Budget");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_budget) + "Mb").c_str());
+
+		ImGui::Text("VRAM Current usage");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_usage) + "Mb").c_str());
+
+		ImGui::Text("VRAM Memory available");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_available) + "Mb").c_str());
+
+		ImGui::Text("VRAM Memory reserve");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_reserved) + "Mb").c_str());
+		
+
 	}
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
@@ -218,16 +265,32 @@ std::string PanelConfiguration::GetCpuInfo()
 
 	std::string info;
 
-	if (SDL_Has3DNow())info.append("3DNow, ");
-	if (SDL_HasAVX())info.append("AVX, ");
-	if (SDL_HasAVX2())info.append("AVX2, ");
-	if (SDL_HasMMX())info.append("MMX, ");
-	if (SDL_HasRDTSC())info.append("RDTSC, ");
-	if (SDL_HasSSE())info.append("SSE, ");
-	if (SDL_HasSSE2())info.append("SSE2, ");
-	if (SDL_HasSSE3())info.append("SSE3, ");
-	if (SDL_HasSSE41())info.append("SSE41, ");
-	if (SDL_HasSSE42())info.append("SSE42");
+	if (SDL_Has3DNow())info.append("3DNow | ");
+	if (SDL_HasAVX())info.append("AVX | ");
+	if (SDL_HasAVX2())info.append("AVX2 | ");
+	if (SDL_HasMMX())info.append("MMX | ");
+	if (SDL_HasRDTSC())info.append("RDTSC | ");
+	if (SDL_HasSSE())info.append("SSE | ");
+	if (SDL_HasSSE2())info.append("SSE2 | ");
+	if (SDL_HasSSE3())info.append("SSE3 | ");
+	if (SDL_HasSSE41())info.append("SSE41 | ");
+	if (SDL_HasSSE42())info.append("SSE42 | ");
 
 	return info;
+}
+
+void PanelConfiguration::UpdateGpuInfo()
+{
+	unsigned __int64 memory_budget;
+	unsigned __int64 memory_usage;
+	unsigned __int64 memory_available;
+	unsigned __int64 memory_reserved;
+
+	if (getGraphicsDeviceInfo(nullptr, nullptr, nullptr, &memory_budget, &memory_usage, &memory_available, &memory_reserved)) {
+		gpu_info.memory_budget = float(memory_budget) / (1024.f * 1024.f);
+		gpu_info.memory_usage = float(memory_usage) / (1024.f * 1024.f);
+		gpu_info.memory_available = float(memory_available) / (1024.f * 1024.f);
+		gpu_info.memory_reserved = float(memory_reserved) / (1024.f * 1024.f);
+	}
+	else LOG("Something went wrong while getting graphics device info");
 }
