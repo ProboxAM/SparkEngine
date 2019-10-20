@@ -28,6 +28,9 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Init(nlohmann::json::iterator it)
 {
 	root = CreateRootGameObject();
+
+	show_grid = (*it)["grid"];
+
 	return true;
 }
 
@@ -42,7 +45,8 @@ bool ModuleScene::Start()
 
 update_status ModuleScene::Update(float dt)
 {
-	if(show_grid)DrawGrid();
+	if(show_grid)
+		DrawGrid();
 
 	for (int i = 0; i < gameobjects.size(); i++)
 	{
@@ -54,6 +58,21 @@ update_status ModuleScene::Update(float dt)
 
 bool ModuleScene::CleanUp()
 {
+	return true;
+}
+
+bool ModuleScene::Load(nlohmann::json::iterator it)
+{
+	show_grid = (*it)["grid"];
+
+	return true;
+}
+bool ModuleScene::Save(nlohmann::json& it)
+{
+	it[name] = {
+		{ "grid", show_grid },
+	};
+
 	return true;
 }
 

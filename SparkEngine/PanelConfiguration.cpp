@@ -10,10 +10,6 @@
 
 PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		window_settings[i] = false;
-	}
 }
 
 
@@ -23,21 +19,6 @@ PanelConfiguration::~PanelConfiguration()
 
 void PanelConfiguration::Start()
 {
-	app_name = App->GetName();
-	org_name = App->GetOrganization();
-	refresh_rate = App->window->GetRefreshRate();
-	brightness = App->window->GetBrightness();
-	width = App->window->GetWindowWidth();
-	height = App->window->GetWindowHeight();
-	window_settings[FULLSCREEN] = App->window->GetFullscreen();
-	window_settings[BORDERLESS] = App->window->GetBorderless();
-	window_settings[RESIZABLE] = App->window->GetResizable();
-	window_settings[FSDESKTOP] = App->window->GetFullDesktop();
-	lighting = true;
-	depth_test = true;
-	cull_face = true;
-	color_material = true;
-	texture_2D = true;
 	SDL_VERSION(&compiled_version);
 }
 
@@ -47,13 +28,19 @@ void PanelConfiguration::Draw()
 
 	if (ImGui::Button("Save"))
 		App->SaveSettings();
+	ImGui::SameLine();
+	if (ImGui::Button("Load"))
+		App->LoadSettings();
 
 	if (ImGui::CollapsingHeader("Application"))
 	{
+		std::string app_name = App->GetName();
 		if (ImGui::InputText("Name", &app_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 			App->SetName(app_name);
+		std::string org_name = App->GetOrganization();
 		if (ImGui::InputText("Organization", &org_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 			App->SetOrganization(org_name);
+		int max_fps = App->GetFPSCap();
 		if (ImGui::SliderInt("Cap FPS", &max_fps, 0, 144))
 			App->SetFPSCap(max_fps);
 
@@ -69,33 +56,38 @@ void PanelConfiguration::Draw()
 	}
 
 	if (ImGui::CollapsingHeader("Window"))
-	{
+	{		
+		int width = App->window->GetWindowWidth();
+		int height = App->window->GetWindowHeight();
+		float brightness = App->window->GetBrightness();
 		if (ImGui::SliderInt("Width", &width, 0, 1920))	App->window->SetWindowWidth(width);
 		if (ImGui::SliderInt("Height", &height, 0, 1080)) App->window->SetWindowHeight(height);
 		if (ImGui::SliderFloat("Brightness", &brightness, 0, 1)) App->window->SetWindowBrightness(brightness);
 
+		int refresh_rate = App->window->GetRefreshRate();
 		ImGui::Text("Refresh rate");
 		ImGui::SameLine();
-		std::string temp = std::to_string(refresh_rate);
-		ImGui::TextColored({ 0, 255, 255, 255 }, temp.c_str());
+		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(refresh_rate).c_str());
 
-		if (ImGui::Checkbox("Fullscreen", &window_settings[FULLSCREEN])) {
-			App->window->SetScreenMode(FULLSCREEN, window_settings[FULLSCREEN]);
+		bool fullscreen = App->window->GetFullscreen();
+		if (ImGui::Checkbox("Fullscreen", &fullscreen)) {
+			App->window->SetScreenMode(FULLSCREEN, fullscreen);
 		}
 
 		ImGui::SameLine();
-
-		if (ImGui::Checkbox("Resizable", &window_settings[RESIZABLE])) {
-			App->window->SetScreenMode(RESIZABLE, window_settings[RESIZABLE]);
+		bool resizable = App->window->GetResizable();
+		if (ImGui::Checkbox("Resizable", &resizable)) {
+			App->window->SetScreenMode(RESIZABLE, resizable);
 		}
-		if (ImGui::Checkbox("Borderless", &window_settings[BORDERLESS])) {
-			App->window->SetScreenMode(BORDERLESS, window_settings[BORDERLESS]);
+		bool borderless = App->window->GetBorderless();
+		if (ImGui::Checkbox("Borderless", &borderless)) {
+			App->window->SetScreenMode(BORDERLESS, borderless);
 		}
 
 		ImGui::SameLine();
-
-		if (ImGui::Checkbox("Full Desktop", &window_settings[FSDESKTOP])) {
-			App->window->SetScreenMode(FSDESKTOP, window_settings[FSDESKTOP]);
+		bool fulldesktop = App->window->GetFullDesktop();
+		if (ImGui::Checkbox("Full Desktop", &fulldesktop)) {
+			App->window->SetScreenMode(FSDESKTOP, fulldesktop);
 		}
 	}
 
@@ -160,19 +152,28 @@ void PanelConfiguration::Draw()
 		ImGui::SameLine();
 		ImGui::TextColored({ 0, 255, 255, 255 }, (const char*)glGetString(GL_RENDERER));
 	}
+
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
+		bool vsync = App->renderer3D->GetVsync();
+		if (ImGui::Checkbox("Vsync", &vsync))
+			App->renderer3D->SetVsync(vsync);
+		bool depth_test = App->renderer3D->IsEnabled(GL_DEPTH_TEST);
 		if (ImGui::Checkbox("Depth Test", &depth_test))
 			App->renderer3D->GLEnable(GL_DEPTH_TEST, depth_test);
 		ImGui::SameLine();
+		bool cull_face = App->renderer3D->IsEnabled(GL_CULL_FACE);
 		if (ImGui::Checkbox("Cull Face", &cull_face))
 			App->renderer3D->GLEnable(GL_CULL_FACE, cull_face);
 		ImGui::SameLine();
+		bool lighting = App->renderer3D->IsEnabled(GL_LIGHTING);
 		if (ImGui::Checkbox("Lighting", &lighting))
 			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
+		bool color_material = App->renderer3D->IsEnabled(GL_COLOR_MATERIAL);
 		if (ImGui::Checkbox("Color Material", &color_material))
 			App->renderer3D->GLEnable(GL_COLOR_MATERIAL, color_material);
 		ImGui::SameLine();
+		bool texture_2D = App->renderer3D->IsEnabled(GL_TEXTURE_2D);
 		if (ImGui::Checkbox("Texture 2D", &texture_2D))
 			App->renderer3D->GLEnable(GL_TEXTURE_2D, texture_2D);
 	}
