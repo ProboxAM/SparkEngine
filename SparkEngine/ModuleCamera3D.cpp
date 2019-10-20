@@ -8,6 +8,8 @@
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
+	name = "Camera3D";
+
 	CalculateViewMatrix();
 
 	X = vec3(1.0f, 0.0f, 0.0f);
@@ -42,15 +44,44 @@ bool ModuleCamera3D::CleanUp()
 	return true;
 }
 
+bool ModuleCamera3D::Init(nlohmann::json::iterator it)
+{
+	movement_speed = (*it)["movement_speed"];
+	sprint_speed = (*it)["sprint_speed"];
+	camera_inputs_active = (*it)["inputs"];
+
+	return true;
+}
+
+bool ModuleCamera3D::Load(nlohmann::json::iterator it)
+{
+	movement_speed = (*it)["movement_speed"];
+	sprint_speed = (*it)["sprint_speed"];
+	camera_inputs_active = (*it)["inputs"];
+
+	return true;
+}
+
+bool ModuleCamera3D::Save(nlohmann::json & it)
+{
+	it[name] = {
+		{ "movement_speed",movement_speed },
+		{ "sprint_speed",sprint_speed },
+		{ "inputs", camera_inputs_active}
+	};
+
+	return true;
+}
+
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 	newPos = { 0, 0, 0 };
-	speed = 300.0f * dt;
+	speed = movement_speed * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 800.0f * dt;
+		speed = sprint_speed * dt;
 
 	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
