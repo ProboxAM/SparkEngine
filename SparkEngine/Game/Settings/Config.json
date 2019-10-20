@@ -3,6 +3,11 @@
         "Organization": "ProBoxAM",
         "Title": "Spark Engine"
     },
+    "Camera3D": {
+        "movement_speed": 20.0,
+        "sprint_speed": 40.0,
+        "inputs": true
+    },
     "Render": {
         "color_material": true,
         "cull_face": true,
@@ -10,7 +15,10 @@
         "lighting": true,
         "texture2d": true,
         "vsync": true,
-		"wireframe": false
+        "wireframe": false
+    },
+    "Scene": {
+        "grid": true
     },
     "Window": {
         "borderless": false,
@@ -21,8 +29,5 @@
         "resizable": false,
         "size": 1,
         "width": 1275
-    },
-	"Scene":{
-		"grid":true
-	}
+    }
 }

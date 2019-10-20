@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
@@ -227,6 +228,13 @@ void PanelConfiguration::Draw()
 		bool texture_2D = App->renderer3D->IsEnabled(GL_TEXTURE_2D);
 		if (ImGui::Checkbox("Texture 2D", &texture_2D))
 			App->renderer3D->GLEnable(GL_TEXTURE_2D, texture_2D);
+	}
+
+	if (ImGui::CollapsingHeader("Camera3D"))
+	{
+		ImGui::Checkbox("Camera Inputs", &App->camera->camera_inputs_active);
+		ImGui::SliderFloat("Movement Speed", &App->camera->movement_speed, 0, 100);
+		ImGui::SliderFloat("Sprint Speed", &App->camera->sprint_speed, 0, 100);
 	}
 
 	ImGui::End();

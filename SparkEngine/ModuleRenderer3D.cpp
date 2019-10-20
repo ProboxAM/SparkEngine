@@ -209,7 +209,8 @@ bool ModuleRenderer3D::Save(nlohmann::json &it)
 		{ "cull_face",cull_face },
 		{ "lighting",lighting },
 		{ "color_material",color_material },
-		{ "texture2d",texture2d }
+		{ "texture2d",texture2d },
+		{ "wireframe",wireframe}
 	};
 
 	return true;
@@ -226,16 +227,11 @@ bool ModuleRenderer3D::Load(nlohmann::json::iterator it)
 	wireframe = (*it)["wireframe"];
 
 	SetVsync(vsync);
-	if (depth_test)
-		glEnable(GL_DEPTH_TEST);
-	if (cull_face)
-		glEnable(GL_CULL_FACE);
-	if (lighting)
-		glEnable(GL_LIGHTING);
-	if (color_material)
-		glEnable(GL_COLOR_MATERIAL);
-	if (texture2d)
-		glEnable(GL_TEXTURE_2D);
+	GLEnable(GL_DEPTH_TEST, depth_test);
+	GLEnable(GL_CULL_FACE, cull_face);
+	GLEnable(GL_LIGHTING, lighting);
+	GLEnable(GL_COLOR_MATERIAL, color_material);
+	GLEnable(GL_TEXTURE_2D, texture2d);
 	SetWireframeMode(wireframe);
 
 	return true;
