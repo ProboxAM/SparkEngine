@@ -19,15 +19,27 @@ void PanelHierarchy::Draw()
 	static int selected = -1;
 	for (int i = 0; i < App->scene->gameobjects.size(); ++i)
 	{
-		if (App->scene->gameobjects[i]->GetName() != "root")
+		if (App->scene->gameobjects[i] != App->scene->root)
 		{
-			if (ImGui::Selectable(App->scene->gameobjects[i]->GetName().c_str(), selected == i))
+			if (App->scene->gameobjects[i]->transform->GetChildCount() > 0)
 			{
-				selected = i;
-				App->scene->selected_gameobject = App->scene->gameobjects[i];
-				//LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+				if (ImGui::TreeNode(App->scene->gameobjects[i]->GetName().c_str())) {
+					for (int j = 0; j < App->scene->gameobjects[i]->transform->GetChildCount(); j++)
+					{
+						if (ImGui::Selectable(App->scene->gameobjects[i]->transform->GetChildren()[j]->gameobject->GetName().c_str(), selected == j))
+						{
+							selected = j;
+							App->scene->selected_gameobject = App->scene->gameobjects[i]->transform->GetChildren()[j]->gameobject;
+							LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+						}
+					}
+
+					ImGui::TreePop();
+				}
+
 			}
 		}
+
 	}
 
 	ImGui::End();

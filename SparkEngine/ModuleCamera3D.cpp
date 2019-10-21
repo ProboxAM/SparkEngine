@@ -96,21 +96,8 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 	}
 
+	if (focusing) Focus();
 
-	if (focusing)
-	{
-		GOSelectedAsReference();
-		float3 end_position = { Reference.x, Reference.y, Reference.z};
-		float3 position = { Position.x, Position.y, Position.z };
-		float distance = position.Distance(end_position);
-		speed = speed * distance * focus_factor;
-		if (distance < min_distance) {
-			focusing = false;
-			camera_inputs_active = true;
-		}
-		else newPos -= Z * speed;
-		LOG("Distance %f", distance);
-	}
 
 	CameraInputs();
 
@@ -270,6 +257,20 @@ void ModuleCamera3D::CameraInputs()
 		if (App->input->GetMouseZ() > 0) newPos -= Z * speed;
 		if (App->input->GetMouseZ() < 0) newPos += Z * speed;
 	}
+}
+
+void ModuleCamera3D::Focus()//If theres a selected game object the camera looks at the target and moves to it. It moves slower as the camera gets closer to the target
+{
+	GOSelectedAsReference();
+	float3 end_position = { Reference.x, Reference.y, Reference.z };
+	float3 position = { Position.x, Position.y, Position.z };
+	float distance = position.Distance(end_position);
+	speed = speed * distance * focus_factor;
+	if (distance < min_distance) {
+		focusing = false;
+		camera_inputs_active = true;
+	}
+	else newPos -= Z * speed;
 }
 
 // -----------------------------------------------------------------

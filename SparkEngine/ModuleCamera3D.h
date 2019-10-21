@@ -25,14 +25,14 @@ public:
 	float focus_distance = 5.f;
 	float min_distance = 15.f;
 
-	bool GOSelectedAsReference();
-	void CameraInputs();
-
 	bool camera_inputs_active = true;
 	float movement_speed, sprint_speed, focus_factor;
 private:
 
 	void CalculateViewMatrix();
+	bool GOSelectedAsReference();
+	void CameraInputs();
+	void Focus();
 
 public:
 	

@@ -27,7 +27,7 @@ public:
 	int GetChildCount();
 	void SetParent(ComponentTransform* parent);
 	ComponentTransform* GetParent();
-	
+	std::vector<ComponentTransform*> GetChildren();
 	float3 EulerAngles();
 
 

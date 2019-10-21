@@ -12,6 +12,7 @@ void ComponentTransform::SetParent(ComponentTransform* parent)
 	{
 		this->parent = parent;
 		transform_matrix = parent->transform_matrix * local_transform_matrix;
+		this->parent->children.push_back(this);
 	}
 	else {
 		transform_matrix = {
@@ -26,6 +27,11 @@ void ComponentTransform::SetParent(ComponentTransform* parent)
 ComponentTransform * ComponentTransform::GetParent()
 {
 	return this->parent;
+}
+
+std::vector<ComponentTransform*> ComponentTransform::GetChildren()
+{
+	return children;
 }
 
 float3 ComponentTransform::EulerAngles()
