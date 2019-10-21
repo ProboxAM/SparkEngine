@@ -29,7 +29,7 @@ public:
 	void CameraInputs();
 
 	bool camera_inputs_active = true;
-	float movement_speed, sprint_speed;
+	float movement_speed, sprint_speed, focus_factor;
 private:
 
 	void CalculateViewMatrix();

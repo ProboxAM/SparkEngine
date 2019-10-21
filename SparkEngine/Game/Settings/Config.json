@@ -5,6 +5,7 @@
     },
     "Camera3D": {
         "movement_speed": 20.0,
+        "focus_factor": 0.25,
         "sprint_speed": 40.0,
         "inputs": true
     },
