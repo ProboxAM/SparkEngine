@@ -47,6 +47,7 @@ bool ModuleCamera3D::CleanUp()
 bool ModuleCamera3D::Init(nlohmann::json::iterator it)
 {
 	movement_speed = (*it)["movement_speed"];
+	focus_factor = (*it)["focus_factor"];
 	sprint_speed = (*it)["sprint_speed"];
 	camera_inputs_active = (*it)["inputs"];
 
@@ -56,6 +57,7 @@ bool ModuleCamera3D::Init(nlohmann::json::iterator it)
 bool ModuleCamera3D::Load(nlohmann::json::iterator it)
 {
 	movement_speed = (*it)["movement_speed"];
+	focus_factor = (*it)["focus_factor"];
 	sprint_speed = (*it)["sprint_speed"];
 	camera_inputs_active = (*it)["inputs"];
 
@@ -66,6 +68,7 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 {
 	it[name] = {
 		{ "movement_speed",movement_speed },
+		{ "focus_factor",focus_factor },
 		{ "sprint_speed",sprint_speed },
 		{ "inputs", camera_inputs_active}
 	};
@@ -100,7 +103,7 @@ update_status ModuleCamera3D::Update(float dt)
 		float3 end_position = { Reference.x, Reference.y, Reference.z};
 		float3 position = { Position.x, Position.y, Position.z };
 		float distance = position.Distance(end_position);
-		speed = speed * distance * dt;
+		speed = speed * distance * focus_factor;
 		if (distance < min_distance) {
 			focusing = false;
 			camera_inputs_active = true;

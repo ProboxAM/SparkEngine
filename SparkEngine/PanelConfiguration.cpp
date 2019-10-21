@@ -6,10 +6,6 @@
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
 #include "ImGui/misc/cpp/imgui_stdlib.h"
-#include "gpudetect/DeviceId.h"
-
-#include <sstream>
-#include <iomanip>
 
 #define MAX_LOG 50
 
@@ -19,25 +15,6 @@ PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 	{
 		window_settings[i] = false;
 	}
-
-	unsigned int vendor_id;
-	unsigned int device_id;
-	std::wstring gfx_brand;
-	unsigned __int64 memory_budget;
-	unsigned __int64 memory_usage;
-	unsigned __int64 memory_available;
-	unsigned __int64 memory_reserved;
-
-	if (getGraphicsDeviceInfo(&vendor_id, &device_id, &gfx_brand, &memory_budget, &memory_usage, &memory_available, &memory_reserved)) {
-		gpu_info.vendor_id = vendor_id;
-		gpu_info.device_id = device_id;
-		gpu_info.gfx_brand = ws2s(gfx_brand);
-		gpu_info.memory_budget = float(memory_budget) / 1073741824.0f;
-		gpu_info.memory_usage = float(memory_usage) / (1024.f * 1024.f * 1024.f);
-		gpu_info.memory_available = float(memory_available) / (1024.f * 1024.f * 1024.f);
-		gpu_info.memory_reserved = float(memory_reserved) / (1024.f * 1024.f * 1024.f);
-	}else LOG("Something went wrong while getting graphics device info");
-
 }
 
 
@@ -172,35 +149,26 @@ void PanelConfiguration::Draw()
 
 		ImGui::Separator();
 
-		UpdateGpuInfo();
-
-		ImGui::Text("GPU Vendor id:");
+		ImGui::Text("VRAM Budget:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(gpu_info.vendor_id).c_str());
+		int aux = 0;
+		glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &aux);
+		ImGui::TextColored({ 255, 255, 0, 255 }, "%iMb", aux / 1024);
 
-		ImGui::Text("GPU Device id:");
+		ImGui::Text("VRAM Usage:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(gpu_info.device_id).c_str());
+		glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &aux);
+		ImGui::TextColored({ 255, 255, 0, 255 }, "%iMb", aux / 1024);
 
-		ImGui::Text("GPU Brand");
+		ImGui::Text("VRAM Available:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, gpu_info.gfx_brand.c_str());
+		glGetIntegerv(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX, &aux);
+		ImGui::TextColored({ 255, 255, 0, 255 }, "%iMb", aux / 1024);
 
-		ImGui::Text("VRAM Budget");
+		ImGui::Text("VRAM Reserved:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_budget) + "Mb").c_str());
-
-		ImGui::Text("VRAM Current usage");
-		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_usage) + "Mb").c_str());
-
-		ImGui::Text("VRAM Memory available");
-		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_available) + "Mb").c_str());
-
-		ImGui::Text("VRAM Memory reserve");
-		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, (std::to_string(gpu_info.memory_reserved) + "Mb").c_str());
+		glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTED_MEMORY_NVX, &aux);
+		ImGui::TextColored({ 255, 255, 0, 255 }, "%iMb", aux / 1024);
 		
 
 	}
@@ -290,20 +258,4 @@ std::string PanelConfiguration::GetCpuInfo()
 	if (SDL_HasSSE42())info.append("SSE42 | ");
 
 	return info;
-}
-
-void PanelConfiguration::UpdateGpuInfo()
-{
-	unsigned __int64 memory_budget;
-	unsigned __int64 memory_usage;
-	unsigned __int64 memory_available;
-	unsigned __int64 memory_reserved;
-
-	if (getGraphicsDeviceInfo(nullptr, nullptr, nullptr, &memory_budget, &memory_usage, &memory_available, &memory_reserved)) {
-		gpu_info.memory_budget = float(memory_budget) / (1024.f * 1024.f);
-		gpu_info.memory_usage = float(memory_usage) / (1024.f * 1024.f);
-		gpu_info.memory_available = float(memory_available) / (1024.f * 1024.f);
-		gpu_info.memory_reserved = float(memory_reserved) / (1024.f * 1024.f);
-	}
-	else LOG("Something went wrong while getting graphics device info");
 }

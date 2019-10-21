@@ -7,17 +7,7 @@ enum KEY_STATE;
 
 class PanelConfiguration : public Panel
 {
-
-	struct GPUinfo {
-		unsigned int vendor_id;
-		unsigned int device_id;
-		std::string gfx_brand;
-		float memory_budget;
-		float  memory_usage;
-		float memory_available;
-		float memory_reserved;
-	};
-
+	
 public:
 	PanelConfiguration(bool a);
 	~PanelConfiguration();
@@ -40,10 +30,6 @@ private:
 	//Hardware window
 	SDL_version compiled_version;
 	std::string GetCpuInfo();
-	GPUinfo gpu_info;
-
-	void UpdateGpuInfo();
-
 
 	bool depth_test = false;
 	bool cull_face = false;
@@ -51,6 +37,8 @@ private:
 	bool color_material = false;
 	bool texture_2D = false;
 	bool wireframe = false;
+
+	bool window_settings[4];
 };
 
 #endif // !_PANEL_CONFIG_H_
