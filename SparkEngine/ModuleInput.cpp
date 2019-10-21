@@ -83,7 +83,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			if (mouse_buttons[i] == KEY_IDLE)
 			{
 				mouse_buttons[i] = KEY_DOWN;
-				App->editor->LogInput(i + 1, KEY_DOWN, true);
+				App->editor->LogInput(i, KEY_DOWN, true);
 			}
 			else
 				mouse_buttons[i] = KEY_REPEAT;
@@ -93,7 +93,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			if(mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
 			{
 				mouse_buttons[i] = KEY_UP;
-				App->editor->LogInput(i + 1, KEY_UP, true);
+				App->editor->LogInput(i, KEY_UP, true);
 			}
 			else
 				mouse_buttons[i] = KEY_IDLE;

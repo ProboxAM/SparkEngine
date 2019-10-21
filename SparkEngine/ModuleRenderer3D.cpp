@@ -259,7 +259,7 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 		glDisable(flag);
 }
 
-bool ModuleRenderer3D::IsEnabled(unsigned int flag)
+bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 {
 	bool ret = false;
 	switch (flag)
@@ -279,7 +279,7 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag)
 }
 
 
-void ModuleRenderer3D::DrawMesh(Mesh* m, Texture* tex)
+void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex) const
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
@@ -317,11 +317,11 @@ void ModuleRenderer3D::SetWireframeMode(bool on)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-bool ModuleRenderer3D::IsWireframeEnabled() {
+bool ModuleRenderer3D::IsWireframeEnabled() const {
 	return wireframe;
 }
 
-void ModuleRenderer3D::DebugVertexNormals(Mesh* m)
+void ModuleRenderer3D::DebugVertexNormals(const Mesh* m) const
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_VERT_NORM]); 
@@ -331,7 +331,7 @@ void ModuleRenderer3D::DebugVertexNormals(Mesh* m)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ModuleRenderer3D::DebugFaceNormals(Mesh* m)
+void ModuleRenderer3D::DebugFaceNormals(const Mesh* m) const
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_FACE_NORM]);
@@ -371,7 +371,7 @@ void ModuleRenderer3D::CreateSceneBuffer()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-bool ModuleRenderer3D::GetVsync()
+bool ModuleRenderer3D::GetVsync() const
 {
 	return vsync;
 }

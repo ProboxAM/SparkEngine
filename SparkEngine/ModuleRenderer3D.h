@@ -23,18 +23,18 @@ public:
 	bool Save(nlohmann::json &it);
 	bool Load(nlohmann::json::iterator it);
 	void GLEnable(unsigned int flag, bool active);
-	bool IsEnabled(unsigned int flag);
+	bool IsEnabled(unsigned int flag) const;
 
 	void SetWireframeMode(bool on);
 
-	void DrawMesh(Mesh* m, Texture* tex);
-	void DebugVertexNormals(Mesh* m);
-	void DebugFaceNormals(Mesh* m);
+	void DrawMesh(const Mesh* m, const Texture* tex) const;
+	void DebugVertexNormals(const Mesh* m) const;
+	void DebugFaceNormals(const Mesh* m) const;
 
 	void ResizeScene(float w, float h);
 
-	bool IsWireframeEnabled();
-	bool GetVsync();
+	bool IsWireframeEnabled() const;
+	bool GetVsync() const;
 	void SetVsync(bool active);
 
 private:

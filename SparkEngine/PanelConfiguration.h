@@ -30,7 +30,6 @@ private:
 	//Hardware window
 	SDL_version compiled_version;
 	std::string GetCpuInfo();
-
 	bool depth_test = false;
 	bool cull_face = false;
 	bool lighting = false;
