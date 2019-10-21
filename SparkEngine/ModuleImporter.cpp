@@ -136,8 +136,11 @@ void ModuleImporter::ImportFile(const char * path)
 		if (App->scene->selected_gameobject)
 		{
 			ComponentTexture* c_tex = (ComponentTexture*)App->scene->selected_gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
-			c_tex->AddTexture(App->textures->LoadTexture(file.c_str()));
-			LOG("Applied texture: %s to GameObject: %s", file.c_str(), App->scene->selected_gameobject->GetName().c_str());
+			if (c_tex)
+			{
+				c_tex->AddTexture(App->textures->LoadTexture(file.c_str()));
+				LOG("Applied texture: %s to GameObject: %s", file.c_str(), App->scene->selected_gameobject->GetName().c_str());
+			}
 		}	
 	}	
 }

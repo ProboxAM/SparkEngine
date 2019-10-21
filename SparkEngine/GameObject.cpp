@@ -40,7 +40,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE type)
 
 Component * GameObject::GetComponent(COMPONENT_TYPE type)
 {
-	Component* aux;
+	Component* aux = nullptr;
 	for (int i = 0; i < components.size(); i++)
 	{
 		if (components[i]->type == type)
