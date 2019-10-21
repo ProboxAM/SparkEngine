@@ -68,8 +68,10 @@ bool ModuleImporter::CleanUp()
 void ModuleImporter::LoadFBXFile(const char * file)
 {
 	std::string final_path = ASSETS_FOLDER + std::string(file);
+	GameObject* parent_object;
 
 	const aiScene* scene = aiImportFile(final_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	parent_object = App->scene->CreateGameObject(nullptr, file);
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		std::string file;
@@ -81,8 +83,7 @@ void ModuleImporter::LoadFBXFile(const char * file)
 			Texture* new_texture;
 			aiMesh* current_mesh = scene->mMeshes[i];
 
-
-			new_object = App->scene->CreateGameObject(nullptr, file + std::to_string(i));
+			new_object = App->scene->CreateGameObject(parent_object, scene->mRootNode->mChildren[i]->mName.C_Str());
 			new_mesh = App->meshes->LoadMesh(scene, current_mesh);
 
 			//Check for material, and then load texture if it has, otherise apply default texture
