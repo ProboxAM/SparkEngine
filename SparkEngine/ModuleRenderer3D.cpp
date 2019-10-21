@@ -9,7 +9,7 @@
 #include "Mesh.h"
 #include "ModuleRenderer3D.h"
 
-#pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib     */
+#pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib  */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
 
@@ -237,6 +237,7 @@ bool ModuleRenderer3D::Load(nlohmann::json::iterator it)
 	return true;
 }
 
+//Enables or disables a GL configuration
 void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 {
 	switch (flag)
@@ -259,6 +260,7 @@ void ModuleRenderer3D::GLEnable(unsigned int flag, bool active)
 		glDisable(flag);
 }
 
+//Returns if a GL config is enabled or not
 bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 {
 	bool ret = false;
@@ -278,7 +280,7 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 	return ret;
 }
 
-
+//Draws a mesh and binds texture to it
 void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex) const
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -341,6 +343,7 @@ void ModuleRenderer3D::DebugFaceNormals(const Mesh* m) const
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+//Resize texture buffer of Scene rendering
 void ModuleRenderer3D::ResizeScene(float w, float h)
 {
 	glBindTexture(GL_TEXTURE_2D, scene_texture_id);
@@ -350,6 +353,7 @@ void ModuleRenderer3D::ResizeScene(float w, float h)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, w, h);
 }
 
+//Creates a Frame Buffer for rendering into Scene window
 void ModuleRenderer3D::CreateSceneBuffer()
 {
 	glGenFramebuffers(1, &scene_buffer_id);

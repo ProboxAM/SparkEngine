@@ -36,11 +36,9 @@ private:
 	std::string		organization;
 
 	Timer	ms_timer;
-	Timer	fps_timer;
 	float	dt;
 	int		fps_cap = 0;
 	int		fps = 0;
-	int		fps_count = 0;
 	int		capped_ms = 0;
 	int		last_frame_ms = 0;
 	std::list<Module*> list_modules;

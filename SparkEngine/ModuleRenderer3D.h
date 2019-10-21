@@ -46,8 +46,10 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
+	///Buffer and texture for rendering into Scene window
 	uint scene_buffer_id = -1;
 	uint scene_texture_id;
+
 private:
 	bool wireframe;
 	bool vsync;
