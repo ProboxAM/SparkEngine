@@ -40,7 +40,7 @@ bool ModuleTextures::Start()
 	return true;
 }
 
-Texture* ModuleTextures::CreateDefaultTexture()
+Texture* ModuleTextures::CreateDefaultTexture() const
 {
 	Texture* tex = new Texture();
 
@@ -77,7 +77,7 @@ Texture* ModuleTextures::CreateDefaultTexture()
 
 	return tex;
 }
-Texture* ModuleTextures::LoadTexture(const char* path)
+Texture* ModuleTextures::LoadTexture(const char* path) const
 {
 	Texture* tex = new Texture();
 	uint image_id;

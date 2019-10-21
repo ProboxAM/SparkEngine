@@ -18,7 +18,7 @@ public:
 	ModuleMeshes(bool active);
 	~ModuleMeshes();
 
-	Mesh* LoadMesh(const aiScene* scene, aiMesh* mesh);
+	Mesh* LoadMesh(const aiScene* scene, const aiMesh* mesh) const;
 	Mesh* CreatePrimitiveMesh(PRIMITIVE_TYPE type);
 };
 

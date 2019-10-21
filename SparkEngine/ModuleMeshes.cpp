@@ -26,7 +26,7 @@ ModuleMeshes::~ModuleMeshes()
 }
 
 
-Mesh* ModuleMeshes::LoadMesh(const aiScene* scene, aiMesh* mesh)
+Mesh* ModuleMeshes::LoadMesh(const aiScene* scene, const aiMesh* mesh) const
 {
 	Mesh* new_mesh = new Mesh();
 	for (uint i = 0; i < mesh->mNumVertices; i++)

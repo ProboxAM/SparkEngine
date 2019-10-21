@@ -11,11 +11,11 @@ public:
 	bool Init(nlohmann::json::iterator it);
 	bool Start();
 
-	Texture* LoadTexture(const char* path);
+	Texture* LoadTexture(const char* path) const;
 	Texture* GetDefaultTexture();
 
 private:
-	Texture* CreateDefaultTexture();
+	Texture* CreateDefaultTexture() const;
 	Texture* default_texture;
 };
 
