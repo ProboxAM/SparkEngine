@@ -14,14 +14,14 @@ public:
 	ModuleRenderer3D(bool start_enabled = true);
 	~ModuleRenderer3D();
 
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
 	void OnResize(int width, int height);
 	bool Save(nlohmann::json &it);
-	bool Load(nlohmann::json::iterator it);
+	bool Load(const nlohmann::json::iterator& it);
 	void GLEnable(unsigned int flag, bool active);
 	bool IsEnabled(unsigned int flag) const;
 

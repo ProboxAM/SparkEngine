@@ -1,15 +1,15 @@
-#include "PanelDebug.h"
+#include "PanelConsole.h"
 
-PanelDebug::PanelDebug(bool a) : Panel(a)
+PanelConsole::PanelConsole(bool a) : Panel(a)
 {
 }
 
 
-PanelDebug::~PanelDebug()
+PanelConsole::~PanelConsole()
 {
 }
 
-void PanelDebug::Draw()
+void PanelConsole::Draw()
 {
 	ImGui::Begin("Console");
 	ImGui::TextUnformatted(debug_buff.begin());
@@ -21,7 +21,7 @@ void PanelDebug::Draw()
 	ImGui::End();
 }
 
-void PanelDebug::LogDebug(const char * text)
+void PanelConsole::LogDebug(const char * text)
 {
 	debug_buff.appendf(text);
 	move_debug_scroll = true;

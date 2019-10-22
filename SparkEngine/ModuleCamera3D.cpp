@@ -44,17 +44,14 @@ bool ModuleCamera3D::CleanUp()
 	return true;
 }
 
-bool ModuleCamera3D::Init(nlohmann::json::iterator it)
+bool ModuleCamera3D::Init(const nlohmann::json::iterator& it)
 {
-	movement_speed = (*it)["movement_speed"];
-	focus_factor = (*it)["focus_factor"];
-	sprint_speed = (*it)["sprint_speed"];
-	camera_inputs_active = (*it)["inputs"];
+	Load(it);
 
 	return true;
 }
 
-bool ModuleCamera3D::Load(nlohmann::json::iterator it)
+bool ModuleCamera3D::Load(const nlohmann::json::iterator& it)
 {
 	movement_speed = (*it)["movement_speed"];
 	focus_factor = (*it)["focus_factor"];

@@ -19,6 +19,14 @@ public:
 	void LogFrame(float fps, float ms);
 
 private:
+	//Draw functions
+	void DrawApplication();
+	void DrawWindow();
+	void DrawInput();
+	void DrawHardware();
+	void DrawRenderer();
+	void DrawCamera();
+
 	//Application window
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;
@@ -30,14 +38,6 @@ private:
 	//Hardware window
 	SDL_version compiled_version;
 	std::string GetCpuInfo();
-	bool depth_test = false;
-	bool cull_face = false;
-	bool lighting = false;
-	bool color_material = false;
-	bool texture_2D = false;
-	bool wireframe = false;
-
-	bool window_settings[4];
 };
 
 #endif // !_PANEL_CONFIG_H_

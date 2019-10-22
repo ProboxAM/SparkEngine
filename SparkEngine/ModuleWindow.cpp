@@ -15,7 +15,7 @@ ModuleWindow::~ModuleWindow()
 }
 
 // Called before render is available
-bool ModuleWindow::Init(nlohmann::json::iterator it)
+bool ModuleWindow::Init(const nlohmann::json::iterator& it)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
@@ -198,7 +198,7 @@ bool ModuleWindow::GetFullDesktop() {
 	return full_desktop;
 }
 
-bool ModuleWindow::Load(nlohmann::json::iterator it)
+bool ModuleWindow::Load(const nlohmann::json::iterator& it)
 {
 	SetWindowHeight((*it)["height"]);
 	SetWindowWidth((*it)["width"]);

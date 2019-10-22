@@ -11,10 +11,6 @@
 
 PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		window_settings[i] = false;
-	}
 }
 
 
@@ -37,6 +33,37 @@ void PanelConfiguration::Draw()
 	if (ImGui::Button("Load"))
 		App->LoadSettings();
 
+	DrawApplication();
+	DrawWindow();
+	DrawInput();
+	DrawHardware();
+	DrawRenderer();
+	DrawCamera();
+
+	ImGui::End();
+}
+
+void PanelConfiguration::LogFrame(float fps, float ms)
+{
+	if (fps_log.size() == MAX_LOG)
+	{
+		for (uint i = 1; i < MAX_LOG; ++i)
+		{
+			fps_log[i] = fps_log[i - 1];
+			ms_log[i] = ms_log[i - 1];
+		}
+		fps_log[0] = fps;
+		ms_log[0] = ms;
+	}
+	else
+	{
+		fps_log.insert(fps_log.begin(), fps);
+		ms_log.insert(ms_log.begin(), ms);
+	}
+}
+
+void PanelConfiguration::DrawApplication()
+{
 	if (ImGui::CollapsingHeader("Application"))
 	{
 		std::string app_name = App->GetName();
@@ -59,9 +86,12 @@ void PanelConfiguration::Draw()
 		sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 		ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 	}
+}
 
+void PanelConfiguration::DrawWindow()
+{
 	if (ImGui::CollapsingHeader("Window"))
-	{		
+	{
 		int width = App->window->GetWindowWidth();
 		int height = App->window->GetWindowHeight();
 		float brightness = App->window->GetBrightness();
@@ -95,7 +125,10 @@ void PanelConfiguration::Draw()
 			App->window->SetScreenMode(FSDESKTOP, fulldesktop);
 		}
 	}
+}
 
+void PanelConfiguration::DrawInput()
+{
 	if (ImGui::CollapsingHeader("Input"))
 	{
 		ImGui::Text("Mouse position:");
@@ -123,7 +156,10 @@ void PanelConfiguration::Draw()
 		}
 		ImGui::EndChild();
 	}
+}
 
+void PanelConfiguration::DrawHardware()
+{
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
 		ImGui::Text("SDL Version:");
@@ -169,10 +205,11 @@ void PanelConfiguration::Draw()
 		ImGui::SameLine();
 		glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTED_MEMORY_NVX, &aux);
 		ImGui::TextColored({ 255, 255, 0, 255 }, "%iMb", aux / 1024);
-		
-
 	}
+}
 
+void PanelConfiguration::DrawRenderer()
+{
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
 		bool vsync = App->renderer3D->GetVsync();
@@ -197,33 +234,15 @@ void PanelConfiguration::Draw()
 		if (ImGui::Checkbox("Texture 2D", &texture_2D))
 			App->renderer3D->GLEnable(GL_TEXTURE_2D, texture_2D);
 	}
+}
 
+void PanelConfiguration::DrawCamera()
+{
 	if (ImGui::CollapsingHeader("Camera3D"))
 	{
 		ImGui::Checkbox("Camera Inputs", &App->camera->camera_inputs_active);
 		ImGui::SliderFloat("Movement Speed", &App->camera->movement_speed, 0, 100);
 		ImGui::SliderFloat("Sprint Speed", &App->camera->sprint_speed, 0, 100);
-	}
-
-	ImGui::End();
-}
-
-void PanelConfiguration::LogFrame(float fps, float ms)
-{
-	if (fps_log.size() == MAX_LOG)
-	{
-		for (uint i = 1; i < MAX_LOG; ++i)
-		{
-			fps_log[i] = fps_log[i - 1];
-			ms_log[i] = ms_log[i - 1];
-		}
-		fps_log[0] = fps;
-		ms_log[0] = ms;
-	}
-	else
-	{
-		fps_log.insert(fps_log.begin(), fps);
-		ms_log.insert(ms_log.begin(), ms);
 	}
 }
 
@@ -243,7 +262,6 @@ void PanelConfiguration::LogInput(int key, KEY_STATE state, bool mouse)
 
 std::string PanelConfiguration::GetCpuInfo()
 {
-
 	std::string info;
 
 	if (SDL_Has3DNow())info.append("3DNow | ");

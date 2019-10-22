@@ -13,7 +13,7 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init(nlohmann::json::iterator it)
+	virtual bool Init(const nlohmann::json::iterator& it)
 	{
 		return true;
 	}
@@ -43,7 +43,7 @@ public:
 		return true;
 	}
 
-	virtual bool Load(nlohmann::json::iterator it)
+	virtual bool Load(const nlohmann::json::iterator& it)
 	{
 		return true;
 	}

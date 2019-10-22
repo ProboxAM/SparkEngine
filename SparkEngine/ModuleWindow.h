@@ -15,7 +15,7 @@ public:
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 	bool CleanUp();
 
 	void SetTitle(const char* title);
@@ -37,7 +37,7 @@ public:
 	void SetWindowBrightness(float value);
 	void SetScreenMode(WINDOWSETTINGS mode, bool active);
 
-	bool Load(nlohmann::json::iterator it);
+	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);
 
 public:

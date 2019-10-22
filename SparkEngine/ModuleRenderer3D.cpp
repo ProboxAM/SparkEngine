@@ -23,7 +23,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
+bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
@@ -96,25 +96,7 @@ bool ModuleRenderer3D::Init(nlohmann::json::iterator it)
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		depth_test = (*it)["depth_test"];
-		cull_face = (*it)["cull_face"];
-		lighting = (*it)["lighting"];
-		color_material = (*it)["color_material"];
-		texture2d = (*it)["texture2d"];
-		wireframe = (*it)["wireframe"];
-
-		if(depth_test)
-			glEnable(GL_DEPTH_TEST);
-		if(cull_face)
-			glEnable(GL_CULL_FACE);
-		if(lighting)
-			glEnable(GL_LIGHTING);
-		if(color_material)
-			glEnable(GL_COLOR_MATERIAL);
-		if(texture2d)
-			glEnable(GL_TEXTURE_2D);
-
-		SetWireframeMode(wireframe);
+		Load(it);
 
 		lights[0].Active(true);
 	}
@@ -144,7 +126,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//// Choose a random mean between 1 and 6
 	//std::uniform_real_distribution<float> uniform_dist(0, 1);
 	//float mean = uniform_dist(rng);
-	ResizeScene(App->window->GetWindowWidth(), App->window->GetWindowHeight());
 	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -202,22 +183,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-bool ModuleRenderer3D::Save(nlohmann::json &it)
-{
-	it[name] = {
-		{ "vsync",vsync },
-		{ "depth_test",depth_test },
-		{ "cull_face",cull_face },
-		{ "lighting",lighting },
-		{ "color_material",color_material },
-		{ "texture2d",texture2d },
-		{ "wireframe",wireframe}
-	};
-
-	return true;
-}
-
-bool ModuleRenderer3D::Load(nlohmann::json::iterator it)
+bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
 {
 	vsync = (*it)["vsync"];
 	depth_test = (*it)["depth_test"];
@@ -234,6 +200,22 @@ bool ModuleRenderer3D::Load(nlohmann::json::iterator it)
 	GLEnable(GL_COLOR_MATERIAL, color_material);
 	GLEnable(GL_TEXTURE_2D, texture2d);
 	SetWireframeMode(wireframe);
+
+	return true;
+}
+
+
+bool ModuleRenderer3D::Save(nlohmann::json &it)
+{
+	it[name] = {
+		{ "vsync",vsync },
+		{ "depth_test",depth_test },
+		{ "cull_face",cull_face },
+		{ "lighting",lighting },
+		{ "color_material",color_material },
+		{ "texture2d",texture2d },
+		{ "wireframe",wireframe}
+	};
 
 	return true;
 }

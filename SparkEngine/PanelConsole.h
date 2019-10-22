@@ -1,11 +1,11 @@
 #pragma once
 #include "Panel.h"
-class PanelDebug :
+class PanelConsole :
 	public Panel
 {
 public:
-	PanelDebug(bool a);
-	~PanelDebug();
+	PanelConsole(bool a);
+	~PanelConsole();
 
 	void Draw();
 	void LogDebug(const char* text);

@@ -19,7 +19,7 @@ ModuleTextures::~ModuleTextures()
 {
 }
 
-bool ModuleTextures::Init(nlohmann::json::iterator it)
+bool ModuleTextures::Init(const nlohmann::json::iterator& it)
 {
 	ilInit();
 	iluInit();

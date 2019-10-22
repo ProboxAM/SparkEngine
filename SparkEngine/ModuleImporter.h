@@ -16,7 +16,7 @@ public:
 	ModuleImporter(bool start_enabled = true);
 	~ModuleImporter();
 
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 	void LoadFBXFile(const char* file);
