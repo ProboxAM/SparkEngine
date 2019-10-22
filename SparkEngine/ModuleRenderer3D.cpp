@@ -144,6 +144,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//// Choose a random mean between 1 and 6
 	//std::uniform_real_distribution<float> uniform_dist(0, 1);
 	//float mean = uniform_dist(rng);
+	ResizeScene(App->window->GetWindowWidth(), App->window->GetWindowHeight());
 	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
