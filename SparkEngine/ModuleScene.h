@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_SCENE_H_
+#define _MODULE_SCENE_H_
+
 #include "Module.h"
 #include <vector>
 
@@ -11,7 +13,7 @@ class ModuleScene :
 	public Module
 {
 public:
-	GameObject* root = nullptr;
+	GameObject * root = nullptr;
 	GameObject* selected_gameobject = nullptr;
 	std::vector<GameObject*> gameobjects;
 public:
@@ -37,3 +39,4 @@ public:
 	bool show_grid = true;
 };
 
+#endif // !_MODULE_SCENE_H_

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULE_FILE_SYSTEM_H_
+#define _MODULE_FILE_SYSTEM_H_
 
 #include "Module.h"
 #include <vector>
@@ -9,7 +10,6 @@ int close_sdl_rwops(SDL_RWops *rw);
 class ModuleFileSystem : public Module
 {
 public:
-
 	ModuleFileSystem(const char* game_path = nullptr);
 
 	// Destructor
@@ -45,3 +45,5 @@ public:
 	const char* GetWritePath() const;
 	const char* GetReadPaths() const;
 };
+
+#endif // !_MODULE_FILE_SYSTEM_H_

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PANEL_HIERARCHY_H_
+#define _PANEL_HIERARCHY_H_
+
 #include "Panel.h"
 
 class ComponentTransform;
@@ -15,4 +17,6 @@ public:
 
 	int node_iterator = -1;
 };
+
+#endif // !_PANEL_HIERARCHY_H_
 

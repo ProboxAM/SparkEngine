@@ -1,5 +1,5 @@
-#ifndef __ModuleWindow_H__
-#define __ModuleWindow_H__
+#ifndef _MODULE_WINDOW_H_
+#define _MODULE_WINDOW_H_
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
@@ -57,4 +57,4 @@ private:
 	SDL_DisplayMode current_displaymode;
 };
 
-#endif // __ModuleWindow_H__
+#endif // _MODULE_WINDOW_H_

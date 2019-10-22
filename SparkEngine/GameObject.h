@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _GAMEOBJECT_H_
+#define _GAMEOBJECT_H_
+
 #include <string>
 #include <vector>
 #include "Component.h"
@@ -35,6 +37,9 @@ public:
 	bool CompareTag(std::string tag);
 
 public:
-	ComponentTransform* transform = nullptr;
+	ComponentTransform * transform = nullptr;
 };
+
+#endif // !_GAMEOBJECT_H_
+
 

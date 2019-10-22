@@ -4,7 +4,6 @@ PanelConsole::PanelConsole(bool a) : Panel(a)
 {
 }
 
-
 PanelConsole::~PanelConsole()
 {
 }
