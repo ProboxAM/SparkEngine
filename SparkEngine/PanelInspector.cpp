@@ -106,7 +106,7 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("BPP: " + std::to_string(c_texture->GetTextureBPP())).c_str());
 
-					ImGui::Image((void*)(intptr_t)c_texture->GetTextureID(), ImVec2(256, 256));
+					ImGui::Image((void*)(intptr_t)c_texture->GetTextureID(), ImVec2(256, 256), ImVec2(0,1), ImVec2(1,0));
 
 
 					ImGui::Checkbox("Checkers texture", &c_texture->debug_texture);
