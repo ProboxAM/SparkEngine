@@ -193,7 +193,6 @@ bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
 	texture2d = (*it)["texture2d"];
 	wireframe = (*it)["wireframe"];
 
-	SetVsync(vsync);
 	GLEnable(GL_DEPTH_TEST, depth_test);
 	GLEnable(GL_CULL_FACE, cull_face);
 	GLEnable(GL_LIGHTING, lighting);
