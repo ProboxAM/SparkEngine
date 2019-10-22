@@ -8,7 +8,7 @@ public:
 	ModuleTextures(bool active);
 	~ModuleTextures();
 
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 	bool Start();
 
 	Texture* LoadTexture(const char* path) const;

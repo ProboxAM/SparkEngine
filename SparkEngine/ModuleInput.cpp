@@ -24,7 +24,7 @@ ModuleInput::~ModuleInput()
 }
 
 // Called before render is available
-bool ModuleInput::Init(nlohmann::json::iterator it)
+bool ModuleInput::Init(const nlohmann::json::iterator& it)
 {
 	LOG("Init SDL input event system");
 	bool ret = true;

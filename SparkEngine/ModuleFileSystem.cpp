@@ -49,7 +49,7 @@ ModuleFileSystem::~ModuleFileSystem()
 }
 
 // Called before render is available
-bool ModuleFileSystem::Init(nlohmann::json::iterator it)
+bool ModuleFileSystem::Init(const nlohmann::json::iterator& it)
 {
 	LOG("Loading File System");
 	bool ret = true;

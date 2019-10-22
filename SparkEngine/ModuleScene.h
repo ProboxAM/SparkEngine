@@ -18,12 +18,12 @@ public:
 	ModuleScene(bool start_enabled = true);
 	~ModuleScene();
 
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
 
-	bool Load(nlohmann::json::iterator it);
+	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);
 
 	GameObject* CreateGameObject(GameObject* parent = nullptr, std::string name = "GameObject");

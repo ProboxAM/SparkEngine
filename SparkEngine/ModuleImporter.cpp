@@ -42,9 +42,8 @@ ModuleImporter::~ModuleImporter()
 {
 }
 
-bool ModuleImporter::Init(nlohmann::json::iterator it)
+bool ModuleImporter::Init(const nlohmann::json::iterator& it)
 {
-
 	aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	stream.callback = LogCallback;

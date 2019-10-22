@@ -12,8 +12,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	bool Init(nlohmann::json::iterator it);
-	bool Load(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);

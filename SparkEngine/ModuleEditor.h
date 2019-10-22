@@ -21,7 +21,7 @@ class ModuleEditor : public Module
 public:
 	ModuleEditor(bool start_enabled = true);
 	~ModuleEditor();
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 	bool CleanUp();
 	void Draw();
 	bool Start();
@@ -33,7 +33,6 @@ public:
 
 private:
 	std::vector<Panel*> panels;
-
 	void BeginDockSpace();
 };
 

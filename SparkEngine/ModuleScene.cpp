@@ -25,7 +25,7 @@ ModuleScene::~ModuleScene()
 {
 }
 
-bool ModuleScene::Init(nlohmann::json::iterator it)
+bool ModuleScene::Init(const nlohmann::json::iterator& it)
 {
 	root = CreateRootGameObject();
 
@@ -61,7 +61,7 @@ bool ModuleScene::CleanUp()
 	return true;
 }
 
-bool ModuleScene::Load(nlohmann::json::iterator it)
+bool ModuleScene::Load(const nlohmann::json::iterator& it)
 {
 	show_grid = (*it)["grid"];
 

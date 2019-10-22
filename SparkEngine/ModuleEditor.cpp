@@ -34,7 +34,7 @@ ModuleEditor::~ModuleEditor()
 {
 }
 
-bool ModuleEditor::Init(nlohmann::json::iterator it)
+bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

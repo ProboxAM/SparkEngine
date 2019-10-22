@@ -16,7 +16,7 @@ public:
 	~ModuleFileSystem();
 
 	// Called before render is available
-	bool Init(nlohmann::json::iterator it);
+	bool Init(const nlohmann::json::iterator& it);
 
 	// Called before quitting
 	bool CleanUp();
