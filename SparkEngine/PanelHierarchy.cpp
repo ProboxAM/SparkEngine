@@ -56,5 +56,4 @@ void PanelHierarchy::Draw()
 	}
 
 	ImGui::End();
-	ImGui::ShowDemoWindow();
 }
