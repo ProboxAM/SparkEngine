@@ -38,6 +38,14 @@ void PanelHierarchy::Draw()
 				}
 
 			}
+			else if(App->scene->gameobjects[i]->transform->GetParent()->gameobject == App->scene->root){
+				if (ImGui::Selectable(App->scene->gameobjects[i]->GetName().c_str(), selected == i))
+				{
+					selected = i;
+					App->scene->selected_gameobject = App->scene->gameobjects[i];
+					LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+				}
+			}
 		}
 
 	}
