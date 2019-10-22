@@ -48,10 +48,7 @@ update_status ModuleScene::Update(float dt)
 	if(show_grid)
 		DrawGrid();
 
-	for (int i = 0; i < gameobjects.size(); i++)
-	{
-		gameobjects[i]->Update(dt);
-	}
+	root->Update(dt);
 
 	return UPDATE_CONTINUE;
 }

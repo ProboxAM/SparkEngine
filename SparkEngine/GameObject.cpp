@@ -10,6 +10,11 @@ void GameObject::Update(float dt)
 	{
 		components[i]->Update(dt);
 	}
+
+	for (int i = 0; i < transform->GetChildCount(); i++)
+	{
+		transform->GetChildren()[i]->gameobject->Update(dt);
+	}
 }
 
 Component* GameObject::AddComponent(COMPONENT_TYPE type)
