@@ -4,10 +4,10 @@
         "Title": "Spark Engine"
     },
     "Camera3D": {
-        "movement_speed": 20.0,
         "focus_factor": 0.25,
-        "sprint_speed": 40.0,
-        "inputs": true
+        "inputs": true,
+        "movement_speed": 20.0,
+        "sprint_speed": 40.0
     },
     "Render": {
         "color_material": true,
@@ -26,9 +26,9 @@
         "brightness": 1.0,
         "fullDesktop": false,
         "fullscreen": false,
-        "height": 794,
+        "height": 857,
         "resizable": false,
         "size": 1,
-        "width": 1275
+        "width": 1409
     }
 }

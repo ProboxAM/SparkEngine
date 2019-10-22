@@ -19,11 +19,14 @@ PanelScene::~PanelScene()
 
 void PanelScene::Draw()
 {
-	ImGui::Begin("Scene",NULL, ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_MenuBar);
+	float w, h;
+	w = ImGui::GetWindowWidth();
+	h = ImGui::GetWindowHeight();
 	ImGui::GetWindowDrawList()->AddImage(
 		(void *)App->renderer3D->scene_texture_id,
-		ImVec2(0,0),
-		ImVec2(0 + App->window->GetWindowWidth(), 0 + App->window->GetWindowHeight()),
+		ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetCursorScreenPos().y),
+		ImVec2(ImGui::GetCursorScreenPos().x + w, ImGui::GetCursorScreenPos().y + h),
 		ImVec2(0, 1), 
 		ImVec2(1, 0));
 	if (ImGui::BeginMenuBar())
