@@ -16,39 +16,45 @@ PanelHierarchy::~PanelHierarchy()
 void PanelHierarchy::Draw()
 {
 	ImGui::Begin("Hierarchy");
+	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	static int selected = -1;
-	for (int i = 0; i < App->scene->gameobjects.size(); ++i)
+	for (int i = 0; i < App->scene->root->transform->GetChildCount(); ++i)
 	{
-		if (App->scene->gameobjects[i] != App->scene->root)
+		ImGuiTreeNodeFlags node_flags = base_flags;
+		if (App->scene->root->transform->GetChildren()[i]->GetChildCount() > 0)
 		{
-			if (App->scene->gameobjects[i]->transform->GetChildCount() > 0)
-			{
-				if (ImGui::TreeNode(App->scene->gameobjects[i]->GetName().c_str())) {
-					for (int j = 0; j < App->scene->gameobjects[i]->transform->GetChildCount(); j++)
-					{
-						if (ImGui::Selectable(App->scene->gameobjects[i]->transform->GetChildren()[j]->gameobject->GetName().c_str(), selected == j))
-						{
-							selected = j;
-							App->scene->selected_gameobject = App->scene->gameobjects[i]->transform->GetChildren()[j]->gameobject;
-							LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
-						}
-					}
-
-					ImGui::TreePop();
-				}
-
+			bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->scene->root->transform->GetChildren()[i]->gameobject->GetName().c_str(), i);
+			if (ImGui::IsItemClicked()) {
+				selected = i;
+				App->scene->selected_gameobject = App->scene->root->transform->GetChildren()[i]->gameobject;
+				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 			}
-			else if(App->scene->gameobjects[i]->transform->GetParent()->gameobject == App->scene->root){
-				if (ImGui::Selectable(App->scene->gameobjects[i]->GetName().c_str(), selected == i))
+			if (node_open) {
+				for (int j = 0; j < App->scene->root->transform->GetChildren()[i]->GetChildCount(); j++)
 				{
-					selected = i;
-					App->scene->selected_gameobject = App->scene->gameobjects[i];
-					LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+					node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+					ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->scene->root->transform->GetChildren()[i]->GetChildren()[j]->gameobject->GetName().c_str(), i);
+					if (ImGui::IsItemClicked()) {
+						selected = j;
+						App->scene->selected_gameobject = App->scene->root->transform->GetChildren()[i]->GetChildren()[j]->gameobject;
+						LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+					}
 				}
+				ImGui::TreePop();
+			}
+
+		}
+		else {
+			node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+			ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->scene->root->transform->GetChildren()[i]->gameobject->GetName().c_str(), i);
+			if (ImGui::IsItemClicked()) {
+				selected = i;
+				App->scene->selected_gameobject = App->scene->root->transform->GetChildren()[i]->gameobject;
+				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 			}
 		}
-
 	}
 
 	ImGui::End();
+	ImGui::ShowDemoWindow();
 }
