@@ -8,7 +8,7 @@
 #include "Panel.h"
 #include "PanelConfiguration.h"
 #include "PanelAbout.h"
-#include "PanelDebug.h"
+#include "PanelConsole.h"
 #include "PanelScene.h"
 #include "PanelHierarchy.h"
 #include "PanelInspector.h"
@@ -46,7 +46,7 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	ImGui_ImplOpenGL3_Init();
 
 	panels[CONFIG] = new PanelConfiguration(false);
-	panels[DEBUG] = new PanelDebug(true);
+	panels[DEBUG] = new PanelConsole(true);
 	panels[ABOUT] = new PanelAbout(false);
 	panels[HIERARCHY] = new PanelHierarchy(true);
 	panels[INSPECTOR] = new PanelInspector(true);
@@ -158,7 +158,7 @@ void ModuleEditor::LogInput(int key, KEY_STATE state, bool mouse)
 void ModuleEditor::LogDebug(const char* text)
 {
 	if (panels[DEBUG] != nullptr)
-		((PanelDebug*)panels[DEBUG])->LogDebug(text);
+		((PanelConsole*)panels[DEBUG])->LogDebug(text);
 }
 
 void ModuleEditor::LogFrame(float fps, float ms)
