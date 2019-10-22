@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_RENDERER_3D_H_
+#define _MODULE_RENDERER_3D_H_
+
 #include "Module.h"
 #include "glmath.h"
 #include "Light.h"
@@ -57,3 +59,5 @@ private:
 	uint scene_depth_id;
 
 };
+
+#endif // !_MODULE_RENDERER_3D_H_

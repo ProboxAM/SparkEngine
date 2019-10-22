@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_CAMERA_3D_H_
+#define _MODULE_CAMERA_3D_H_
+
 #include "Module.h"
 #include "glmath.h"
 
@@ -35,7 +37,7 @@ private:
 	void Focus();
 
 public:
-	
+
 	vec3 X, Y, Z, Position, Reference, newPos;
 	float speed;
 
@@ -43,3 +45,5 @@ private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 };
+
+#endif // !_MODULE_CAMERA_3D_H_

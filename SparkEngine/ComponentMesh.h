@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _COMPONENT_MESH_H_
+#define _COMPONENT_MESH_H_
+
 #include "Component.h"
 
 class Mesh;
@@ -21,9 +23,11 @@ public:
 	int GetIndicesAmount();
 
 private:
-	Mesh* mesh = nullptr;
+	Mesh * mesh = nullptr;
 
 public:
 	bool debug_vertex_normal = false, debug_face_normal = false;
 };
+
+#endif // !_COMPONENT_MESH_H_
 

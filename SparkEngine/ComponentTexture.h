@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _COMPONENT_TEXTURE_H_
+#define _COMPONENT_TEXTURE_H_
 
 struct Texture;
 typedef unsigned int uint;
@@ -26,9 +27,14 @@ public:
 	uint GetTextureDepth();
 
 private:
-	Texture* tex = nullptr;
+	Texture * tex = nullptr;
 public:
 	bool debug_texture = false;
 
 };
+
+#endif // !_COMPONENT_TEXTURE_H_
+
+
+
 

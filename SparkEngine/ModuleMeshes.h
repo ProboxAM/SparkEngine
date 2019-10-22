@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_MESHES_H_
+#define _MODULE_MESHES_H_
+
 #include "Module.h"
 class Mesh;
 struct aiScene;
@@ -21,4 +23,8 @@ public:
 	Mesh* LoadMesh(const aiScene* scene, const aiMesh* mesh) const;
 	Mesh* CreatePrimitiveMesh(PRIMITIVE_TYPE type);
 };
+
+
+#endif // !_MODULE_MESHES_H_
+
 

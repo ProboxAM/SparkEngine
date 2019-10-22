@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_INPUT_H_
+#define _MODULE_INPUT_H_
+
 #include "Module.h"
 
 #define MAX_MOUSE_BUTTONS 5
@@ -14,7 +16,7 @@ enum KEY_STATE
 class ModuleInput : public Module
 {
 public:
-	
+
 	ModuleInput(bool start_enabled = true);
 	~ModuleInput();
 
@@ -58,7 +60,7 @@ public:
 	}
 
 private:
-	KEY_STATE* keyboard;
+	KEY_STATE * keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
 	int mouse_y;
@@ -68,3 +70,5 @@ private:
 	//int mouse_z_motion;
 	std::string drop_filepath = "";
 };
+#endif // !_MODULE_INPUT_H_
+

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_TEXTURES_H_
+#define _MODULE_TEXTURES_H_
+
 #include "Module.h"
 struct Texture;
 
@@ -15,7 +17,9 @@ public:
 	Texture* GetDefaultTexture();
 
 private:
-	Texture* CreateDefaultTexture() const;
+	Texture * CreateDefaultTexture() const;
 	Texture* default_texture;
 };
 
+
+#endif // !_MODULE_TEXTURES_H_

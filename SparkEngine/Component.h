@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _COMPONENT_H_
+#define _COMPONENT_H_
 
 class GameObject;
 
@@ -18,4 +19,9 @@ public:
 	virtual void Update(float dt);
 	virtual void Disable() { active = false; }
 };
+
+#endif // !_COMPONENT_H_
+
+
+
 

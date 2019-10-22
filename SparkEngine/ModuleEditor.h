@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULE_EDITOR_H_
+#define _MODULE_EDITOR_H_
+
 #include "Module.h"
 #include <string>
 #include <vector>
@@ -35,4 +37,8 @@ private:
 	std::vector<Panel*> panels;
 	void BeginDockSpace();
 };
+
+#endif // !_MODULE_EDITOR_H_
+
+
 

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _COMPONENT_TRANSFORM_H_
+#define _COMPONENT_TRANSFORM_H_
+
 #include "Component.h"
 #include "MathGeoLib/Math/MathAll.h"
 #include <vector>
@@ -13,7 +15,6 @@ private:
 	std::vector<ComponentTransform*> children;
 
 public:
-
 	//global
 	float3 position;
 	Quat rotation;
@@ -37,4 +38,8 @@ public:
 
 	void Update(float dt);
 };
+
+#endif // !_COMPONENT_TRANSFORM_H_
+
+
 

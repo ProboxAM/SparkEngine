@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PANEL_HIERARCHY_H_
+#define _PANEL_HIERARCHY_H_
+
 #include "Panel.h"
 class PanelHierarchy :
 	public Panel
@@ -9,4 +11,6 @@ public:
 
 	void Draw();
 };
+
+#endif // !_PANEL_HIERARCHY_H_
 
