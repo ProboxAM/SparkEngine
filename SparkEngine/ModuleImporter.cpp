@@ -70,47 +70,64 @@ void ModuleImporter::LoadFBXFile(const char * file)
 	GameObject* parent_object;
 
 	const aiScene* scene = aiImportFile(final_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
-	parent_object = App->scene->CreateGameObject(nullptr, file);
+	std::string name;
+	App->fsystem->SplitFilePath(final_path.c_str(), nullptr, &name);
+	parent_object = App->scene->CreateGameObject(nullptr, name);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		std::string file;
-		App->fsystem->SplitFilePath(final_path.c_str(), nullptr, &file);
-		for (int i = 0; i < scene->mNumMeshes; i++)
+		for (int i = 0; i < scene->mRootNode->mNumChildren; i++)
 		{
-			GameObject* new_object;
-			Mesh* new_mesh;
-			Texture* new_texture;
-			aiMesh* current_mesh = scene->mMeshes[i];
-
-			new_object = App->scene->CreateGameObject(parent_object, scene->mRootNode->mChildren[i]->mName.C_Str());
-			new_mesh = App->meshes->LoadMesh(scene, current_mesh);
-
-			//Check for material, and then load texture if it has, otherise apply default texture
-			if (scene->mMeshes[i]->mMaterialIndex >= 0)
-			{
-				aiString texture_path;
-				scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
-				if (texture_path.length > 0)
-				{
-					new_texture = App->textures->LoadTexture(texture_path.C_Str());
-				}
-				else
-				{
-					new_texture = App->textures->GetDefaultTexture();
-					LOG("Default texture applied to %s", new_object->GetName().c_str());
-				}
-			}
-
-			ComponentMesh* c_mesh = (ComponentMesh*) new_object->AddComponent(COMPONENT_TYPE::MESH);
-			c_mesh->AddMesh(new_mesh);
-
-			ComponentTexture* c_text = (ComponentTexture*) new_object->AddComponent(COMPONENT_TYPE::TEXTURE);
-			c_text->AddTexture(new_texture);
+			LoadNode(scene->mRootNode->mChildren[i], scene, parent_object);
 		}
 		aiReleaseImport(scene);
 	}
 	else
 		LOG("Error loading file %s", file);
+}
+
+void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObject* parent)
+{	
+	GameObject* new_object;
+	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str());
+
+	if (node->mNumMeshes > 0)
+	{
+		Mesh* new_mesh;
+		Texture* new_texture;
+		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]];
+
+		new_mesh = App->meshes->LoadMesh(scene, current_mesh);
+
+		//Check for material, and then load texture if it has, otherwise apply default texture
+		if (current_mesh->mMaterialIndex >= 0)
+		{
+			aiString texture_path;
+			scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+			if (texture_path.length > 0)
+			{
+				new_texture = App->textures->LoadTexture(texture_path.C_Str());
+			}
+			else
+			{
+				new_texture = App->textures->GetDefaultTexture();
+				LOG("Default texture applied to %s", new_object->GetName().c_str());
+			}
+		}
+
+		ComponentMesh* c_mesh = (ComponentMesh*)new_object->AddComponent(COMPONENT_TYPE::MESH);
+		c_mesh->AddMesh(new_mesh);
+
+		ComponentTexture* c_text = (ComponentTexture*)new_object->AddComponent(COMPONENT_TYPE::TEXTURE);
+		c_text->AddTexture(new_texture);
+	}
+
+	if (node->mNumChildren > 0)
+	{
+		for (int i = 0; i < node->mNumChildren; i++)
+		{
+			LoadNode(node->mChildren[i], scene, new_object);
+		}
+	}
 }
 
 void ModuleImporter::ImportFile(const char * path)
@@ -120,6 +137,7 @@ void ModuleImporter::ImportFile(const char * path)
 
 	std::string extension, file;
 	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
+	file += "." + extension;
 
 	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str())) //if file doesnt exist we copy it
 	{
@@ -130,7 +148,7 @@ void ModuleImporter::ImportFile(const char * path)
 	{
 		LoadFBXFile(file.c_str());
 	}
-	else if (extension == "png" || extension == "dds")
+	else if (extension == "png" || extension == "dds" || extension == "jpg")
 	{
 		if (App->scene->selected_gameobject)
 		{

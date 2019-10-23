@@ -13,7 +13,7 @@ public:
 	bool Init(const nlohmann::json::iterator& it);
 	bool Start();
 
-	Texture* LoadTexture(const char* path) const;
+	Texture* LoadTexture(const char* path);
 	Texture* GetDefaultTexture();
 
 private:

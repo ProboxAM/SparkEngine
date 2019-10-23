@@ -77,7 +77,7 @@ Texture* ModuleTextures::CreateDefaultTexture() const
 
 	return tex;
 }
-Texture* ModuleTextures::LoadTexture(const char* path) const
+Texture* ModuleTextures::LoadTexture(const char* path)
 {
 	Texture* tex = new Texture();
 	uint image_id;
@@ -86,18 +86,18 @@ Texture* ModuleTextures::LoadTexture(const char* path) const
 
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
-	ilLoadImage(final_path.c_str());
-
-	tex->id = ilutGLBindTexImage();
-	tex->width = ilGetInteger(IL_IMAGE_WIDTH);
-	tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
-	tex->path = final_path;
-	tex->mips = ilGetInteger(IL_NUM_MIPMAPS);
-	tex->depth = ilGetInteger(IL_IMAGE_DEPTH);
-
-	ILenum format = ilGetInteger(IL_IMAGE_FORMAT);
-	switch (format)
+	if (ilLoadImage(final_path.c_str()))
 	{
+		tex->id = ilutGLBindTexImage();
+		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
+		tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
+		tex->path = final_path;
+		tex->mips = ilGetInteger(IL_NUM_MIPMAPS);
+		tex->depth = ilGetInteger(IL_IMAGE_DEPTH);
+
+		ILenum format = ilGetInteger(IL_IMAGE_FORMAT);
+		switch (format)
+		{
 		case IL_COLOR_INDEX:tex->format = "color index"; break;
 		case IL_ALPHA:tex->format = "alpha"; break;
 		case IL_RGB:tex->format = "rgb"; break;
@@ -106,14 +106,21 @@ Texture* ModuleTextures::LoadTexture(const char* path) const
 		case IL_BGRA:tex->format = "bgra"; break;
 		case IL_LUMINANCE:tex->format = "luminance"; break;
 		case IL_LUMINANCE_ALPHA:tex->format = "luminance alpha"; break;
+		}
+
+		tex->bpp = ilGetInteger(IL_IMAGE_BPP);
+		tex->size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->path.c_str(), tex->width, tex->height, tex->format.c_str(), tex->size);
+	}
+	else
+	{
+		tex = GetDefaultTexture();
+		LOG("Error loading texture %s. Applied default texture instead.", tex->path.c_str());
 	}
 
-	tex->bpp = ilGetInteger(IL_IMAGE_BPP);
-	tex->size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
-	glBindTexture(GL_TEXTURE_2D, 0);
 	ilDeleteImages(1, &image_id);
-
-	LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->path.c_str(), tex->width,tex->height,tex->format.c_str(),tex->size);
 
 	return tex;
 }

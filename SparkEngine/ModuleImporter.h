@@ -7,6 +7,7 @@
 class Mesh;
 struct Texture;
 class aiMesh;
+class aiNode;
 class aiScene;
 class GameObject;
 
@@ -22,6 +23,8 @@ public:
 	void LoadFBXFile(const char* file);
 	void ImportFile(const char* path);
 
+private:
+	void LoadNode(const aiNode* node, const aiScene* scene, GameObject* parent);
 };
 
 #endif
