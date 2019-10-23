@@ -36,7 +36,17 @@ std::vector<ComponentTransform*> ComponentTransform::GetChildren()
 
 float3 ComponentTransform::EulerAngles()
 {
-	return rotation.ToEulerXYZ();
+	return local_rotation.ToEulerXYZ();
+}
+
+void ComponentTransform::SetTransformMatrix(float4x4 matrix)
+{
+	transform_matrix = matrix;
+}
+
+float4x4 ComponentTransform::GetTransformMatrix()
+{
+	return transform_matrix;
 }
 
 ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobject)
@@ -50,11 +60,11 @@ ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobj
 
 	position = { 0.0f, 0.0f, 0.0f };
 	rotation = { 0.0f, 0.0f, 0.0f, 0.0f };
-	scale = { 0.0f, 0.0f, 0.0f };	
+	scale = { 1.0f, 1.0f, 1.0f };	
 	
 	local_position = { 0.0f, 0.0f, 0.0f };
 	local_rotation = { 0.0f, 0.0f, 0.0f, 0.0f };
-	local_scale = { 0.0f, 0.0f, 0.0f };
+	local_scale = { 1.0f, 1.0f, 1.0f };
 }
 
 

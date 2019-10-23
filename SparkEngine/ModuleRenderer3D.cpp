@@ -263,8 +263,11 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 }
 
 //Draws a mesh and binds texture to it
-void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex) const
+void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x4* mtransform) const
 {
+	glPushMatrix();
+	glMultMatrixf((float*)&mtransform);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
 	glVertexPointer(3, GL_FLOAT, 0, nullptr);
@@ -290,6 +293,8 @@ void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex) const
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glPopMatrix();
 }
 
 void ModuleRenderer3D::SetWireframeMode(bool on)

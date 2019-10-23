@@ -33,13 +33,13 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					std::string x, y, z;
 					std::stringstream stream;
-					stream << std::fixed << std::setprecision(2) << go->transform->position.x;
+					stream << std::fixed << std::setprecision(2) << go->transform->local_position.x;
 					x = stream.str();
 					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->position.y;
+					stream << std::fixed << std::setprecision(2) << go->transform->local_position.y;
 					y = stream.str();
 					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->position.z;
+					stream << std::fixed << std::setprecision(2) << go->transform->local_position.z;
 					z = stream.str();
 					stream.str("");
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("X: " + x + " Y: " + y + " Z: " + z).c_str());
@@ -59,13 +59,13 @@ void PanelInspector::Draw()
 
 					ImGui::Text("Scale: ");
 					ImGui::SameLine();
-					stream << std::fixed << std::setprecision(2) << go->transform->scale.x;
+					stream << std::fixed << std::setprecision(2) << go->transform->local_scale.x;
 					x = stream.str();
 					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->scale.y;
+					stream << std::fixed << std::setprecision(2) << go->transform->local_scale.y;
 					y = stream.str();
 					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->scale.z;
+					stream << std::fixed << std::setprecision(2) << go->transform->local_scale.z;
 					z = stream.str();
 					stream.str("");
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("   X: " + x + " Y: " + y + " Z: " + z).c_str());

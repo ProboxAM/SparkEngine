@@ -31,6 +31,9 @@ public:
 	std::vector<ComponentTransform*> GetChildren();
 	float3 EulerAngles();
 
+	void SetTransformMatrix(float4x4  matrix);
+	float4x4 GetTransformMatrix();
+
 
 public:
 	ComponentTransform(GameObject* gameobject);
