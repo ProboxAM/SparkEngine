@@ -33,9 +33,12 @@ public:
 	GameObject* CreateGameObject(
 		GameObject* parent = nullptr, 
 		std::string name = "GameObject",
-		float3 position = {0, 0, 0},
-		Quat rotation = {1, 0, 0, 0 },
-		float3 scale = { 1, 1, 1 }
+		float4x4 m_transform = {
+			{1.f, 0.f ,0.f, 0.f},
+			{0.f, 1.f ,0.f, 0.f},
+			{0.f, 0.f ,1.f, 0.f},
+			{0.f, 0.f ,0.f, 1.f},
+		}
 	);
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();

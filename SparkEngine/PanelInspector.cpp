@@ -29,46 +29,14 @@ void PanelInspector::Draw()
 			{
 				if (ImGui::CollapsingHeader("Transform"))
 				{
-					ImGui::Text("Position: ");
-					ImGui::SameLine();
-					std::string x, y, z;
-					std::stringstream stream;
-					stream << std::fixed << std::setprecision(2) << go->transform->local_position.x;
-					x = stream.str();
-					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->local_position.y;
-					y = stream.str();
-					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->local_position.z;
-					z = stream.str();
-					stream.str("");
-					ImGui::TextColored({ 255, 255, 0, 255 }, ("X: " + x + " Y: " + y + " Z: " + z).c_str());
+					float* p = (float*)&go->transform->local_position;
+					ImGui::InputFloat3("Position", p, 2);
 
-					ImGui::Text("Rotation: ");
-					ImGui::SameLine();
-					stream << std::fixed << std::setprecision(2) << go->transform->EulerAngles().x;
-					x = stream.str();
-					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->EulerAngles().y;
-					y = stream.str();
-					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->EulerAngles().z;
-					z = stream.str();
-					stream.str("");
-					ImGui::TextColored({ 255, 255, 0, 255 }, ("X: " + x + " Y: " + y + " Z: " + z).c_str());
+					float* r = (float*)&go->transform->local_rotation;
+					ImGui::InputFloat4("Rotation", r, 2);
 
-					ImGui::Text("Scale: ");
-					ImGui::SameLine();
-					stream << std::fixed << std::setprecision(2) << go->transform->local_scale.x;
-					x = stream.str();
-					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->local_scale.y;
-					y = stream.str();
-					stream.str("");
-					stream << std::fixed << std::setprecision(2) << go->transform->local_scale.z;
-					z = stream.str();
-					stream.str("");
-					ImGui::TextColored({ 255, 255, 0, 255 }, ("   X: " + x + " Y: " + y + " Z: " + z).c_str());
+					float* s = (float*)&go->transform->local_scale;
+					ImGui::InputFloat3("Scale", s, 2);
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::MESH)

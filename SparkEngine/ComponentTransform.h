@@ -11,6 +11,8 @@ class ComponentTransform :
 private:
 	ComponentTransform* parent = nullptr;
 	std::vector<ComponentTransform*> children;
+	float4x4 local_transform_matrix;
+	float4x4 transform_matrix;
 
 public:
 	//global

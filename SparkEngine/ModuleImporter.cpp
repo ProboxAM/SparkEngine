@@ -97,8 +97,10 @@ void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObje
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
+	
+	float4x4 m_transform = float4x4::FromTRS(pos, rot, scale/100);
 
-	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str(), pos, rot, scale);
+	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str(), m_transform);
 
 	if (node->mNumMeshes > 0)
 	{
