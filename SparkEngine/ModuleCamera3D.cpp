@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleScene.h"
+#include "ModuleEditor.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ModuleCamera3D.h"
@@ -102,7 +103,6 @@ update_status ModuleCamera3D::Update(float dt)
 	Reference += newPos;
 
 	// Mouse motion ----------------
-
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
 		if (App->scene->selected_gameobject)LookAt({ App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z });
@@ -143,7 +143,7 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
@@ -152,7 +152,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position -= Reference;
 
-		if(dx != 0)
+		if (dx != 0)
 		{
 			float DeltaX = (float)dx * Sensitivity;
 
@@ -161,14 +161,14 @@ update_status ModuleCamera3D::Update(float dt)
 			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if(dy != 0)
+		if (dy != 0)
 		{
 			float DeltaY = (float)dy * Sensitivity;
 
 			Y = rotate(Y, DeltaY, X);
 			Z = rotate(Z, DeltaY, X);
 
-			if(Y.y < 0.0f)
+			if (Y.y < 0.0f)
 			{
 				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
 				Y = cross(Z, X);
@@ -251,8 +251,11 @@ void ModuleCamera3D::CameraInputs()
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
-		if (App->input->GetMouseZ() > 0) newPos -= Z * speed;
-		if (App->input->GetMouseZ() < 0) newPos += Z * speed;
+		if (App->editor->IsInsideSceneWindow(math::float2(App->input->GetMouseX(), App->input->GetMouseY())))
+		{
+			if (App->input->GetMouseZ() > 0) newPos -= Z * speed;
+			if (App->input->GetMouseZ() < 0) newPos += Z * speed;
+		}
 	}
 }
 
