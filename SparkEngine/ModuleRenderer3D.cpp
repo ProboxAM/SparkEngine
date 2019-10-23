@@ -267,7 +267,7 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, float4x4 mtransform) const
 {
 	glPushMatrix();
-	glMultMatrixf((float*)&mtransform);
+	glMultMatrixf((float*)&mtransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);

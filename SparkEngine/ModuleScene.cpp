@@ -73,7 +73,7 @@ bool ModuleScene::Save(nlohmann::json& it)
 	return true;
 }
 
-GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name, float4x4 m_transform)
+GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name, float3 position, Quat rotation, float3 scale)
 {
 	if (!parent)
 		parent = root;
@@ -81,12 +81,10 @@ GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name
 	GameObject* go = new GameObject();
 	go->transform->SetParent(parent->transform);
 	go->SetName(name);
-	float3 position, scale;
-	Quat rotation;
-	m_transform.Decompose(position, rotation, scale);
 	go->transform->local_position = position;
 	go->transform->local_rotation = rotation;
 	go->transform->local_scale = scale;
+	go->transform->local_euler_rotation = rotation.ToEulerXYZ()*RADTODEG;
 	gameobjects.push_back(go);
 	return go;
 }

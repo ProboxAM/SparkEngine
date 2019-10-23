@@ -17,11 +17,13 @@ private:
 public:
 	//global
 	float3 position;
+	float3 euler_rotation;
 	Quat rotation;
 	float3 scale;
 
 	//local
 	float3 local_position;
+	float3 local_euler_rotation;
 	Quat local_rotation;
 	float3 local_scale;
 
