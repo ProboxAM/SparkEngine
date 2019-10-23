@@ -311,24 +311,34 @@ bool ModuleRenderer3D::IsWireframeEnabled() const {
 	return wireframe;
 }
 
-void ModuleRenderer3D::DebugVertexNormals(const Mesh* m) const
+void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, float4x4 mtransform) const
 {
+	glPushMatrix();
+	glMultMatrixf((float*)&mtransform);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_VERT_NORM]); 
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glDrawArrays(GL_LINES, 0, m->debug_vertex_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glPopMatrix();
 }
 
-void ModuleRenderer3D::DebugFaceNormals(const Mesh* m) const
+void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, float4x4 mtransform) const
 {
+	glPushMatrix();
+	glMultMatrixf((float*)&mtransform);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_FACE_NORM]);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glDrawArrays(GL_LINES, 0, m->debug_face_normals.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glPopMatrix();
 }
 
 //Resize texture buffer of Scene rendering
