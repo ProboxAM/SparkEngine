@@ -189,9 +189,8 @@ void ModuleFileSystem::SplitFilePath(const char * full_path, std::string * path,
 	if (full_path != nullptr)
 	{
 		std::string full(full_path);
-		NormalizePath(full);
-		std::size_t pos_separator = full.find_last_of("\\/");
-		std::size_t pos_dot = full.find_last_of(".");
+		size_t pos_separator = full.find_last_of("\\/");
+		size_t pos_dot = full.find_last_of(".");
 
 		if (path != nullptr)
 		{
@@ -206,7 +205,7 @@ void ModuleFileSystem::SplitFilePath(const char * full_path, std::string * path,
 			if (pos_separator < full.length())
 				*file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
 			else
-				*file = full;
+				*file = full.substr(0, pos_dot);
 		}
 
 		if (extension != nullptr)
