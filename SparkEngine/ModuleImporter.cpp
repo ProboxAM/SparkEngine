@@ -117,7 +117,9 @@ void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObje
 			scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
 			if (texture_path.length > 0)
 			{
-				new_texture = App->textures->LoadTexture(texture_path.C_Str());
+				std::string file, extension;
+				App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file, &extension);
+				new_texture = App->textures->LoadTexture(std::string(file+"."+extension).c_str());
 			}
 			else
 			{

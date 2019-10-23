@@ -30,8 +30,8 @@ public:
 	void SetWireframeMode(bool on);
 
 	void DrawMesh(const Mesh* m, const Texture* tex, float4x4 mtransform) const;
-	void DebugVertexNormals(const Mesh* m) const;
-	void DebugFaceNormals(const Mesh* m) const;
+	void DebugVertexNormals(const Mesh* m, float4x4 mtransform) const;
+	void DebugFaceNormals(const Mesh* m, float4x4 mtransform) const;
 
 	void ResizeScene(float w, float h);
 

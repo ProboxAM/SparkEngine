@@ -21,13 +21,14 @@ ComponentMesh::~ComponentMesh()
 void ComponentMesh::Update(float dt)
 {
 	Texture* tex = ((ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE))->GetTexture();
+	float4x4 transform = gameobject->transform->GetTransformMatrix();
 	if (mesh)
-		App->renderer3D->DrawMesh(mesh, tex, gameobject->transform->GetTransformMatrix());
+		App->renderer3D->DrawMesh(mesh, tex, transform);
 
 	if (debug_vertex_normal)
-		App->renderer3D->DebugVertexNormals(mesh);
+		App->renderer3D->DebugVertexNormals(mesh, transform);
 	if (debug_face_normal)
-		App->renderer3D->DebugFaceNormals(mesh);
+		App->renderer3D->DebugFaceNormals(mesh, transform);
 }
 
 void ComponentMesh::AddMesh(Mesh * mesh)
