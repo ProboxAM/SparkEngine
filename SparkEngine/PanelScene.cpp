@@ -3,6 +3,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleScene.h"
 #include "MathGeoLib\Math\float3.h"
+#include "MathGeoLib\Geometry\AABB2D.h"
 #include "glew/glew.h"
 
 #include "PanelScene.h"
@@ -20,13 +21,13 @@ PanelScene::~PanelScene()
 void PanelScene::Draw()
 {
 	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_MenuBar);
-	float w, h;
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight();
+	screen_pos = ImGui::GetCursorScreenPos();
 	ImGui::GetWindowDrawList()->AddImage(
 		(void *)App->renderer3D->scene_texture_id,
-		ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetCursorScreenPos().y),
-		ImVec2(ImGui::GetCursorScreenPos().x + w, ImGui::GetCursorScreenPos().y + h),
+		screen_pos,
+		ImVec2(screen_pos.x + w, screen_pos.y + h),
 		ImVec2(0, 1), 
 		ImVec2(1, 0));
 	if (ImGui::BeginMenuBar())
@@ -45,4 +46,10 @@ void PanelScene::Draw()
 
 void PanelScene::Start()
 {
+}
+
+bool PanelScene::IsInside(const float2& pos) const
+{
+	AABB2D box(float2(screen_pos.x, screen_pos.y), float2(screen_pos.x + w, screen_pos.y + h));
+	return math::Contains(box, float3(pos.x, pos.y, 0));
 }

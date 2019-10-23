@@ -167,6 +167,11 @@ void ModuleEditor::LogFrame(float fps, float ms)
 		((PanelConfiguration*)panels[CONFIG])->LogFrame(fps, ms);
 }
 
+bool ModuleEditor::IsInsideSceneWindow(float2 pos)
+{
+	return ((PanelScene*)panels[SCENE])->IsInside(pos);
+}
+
 
 void ModuleEditor::BeginDockSpace()
 {

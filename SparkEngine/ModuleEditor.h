@@ -32,6 +32,7 @@ public:
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
 	void LogDebug(const char* text);
 	void LogFrame(float fps, float ms);
+	bool IsInsideSceneWindow(float2 pos);
 
 private:
 	std::vector<Panel*> panels;
