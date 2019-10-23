@@ -73,7 +73,7 @@ bool ModuleScene::Save(nlohmann::json& it)
 	return true;
 }
 
-GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name)
+GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name, float4x4* t_matrix)
 {
 	if (!parent)
 		parent = root;
@@ -81,6 +81,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name)
 	GameObject* go = new GameObject();
 	go->transform->SetParent(parent->transform);
 	go->SetName(name);
+	go->transform->SetTransformMatrix(t_matrix);
 	gameobjects.push_back(go);
 	return go;
 }

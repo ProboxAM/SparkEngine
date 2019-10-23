@@ -8,6 +8,7 @@
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
+#include "MathGeoLib/Math/float4x4.h"
 
 
 
@@ -88,7 +89,14 @@ void ModuleImporter::LoadFBXFile(const char * file)
 void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObject* parent)
 {	
 	GameObject* new_object;
-	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str());
+	aiMatrix4x4 inverse_matrix = node->mTransformation.Inverse;
+	float4x4 c_matrix = {
+		{ inverse_matrix.a1, inverse_matrix.a2, inverse_matrix.a3, inverse_matrix.a4 },
+		{ inverse_matrix.b1, inverse_matrix.b2, inverse_matrix.b3, inverse_matrix.b4 },
+		{ inverse_matrix.c1, inverse_matrix.c2, inverse_matrix.c3, inverse_matrix.c4},
+		{ inverse_matrix.d1, inverse_matrix.d2, inverse_matrix.d3, inverse_matrix.d4 }
+	};
+	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str(), c_matrix);
 
 	if (node->mNumMeshes > 0)
 	{

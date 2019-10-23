@@ -2,7 +2,8 @@
 #define _COMPONENT_TRANSFORM_H_
 
 #include "Component.h"
-#include "MathGeoLib/Math/MathAll.h"
+#include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/Quat.h"
 #include <vector>
 
 class ComponentTransform :
