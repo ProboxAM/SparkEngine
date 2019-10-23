@@ -1,4 +1,6 @@
 #include "ComponentTransform.h"
+#include "Globals.h"
+
 
 
 int ComponentTransform::GetChildCount()
@@ -8,21 +10,10 @@ int ComponentTransform::GetChildCount()
 
 void ComponentTransform::SetParent(ComponentTransform* parent)
 {
-	if (parent != nullptr)
-	{
-		this->parent = parent;
-		transform_matrix = parent->transform_matrix * local_transform_matrix;
-		this->parent->children.push_back(this);
-	}
-	else {
-		transform_matrix = {
-		{ 1.0f, 0.0f, 0.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f, 0.0f },
-		{ 0.0f, 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 0.0f, 0.0f, 1.0f }
-		};
-	}
+	this->parent = parent;
+	this->parent->children.push_back(this);
 }
+
 
 ComponentTransform * ComponentTransform::GetParent()
 {
@@ -39,25 +30,21 @@ float3 ComponentTransform::EulerAngles()
 	return local_rotation.ToEulerXYZ();
 }
 
-void ComponentTransform::SetTransformMatrix(float4x4 matrix)
-{
-	transform_matrix = matrix;
-}
-
 float4x4 ComponentTransform::GetTransformMatrix()
 {
+	float4x4 local_transform_matrix(local_rotation, local_position);
+	local_transform_matrix.Scale(local_scale);
+
+	float4x4 transform_matrix;
+
+	if (parent)transform_matrix = parent->GetTransformMatrix() * local_transform_matrix;
+	else transform_matrix = local_transform_matrix;
+
 	return transform_matrix;
 }
 
 ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobject)
 {
-	local_transform_matrix = {
-		{ 1.0f, 0.0f, 0.0f, 0.0f },
-		{ 0.0f, 1.0f, 0.0f, 0.0f },
-		{ 0.0f, 0.0f, 1.0f, 0.0f },
-		{ 0.0f, 0.0f, 0.0f, 1.0f }
-	};
-
 	position = { 0.0f, 0.0f, 0.0f };
 	rotation = { 0.0f, 0.0f, 0.0f, 0.0f };
 	scale = { 1.0f, 1.0f, 1.0f };	
@@ -74,7 +61,5 @@ ComponentTransform::~ComponentTransform()
 
 void ComponentTransform::Update(float dt)
 {
-	if(parent)transform_matrix = parent->transform_matrix * local_transform_matrix;
-
-	transform_matrix.Decompose(position, rotation, scale);
+	
 }

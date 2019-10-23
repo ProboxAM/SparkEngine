@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
+#include "MathGeoLib/Math/float4x4.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
@@ -263,7 +264,7 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 }
 
 //Draws a mesh and binds texture to it
-void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x4* mtransform) const
+void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, float4x4 mtransform) const
 {
 	glPushMatrix();
 	glMultMatrixf((float*)&mtransform);

@@ -2,16 +2,13 @@
 #define _COMPONENT_TRANSFORM_H_
 
 #include "Component.h"
-#include "MathGeoLib/Math/float4x4.h"
-#include "MathGeoLib/Math/Quat.h"
+#include "MathGeoLib/Math/MathAll.h"
 #include <vector>
 
 class ComponentTransform :
 	public Component
 {
 private:
-	float4x4 transform_matrix;
-	float4x4 local_transform_matrix;
 	ComponentTransform* parent = nullptr;
 	std::vector<ComponentTransform*> children;
 
@@ -32,7 +29,6 @@ public:
 	std::vector<ComponentTransform*> GetChildren();
 	float3 EulerAngles();
 
-	void SetTransformMatrix(float4x4  matrix);
 	float4x4 GetTransformMatrix();
 
 

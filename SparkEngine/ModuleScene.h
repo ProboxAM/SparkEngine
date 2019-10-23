@@ -3,10 +3,10 @@
 
 #include "Module.h"
 #include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/Quat.h"
 #include <vector>
 
 class GameObject;
-class float4x4;
 enum PRIMITIVE_TYPE;
 
 #define GRID_SIZE 40
@@ -32,8 +32,10 @@ public:
 
 	GameObject* CreateGameObject(
 		GameObject* parent = nullptr, 
-		std::string name = "GameObject", 
-		float4x4* t_matrix = nullptr
+		std::string name = "GameObject",
+		float3 position = {0, 0, 0},
+		Quat rotation = {1, 0, 0, 0 },
+		float3 scale = { 1, 1, 1 }
 	);
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();

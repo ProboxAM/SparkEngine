@@ -22,7 +22,7 @@ void ComponentMesh::Update(float dt)
 {
 	Texture* tex = ((ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE))->GetTexture();
 	if (mesh)
-		App->renderer3D->DrawMesh(mesh, tex, &gameobject->transform->GetTransformMatrix());
+		App->renderer3D->DrawMesh(mesh, tex, gameobject->transform->GetTransformMatrix());
 
 	if (debug_vertex_normal)
 		App->renderer3D->DebugVertexNormals(mesh);
