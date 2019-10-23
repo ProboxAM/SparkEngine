@@ -134,9 +134,9 @@ bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * de
 	FILE* source = nullptr;
 	fopen_s(&source, full_path, "rb");
 
-	std::string file;
-	SplitFilePath(full_path, nullptr, &file, nullptr);
-	std::string final_path = destination + file;
+	std::string file, extension;
+	SplitFilePath(full_path, nullptr, &file, &extension);
+	std::string final_path = destination + file + "." + extension;
 
 	PHYSFS_file* dest = PHYSFS_openWrite(final_path.c_str());
 
@@ -204,7 +204,7 @@ void ModuleFileSystem::SplitFilePath(const char * full_path, std::string * path,
 		if (file != nullptr)
 		{
 			if (pos_separator < full.length())
-				*file = full.substr(pos_separator + 1);
+				*file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
 			else
 				*file = full;
 		}
