@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include "Component.h"
+#include "MathGeoLib/Geometry/OBB.h"
+#include "MathGeoLib/Geometry/AABB.h"
 
 class ComponentTransform;
 
@@ -38,6 +40,7 @@ public:
 
 public:
 	ComponentTransform * transform = nullptr;
+	AABB bounding_box;
 };
 
 #endif // !_GAMEOBJECT_H_
