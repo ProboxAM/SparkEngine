@@ -266,11 +266,32 @@ void ModuleCamera3D::Focus()//If theres a selected game object the camera looks 
 	float3 position = { Position.x, Position.y, Position.z };
 	float distance = position.Distance(end_position);
 	speed = speed * distance * focus_factor;
-	if (distance < min_distance) {
+	min_distance = App->scene->selected_gameobject->bounding_box.Size().Length()*focus_margin;
+
+
+	if (distance + threshold <= min_distance || distance - threshold >= min_distance) {
+		if (distance < min_distance) {
+			newPos += Z * speed;
+			if (distance + newPos.z >= min_distance)
+			{
+				focusing = false;
+				camera_inputs_active = true;
+			}
+		}
+		else if (distance > min_distance) {
+			newPos -= Z * speed;
+			if (distance - newPos.z <= min_distance)
+			{
+				focusing = false;
+				camera_inputs_active = true;
+			}
+		}
+	}
+	else {
 		focusing = false;
 		camera_inputs_active = true;
 	}
-	else newPos -= Z * speed;
+	
 }
 
 // -----------------------------------------------------------------
