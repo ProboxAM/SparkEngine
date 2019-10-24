@@ -8,7 +8,8 @@ void GameObject::Update(float dt)
 {
 	for (int i = 0; i < components.size(); i++)
 	{
-		components[i]->Update(dt);
+		if(components[i]->active)
+			components[i]->Update(dt);
 	}
 
 	for (int i = 0; i < transform->GetChildCount(); i++)

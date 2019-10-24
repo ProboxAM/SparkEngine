@@ -9,8 +9,8 @@ class Component
 {
 public:
 	COMPONENT_TYPE type;
-	bool active;
-	GameObject* gameobject;
+	bool active = true;
+	GameObject* gameobject = nullptr;
 public:
 	Component(GameObject* gameobject);
 	~Component();

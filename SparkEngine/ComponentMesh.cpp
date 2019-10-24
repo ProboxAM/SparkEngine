@@ -3,7 +3,6 @@
 #include "ComponentTexture.h"
 #include "GameObject.h"
 #include "Mesh.h"
-#include "Texture.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 
@@ -20,10 +19,10 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Update(float dt)
 {
-	Texture* tex = ((ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE))->GetTexture();
+	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
 	if (mesh)
-		App->renderer3D->DrawMesh(mesh, tex, transform);
+		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr , transform);
 
 	if (debug_vertex_normal)
 		App->renderer3D->DebugVertexNormals(mesh, transform);

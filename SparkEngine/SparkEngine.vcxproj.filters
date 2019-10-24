@@ -43,9 +43,6 @@
     <Filter Include="Sources\ImGui">
       <UniqueIdentifier>{aee9dc08-ace0-4462-a954-0ae227b4f1be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\gpudetect">
-      <UniqueIdentifier>{053ec222-39d5-44f4-80ff-433192fd50eb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -369,12 +366,6 @@
     <ClInclude Include="PanelScene.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="gpudetect\DeviceId.h">
-      <Filter>Sources\gpudetect</Filter>
-    </ClInclude>
-    <ClInclude Include="gpudetect\dxgi1_4.h">
-      <Filter>Sources\gpudetect</Filter>
-    </ClInclude>
     <ClInclude Include="PanelConsole.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
@@ -577,9 +568,6 @@
     </ClCompile>
     <ClCompile Include="PanelScene.cpp">
       <Filter>Sources\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="gpudetect\DeviceId.cpp">
-      <Filter>Sources\gpudetect</Filter>
     </ClCompile>
     <ClCompile Include="PanelConsole.cpp">
       <Filter>Sources\Panels</Filter>
