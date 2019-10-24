@@ -17,6 +17,7 @@ Spark Engine is a 3D engine developed by Marc Guillen and Axel Alavedra during t
 #### Debug
 - Component Mesh on Inspector can activate debug vertex normals and face normals.
 - Component Texture on Inspector can activate Checkers texture for the GameObject.
+- Console window logs geometry loading process and texture loading.
 
 ### Controls
 
