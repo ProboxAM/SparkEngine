@@ -212,6 +212,9 @@ void PanelConfiguration::DrawRenderer()
 {
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
+		float* c = (float*)&App->renderer3D->bkg_color;
+		ImGui::SliderFloat3("Background Color", c, 0, 1, "%.1f");
+
 		bool vsync = App->renderer3D->GetVsync();
 		if (ImGui::Checkbox("Vsync", &vsync))
 			App->renderer3D->SetVsync(vsync);

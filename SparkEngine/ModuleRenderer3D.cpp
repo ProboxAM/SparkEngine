@@ -120,7 +120,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id); //set scene buffer to render to a texture
-	glClearColor(0.1f, 0.1f, 0.2f, 0.6f); // background color for scene
+	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);

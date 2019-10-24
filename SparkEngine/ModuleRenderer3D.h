@@ -51,6 +51,7 @@ public:
 	///Buffer and texture for rendering into Scene window
 	uint scene_buffer_id = -1;
 	uint scene_texture_id;
+	float3 bkg_color = float3(0.1f, 0.1f, 0.1f);
 
 private:
 	bool wireframe;
