@@ -26,7 +26,7 @@ public:
 	bool focusing = false;
 	float focus_distance = 5.f;
 	float min_distance = 0.5f;
-	float threshold = 0.1f;
+	float threshold = 0.5f;
 	float focus_margin = 1.25f;
 
 	bool camera_inputs_active = true;

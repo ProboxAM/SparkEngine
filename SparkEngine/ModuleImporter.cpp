@@ -70,6 +70,7 @@ void ModuleImporter::LoadFBXFile(const char * file)
 {
 	std::string final_path = ASSETS_FOLDER + std::string(file);
 	GameObject* parent_object;
+	AABB bb;
 	const aiScene* scene = aiImportFile(final_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	std::string name;
 	App->fsystem->SplitFilePath(final_path.c_str(), nullptr, &name);
