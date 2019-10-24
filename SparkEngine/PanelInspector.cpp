@@ -18,7 +18,7 @@ PanelInspector::~PanelInspector()
 
 void PanelInspector::Draw()
 {
-	ImGui::Begin("Inspector");
+	ImGui::Begin("Inspector", &active);
 	if (App->scene->selected_gameobject)
 	{
 		std::vector<Component*> comp = App->scene->selected_gameobject->GetComponents(COMPONENT_TYPE::NONE);

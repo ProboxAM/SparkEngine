@@ -20,7 +20,7 @@ PanelScene::~PanelScene()
 
 void PanelScene::Draw()
 {
-	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("Scene", &active, ImGuiWindowFlags_MenuBar);
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight();
 	screen_pos = ImGui::GetCursorScreenPos();

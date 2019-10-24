@@ -10,7 +10,7 @@ PanelConsole::~PanelConsole()
 
 void PanelConsole::Draw()
 {
-	ImGui::Begin("Console");
+	ImGui::Begin("Console", &active);
 	ImGui::TextUnformatted(debug_buff.begin());
 	if (move_debug_scroll)
 	{

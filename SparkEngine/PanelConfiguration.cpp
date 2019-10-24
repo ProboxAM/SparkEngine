@@ -25,7 +25,7 @@ void PanelConfiguration::Start()
 
 void PanelConfiguration::Draw()
 {
-	ImGui::Begin("Configuration");
+	ImGui::Begin("Configuration", &active);
 
 	if (ImGui::Button("Save"))
 		App->SaveSettings();

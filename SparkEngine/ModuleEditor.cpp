@@ -46,7 +46,7 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	ImGui_ImplOpenGL3_Init();
 
 	panels[CONFIG] = new PanelConfiguration(false);
-	panels[DEBUG] = new PanelConsole(true);
+	panels[CONSOLE] = new PanelConsole(true);
 	panels[ABOUT] = new PanelAbout(false);
 	panels[HIERARCHY] = new PanelHierarchy(true);
 	panels[INSPECTOR] = new PanelInspector(true);
@@ -98,15 +98,16 @@ update_status ModuleEditor::Update(float dt)
 		}
 		if (ImGui::BeginMenu("View"))
 		{
-			if (ImGui::MenuItem("Configuration"))
+			if (ImGui::MenuItem("Configuration", nullptr, panels[CONFIG]->IsActive()))
 				panels[CONFIG]->Activate();
-			if (ImGui::MenuItem("Debug"))
-				panels[DEBUG]->Activate();
-			if (ImGui::MenuItem("Hierarchy"))
+			if (ImGui::MenuItem("Console", nullptr, panels[CONSOLE]->IsActive()))
+				panels[CONSOLE]->Activate();
+			if (ImGui::MenuItem("Hierarchy", nullptr, panels[HIERARCHY]->IsActive()))
 				panels[HIERARCHY]->Activate();
-			if (ImGui::MenuItem("Inspector"))
+			if (ImGui::MenuItem("Inspector", nullptr, panels[INSPECTOR]->IsActive()))
 				panels[INSPECTOR]->Activate();
-
+			if (ImGui::MenuItem("Scene", nullptr, panels[SCENE]->IsActive()))
+				panels[SCENE]->Activate();
 			ImGui::EndMenu();
 		}
 
@@ -130,7 +131,7 @@ update_status ModuleEditor::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("About"))
+			if (ImGui::MenuItem("About", nullptr, panels[ABOUT]->IsActive()))
 				panels[ABOUT]->Activate();
 			ImGui::EndMenu();
 		}
@@ -157,8 +158,8 @@ void ModuleEditor::LogInput(int key, KEY_STATE state, bool mouse)
 
 void ModuleEditor::LogDebug(const char* text)
 {
-	if (panels[DEBUG] != nullptr)
-		((PanelConsole*)panels[DEBUG])->LogDebug(text);
+	if (panels[CONSOLE] != nullptr)
+		((PanelConsole*)panels[CONSOLE])->LogDebug(text);
 }
 
 void ModuleEditor::LogFrame(float fps, float ms)
