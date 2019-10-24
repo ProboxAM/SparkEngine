@@ -30,7 +30,7 @@ public:
 	float focus_margin = 1.25f;
 
 	bool camera_inputs_active = true;
-	float movement_speed, sprint_speed, focus_factor;
+	float movement_speed, focus_factor;
 private:
 
 	void CalculateViewMatrix();

@@ -56,7 +56,6 @@ bool ModuleCamera3D::Load(const nlohmann::json::iterator& it)
 {
 	movement_speed = (*it)["movement_speed"];
 	focus_factor = (*it)["focus_factor"];
-	sprint_speed = (*it)["sprint_speed"];
 	camera_inputs_active = (*it)["inputs"];
 
 	return true;
@@ -67,7 +66,6 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 	it[name] = {
 		{ "movement_speed",movement_speed },
 		{ "focus_factor",focus_factor },
-		{ "sprint_speed",sprint_speed },
 		{ "inputs", camera_inputs_active}
 	};
 
@@ -82,7 +80,7 @@ update_status ModuleCamera3D::Update(float dt)
 	newPos = { 0, 0, 0 };
 	speed = movement_speed * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = sprint_speed * dt;
+		speed = movement_speed * 2 * dt;
 
 	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)

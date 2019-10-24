@@ -245,7 +245,6 @@ void PanelConfiguration::DrawCamera()
 	{
 		ImGui::Checkbox("Camera Inputs", &App->camera->camera_inputs_active);
 		ImGui::SliderFloat("Movement Speed", &App->camera->movement_speed, 0, 100);
-		ImGui::SliderFloat("Sprint Speed", &App->camera->sprint_speed, 0, 100);
 	}
 }
 
