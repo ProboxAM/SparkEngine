@@ -10,7 +10,7 @@ enum KEY_STATE;
 
 enum Panel_Type {
 	CONFIG,
-	DEBUG,
+	CONSOLE,
 	ABOUT,
 	HIERARCHY,
 	INSPECTOR,

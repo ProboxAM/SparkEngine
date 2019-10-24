@@ -119,18 +119,9 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	//// Seed with a real random value, if available
-	//pcg_extras::seed_seq_from<std::random_device> seed_source;
-	//// Make a random number engine
-	//pcg32 rng(seed_source);
-
-	//// Choose a random mean between 1 and 6
-	//std::uniform_real_distribution<float> uniform_dist(0, 1);
-	//float mean = uniform_dist(rng);
-	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id); //set scene buffer to render to a texture
+	glClearColor(0.1f, 0.1f, 0.2f, 0.6f); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
@@ -149,7 +140,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	App->editor->Draw();
@@ -264,7 +255,7 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 }
 
 //Draws a mesh and binds texture to it
-void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, float4x4 mtransform) const
+void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x4& mtransform) const
 {
 	glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());
@@ -311,10 +302,10 @@ bool ModuleRenderer3D::IsWireframeEnabled() const {
 	return wireframe;
 }
 
-void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, float4x4 mtransform) const
+void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, const float4x4& mtransform) const
 {
 	glPushMatrix();
-	glMultMatrixf((float*)&mtransform);
+	glMultMatrixf((float*)&mtransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_VERT_NORM]); 
@@ -326,10 +317,10 @@ void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, float4x4 mtransform) co
 	glPopMatrix();
 }
 
-void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, float4x4 mtransform) const
+void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, const float4x4& mtransform) const
 {
 	glPushMatrix();
-	glMultMatrixf((float*)&mtransform);
+	glMultMatrixf((float*)&mtransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_DEBUG_FACE_NORM]);

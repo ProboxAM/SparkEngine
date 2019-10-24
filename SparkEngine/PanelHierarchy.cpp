@@ -15,7 +15,7 @@ PanelHierarchy::~PanelHierarchy()
 
 void PanelHierarchy::Draw()
 {
-	ImGui::Begin("Hierarchy");
+	ImGui::Begin("Hierarchy", &active);
 
 	node_iterator = 0;
 

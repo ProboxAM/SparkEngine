@@ -15,7 +15,7 @@ PanelAbout::~PanelAbout()
 
 void PanelAbout::Draw()
 {
-	ImGui::Begin("About");
+	ImGui::Begin("About", &active);
 	// Engine description
 	ImGui::Text("Spark Engine");
 	ImGui::Spacing();

@@ -18,7 +18,7 @@ PanelInspector::~PanelInspector()
 
 void PanelInspector::Draw()
 {
-	ImGui::Begin("Inspector");
+	ImGui::Begin("Inspector", &active);
 	if (App->scene->selected_gameobject)
 	{
 		std::vector<Component*> comp = App->scene->selected_gameobject->GetComponents(COMPONENT_TYPE::NONE);
@@ -45,6 +45,10 @@ void PanelInspector::Draw()
 
 				if (ImGui::CollapsingHeader("Mesh")) 
 				{
+					ImGui::PushID("active_mesh");
+					ImGui::Checkbox("Active", &c_mesh->active);
+					ImGui::PopID();
+
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Index amount: " + std::to_string(c_mesh->GetIndicesAmount()) + " |").c_str());
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Vertex amount: " + std::to_string(c_mesh->GetVerticesAmount())).c_str());
@@ -61,6 +65,10 @@ void PanelInspector::Draw()
 				ComponentTexture* c_texture = (ComponentTexture*)go->GetComponent(COMPONENT_TYPE::TEXTURE);
 				if (ImGui::CollapsingHeader("Texture"))
 				{
+					ImGui::PushID("active_texture");
+					ImGui::Checkbox("Active", &c_texture->active);
+					ImGui::PopID();
+
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("With: " + std::to_string(c_texture->GetTextureWidth()) + " |").c_str());
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Height: " + std::to_string(c_texture->GetTextureHeight())).c_str());

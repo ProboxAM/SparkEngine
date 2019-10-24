@@ -27,7 +27,7 @@ public:
 
 	virtual void Draw() {};
 
-private:
+protected:
 	bool active = false;
 };
 #endif
