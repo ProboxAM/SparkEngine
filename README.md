@@ -24,7 +24,7 @@ Spark Engine is a 3D engine developed by Marc Guillen and Axel Alavedra during t
 - Mouse Hold Right:
 	- WASD: move forward, left, backward and right
 	- Look around
-- F: look at target
+- F: focus camera to selected Game Object
 - Hold Alt:
 	- Mouse Hold Left: look around target
 - Mouse Wheel: zoom in/out
