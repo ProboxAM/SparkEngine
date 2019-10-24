@@ -5,6 +5,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
+#include "ImGui/misc/cpp/imgui_stdlib.h"
 
 #include <iomanip>
 
@@ -21,6 +22,20 @@ void PanelInspector::Draw()
 	ImGui::Begin("Inspector", &active);
 	if (App->scene->selected_gameobject)
 	{
+		bool active = App->scene->selected_gameobject->isActive();
+		if (ImGui::Checkbox(" ", &active))
+		{
+			App->scene->selected_gameobject->SetActive(active);
+		}
+		ImGui::SameLine();
+		ImGui::PushID("name");
+		std::string obj_name = App->scene->selected_gameobject->GetName();
+		if (ImGui::InputText("", &obj_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+			App->scene->selected_gameobject->SetName(obj_name);
+		ImGui::PopID();
+
+		ImGui::Separator();
+
 		std::vector<Component*> comp = App->scene->selected_gameobject->GetComponents(COMPONENT_TYPE::NONE);
 		GameObject* go = App->scene->selected_gameobject;
 		for (int i = 0; i < comp.size(); i++)
@@ -92,6 +107,8 @@ void PanelInspector::Draw()
 			{
 				ImGui::CollapsingHeader("LIGHT");
 			}
+
+			ImGui::Separator();
 		}
 	}
 	ImGui::End();

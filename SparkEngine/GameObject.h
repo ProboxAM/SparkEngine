@@ -13,10 +13,10 @@ class GameObject
 {
 private:
 	std::string name;
-	std::string tag;
-	std::string layer;
-	bool active;
-	bool is_static;
+	std::string tag = "Untagged";
+	std::string layer = "Default";
+	bool active = true;
+	bool is_static = false;
 	std::vector<Component*> components;
 public:
 	GameObject();
