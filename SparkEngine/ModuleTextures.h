@@ -16,6 +16,8 @@ public:
 	Texture* LoadTexture(const char* path);
 	Texture* GetDefaultTexture();
 
+	int version;
+
 private:
 	Texture * CreateDefaultTexture() const;
 	Texture* default_texture;

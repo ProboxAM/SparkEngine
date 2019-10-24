@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "glew/glew.h"
+#include "ModuleTextures.h"
 #include "PanelAbout.h"
 
 
@@ -53,6 +54,9 @@ void PanelAbout::Draw()
 
 	if (ImGui::Button("ImGui")) { App->OpenWebURL("https://github.com/ocornut/imgui"); }
 	ImGui::SameLine(); ImGui::TextWrapped("%s", ImGui::GetVersion());
+
+	if (ImGui::Button("DevIL")) { App->OpenWebURL("http://openil.sourceforge.net"); }
+	ImGui::SameLine(); ImGui::TextWrapped("%i", App->textures->version);
 
 	if (ImGui::Button("MathGeoLib")) { App->OpenWebURL("https://github.com/juj/MathGeoLib"); }
 	ImGui::SameLine(); ImGui::TextWrapped("1.5");

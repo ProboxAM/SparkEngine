@@ -28,7 +28,8 @@ bool ModuleTextures::Init(const nlohmann::json::iterator& it)
 	ilutEnable(ILUT_OPENGL_CONV);
 	ilutRenderer(ILUT_OPENGL);
 
-	LOG("Initialized DevIL version: %d", (int)ilGetInteger(IL_VERSION_NUM));
+	version = ilGetInteger(IL_VERSION_NUM);
+	LOG("Initialized DevIL version: %i", version);
 
 	return true;
 }
