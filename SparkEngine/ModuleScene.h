@@ -45,6 +45,7 @@ public:
 	void GenerateGrid();
 	void DrawGrid();
 	bool show_grid = true;
+
 };
 
 #endif // !_MODULE_SCENE_H_
