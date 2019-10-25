@@ -28,6 +28,7 @@ public:
 	void Draw();
 	bool Start();
 	update_status Update(float dt);
+	update_status PreUpdate(float dt);
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
 	void LogDebug(const char* text);

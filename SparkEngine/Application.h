@@ -45,6 +45,10 @@ private:
 
 public:
 
+	bool exit = false;
+
+public:
+
 	Application();
 	~Application();
 

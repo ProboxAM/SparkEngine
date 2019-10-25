@@ -135,6 +135,9 @@ update_status Application::Update()
 		}
 	}
 
+	if (exit)
+		ret = UPDATE_STOP;
+
 	FinishUpdate();
 
 	return ret;
