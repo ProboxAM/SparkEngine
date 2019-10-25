@@ -5,7 +5,7 @@
 #include "ModuleInput.h"
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
-#include "ImGui/misc/cpp/imgui_stdlib.h"
+#include "ImGui/imgui_stdlib.h"
 
 #define MAX_LOG 80
 
@@ -74,6 +74,10 @@ void PanelConfiguration::DrawApplication()
 		ImGui::Text("Framerate Cap:");
 		ImGui::SameLine();
 		ImGui::TextColored({ 0,255,255,255 }, std::to_string(App->GetFPSCap()).c_str());
+
+		bool vsync = App->renderer3D->GetVsync();
+		if (ImGui::Checkbox("Vsync", &vsync))
+			App->renderer3D->SetVsync(vsync);
 
 		char title[25];
 		sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
@@ -210,9 +214,6 @@ void PanelConfiguration::DrawRenderer()
 		float* c = (float*)&App->renderer3D->bkg_color;
 		ImGui::SliderFloat3("Background Color", c, 0, 1, "%.1f");
 
-		bool vsync = App->renderer3D->GetVsync();
-		if (ImGui::Checkbox("Vsync", &vsync))
-			App->renderer3D->SetVsync(vsync);
 		bool depth_test = App->renderer3D->IsEnabled(GL_DEPTH_TEST);
 		if (ImGui::Checkbox("Depth Test", &depth_test))
 			App->renderer3D->GLEnable(GL_DEPTH_TEST, depth_test);

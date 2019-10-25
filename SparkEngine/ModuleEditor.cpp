@@ -14,9 +14,9 @@
 #include "PanelInspector.h"
 
 
-#include "ImGui/examples/imgui_impl_sdl.h"
-#include "ImGui/examples/imgui_impl_opengl3.h"
-#include "ImGui/misc/cpp/imgui_stdlib.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+#include "ImGui/imgui_stdlib.h"
 
 
 

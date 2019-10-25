@@ -5,6 +5,7 @@
 #include "SDL\include\SDL_opengl.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "ModuleCamera3D.h"
+#include "ModuleScene.h"
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
 #include "Mesh.h"
@@ -126,9 +127,6 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id); //set scene buffer to render to a texture
-	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
@@ -147,9 +145,16 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id); //set scene buffer to render to a texture
+	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	App->scene->UpdateScene(dt); //Update/Draw scene should probably split it in the future
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	App->editor->Draw();
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -362,16 +367,14 @@ void ModuleRenderer3D::CreateSceneBuffer()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, scene_texture_id, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);	
 
 	glGenRenderbuffers(1, &scene_depth_id);
 	glBindRenderbuffer(GL_RENDERBUFFER, scene_depth_id);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, size.x, size.y);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, scene_depth_id);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -383,9 +386,6 @@ bool ModuleRenderer3D::GetVsync() const
 void ModuleRenderer3D::SetVsync(bool active)
 {
 	vsync = active;
-	if (SDL_GL_SetSwapInterval(vsync) < 0)
-	{
-		LOG("Error %s Vsync, SDL Error: %s\n", vsync? "enabling":"disabling", SDL_GetError());
-	}
+	SDL_GL_SetSwapInterval(active);
 }
 

@@ -5,7 +5,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
-#include "ImGui/misc/cpp/imgui_stdlib.h"
+#include "ImGui/imgui_stdlib.h"
 
 #include <iomanip>
 

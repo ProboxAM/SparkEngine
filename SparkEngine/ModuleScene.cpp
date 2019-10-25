@@ -46,7 +46,7 @@ bool ModuleScene::Start()
 	return true;
 }
 
-update_status ModuleScene::Update(float dt)
+update_status ModuleScene::UpdateScene(float dt)
 {
 	if(show_grid)
 		DrawGrid();
