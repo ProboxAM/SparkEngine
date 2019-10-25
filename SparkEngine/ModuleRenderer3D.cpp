@@ -103,16 +103,23 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 	}
 
 	GLenum err = glewInit();
-	// … check for errors
-	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	if (err != GL_NO_ERROR) // … check for errors
+	{
+		LOG("Failed glew Init with error: %s", SDL_GetError());
+		ret = false;
+	}
+	else
+	{
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	CreateSceneBuffer();
-	// Projection matrix for
-	OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
+		CreateSceneBuffer();
+		// Projection matrix for
+		OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
+	}
 
 	return ret;
 }
@@ -373,7 +380,7 @@ void ModuleRenderer3D::SetVsync(bool active)
 	vsync = active;
 	if (SDL_GL_SetSwapInterval(vsync) < 0)
 	{
-		LOG("SDL Error: %s\n", SDL_GetError());
+		LOG("Error %s Vsync, SDL Error: %s\n", vsync? "enabling":"disabling", SDL_GetError());
 	}
 }
 

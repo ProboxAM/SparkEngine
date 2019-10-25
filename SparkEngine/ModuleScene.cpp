@@ -27,6 +27,9 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init(const nlohmann::json::iterator& it)
 {
+	LOG("Init Scene");
+
+	LOG("Creating root game object");
 	root = CreateRootGameObject();
 
 	show_grid = (*it)["grid"];

@@ -6,7 +6,6 @@
   "Camera3D": {
     "focus_factor": 0.25,
     "movement_speed": 20.0,
-    "sprint_speed": 40.0,
     "inputs": true
   },
     "Render": {
