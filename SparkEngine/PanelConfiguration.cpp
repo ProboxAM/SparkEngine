@@ -7,10 +7,12 @@
 #include "PanelConfiguration.h"
 #include "ImGui/misc/cpp/imgui_stdlib.h"
 
-#define MAX_LOG 50
+#define MAX_LOG 80
 
 PanelConfiguration::PanelConfiguration(bool a) : Panel(a)
 {
+	fps_log = std::vector<float>(MAX_LOG);
+	ms_log = std::vector<float>(MAX_LOG);
 }
 
 
@@ -45,21 +47,14 @@ void PanelConfiguration::Draw()
 
 void PanelConfiguration::LogFrame(float fps, float ms)
 {
-	if (fps_log.size() == MAX_LOG)
+	for (int i = fps_log.size() - 1; i > 0; --i)
 	{
-		for (uint i = 1; i < MAX_LOG; ++i)
-		{
-			fps_log[i] = fps_log[i - 1];
-			ms_log[i] = ms_log[i - 1];
-		}
-		fps_log[0] = fps;
-		ms_log[0] = ms;
+		fps_log[i] = fps_log[i - 1];
+		ms_log[i] = ms_log[i - 1];
 	}
-	else
-	{
-		fps_log.insert(fps_log.begin(), fps);
-		ms_log.insert(ms_log.begin(), ms);
-	}
+		
+	fps_log[0] = fps;
+	ms_log[0] = ms;
 }
 
 void PanelConfiguration::DrawApplication()

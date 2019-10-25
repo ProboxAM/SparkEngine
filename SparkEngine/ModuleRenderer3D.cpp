@@ -41,7 +41,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 	{
 		//Use Vsync
 		vsync = (*it)["vsync"];
-		if(vsync && SDL_GL_SetSwapInterval(vsync) < 0)
+		if(SDL_GL_SetSwapInterval(vsync) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
@@ -371,6 +371,9 @@ bool ModuleRenderer3D::GetVsync() const
 void ModuleRenderer3D::SetVsync(bool active)
 {
 	vsync = active;
-	SDL_GL_SetSwapInterval(vsync);
+	if (SDL_GL_SetSwapInterval(vsync) < 0)
+	{
+		LOG("SDL Error: %s\n", SDL_GetError());
+	}
 }
 
