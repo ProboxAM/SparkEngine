@@ -100,7 +100,9 @@ void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObje
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
-	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str(), pos, rot, scale/100);
+	FixScaleUnits(scale);
+
+	new_object = App->scene->CreateGameObject(parent, node->mName.C_Str(), pos, rot, scale);
 
 	if (node->mNumMeshes > 0)
 	{
@@ -109,7 +111,8 @@ void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObje
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]];
 
 		new_mesh = App->meshes->LoadMesh(scene, current_mesh);
-		new_object->bounding_box.SetFrom(&new_mesh->vertices[0], new_mesh->vertices.size());
+		new_object->bounding_box.SetNegativeInfinity();
+		new_object->bounding_box.Enclose(&new_mesh->vertices[0], new_mesh->vertices.size());
 
 		//Check for material, and then load texture if it has, otherwise apply default texture
 		if (current_mesh->mMaterialIndex >= 0)
@@ -143,6 +146,13 @@ void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObje
 			LoadNode(node->mChildren[i], scene, new_object);
 		}
 	}
+}
+
+void ModuleImporter::FixScaleUnits(float3 &scale)
+{
+	if (scale.x >= 1000)scale /= 1000;
+	if (scale.x >= 100)scale /= 100;
+	if (scale.x >= 10)scale /= 10;
 }
 
 void ModuleImporter::ImportFile(const char * path)

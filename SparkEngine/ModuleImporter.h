@@ -25,6 +25,7 @@ public:
 
 private:
 	void LoadNode(const aiNode* node, const aiScene* scene, GameObject* parent);
+	void FixScaleUnits(float3 &scale);
 };
 
 #endif
