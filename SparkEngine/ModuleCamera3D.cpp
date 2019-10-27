@@ -87,10 +87,8 @@ update_status ModuleCamera3D::Update(float dt)
 	{
 		if (App->scene->selected_gameobject)
 		{
-			if (!isSelectedGOAsReference()) {
-				SelectedGOAsReference();
-				LookAt(Reference);
-			}
+			SelectedGOAsReference();
+			LookAt(Reference);
 			focusing = true;
 			camera_inputs_active = false;
 		}
@@ -175,16 +173,6 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 float* ModuleCamera3D::GetViewMatrix()
 {
 	return &ViewMatrix;
-}
-
-bool ModuleCamera3D::isSelectedGOAsReference()
-{
-	if (App->scene->selected_gameobject)
-	{
-		float3 comparator = { Reference.x, Reference.y, Reference.z };
-		if (App->scene->selected_gameobject->transform->position.Equals(comparator)) return true;
-	}
-	else return false;
 }
 
 void ModuleCamera3D::CameraInputs()
