@@ -35,7 +35,6 @@ private:
 
 	void CalculateViewMatrix();
 	void SelectedGOAsReference();
-	bool isSelectedGOAsReference();
 	void CameraInputs();
 	void Focus();
 	void RotateAroundReference();
