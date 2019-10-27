@@ -85,12 +85,15 @@ update_status ModuleCamera3D::Update(float dt)
 	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		if (!isSelectedGOAsReference()) {
-			SelectedGOAsReference();
-			LookAt(Reference);
+		if (App->scene->selected_gameobject)
+		{
+			if (!isSelectedGOAsReference()) {
+				SelectedGOAsReference();
+				LookAt(Reference);
+			}
+			focusing = true;
+			camera_inputs_active = false;
 		}
-		focusing = true;
-		camera_inputs_active = false;		
 	}
 
 	if (focusing) Focus();
@@ -135,7 +138,7 @@ void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool Rota
 		this->Reference = this->Position;
 		this->Position += Z * 0.05f;
 	}
-
+													  
 	CalculateViewMatrix();
 }
 
@@ -144,9 +147,16 @@ void ModuleCamera3D::LookAt(const vec3 &Spot)
 {
 	Reference = Spot;
 
-	Z = normalize(Position - Reference);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
+	float3 aux = { Position.x - Reference.x, Position.y - Reference.y, Position.z - Reference.z };
+	aux.Normalize();
+	float3 b = { 0, 1, 0 };
+
+	if (!aux.Equals(b)) {
+		Z = normalize(Position - Reference);
+		X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
+		Y = cross(Z, X);
+	}
+
 
 	CalculateViewMatrix();
 }
@@ -169,8 +179,11 @@ float* ModuleCamera3D::GetViewMatrix()
 
 bool ModuleCamera3D::isSelectedGOAsReference()
 {
-	float3 comparator = { Reference.x, Reference.y, Reference.z };
-	if (App->scene->selected_gameobject->transform->position.Equals(comparator)) return true;
+	if (App->scene->selected_gameobject)
+	{
+		float3 comparator = { Reference.x, Reference.y, Reference.z };
+		if (App->scene->selected_gameobject->transform->position.Equals(comparator)) return true;
+	}
 	else return false;
 }
 
