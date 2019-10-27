@@ -169,11 +169,12 @@ void ModuleImporter::ImportFile(const char * path)
 		App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER);
 	}
 
-	if (extension == "fbx")
+	if (extension == "fbx" || extension == "FBX")
 	{
 		LoadFBXFile(file.c_str());
 	}
-	else if (extension == "png" || extension == "dds" || extension == "jpg")
+	else if (extension == "png" || extension == "dds" || extension == "jpg" ||
+			 extension == "PNG" || extension == "DDS" || extension == "JPG")
 	{
 		if (App->scene->selected_gameobject)
 		{

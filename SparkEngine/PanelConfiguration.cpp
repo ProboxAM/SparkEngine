@@ -212,7 +212,7 @@ void PanelConfiguration::DrawRenderer()
 	if (ImGui::CollapsingHeader("Renderer"))
 	{
 		float* c = (float*)&App->renderer3D->bkg_color;
-		ImGui::SliderFloat3("Background Color", c, 0, 1, "%.1f");
+		ImGui::ColorPicker3("Background Color", c);
 
 		bool depth_test = App->renderer3D->IsEnabled(GL_DEPTH_TEST);
 		if (ImGui::Checkbox("Depth Test", &depth_test))
