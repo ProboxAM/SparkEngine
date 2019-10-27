@@ -85,11 +85,12 @@ update_status ModuleCamera3D::Update(float dt)
 	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		if (GOSelectedAsReference()) {
+		if (!isSelectedGOAsReference()) {
+			SelectedGOAsReference();
 			LookAt(Reference);
-			focusing = true;
-			camera_inputs_active = false;
 		}
+		focusing = true;
+		camera_inputs_active = false;		
 	}
 
 	if (focusing) Focus();
@@ -103,7 +104,7 @@ update_status ModuleCamera3D::Update(float dt)
 	// Mouse motion ----------------
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
-		GOSelectedAsReference();//We set the select game object as reference so we now rotate around it.
+		SelectedGOAsReference();//We set the select game object as reference so we now rotate around it.
 		RotateAroundReference();
 	}
 
@@ -166,12 +167,10 @@ float* ModuleCamera3D::GetViewMatrix()
 	return &ViewMatrix;
 }
 
-bool ModuleCamera3D::GOSelectedAsReference()
+bool ModuleCamera3D::isSelectedGOAsReference()
 {
-	if (App->scene->selected_gameobject) {
-		Reference = { App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z };
-		return true;
-	}
+	float3 comparator = { Reference.x, Reference.y, Reference.z };
+	if (App->scene->selected_gameobject->transform->position.Equals(comparator)) return true;
 	else return false;
 }
 
@@ -196,7 +195,7 @@ void ModuleCamera3D::CameraInputs()
 
 void ModuleCamera3D::Focus()//If theres a selected game object the camera looks at the target and moves to it. It moves slower as the camera gets closer to the target
 {
-	GOSelectedAsReference();
+	SelectedGOAsReference();
 	float3 end_position = { Reference.x, Reference.y, Reference.z };
 	float3 position = { Position.x, Position.y, Position.z };
 	float distance = position.Distance(end_position);
@@ -281,4 +280,11 @@ void ModuleCamera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
 	ViewMatrixInverse = inverse(ViewMatrix);
+}
+
+void ModuleCamera3D::SelectedGOAsReference()
+{
+	if (App->scene->selected_gameobject) {
+		Reference = { App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z };
+	}
 }
