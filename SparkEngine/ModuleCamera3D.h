@@ -37,6 +37,7 @@ private:
 	bool GOSelectedAsReference();
 	void CameraInputs();
 	void Focus();
+	void RotateAroundReference();
 
 public:
 
