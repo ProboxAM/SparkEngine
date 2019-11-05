@@ -43,6 +43,9 @@
     <Filter Include="Sources\ImGui">
       <UniqueIdentifier>{aee9dc08-ace0-4462-a954-0ae227b4f1be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Importers">
+      <UniqueIdentifier>{69f4e9cf-b079-49f4-a2b9-93b4397a388d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -324,17 +327,11 @@
     <ClInclude Include="ComponentTexture.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTextures.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="PanelHierarchy.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
     <ClInclude Include="PanelInspector.h">
       <Filter>Sources\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleMeshes.h">
-      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="PanelScene.h">
       <Filter>Sources\Panels</Filter>
@@ -369,6 +366,16 @@
     <ClInclude Include="ImGui\imconfig.h">
       <Filter>Sources\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshImporter.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureImporter.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -512,9 +519,6 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Sources\Containers</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
@@ -533,17 +537,11 @@
     <ClCompile Include="ComponentTexture.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTextures.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="PanelHierarchy.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
     <ClCompile Include="PanelInspector.cpp">
       <Filter>Sources\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleMeshes.cpp">
-      <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="PanelScene.cpp">
       <Filter>Sources\Panels</Filter>
@@ -572,6 +570,16 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Sources\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Importer.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshImporter.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureImporter.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

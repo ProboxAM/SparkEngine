@@ -1,9 +1,8 @@
 #include "Application.h"
+#include "ModuleImporter.h"
+#include "TextureImporter.h"
 #include "glew/glew.h"
-#include "ModuleTextures.h"
 #include "PanelAbout.h"
-
-
 
 PanelAbout::PanelAbout(bool a) : Panel(a)
 {
@@ -56,7 +55,7 @@ void PanelAbout::Draw()
 	ImGui::SameLine(); ImGui::TextWrapped("%s", ImGui::GetVersion());
 
 	if (ImGui::Button("DevIL")) { App->OpenWebURL("http://openil.sourceforge.net"); }
-	ImGui::SameLine(); ImGui::TextWrapped("%i", App->textures->version);
+	ImGui::SameLine(); ImGui::TextWrapped("%i", App->importer->texture->version);
 
 	if (ImGui::Button("MathGeoLib")) { App->OpenWebURL("https://github.com/juj/MathGeoLib"); }
 	ImGui::SameLine(); ImGui::TextWrapped("1.5");

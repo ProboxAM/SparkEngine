@@ -1,50 +1,64 @@
-#include "GameObject.h"
-#include "ModuleTextures.h"
-#include "Mesh.h"
-#include "Texture.h"
-
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
+#include "MathGeoLib/Math/float4x4.h"
+#include "MathGeoLib/Math/Quat.h"
+
 #define PAR_SHAPES_IMPLEMENTATION
 #include "Par/par_shapes.h"
 
-#include "ModuleMeshes.h"
+#include "Mesh.h"
+
+#include "MeshImporter.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-ModuleMeshes::ModuleMeshes(bool active): Module(active)
+MeshImporter::MeshImporter()
 {
 }
 
 
-ModuleMeshes::~ModuleMeshes()
+MeshImporter::~MeshImporter()
 {
-
 }
 
-
-Mesh* ModuleMeshes::LoadMesh(const aiScene* scene, const aiMesh* mesh) const
+bool MeshImporter::Init()
 {
-	Mesh* new_mesh = new Mesh();
+	return true;
+}
+
+bool MeshImporter::CleanUp()
+{
+	return true;
+}
+
+Mesh* MeshImporter::Load(const char * exported_file)
+{
+	return nullptr;
+}
+
+Mesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
+{
+	Mesh* resource = new Mesh();
+
 	for (uint i = 0; i < mesh->mNumVertices; i++)
 	{
 		//Vertex vertex;
-		new_mesh->vertices.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		new_mesh->normal.push_back(float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		resource->vertices.push_back(float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+		resource->normal.push_back(float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
 
 		if (mesh->mTextureCoords[0]) //Only take in count first texture
 		{
-			new_mesh->uv.push_back(float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
+			resource->uv.push_back(float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 		}
 		else
-			new_mesh->uv.push_back(float2(0.0f, 0.0f)); //Default to 0,0
+			resource->uv.push_back(float2(0.0f, 0.0f)); //Default to 0,0
 
-		//DEBUG NORMAL VERTEX
-		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i]);
-		new_mesh->debug_vertex_normals.push_back(new_mesh->vertices[i] + (new_mesh->normal[i].Normalized() * DEBUG_NORMAL_LENGTH));
+														//DEBUG NORMAL VERTEX
+		resource->debug_vertex_normals.push_back(resource->vertices[i]);
+		resource->debug_vertex_normals.push_back(resource->vertices[i] + (resource->normal[i].Normalized() * DEBUG_NORMAL_LENGTH));
 
 	}
 	for (uint i = 0; i < mesh->mNumFaces; i++) //ASSUME FACE IS TRIANGLE
@@ -52,36 +66,37 @@ Mesh* ModuleMeshes::LoadMesh(const aiScene* scene, const aiMesh* mesh) const
 		aiFace face = mesh->mFaces[i];
 		for (uint j = 0; j < face.mNumIndices; j++)
 		{
-			new_mesh->indices.push_back(face.mIndices[j]);
+			resource->indices.push_back(face.mIndices[j]);
 		}
 
 		//Calculate center of face
-		float center_x = (new_mesh->vertices[face.mIndices[0]].x + new_mesh->vertices[face.mIndices[1]].x + new_mesh->vertices[face.mIndices[2]].x) / 3;
-		float center_y = (new_mesh->vertices[face.mIndices[0]].y + new_mesh->vertices[face.mIndices[1]].y + new_mesh->vertices[face.mIndices[2]].y) / 3;
-		float center_z = (new_mesh->vertices[face.mIndices[0]].z + new_mesh->vertices[face.mIndices[1]].z + new_mesh->vertices[face.mIndices[2]].z) / 3;
+		float center_x = (resource->vertices[face.mIndices[0]].x + resource->vertices[face.mIndices[1]].x + resource->vertices[face.mIndices[2]].x) / 3;
+		float center_y = (resource->vertices[face.mIndices[0]].y + resource->vertices[face.mIndices[1]].y + resource->vertices[face.mIndices[2]].y) / 3;
+		float center_z = (resource->vertices[face.mIndices[0]].z + resource->vertices[face.mIndices[1]].z + resource->vertices[face.mIndices[2]].z) / 3;
 
 		float3 center = float3(center_x, center_y, center_z);
 
 		//Calculate normal of face. Create 2 vector from face edges and calculate normal with cross product
-		float3 edge_1 = (new_mesh->vertices[face.mIndices[1]] - new_mesh->vertices[face.mIndices[0]]);
-		float3 edge_2 = (new_mesh->vertices[face.mIndices[2]] - new_mesh->vertices[face.mIndices[0]]);
+		float3 edge_1 = (resource->vertices[face.mIndices[1]] - resource->vertices[face.mIndices[0]]);
+		float3 edge_2 = (resource->vertices[face.mIndices[2]] - resource->vertices[face.mIndices[0]]);
 
 		float3 normal;
 		normal.x = (edge_1.y * edge_2.z) - (edge_1.z * edge_2.y);
 		normal.y = (edge_1.z * edge_2.x) - (edge_1.x * edge_2.z);
 		normal.z = (edge_1.x * edge_2.y) - (edge_1.y * edge_2.x);
 
-		new_mesh->debug_face_normals.push_back(center);
-		new_mesh->debug_face_normals.push_back(center + (normal.Normalized() * DEBUG_NORMAL_LENGTH));
+		resource->debug_face_normals.push_back(center);
+		resource->debug_face_normals.push_back(center + (normal.Normalized() * DEBUG_NORMAL_LENGTH));
 	}
 
-	LOG("New mesh with %d vertices", new_mesh->vertices.size());
-	new_mesh->PrepareBuffers();
+	LOG("New mesh with %d vertices", resource->vertices.size());
+	resource->PrepareBuffers();
 
-	return new_mesh;
+	return resource;
 }
 
-Mesh * ModuleMeshes::CreatePrimitiveMesh(PRIMITIVE_TYPE type)
+
+Mesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 {
 	Mesh* new_mesh = new Mesh();
 	par_shapes_mesh* primitive_mesh = nullptr;
@@ -106,7 +121,7 @@ Mesh * ModuleMeshes::CreatePrimitiveMesh(PRIMITIVE_TYPE type)
 	default:
 		break;
 	}
-	
+
 	for (int i = 0; i < primitive_mesh->npoints * 3;)
 	{
 		float3 vertex;
@@ -143,21 +158,21 @@ Mesh * ModuleMeshes::CreatePrimitiveMesh(PRIMITIVE_TYPE type)
 		}
 	}
 
-	new_mesh->indices.insert(new_mesh->indices.end(), &primitive_mesh->triangles[0], &primitive_mesh->triangles[primitive_mesh->ntriangles*3]);
+	new_mesh->indices.insert(new_mesh->indices.end(), &primitive_mesh->triangles[0], &primitive_mesh->triangles[primitive_mesh->ntriangles * 3]);
 
 	//DEBUG	
 	for (int i = 0; i < primitive_mesh->ntriangles * 3;)
 	{
 		//Calculate center of face
-		float center_x = (new_mesh->vertices[primitive_mesh->triangles[i]].x + new_mesh->vertices[primitive_mesh->triangles[i+1]].x + new_mesh->vertices[primitive_mesh->triangles[i+2]].x) / 3;
-		float center_y = (new_mesh->vertices[primitive_mesh->triangles[i]].y + new_mesh->vertices[primitive_mesh->triangles[i+1]].y + new_mesh->vertices[primitive_mesh->triangles[i+2]].y) / 3;
-		float center_z = (new_mesh->vertices[primitive_mesh->triangles[i]].z + new_mesh->vertices[primitive_mesh->triangles[i+1]].z + new_mesh->vertices[primitive_mesh->triangles[i+2]].z) / 3;
+		float center_x = (new_mesh->vertices[primitive_mesh->triangles[i]].x + new_mesh->vertices[primitive_mesh->triangles[i + 1]].x + new_mesh->vertices[primitive_mesh->triangles[i + 2]].x) / 3;
+		float center_y = (new_mesh->vertices[primitive_mesh->triangles[i]].y + new_mesh->vertices[primitive_mesh->triangles[i + 1]].y + new_mesh->vertices[primitive_mesh->triangles[i + 2]].y) / 3;
+		float center_z = (new_mesh->vertices[primitive_mesh->triangles[i]].z + new_mesh->vertices[primitive_mesh->triangles[i + 1]].z + new_mesh->vertices[primitive_mesh->triangles[i + 2]].z) / 3;
 
 		float3 center = float3(center_x, center_y, center_z);
 
 		//Calculate normal of face. Create 2 vector from face edges and calculate normal with cross product
-		float3 edge_1 = (new_mesh->vertices[primitive_mesh->triangles[i+1]] - new_mesh->vertices[primitive_mesh->triangles[i]]);
-		float3 edge_2 = (new_mesh->vertices[primitive_mesh->triangles[i+2]] - new_mesh->vertices[primitive_mesh->triangles[i]]);
+		float3 edge_1 = (new_mesh->vertices[primitive_mesh->triangles[i + 1]] - new_mesh->vertices[primitive_mesh->triangles[i]]);
+		float3 edge_2 = (new_mesh->vertices[primitive_mesh->triangles[i + 2]] - new_mesh->vertices[primitive_mesh->triangles[i]]);
 
 		float3 normal;
 		normal.x = (edge_1.y * edge_2.z) - (edge_1.z * edge_2.y);
