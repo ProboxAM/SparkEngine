@@ -90,6 +90,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name
 	go->transform->local_scale = scale;
 	go->transform->local_euler_rotation = rotation.ToEulerXYZ()*RADTODEG;
 	gameobjects.push_back(go);
+	go->transform->UpdateTransformMatrix();
 	return go;
 }
 
