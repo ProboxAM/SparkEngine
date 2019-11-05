@@ -65,7 +65,7 @@ bool SceneImporter::Load(const char * exported_file, GameObject * resource)
 }
 
 
-bool SceneImporter::Import(const char* file, std::string& output_file)
+bool SceneImporter::Import(const char* file)
 {
 	std::string final_path = ASSETS_FOLDER + std::string(file);
 	GameObject* parent_object;
@@ -124,10 +124,9 @@ void SceneImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObjec
 			scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
 			if (texture_path.length > 0)
 			{
-				std::string file, extension;
-				App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file, &extension);
-
-				new_texture = App->importer->texture->Load(std::string(file+"."+extension).c_str());
+				std::string file;
+				App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file);
+				new_texture = App->importer->texture->Load(std::string(LIBRARY_TEXTURES_FOLDER + file + ".dds").c_str());
 			}
 			else
 			{

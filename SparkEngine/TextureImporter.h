@@ -24,7 +24,7 @@ public:
 	int version;
 private:
 
-	Texture* default_texture;
+	Texture* default_texture = nullptr;
 };
 
 

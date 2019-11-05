@@ -58,21 +58,23 @@ void ModuleImporter::ImportFile(const char * path)
 		App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER);
 	}
 
-	std::string output;
 	if (extension == "fbx" || extension == "FBX")
 	{
-		scene->Import(file.c_str(), output);
+		scene->Import(file.c_str());
 	}
 	else if (extension == "png" || extension == "dds" || extension == "jpg" ||
 			 extension == "PNG" || extension == "DDS" || extension == "JPG")
 	{
+		std::string output_file;
+		texture->Import(std::string(ASSETS_FOLDER + file).c_str(), output_file);
+
 		if (App->scene->selected_gameobject)
 		{
-			ComponentTexture* c_tex = (ComponentTexture*)App->scene->selected_gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
+			ComponentTexture* c_tex = (ComponentTexture*) App->scene->selected_gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 			if (c_tex)
 			{
-				c_tex->AddTexture(texture->Load(file.c_str()));
-				LOG("Applied texture: %s to GameObject: %s", file.c_str(), App->scene->selected_gameobject->GetName().c_str());
+				c_tex->AddTexture(texture->Load(output_file.c_str()));
+				LOG("Applied texture: %s to GameObject: %s", output_file.c_str(), App->scene->selected_gameobject->GetName().c_str());
 			}
 		}	
 	}	

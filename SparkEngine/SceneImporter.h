@@ -15,8 +15,7 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	bool Import(const char* file, std::string& output_file);
-	bool Import(const void* buffer, uint size, std::string& output_file) { return true; }
+	bool Import(const char* file);
 
 	bool Load(const char* exported_file, GameObject* resource);
 

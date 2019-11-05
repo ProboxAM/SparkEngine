@@ -1,3 +1,5 @@
+#include "Application.h"
+#include "ModuleFileSystem.h"
 #include "Texture.h"
 
 #define ILUT_USE_OPENGL
@@ -30,6 +32,8 @@ bool TextureImporter::Init()
 	version = ilGetInteger(IL_VERSION_NUM);
 	LOG("Initialized DevIL version: %i", version);
 
+	LoadDefault();
+
 	return true;
 }
 
@@ -43,30 +47,28 @@ Texture* TextureImporter::Load(const char* file)
 	Texture* tex = new Texture();
 	uint image_id;
 
-	std::string final_path = ASSETS_FOLDER + std::string(file);
-
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
-	if (ilLoadImage(final_path.c_str()))
+	if (ilLoadImage(file))
 	{
 		tex->id = ilutGLBindTexImage();
 		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
 		tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
-		tex->path = final_path;
+		tex->path = file;
 		tex->mips = ilGetInteger(IL_NUM_MIPMAPS);
 		tex->depth = ilGetInteger(IL_IMAGE_DEPTH);
 
 		ILenum format = ilGetInteger(IL_IMAGE_FORMAT);
 		switch (format)
 		{
-		case IL_COLOR_INDEX:tex->format = "color index"; break;
-		case IL_ALPHA:tex->format = "alpha"; break;
-		case IL_RGB:tex->format = "rgb"; break;
-		case IL_RGBA:tex->format = "rgba"; break;
-		case IL_BGR:tex->format = "bgr"; break;
-		case IL_BGRA:tex->format = "bgra"; break;
-		case IL_LUMINANCE:tex->format = "luminance"; break;
-		case IL_LUMINANCE_ALPHA:tex->format = "luminance alpha"; break;
+			case IL_COLOR_INDEX:tex->format = "color index"; break;
+			case IL_ALPHA:tex->format = "alpha"; break;
+			case IL_RGB:tex->format = "rgb"; break;
+			case IL_RGBA:tex->format = "rgba"; break;
+			case IL_BGR:tex->format = "bgr"; break;
+			case IL_BGRA:tex->format = "bgra"; break;
+			case IL_LUMINANCE:tex->format = "luminance"; break;
+			case IL_LUMINANCE_ALPHA:tex->format = "luminance alpha"; break;
 		}
 
 		tex->bpp = ilGetInteger(IL_IMAGE_BPP);
@@ -78,7 +80,7 @@ Texture* TextureImporter::Load(const char* file)
 	else
 	{
 		tex = LoadDefault();
-		LOG("Error loading texture %s. Applied default texture instead.", tex->path.c_str());
+		LOG("Error loading texture %s. Applied default texture instead.", file);
 	}
 
 	ilDeleteImages(1, &image_id);
@@ -91,8 +93,31 @@ bool TextureImporter::Import(const void * buffer, uint size, std::string & outpu
 	return true;
 }
 
-bool TextureImporter::Import(const char * exported_file, std::string & output_file)
+bool TextureImporter::Import(const char* import_file, std::string& output_file)
 {
+	uint image_id;
+
+	ilGenImages(1, &image_id); // Grab a new image name.
+	ilBindImage(image_id);
+	ilLoadImage(import_file);
+
+	ILuint size;
+	ILubyte *data;
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use 
+	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer 
+	if (size > 0) {
+		data = new ILubyte[size]; // allocate data buffer   
+		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
+		{
+			std::string file;
+			App->fsystem->SplitFilePath(import_file, nullptr, &file, nullptr);
+			output_file = LIBRARY_TEXTURES_FOLDER + file + ".dds";
+			App->fsystem->Save(output_file.c_str(), data, size);
+		}
+		RELEASE_ARRAY(data);
+	}
+	ilDeleteImages(1, &image_id);
+
 	return true;
 }
 
