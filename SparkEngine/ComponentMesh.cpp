@@ -43,6 +43,8 @@ void ComponentMesh::AddMesh(Mesh * mesh)
 {
 	this->mesh = mesh;
 	gameobject->global_aabb = GetAABB();
+	gameobject->global_obb = GetAABB();
+	gameobject->UpdateBBox();
 }
 
 void ComponentMesh::SetDebugVertexNormal()

@@ -351,6 +351,7 @@ void ModuleRenderer3D::DebugDrawCube(const float3 * vertices, Color color) const
 	App->renderer3D->SetWireframeMode(true);
 
 	glColor3f(color.r, color.g, color.b);
+	glLineWidth(5.0f);
 
 	glBegin(GL_QUADS);
 
@@ -387,6 +388,7 @@ void ModuleRenderer3D::DebugDrawCube(const float3 * vertices, Color color) const
 	glEnd();
 
 	glColor3f(1.f, 1.f, 1.f);
+	glLineWidth(1.0f);
 
 	glDisableClientState(GL_CULL_FACE);
 	glDisableClientState(GL_LIGHTING);
