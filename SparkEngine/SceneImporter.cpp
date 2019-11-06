@@ -113,7 +113,7 @@ void SceneImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObjec
 		Texture* new_texture;
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]];
 
-		new_mesh = App->importer->mesh->Load("mesh.spk");
+		new_mesh = App->importer->mesh->Import(scene, current_mesh);
 		new_object->bounding_box.SetNegativeInfinity();
 		new_object->bounding_box.Enclose(new_mesh->vertices, new_mesh->total_vertices);
 
