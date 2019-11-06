@@ -203,13 +203,13 @@ void ModuleCamera3D::Focus()//If theres a selected game object the camera looks 
 	speed = speed * distance * focus_factor;
 	float bb_distance_aux = 0;
 	if(App->scene->selected_gameobject->GetComponent(MESH))
-		min_distance = App->scene->selected_gameobject->bounding_box.Size().Length()*focus_margin;
+		min_distance = App->scene->selected_gameobject->global_aabb.Size().Length()*focus_margin;
 	else if (App->scene->selected_gameobject->transform->GetChildCount() > 0)
 	{
 		for (int i = 0; i < App->scene->selected_gameobject->transform->GetChildCount(); i++)
 		{
-			if (bb_distance_aux < App->scene->selected_gameobject->transform->GetChildren()[i]->gameobject->bounding_box.Size().Length()*focus_margin) {
-				bb_distance_aux = App->scene->selected_gameobject->transform->GetChildren()[i]->gameobject->bounding_box.Size().Length()*focus_margin;
+			if (bb_distance_aux < App->scene->selected_gameobject->transform->GetChildren()[i]->gameobject->global_aabb.Size().Length()*focus_margin) {
+				bb_distance_aux = App->scene->selected_gameobject->transform->GetChildren()[i]->gameobject->global_aabb.Size().Length()*focus_margin;
 			}
 		}
 		min_distance = bb_distance_aux;

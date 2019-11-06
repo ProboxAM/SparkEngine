@@ -26,6 +26,7 @@ public:
 	Component* AddComponent(COMPONENT_TYPE type);
 	Component* GetComponent(COMPONENT_TYPE type);
 	std::vector<Component*> GetComponents(COMPONENT_TYPE type);
+	bool HasComponent(COMPONENT_TYPE type);
 
 	void SetName(std::string name);
 	std::string GetName();
@@ -38,9 +39,12 @@ public:
 	void SetActive(bool active);
 	bool CompareTag(std::string tag);
 
+	void UpdateBBox();
+
 public:
 	ComponentTransform * transform = nullptr;
-	AABB bounding_box;
+	AABB global_aabb;
+	OBB global_obb;
 };
 
 #endif // !_GAMEOBJECT_H_

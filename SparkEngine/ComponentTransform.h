@@ -33,6 +33,7 @@ public:
 	std::vector<ComponentTransform*> GetChildren();
 	float3 EulerAngles();
 
+	void UpdateTransformMatrix();
 	float4x4 GetTransformMatrix();
 
 

@@ -45,13 +45,19 @@ void PanelInspector::Draw()
 				if (ImGui::CollapsingHeader("Transform"))
 				{
 					float* p = (float*)&go->transform->local_position;
-					ImGui::InputFloat3("Position", p, 2);
+					if (ImGui::InputFloat3("Position", p, 2)) {
+						go->transform->UpdateTransformMatrix();
+					}
 
 					float* r = (float*)&go->transform->local_euler_rotation;
-					ImGui::InputFloat3("Rotation", r, 2);
+					if(ImGui::InputFloat3("Rotation", r, 2)) {
+						go->transform->UpdateTransformMatrix();
+					}
 
 					float* s = (float*)&go->transform->local_scale;
-					ImGui::InputFloat3("Scale", s, 2);
+					if (ImGui::InputFloat3("Scale", s, 2)) {
+						go->transform->UpdateTransformMatrix();
+					}
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::MESH)
@@ -73,6 +79,7 @@ void PanelInspector::Draw()
 
 					ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
 					ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
+					ImGui::Checkbox("Bounding box: ", &c_mesh->debug_bounding_box);
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::TEXTURE)

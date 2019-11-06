@@ -32,6 +32,7 @@ public:
 	void DrawMesh(const Mesh* m, const Texture* tex, const float4x4& mtransform) const;
 	void DebugVertexNormals(const Mesh* m, const float4x4& mtransform) const;
 	void DebugFaceNormals(const Mesh* m, const float4x4& mtransform) const;
+	void DebugDrawCube(const float3 * vertices, Color color) const;
 
 	void ResizeScene(float w, float h);
 

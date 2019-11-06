@@ -41,7 +41,6 @@ bool ModuleImporter::CleanUp()
 {	
 	//clean importers
 
-	return true;
 }
 
 void ModuleImporter::ImportFile(const char * path)

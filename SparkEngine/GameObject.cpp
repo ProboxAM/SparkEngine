@@ -80,6 +80,17 @@ std::vector<Component*> GameObject::GetComponents(COMPONENT_TYPE type)
 	return aux;
 }
 
+bool GameObject::HasComponent(COMPONENT_TYPE type)
+{
+	bool ret = false;
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (components[i]->type == type) ret = true;
+	}
+
+	return ret;
+}
+
 void GameObject::SetName(std::string name)
 {
 	this->name = name;
@@ -119,6 +130,16 @@ bool GameObject::CompareTag(std::string tag)
 {
 	if (this->tag == tag) return true;
 	else return false;
+}
+
+void GameObject::UpdateBBox()
+{
+	ComponentMesh* mesh = (ComponentMesh*)GetComponent(COMPONENT_TYPE::MESH);
+	global_obb = mesh->GetAABB();
+	global_obb.Transform(transform->GetTransformMatrix());
+
+	global_aabb.SetNegativeInfinity();
+	global_aabb.Enclose(global_obb);
 }
 
 GameObject::GameObject()

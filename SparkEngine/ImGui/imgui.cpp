@@ -118,7 +118,8 @@ CODE
  - Click and drag on lower right corner to resize window (double-click to auto fit window to its contents).
  - Click and drag on any empty space to move window.
  - TAB/SHIFT+TAB to cycle through keyboard editable fields.
- - CTRL+Click on a slider or drag box to input value as text.
+ - CTRL+Click on a slider or drag 
+ to input value as text.
  - Use mouse wheel to scroll.
  - Text editor:
    - Hold SHIFT or use mouse to select text.

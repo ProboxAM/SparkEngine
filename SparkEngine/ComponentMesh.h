@@ -17,16 +17,20 @@ public:
 	void SetDebugVertexNormal();
 	void SetDebugFaceNormal();
 
+	void SetDebugBoundingBox();
+
 	int GetVerticesAmount();
 	int GetNormalsAmount();
 	int GetUVAmount();
 	int GetIndicesAmount();
 
+	AABB GetAABB();
+
 private:
 	Mesh * mesh = nullptr;
 
 public:
-	bool debug_vertex_normal = false, debug_face_normal = false;
+	bool debug_vertex_normal = false, debug_face_normal = false, debug_bounding_box = false;
 };
 
 #endif // !_COMPONENT_MESH_H_
