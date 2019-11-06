@@ -64,22 +64,22 @@ void ComponentMesh::SetDebugBoundingBox()
 
 int ComponentMesh::GetVerticesAmount()
 {
-	return mesh->vertices.size();
+	return mesh->total_vertices;
 }
 
 int ComponentMesh::GetNormalsAmount()
 {
-	return mesh->normal.size();
+	return mesh->total_normal;
 }
 
 int ComponentMesh::GetUVAmount()
 {
-	return mesh->uv.size();
+	return mesh->total_uv;
 }
 
 int ComponentMesh::GetIndicesAmount()
 {
-	return mesh->indices.size();
+	return mesh->total_indices;
 }
 
 AABB ComponentMesh::GetAABB()

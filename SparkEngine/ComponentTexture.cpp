@@ -1,6 +1,8 @@
 #include "Application.h"
-#include "ModuleTextures.h"
+#include "ModuleImporter.h"
 #include "Texture.h"
+#include "Importer.h"
+#include "TextureImporter.h"
 #include "ComponentTexture.h"
 
 
@@ -19,7 +21,7 @@ ComponentTexture::~ComponentTexture()
 Texture* ComponentTexture::GetTexture()
 {
 	if(debug_texture)
-		return App->textures->GetDefaultTexture();
+		return App->importer->texture->LoadDefault();
 	else
 		return tex;
 }

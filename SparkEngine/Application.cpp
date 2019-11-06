@@ -8,8 +8,6 @@
 #include "ModuleImporter.h"
 #include "ModuleFileSystem.h"
 #include "ModuleScene.h"
-#include "ModuleTextures.h"
-#include "ModuleMeshes.h"
 #include "Application.h"
 #include "nlohmann\json.hpp"
 #include <fstream>
@@ -22,8 +20,6 @@ Application::Application()
 	renderer3D = new ModuleRenderer3D(true);
 	camera = new ModuleCamera3D(true);
 	editor = new ModuleEditor(true);
-	textures = new ModuleTextures(true);
-	meshes = new ModuleMeshes(true);
 	importer = new ModuleImporter(true);
 	fsystem = new ModuleFileSystem(ASSETS_FOLDER);
 	scene = new ModuleScene(true);
@@ -35,8 +31,6 @@ Application::Application()
 	AddModule(window);
 	AddModule(editor);
 	AddModule(camera);
-	AddModule(textures);
-	AddModule(meshes);
 	AddModule(input);
 	AddModule(fsystem);
 	AddModule(importer);

@@ -4,7 +4,6 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleEditor.h"
 #include "ModuleScene.h"
-#include "ModuleMeshes.h"
 #include "Panel.h"
 #include "PanelConfiguration.h"
 #include "PanelAbout.h"
@@ -12,6 +11,7 @@
 #include "PanelScene.h"
 #include "PanelHierarchy.h"
 #include "PanelInspector.h"
+#include "MeshImporter.h"
 
 
 #include "ImGui/imgui_impl_sdl.h"
