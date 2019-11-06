@@ -79,6 +79,7 @@ void PanelInspector::Draw()
 
 					ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
 					ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
+					ImGui::Checkbox("Bounding box: ", &c_mesh->debug_bounding_box);
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::TEXTURE)

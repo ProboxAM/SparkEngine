@@ -343,6 +343,57 @@ void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, const float4x4& mtransfor
 	glPopMatrix();
 }
 
+void ModuleRenderer3D::DebugDrawCube(const float3 * vertices, Color color) const
+{
+	glEnableClientState(GL_CULL_FACE);
+	glEnableClientState(GL_LIGHTING);
+	glEnableClientState(GL_TEXTURE_2D);
+	App->renderer3D->SetWireframeMode(true);
+
+	glColor3f(color.r, color.g, color.b);
+
+	glBegin(GL_QUADS);
+
+	glVertex3fv((const GLfloat*)&vertices[1]);
+	glVertex3fv((const GLfloat*)&vertices[5]);
+	glVertex3fv((const GLfloat*)&vertices[7]);
+	glVertex3fv((const GLfloat*)&vertices[3]);
+
+	glVertex3fv((const GLfloat*)&vertices[4]);
+	glVertex3fv((const GLfloat*)&vertices[0]);
+	glVertex3fv((const GLfloat*)&vertices[2]);
+	glVertex3fv((const GLfloat*)&vertices[6]);
+
+	glVertex3fv((const GLfloat*)&vertices[5]);
+	glVertex3fv((const GLfloat*)&vertices[4]);
+	glVertex3fv((const GLfloat*)&vertices[6]);
+	glVertex3fv((const GLfloat*)&vertices[7]);
+
+	glVertex3fv((const GLfloat*)&vertices[0]);
+	glVertex3fv((const GLfloat*)&vertices[1]);
+	glVertex3fv((const GLfloat*)&vertices[3]);
+	glVertex3fv((const GLfloat*)&vertices[2]);
+
+	glVertex3fv((const GLfloat*)&vertices[3]);
+	glVertex3fv((const GLfloat*)&vertices[7]);
+	glVertex3fv((const GLfloat*)&vertices[6]);
+	glVertex3fv((const GLfloat*)&vertices[2]);
+
+	glVertex3fv((const GLfloat*)&vertices[0]);
+	glVertex3fv((const GLfloat*)&vertices[4]);
+	glVertex3fv((const GLfloat*)&vertices[5]);
+	glVertex3fv((const GLfloat*)&vertices[1]);
+
+	glEnd();
+
+	glColor3f(1.f, 1.f, 1.f);
+
+	glDisableClientState(GL_CULL_FACE);
+	glDisableClientState(GL_LIGHTING);
+	glDisableClientState(GL_TEXTURE_2D);
+	App->renderer3D->SetWireframeMode(false);
+}
+
 //Resize texture buffer of Scene rendering
 void ModuleRenderer3D::ResizeScene(float w, float h)
 {
