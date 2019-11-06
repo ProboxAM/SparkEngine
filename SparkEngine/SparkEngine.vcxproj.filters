@@ -46,6 +46,9 @@
     <Filter Include="Sources\Importers">
       <UniqueIdentifier>{69f4e9cf-b079-49f4-a2b9-93b4397a388d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ImGuizmo">
+      <UniqueIdentifier>{4f102ebf-ce3b-433f-8e7a-43447deadbc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -375,9 +378,11 @@
     <ClInclude Include="TextureImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuizmo.h" />
     <ClInclude Include="SceneImporter.h">
       <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmo.h">
+      <Filter>Sources\ImGuizmo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -582,9 +587,11 @@
     <ClCompile Include="TextureImporter.cpp">
       <Filter>Sources\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuizmo.cpp" />
     <ClCompile Include="SceneImporter.cpp">
       <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmo.cpp">
+      <Filter>Sources\ImGuizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
