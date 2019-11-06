@@ -1,6 +1,7 @@
 #include "ComponentTransform.h"
 #include "Globals.h"
 
+#include "GameObject.h"
 
 
 int ComponentTransform::GetChildCount()
@@ -41,6 +42,9 @@ void ComponentTransform::UpdateTransformMatrix()
 	for (int i = 0; i < children.size(); i++) {
 		children[i]->UpdateTransformMatrix();
 	}
+
+	//Update bbox when a transformation happen
+	if(gameobject->HasComponent(COMPONENT_TYPE::MESH))gameobject->UpdateBBox();
 
 	transform_matrix.Decompose(position, rotation, scale);
 }

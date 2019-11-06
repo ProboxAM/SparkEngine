@@ -123,8 +123,6 @@ GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObj
 	Mesh* mesh = App->meshes->CreatePrimitiveMesh(type);
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
 	c_mesh->AddMesh(mesh);
-	obj->bounding_box.SetNegativeInfinity();
-	obj->bounding_box.Enclose(&mesh->vertices[0], mesh->vertices.size());
 	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
 	c_text->AddTexture(App->textures->GetDefaultTexture());
 

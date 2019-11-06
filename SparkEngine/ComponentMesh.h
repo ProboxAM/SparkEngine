@@ -22,6 +22,8 @@ public:
 	int GetUVAmount();
 	int GetIndicesAmount();
 
+	AABB GetAABB();
+
 private:
 	Mesh * mesh = nullptr;
 

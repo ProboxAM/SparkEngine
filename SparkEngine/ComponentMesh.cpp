@@ -33,6 +33,7 @@ void ComponentMesh::Update(float dt)
 void ComponentMesh::AddMesh(Mesh * mesh)
 {
 	this->mesh = mesh;
+	gameobject->global_aabb = GetAABB();
 }
 
 void ComponentMesh::SetDebugVertexNormal()
@@ -63,4 +64,12 @@ int ComponentMesh::GetUVAmount()
 int ComponentMesh::GetIndicesAmount()
 {
 	return mesh->indices.size();
+}
+
+AABB ComponentMesh::GetAABB()
+{
+	AABB bounding_box;
+	bounding_box.SetNegativeInfinity();
+	bounding_box.Enclose(&mesh->vertices[0], mesh->vertices.size());
+	return bounding_box;
 }

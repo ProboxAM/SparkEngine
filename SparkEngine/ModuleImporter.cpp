@@ -111,8 +111,6 @@ void ModuleImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObje
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]];
 
 		new_mesh = App->meshes->LoadMesh(scene, current_mesh);
-		new_object->bounding_box.SetNegativeInfinity();
-		new_object->bounding_box.Enclose(&new_mesh->vertices[0], new_mesh->vertices.size());
 
 		//Check for material, and then load texture if it has, otherwise apply default texture
 		if (current_mesh->mMaterialIndex >= 0)
