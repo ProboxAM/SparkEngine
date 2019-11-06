@@ -25,6 +25,7 @@ public:
 	bool CleanUp();
 
 	Mesh* Import(const aiScene* scene, const aiMesh* mesh);
+	bool SaveMesh(Mesh* mesh);
 
 	Mesh* Load(const char* exported_file);
 	Mesh* LoadPrimitive(PRIMITIVE_TYPE type);

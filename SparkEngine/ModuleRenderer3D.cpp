@@ -277,12 +277,12 @@ void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
 
-	if (m->normal.size() > 0)
+	if (m->total_normal > 0)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
 		glNormalPointer(GL_FLOAT, 0, nullptr);
 	}
-	if (m->uv.size() > 0)
+	if (m->total_uv > 0)
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_UV]);
@@ -291,7 +291,7 @@ void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x
 	if(tex)
 		glBindTexture(GL_TEXTURE_2D, tex->id);
 
-	glDrawElements(GL_TRIANGLES, m->indices.size(), GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, m->total_indices, GL_UNSIGNED_INT, nullptr);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -315,7 +315,7 @@ bool ModuleRenderer3D::IsWireframeEnabled() const {
 
 void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, const float4x4& mtransform) const
 {
-	glPushMatrix();
+	/*glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -325,12 +325,12 @@ void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, const float4x4& mtransf
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
 void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, const float4x4& mtransform) const
 {
-	glPushMatrix();
+	/*glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -340,7 +340,7 @@ void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, const float4x4& mtransfor
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
 //Resize texture buffer of Scene rendering
