@@ -86,6 +86,6 @@ AABB ComponentMesh::GetAABB()
 {
 	AABB bounding_box;
 	bounding_box.SetNegativeInfinity();
-	bounding_box.Enclose(&mesh->vertices[0], mesh->vertices.size());
+	bounding_box.Enclose(mesh->vertices, mesh->total_vertices);
 	return bounding_box;
 }

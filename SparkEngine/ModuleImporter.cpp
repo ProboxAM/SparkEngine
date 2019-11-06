@@ -40,7 +40,7 @@ bool ModuleImporter::Init(const nlohmann::json::iterator& it)
 bool ModuleImporter::CleanUp()
 {	
 	//clean importers
-
+	return true;
 }
 
 void ModuleImporter::ImportFile(const char * path)
