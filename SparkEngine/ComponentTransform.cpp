@@ -12,7 +12,6 @@ int ComponentTransform::GetChildCount()
 void ComponentTransform::SetParent(ComponentTransform* parent)
 {
 	this->parent = parent;
-	this->parent->children.push_back(this);
 }
 
 
@@ -24,6 +23,22 @@ ComponentTransform * ComponentTransform::GetParent()
 std::vector<ComponentTransform*> ComponentTransform::GetChildren()
 {
 	return children;
+}
+
+void ComponentTransform::AddChild(ComponentTransform* child)
+{
+	children.push_back(child);
+}
+
+void ComponentTransform::DestroyChild(ComponentTransform* child)
+{
+	children.erase(remove(children.begin(), children.end(), child));
+}
+
+bool ComponentTransform::IsChild(ComponentTransform * ct)
+{
+	if (this->parent == ct)return true;
+	else return false;
 }
 
 float3 ComponentTransform::EulerAngles()
@@ -39,8 +54,11 @@ void ComponentTransform::UpdateTransformMatrix()
 	if (parent)transform_matrix = parent->GetTransformMatrix() * local_transform_matrix;
 	else transform_matrix = local_transform_matrix;
 
-	for (int i = 0; i < children.size(); i++) {
-		children[i]->UpdateTransformMatrix();
+	if (children.size() > 0)
+	{
+		for (int i = 0; i < children.size(); i++) {
+			children[i]->UpdateTransformMatrix();
+		}
 	}
 
 	//Update bbox when a transformation happen

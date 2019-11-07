@@ -86,6 +86,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name
 
 	GameObject* go = new GameObject();
 	go->transform->SetParent(parent->transform);
+	parent->transform->AddChild(go->transform);
 	go->SetName(name);
 	go->transform->local_position = position;
 	go->transform->local_rotation = rotation;
@@ -121,7 +122,7 @@ GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObj
 		break;
 	}
 
-	GameObject* obj = CreateGameObject(parent,name);
+	GameObject* obj = CreateGameObject(parent, name);
 	Mesh* mesh = App->importer->mesh->LoadPrimitive(type);
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
 	c_mesh->AddMesh(mesh);

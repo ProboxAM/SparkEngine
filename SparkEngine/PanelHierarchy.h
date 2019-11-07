@@ -15,6 +15,9 @@ public:
 	void Draw();
 	void DrawNode(ComponentTransform* ct);
 
+	void SetDragAndDropTarget(ComponentTransform* target);
+	void SetDragAndDropSource(ComponentTransform* target);
+
 	int node_iterator = -1;
 };
 

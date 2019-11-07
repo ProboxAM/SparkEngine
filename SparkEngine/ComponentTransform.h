@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "MathGeoLib/Math/MathAll.h"
 #include <vector>
+#include <algorithm>
 
 class ComponentTransform :
 	public Component
@@ -31,6 +32,9 @@ public:
 	void SetParent(ComponentTransform* parent);
 	ComponentTransform* GetParent();
 	std::vector<ComponentTransform*> GetChildren();
+	void AddChild(ComponentTransform* child);
+	void DestroyChild(ComponentTransform* child);
+	bool IsChild(ComponentTransform* ct);
 	float3 EulerAngles();
 
 	void UpdateTransformMatrix();
