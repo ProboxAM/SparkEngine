@@ -41,6 +41,10 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 	if (ct->GetChildCount() > 0)
 	{
 		bool node_open = ImGui::TreeNodeEx(ct->gameobject->GetName().c_str(), node_flags);
+
+		SetDragAndDropSource(ct);
+		SetDragAndDropTarget(ct);
+
 		if (ImGui::IsItemClicked()) {
 			node_selected = node_iterator;
 			App->scene->selected_gameobject = ct->gameobject;
@@ -58,6 +62,11 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 	else {
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
 		ImGui::TreeNodeEx(ct->gameobject->GetName().c_str(), node_flags);
+
+
+		SetDragAndDropSource(ct);
+		SetDragAndDropTarget(ct);
+
 		if (ImGui::IsItemClicked()) {
 			node_selected = node_iterator;
 			App->scene->selected_gameobject = ct->gameobject;
@@ -74,3 +83,37 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 			selection_mask = (1 << node_selected);           // Click to single-select
 	}
 }
+
+void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
+{
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
+		{
+			GameObject* payload_n = *(GameObject**)payload->Data;
+
+			if (!payload_n->transform->IsChild(App->scene->selected_gameobject->transform))
+			{
+				math::float4x4 globalMatrix = payload_n->transform->GetTransformMatrix();
+				payload_n->transform->GetParent()->DestroyChild(payload_n->transform);
+				target->AddChild(payload_n->transform);
+
+				payload_n->transform->SetParent(target);
+				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+				payload_n->transform->UpdateTransformMatrix();
+			}
+		}
+		ImGui::EndDragDropTarget();
+	}
+}
+
+void PanelHierarchy::SetDragAndDropSource(ComponentTransform * target)
+{
+	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+	{
+		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject, sizeof(GameObject));
+		ImGui::EndDragDropSource();
+	}
+}
+
+
