@@ -92,14 +92,13 @@ void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
 		{
 			GameObject* payload_n = *(GameObject**)payload->Data;
 
-			if (!payload_n->transform->IsChild(App->scene->selected_gameobject->transform))
+			if (!payload_n->transform->IsChild(target))
 			{
 				math::float4x4 globalMatrix = payload_n->transform->GetTransformMatrix();
 				payload_n->transform->GetParent()->DestroyChild(payload_n->transform);
 				target->AddChild(payload_n->transform);
 
 				payload_n->transform->SetParent(target);
-				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 				payload_n->transform->UpdateTransformMatrix();
 			}
 		}

@@ -37,8 +37,17 @@ void ComponentTransform::DestroyChild(ComponentTransform* child)
 
 bool ComponentTransform::IsChild(ComponentTransform * ct)
 {
-	if (this->parent == ct)return true;
-	else return false;
+	bool ret = false;
+
+	if (ct->parent == this) ret = true;
+	else ret = false;
+
+	for (int i = 0; i < children.size() && !ret; i++)
+	{
+		ret = IsChild(children[i]);
+	}
+
+	return ret;
 }
 
 float3 ComponentTransform::EulerAngles()
