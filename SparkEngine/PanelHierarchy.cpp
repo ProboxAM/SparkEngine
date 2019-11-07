@@ -90,17 +90,16 @@ void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
 	{
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
 		{
-			GameObject* payload_n = *(GameObject**)payload->Data;
+			ComponentTransform* payload_n = *(ComponentTransform**)payload->Data;
 
-			if (!payload_n->transform->IsChild(App->scene->selected_gameobject->transform))
+			if (!payload_n->IsChild(target))
 			{
-				math::float4x4 globalMatrix = payload_n->transform->GetTransformMatrix();
-				payload_n->transform->GetParent()->DestroyChild(payload_n->transform);
-				target->AddChild(payload_n->transform);
+				math::float4x4 globalMatrix = payload_n->GetTransformMatrix();
+				payload_n->GetParent()->DestroyChild(payload_n);
+				target->AddChild(payload_n);
 
-				payload_n->transform->SetParent(target);
-				LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
-				payload_n->transform->UpdateTransformMatrix();
+				payload_n->SetParent(target);
+				payload_n->UpdateTransformMatrix();
 			}
 		}
 		ImGui::EndDragDropTarget();
@@ -111,7 +110,7 @@ void PanelHierarchy::SetDragAndDropSource(ComponentTransform * target)
 {
 	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 	{
-		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject, sizeof(GameObject));
+		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject->transform, sizeof(ComponentTransform));
 		ImGui::EndDragDropSource();
 	}
 }
