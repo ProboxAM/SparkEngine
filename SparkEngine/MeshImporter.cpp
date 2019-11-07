@@ -233,11 +233,10 @@ Mesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 		break;
 	}
 
-
 	//Load vertices
 	new_mesh->total_vertices = primitive_mesh->npoints;
-	new_mesh->vertices = new float3[primitive_mesh->npoints];
-	memcpy(new_mesh->vertices, primitive_mesh->points, sizeof(float) * new_mesh->total_vertices);
+	new_mesh->vertices = new float3[new_mesh->total_vertices];
+	memcpy(new_mesh->vertices, primitive_mesh->points, sizeof(float3) * new_mesh->total_vertices);
 
 	//Load uv
 	if (primitive_mesh->tcoords)
@@ -256,7 +255,6 @@ Mesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 	new_mesh->total_indices = primitive_mesh->ntriangles * 3;
 	new_mesh->indices = new uint[new_mesh->total_indices];
 	memcpy(new_mesh->indices, primitive_mesh->triangles, sizeof(uint) * new_mesh->total_indices);
-
 
 	//DEBUG	
 	/*for (int i = 0; i < primitive_mesh->ntriangles * 3;)

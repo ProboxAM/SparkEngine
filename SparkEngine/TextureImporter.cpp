@@ -32,8 +32,6 @@ bool TextureImporter::Init()
 	version = ilGetInteger(IL_VERSION_NUM);
 	LOG("Initialized DevIL version: %i", version);
 
-	LoadDefault();
-
 	return true;
 }
 
