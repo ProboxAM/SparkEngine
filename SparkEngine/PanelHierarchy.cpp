@@ -104,13 +104,14 @@ void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
 		}
 		ImGui::EndDragDropTarget();
 	}
+
 }
 
 void PanelHierarchy::SetDragAndDropSource(ComponentTransform * target)
 {
 	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 	{
-		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject, sizeof(ComponentTransform));
+		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject, sizeof(GameObject));
 		ImGui::EndDragDropSource();
 	}
 }
