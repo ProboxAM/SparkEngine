@@ -384,6 +384,9 @@
     <ClInclude Include="ImGuizmo.h">
       <Filter>Sources\ImGuizmo</Filter>
     </ClInclude>
+    <ClInclude Include="pcg_uint128.hpp">
+      <Filter>Sources\Externals</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -577,9 +580,6 @@
     </ClCompile>
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <Filter>Sources\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Importer.cpp">
-      <Filter>Sources\Importers</Filter>
     </ClCompile>
     <ClCompile Include="MeshImporter.cpp">
       <Filter>Sources\Importers</Filter>

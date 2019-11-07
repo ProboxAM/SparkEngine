@@ -4,6 +4,7 @@
 #include <list>
 #include "Globals.h"
 #include "Timer.h"
+#include "pcg_random.hpp"
 
 class Module;
 class ModuleWindow;
@@ -34,6 +35,8 @@ public:
 private:
 	std::string		app_name;
 	std::string		organization;
+
+	pcg32 random;
 
 	Timer	ms_timer;
 	float	dt;
@@ -67,6 +70,7 @@ public:
 	int GetFPSCap();
 
 	void OpenWebURL(std::string path);
+	uint GenerateRandomNumber();
 
 private:
 

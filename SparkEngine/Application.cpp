@@ -10,6 +10,7 @@
 #include "ModuleScene.h"
 #include "Application.h"
 #include "nlohmann\json.hpp"
+#include <random>
 #include <fstream>
 #include <iomanip>
 
@@ -55,6 +56,10 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
+
+	pcg_extras::seed_seq_from<std::random_device> seed_source;
+	pcg32 rng(seed_source);
+	random = rng;
 
 	std::ifstream i("Settings/Config.json");
 	nlohmann::json j = nlohmann::json::parse(i);
@@ -223,4 +228,11 @@ void Application::LoadSettings()
 	{
 		(*it)->Load(j.find((*it)->name));
 	}
+}
+
+uint Application::GenerateRandomNumber()
+{
+	std::uniform_int_distribution<uint> uniform_dist;
+	uint n = uniform_dist(random);
+	return n;
 }

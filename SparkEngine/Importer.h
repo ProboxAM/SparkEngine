@@ -6,8 +6,8 @@
 class Importer
 {
 public:
-	Importer();
-	~Importer();
+	Importer() {}
+	~Importer() {}
 
 	virtual bool Init() { return true; }
 	virtual bool CleanUp() { return true; }

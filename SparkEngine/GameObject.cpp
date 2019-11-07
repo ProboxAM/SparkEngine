@@ -1,3 +1,4 @@
+#include "Application.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
@@ -145,6 +146,7 @@ void GameObject::UpdateBBox()
 GameObject::GameObject()
 {
 	this->transform = (ComponentTransform*)AddComponent(COMPONENT_TYPE::TRANSFORM);
+	id = App->GenerateRandomNumber();
 }
 
 

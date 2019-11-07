@@ -1,6 +1,7 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
+#include "Globals.h"
 #include <string>
 #include <vector>
 #include "Component.h"
@@ -16,6 +17,7 @@ private:
 	std::string tag = "Untagged";
 	std::string layer = "Default";
 	bool active = true;
+	uint id;
 	bool is_static = false;
 	std::vector<Component*> components;
 public:
