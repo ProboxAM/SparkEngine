@@ -26,8 +26,10 @@ public:
 
 	AABB GetAABB();
 
+	bool Save(const nlohmann::json::iterator& it);
+
 private:
-	Mesh * mesh = nullptr;
+	Mesh* mesh = nullptr;
 
 public:
 	bool debug_vertex_normal = false, debug_face_normal = false, debug_bounding_box = false;

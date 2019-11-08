@@ -18,7 +18,7 @@ private:
 	std::string tag = "Untagged";
 	std::string layer = "Default";
 	bool active = true;
-	uint id;
+	uint id = -1;
 	bool is_static = false;
 	std::vector<Component*> components;
 public:
