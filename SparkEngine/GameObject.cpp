@@ -140,12 +140,11 @@ bool GameObject::Save(const nlohmann::json::iterator& it)
 		{"id", id},
 		{"parent_id", transform->GetParent()? transform->GetParent()->gameobject->GetId() : -1},
 		{"name", name},
-		{"components",nlohmann::json::array()},
+		{"components", nlohmann::json::array()},
 		{"layer", layer},
 		{"active", active},
 		{"static", is_static},
 		{"tag", tag}
-	
 	};
 
 	for each (Component * comp in components) //Save components

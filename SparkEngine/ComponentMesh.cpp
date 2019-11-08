@@ -89,3 +89,18 @@ AABB ComponentMesh::GetAABB()
 	bounding_box.Enclose(mesh->vertices, mesh->total_vertices);
 	return bounding_box;
 }
+
+bool ComponentMesh::Save(const nlohmann::json::iterator & it)
+{
+	nlohmann::json object = {
+		{"active", active },
+		{"type",type},
+		{"debug_bb", debug_bounding_box},
+		{"debug_face_n", debug_face_normal },
+		{"debug_vertex_n", debug_vertex_normal }
+	};
+
+	it.value().push_back(object);
+
+	return true;
+}

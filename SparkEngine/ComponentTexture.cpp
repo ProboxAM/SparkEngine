@@ -75,3 +75,17 @@ uint ComponentTexture::GetTextureDepth()
 {
 	return tex->depth;
 }
+
+bool ComponentTexture::Save(const nlohmann::json::iterator & it)
+{
+	nlohmann::json object = {
+		{"active",active},
+		{"debug_tex", debug_texture},
+		{"type",type},
+		{"texture", GetTexturePath() },
+	};
+
+	it.value().push_back(object);
+
+	return true;
+}

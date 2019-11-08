@@ -40,6 +40,7 @@ public:
 	void UpdateTransformMatrix();
 	float4x4 GetTransformMatrix();
 
+	bool Save(const nlohmann::json::iterator& it);
 
 public:
 	ComponentTransform(GameObject* gameobject);

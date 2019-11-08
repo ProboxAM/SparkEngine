@@ -26,6 +26,8 @@ public:
 	uint GetTextureMIP();
 	uint GetTextureDepth();
 
+	bool Save(const nlohmann::json::iterator& it);
+
 private:
 	Texture * tex = nullptr;
 public:

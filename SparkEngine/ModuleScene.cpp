@@ -97,10 +97,10 @@ bool ModuleScene::SaveScene()
 
 	root->Save(j.find("GameObjects"));
 
-	std::ofstream o(SETTINGS_FOLDER"Scene.scene");
+	std::ofstream o(ASSETS_FOLDER"Scene.scene");
 	o << std::setw(4) << j << std::endl;
 
-	LOG("Scene saved to %s", SETTINGS_FOLDER"Scene.scene");
+	LOG("Scene saved to %s", ASSETS_FOLDER"Scene.scene");
 
 	return true;
 }

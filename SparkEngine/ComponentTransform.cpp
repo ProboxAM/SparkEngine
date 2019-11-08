@@ -108,10 +108,16 @@ void ComponentTransform::Update(float dt)
 
 }
 
-
-/*bool ComponentTransform::Save()
+bool ComponentTransform::Save(const nlohmann::json::iterator& it)
 {
-	{"translation", { transform->position.x, transform->position.y, transform->position.z }},
-	{ "rotation",{transform->rotation.x, transform->rotation.y, transform->rotation.z, transform->rotation.w} },
-	{ "scale",{transform->scale.x, transform->scale.y, transform->scale.z} },
-}*/
+	nlohmann::json object = {
+		{"type",type},
+		{"position", { local_position.x, local_position.y, local_position.z }},
+		{"rotation", { rotation.x, rotation.y, rotation.z, rotation.w} },
+		{"scale", { scale.x, scale.y, scale.z} }
+	};
+
+	it.value().push_back(object);
+
+	return true;
+}
