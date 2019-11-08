@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 
+#include "ImGui/imgui_internal.h"
+
 PanelHierarchy::PanelHierarchy(bool a) : Panel(a)
 {
 
@@ -44,6 +46,7 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 
 		SetDragAndDropSource(ct);
 		SetDragAndDropTarget(ct);
+		SetDragAndDropTargetCustom();
 
 		if (ImGui::IsItemClicked()) {
 			node_selected = node_iterator;
@@ -112,6 +115,28 @@ void PanelHierarchy::SetDragAndDropSource(ComponentTransform * target)
 	{
 		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject->transform, sizeof(ComponentTransform));
 		ImGui::EndDragDropSource();
+	}
+}
+
+void PanelHierarchy::SetDragAndDropTargetCustom()
+{
+	if (ImGui::BeginDragDropTargetCustom(ImGui::GetCurrentWindow()->Rect(), (ImGuiID)"Hierarchy"))
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
+		{
+			ComponentTransform* payload_n = *(ComponentTransform**)payload->Data;
+
+			if (!App->scene->selected_gameobject->transform->IsChild(App->scene->root->transform))
+			{
+				math::float4x4 globalMatrix = App->scene->selected_gameobject->transform->GetTransformMatrix();
+				App->scene->selected_gameobject->transform->GetParent()->DestroyChild(App->scene->selected_gameobject->transform);
+				App->scene->root->transform->AddChild(App->scene->selected_gameobject->transform);
+
+				App->scene->selected_gameobject->transform->SetParent(App->scene->root->transform);
+				App->scene->selected_gameobject->transform->UpdateTransformMatrix();
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 }
 

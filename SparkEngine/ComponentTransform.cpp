@@ -39,12 +39,12 @@ bool ComponentTransform::IsChild(ComponentTransform * ct)
 {
 	bool ret = false;
 
-	if (ct->parent == this) ret = true;
-	else ret = false;
-
 	for (int i = 0; i < children.size() && !ret; i++)
 	{
-		ret = IsChild(children[i]);
+		if (children[i] == ct)
+			return true;
+
+		ret = children[i]->IsChild(ct);
 	}
 
 	return ret;

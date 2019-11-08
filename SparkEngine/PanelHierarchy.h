@@ -17,6 +17,7 @@ public:
 
 	void SetDragAndDropTarget(ComponentTransform* target);
 	void SetDragAndDropSource(ComponentTransform* target);
+	void SetDragAndDropTargetCustom();
 
 	int node_iterator = -1;
 };
