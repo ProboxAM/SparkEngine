@@ -89,11 +89,10 @@ bool ModuleScene::Save(nlohmann::json& it)
 
 bool ModuleScene::SaveScene()
 {
-	nlohmann::json j;
 	LOG("Saving scene...");
 
-	j["Scene"] = {
-		{"GameObjects", nlohmann::json::array()},
+	nlohmann::json j = {
+		{"GameObjects", nlohmann::json::array()}
 	};
 
 	for (int i = 0; i < gameobjects.size(); ++i)
