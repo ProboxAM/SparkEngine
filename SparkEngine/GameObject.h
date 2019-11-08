@@ -7,6 +7,7 @@
 #include "Component.h"
 #include "MathGeoLib/Geometry/OBB.h"
 #include "MathGeoLib/Geometry/AABB.h"
+#include "nlohmann\json.hpp"
 
 class ComponentTransform;
 
@@ -40,6 +41,9 @@ public:
 	bool isStatic();
 	void SetActive(bool active);
 	bool CompareTag(std::string tag);
+	bool Save(const nlohmann::json::iterator& it);
+
+	uint GetId();
 
 	void UpdateBBox();
 

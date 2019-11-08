@@ -30,6 +30,8 @@ public:
 	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);
 
+	bool SaveScene();
+
 	GameObject* CreateGameObject(
 		GameObject* parent = nullptr, 
 		std::string name = "GameObject",

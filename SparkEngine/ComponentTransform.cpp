@@ -105,3 +105,11 @@ void ComponentTransform::Update(float dt)
 {
 
 }
+
+
+/*bool ComponentTransform::Save()
+{
+	{"translation", { transform->position.x, transform->position.y, transform->position.z }},
+	{ "rotation",{transform->rotation.x, transform->rotation.y, transform->rotation.z, transform->rotation.w} },
+	{ "scale",{transform->scale.x, transform->scale.y, transform->scale.z} },
+}*/

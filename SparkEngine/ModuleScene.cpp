@@ -14,9 +14,14 @@
 #include "TextureImporter.h"
 #include "ModuleImporter.h"
 
+#include "ModuleInput.h"
+
 #include "ModuleScene.h"
 
 #include "glew/glew.h"
+
+#include <fstream>
+#include <iomanip>
 
 ModuleScene::ModuleScene(bool start_enabled) : Module(start_enabled)
 {
@@ -56,6 +61,9 @@ update_status ModuleScene::UpdateScene(float dt)
 
 	root->Update(dt);
 
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		SaveScene();
+
 	return UPDATE_CONTINUE;
 }
 
@@ -75,6 +83,28 @@ bool ModuleScene::Save(nlohmann::json& it)
 	it[name] = {
 		{ "grid", show_grid },
 	};
+
+	return true;
+}
+
+bool ModuleScene::SaveScene()
+{
+	nlohmann::json j;
+	LOG("Saving scene...");
+
+	j["Scene"] = {
+		{"GameObjects", nlohmann::json::array()},
+	};
+
+	for (int i = 0; i < gameobjects.size(); ++i)
+	{
+		gameobjects[i]->Save(j.find("GameObjects"));
+	}
+
+	std::ofstream o(SETTINGS_FOLDER"Scene.scene");
+	o << std::setw(4) << j << std::endl;
+
+	LOG("Scene saved to %s", SETTINGS_FOLDER"Scene.scene");
 
 	return true;
 }

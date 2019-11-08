@@ -133,6 +133,43 @@ bool GameObject::CompareTag(std::string tag)
 	else return false;
 }
 
+bool GameObject::Save(const nlohmann::json::iterator& it)
+{
+	LOG("Saving gameobject: %s", name);
+	nlohmann::json object = {
+		{"id", id},
+		{"parent_id", transform->GetParent() ? transform->GetParent()->gameobject->GetId() : -1},
+		{"name", name},
+		{"tag", tag},
+		{"layer", layer},
+		{"active", active},
+		{"static", is_static},
+		{"components",nlohmann::json::array()}
+	};
+
+	for each (Component * comp in components) //Save components
+	{
+		comp->Save(object.find("components"));
+	}
+
+	it.value().push_back(object);
+	LOG("Finished saving gameobject: %s", name)
+
+	//Save children
+	std::vector<ComponentTransform*>childs = transform->GetChildren();
+	for each (ComponentTransform* child in childs)
+	{
+		child->gameobject->Save(it);
+	}
+
+	return true;
+}
+
+uint GameObject::GetId()
+{
+	return id;
+}
+
 void GameObject::UpdateBBox()
 {
 	ComponentMesh* mesh = (ComponentMesh*)GetComponent(COMPONENT_TYPE::MESH);
