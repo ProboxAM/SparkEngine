@@ -124,7 +124,6 @@ void PanelHierarchy::SetDragAndDropTargetCustom()
 	{
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
 		{
-			ComponentTransform* payload_n = *(ComponentTransform**)payload->Data;
 
 			if (!App->scene->selected_gameobject->transform->IsChild(App->scene->root->transform))
 			{
