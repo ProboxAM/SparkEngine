@@ -95,10 +95,7 @@ bool ModuleScene::SaveScene()
 		{"GameObjects", nlohmann::json::array()}
 	};
 
-	for (int i = 0; i < gameobjects.size(); ++i)
-	{
-		gameobjects[i]->Save(j.find("GameObjects"));
-	}
+	root->Save(j.find("GameObjects"));
 
 	std::ofstream o(SETTINGS_FOLDER"Scene.scene");
 	o << std::setw(4) << j << std::endl;

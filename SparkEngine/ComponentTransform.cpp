@@ -82,6 +82,8 @@ float4x4 ComponentTransform::GetTransformMatrix() {
 
 ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobject)
 {
+	parent = nullptr;
+
 	position = { 0.0f, 0.0f, 0.0f };
 	rotation = { 0.0f, 0.0f, 0.0f, 1.0f };
 	euler_rotation = { 0.0f, 0.0f, 0.0f };

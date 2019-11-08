@@ -153,7 +153,7 @@ float ModuleWindow::GetBrightness()
 void ModuleWindow::SetWindowBrightness(float value)
 {
 	brightness = value;
-	SDL_SetWindowBrightness(window, value);
+	//SDL_SetWindowBrightness(window, value);
 }
 
 void ModuleWindow::SetScreenMode(WINDOWSETTINGS mode, bool active)

@@ -3,7 +3,7 @@
         {
             "active": true,
             "components": [],
-            "id": 1518579364,
+            "id": 2850928323,
             "layer": "Default",
             "name": "root",
             "parent_id": 4294967295,
@@ -13,80 +13,30 @@
         {
             "active": true,
             "components": [],
-            "id": 1574313176,
+            "id": 1895310862,
             "layer": "Default",
             "name": "Bakerhouse",
-            "parent_id": 1518579364,
+            "parent_id": 2850928323,
             "static": false,
             "tag": "Untagged"
         },
         {
             "active": true,
             "components": [],
-            "id": 1882757270,
+            "id": 1567094715,
             "layer": "Default",
             "name": "Chimney",
-            "parent_id": 1574313176,
+            "parent_id": 1895310862,
             "static": false,
             "tag": "Untagged"
         },
         {
             "active": true,
             "components": [],
-            "id": 2483979307,
+            "id": 3576737222,
             "layer": "Default",
             "name": "Baker_house",
-            "parent_id": 1574313176,
-            "static": false,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [],
-            "id": 1574313176,
-            "layer": "Default",
-            "name": "Bakerhouse",
-            "parent_id": 1518579364,
-            "static": false,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [],
-            "id": 1882757270,
-            "layer": "Default",
-            "name": "Chimney",
-            "parent_id": 1574313176,
-            "static": false,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [],
-            "id": 2483979307,
-            "layer": "Default",
-            "name": "Baker_house",
-            "parent_id": 1574313176,
-            "static": false,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [],
-            "id": 1882757270,
-            "layer": "Default",
-            "name": "Chimney",
-            "parent_id": 1574313176,
-            "static": false,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [],
-            "id": 2483979307,
-            "layer": "Default",
-            "name": "Baker_house",
-            "parent_id": 1574313176,
+            "parent_id": 1895310862,
             "static": false,
             "tag": "Untagged"
         }
