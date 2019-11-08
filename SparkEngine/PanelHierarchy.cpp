@@ -97,8 +97,7 @@ void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
 
 			if (!payload_n->IsChild(target))
 			{
-				math::float4x4 globalMatrix = payload_n->GetTransformMatrix();
-				payload_n->GetParent()->DestroyChild(payload_n);
+				payload_n->GetParent()->RemoveChild(payload_n);
 				target->AddChild(payload_n);
 
 				payload_n->SetParent(target);
@@ -127,8 +126,7 @@ void PanelHierarchy::SetDragAndDropTargetCustom()
 
 			if (!App->scene->selected_gameobject->transform->IsChild(App->scene->root->transform))
 			{
-				math::float4x4 globalMatrix = App->scene->selected_gameobject->transform->GetTransformMatrix();
-				App->scene->selected_gameobject->transform->GetParent()->DestroyChild(App->scene->selected_gameobject->transform);
+				App->scene->selected_gameobject->transform->GetParent()->RemoveChild(App->scene->selected_gameobject->transform);
 				App->scene->root->transform->AddChild(App->scene->selected_gameobject->transform);
 
 				App->scene->selected_gameobject->transform->SetParent(App->scene->root->transform);

@@ -33,7 +33,7 @@ public:
 	ComponentTransform* GetParent();
 	std::vector<ComponentTransform*> GetChildren();
 	void AddChild(ComponentTransform* child);
-	void DestroyChild(ComponentTransform* child);
+	void RemoveChild(ComponentTransform* child);
 	bool IsChild(ComponentTransform* ct);
 	float3 EulerAngles();
 

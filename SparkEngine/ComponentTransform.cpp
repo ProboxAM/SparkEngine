@@ -30,7 +30,7 @@ void ComponentTransform::AddChild(ComponentTransform* child)
 	children.push_back(child);
 }
 
-void ComponentTransform::DestroyChild(ComponentTransform* child)
+void ComponentTransform::RemoveChild(ComponentTransform* child)
 {
 	children.erase(remove(children.begin(), children.end(), child));
 }
