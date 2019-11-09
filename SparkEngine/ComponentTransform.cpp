@@ -2,6 +2,7 @@
 #include "Globals.h"
 
 #include "GameObject.h"
+#include "ComponentCamera.h"
 
 
 int ComponentTransform::GetChildCount()
@@ -72,6 +73,10 @@ void ComponentTransform::UpdateTransformMatrix()
 
 	//Update bbox when a transformation happen
 	if(gameobject->HasComponent(COMPONENT_TYPE::MESH))gameobject->UpdateBBox();
+	if (gameobject->HasComponent(COMPONENT_TYPE::CAMERA)) {
+		ComponentCamera* c_cam = (ComponentCamera*)gameobject->GetComponent(COMPONENT_TYPE::CAMERA);
+		c_cam->UpdateFrustumTransform();
+	}
 
 	transform_matrix.Decompose(position, rotation, scale);
 }

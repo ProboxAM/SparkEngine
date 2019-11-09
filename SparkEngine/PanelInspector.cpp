@@ -5,6 +5,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
+#include "ComponentCamera.h"
 #include "ImGui/imgui_stdlib.h"
 
 #include <iomanip>
@@ -115,7 +116,43 @@ void PanelInspector::Draw()
 				ImGui::CollapsingHeader("LIGHT");
 			}
 
+			if (comp[i]->type == COMPONENT_TYPE::CAMERA)
+			{
+				ComponentCamera* c_camera = (ComponentCamera*)go->GetComponent(COMPONENT_TYPE::CAMERA);
+				if (ImGui::CollapsingHeader("Camera")) {
+					ImGui::PushID("active_texture");
+					ImGui::Checkbox("Active", &c_camera->active);
+					ImGui::PopID();
+
+					float npd = c_camera->GetFrustumNearPlaneDistance();
+					if (ImGui::SliderFloat("Near plane distance: ", &npd, 0.1f, 1.0f, "%.2f")) {
+						c_camera->SetFrustumNearPlaneDistance(npd);
+					}
+
+					float fpd = c_camera->GetFrustumFarPlaneDistance();
+					if (ImGui::SliderFloat("Far plane distance: ", &fpd, 1.f, 1000.f, "%.2f")) {
+						c_camera->SetFrustumFarPlaneDistance(fpd);
+					}
+
+					float fov = c_camera->GetFrustumVerticalFOV();
+					if (ImGui::SliderAngle("FOV: ", &fov, 60.0f, 90.0f)){
+						c_camera->SetFrustumFOV(fov);
+					}
+				}
+			}
+
 			ImGui::Separator();
+		}
+
+		if (ImGui::Button("Add Component")) ImGui::OpenPopup("Add Component...");
+
+		if (ImGui::BeginPopup("Add Component..."))
+		{
+			if (ImGui::Selectable("Camera")) {
+				App->scene->selected_gameobject->AddComponent(COMPONENT_TYPE::CAMERA);
+			}
+
+			ImGui::EndPopup();
 		}
 	}
 	ImGui::End();

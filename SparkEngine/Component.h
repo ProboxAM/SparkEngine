@@ -5,7 +5,7 @@
 
 class GameObject;
 
-enum COMPONENT_TYPE { TRANSFORM, MESH, TEXTURE, LIGHT, NONE };
+enum COMPONENT_TYPE { TRANSFORM, MESH, TEXTURE, LIGHT, CAMERA, NONE };
 
 class Component
 {

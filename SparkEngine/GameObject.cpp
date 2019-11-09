@@ -2,6 +2,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
+#include "ComponentCamera.h"
 #include "GameObject.h"
 
 
@@ -38,6 +39,9 @@ Component* GameObject::AddComponent(COMPONENT_TYPE type)
 		c = new ComponentTexture(this);
 		break;
 	case COMPONENT_TYPE::LIGHT:
+		break;	
+	case COMPONENT_TYPE::CAMERA:
+		c = new ComponentCamera(this);
 		break;
 	default:
 		break;

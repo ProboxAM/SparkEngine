@@ -387,6 +387,9 @@
     <ClInclude Include="pcg_uint128.hpp">
       <Filter>Sources\Externals</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -592,6 +595,9 @@
     </ClCompile>
     <ClCompile Include="ImGuizmo.cpp">
       <Filter>Sources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "glmath.h"
 
+class ComponentCamera;
+
 class ModuleCamera3D : public Module
 {
 public:
