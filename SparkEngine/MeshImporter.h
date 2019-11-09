@@ -3,7 +3,7 @@
 
 #include "Importer.h"
 
-class Mesh;
+class ResourceMesh;
 struct aiScene;
 struct aiMesh;
 
@@ -24,11 +24,11 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	Mesh* Import(const aiScene* scene, const aiMesh* mesh);
-	bool SaveMesh(Mesh* mesh);
+	ResourceMesh* Import(const aiScene* scene, const aiMesh* mesh);
+	bool SaveMesh(ResourceMesh* mesh);
 
-	Mesh* Load(const char* exported_file);
-	Mesh* LoadPrimitive(PRIMITIVE_TYPE type);
+	ResourceMesh* Load(const char* exported_file);
+	ResourceMesh* LoadPrimitive(PRIMITIVE_TYPE type);
 };
 
 #endif // !_MESH_IMPORTER_H_

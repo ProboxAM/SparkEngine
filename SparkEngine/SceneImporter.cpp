@@ -7,8 +7,8 @@
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
-#include "Mesh.h"
-#include "Texture.h"
+#include "ResourceMesh.h"
+#include "ResourceTexture.h"
 
 #include "Importer.h"
 #include "TextureImporter.h"
@@ -65,7 +65,7 @@ bool SceneImporter::Load(const char * exported_file, GameObject * resource)
 }
 
 
-bool SceneImporter::Import(const char* file)
+bool SceneImporter::Import(const char* file, std::string& output_file)
 {
 	std::string final_path = ASSETS_FOLDER + std::string(file);
 	GameObject* parent_object;
@@ -109,8 +109,8 @@ void SceneImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObjec
 
 	if (node->mNumMeshes > 0)
 	{
-		Mesh* new_mesh;
-		Texture* new_texture;
+		ResourceMesh* new_mesh;
+		ResourceTexture* new_texture;
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]];
 
 		new_mesh = App->importer->mesh->Import(scene, current_mesh);

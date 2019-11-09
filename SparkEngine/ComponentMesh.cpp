@@ -2,7 +2,7 @@
 #include "ModuleRenderer3D.h"
 #include "ComponentTexture.h"
 #include "GameObject.h"
-#include "Mesh.h"
+#include "ResourceMesh.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 
@@ -39,7 +39,7 @@ void ComponentMesh::Update(float dt)
 	}
 }
 
-void ComponentMesh::AddMesh(Mesh * mesh)
+void ComponentMesh::AddMesh(ResourceMesh * mesh)
 {
 	this->mesh = mesh;
 	gameobject->global_aabb = GetAABB();

@@ -1,21 +1,16 @@
 #include "Resource.h"
 
-
-
-Resource::Resource()
-{
-}
-
-
 Resource::~Resource()
 {
 }
 
 Resource::Resource(uint id, RESOURCE_TYPE type)
 {
+	this->id = id;
+	this->type = type;
 }
 
-RESOURCE_TYPE Resource::GetType() const
+Resource::RESOURCE_TYPE Resource::GetType() const
 {
 	return type;
 }

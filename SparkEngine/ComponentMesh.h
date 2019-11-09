@@ -3,7 +3,7 @@
 
 #include "Component.h"
 
-class Mesh;
+class ResourceMesh;
 
 class ComponentMesh : public Component
 {
@@ -12,7 +12,7 @@ public:
 	~ComponentMesh();
 
 	void Update(float dt);
-	void AddMesh(Mesh* tex);
+	void AddMesh(ResourceMesh* tex);
 
 	void SetDebugVertexNormal();
 	void SetDebugFaceNormal();
@@ -29,7 +29,7 @@ public:
 	bool Save(const nlohmann::json::iterator& it);
 
 private:
-	Mesh* mesh = nullptr;
+	ResourceMesh* mesh = nullptr;
 
 public:
 	bool debug_vertex_normal = false, debug_face_normal = false, debug_bounding_box = false;

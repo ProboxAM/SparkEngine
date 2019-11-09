@@ -11,8 +11,8 @@
 #include "PanelScene.h"
 #include "PanelHierarchy.h"
 #include "PanelInspector.h"
+#include "PanelProject.h"
 #include "MeshImporter.h"
-
 
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
@@ -51,6 +51,7 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[HIERARCHY] = new PanelHierarchy(true);
 	panels[INSPECTOR] = new PanelInspector(true);
 	panels[SCENE] = new PanelScene(true);
+	panels[PROJECT] = new PanelProject(true);
 
 	return true;
 }

@@ -12,7 +12,7 @@
 #define PAR_SHAPES_IMPLEMENTATION
 #include "Par/par_shapes.h"
 
-#include "Mesh.h"
+#include "ResourceMesh.h"
 
 #include "MeshImporter.h"
 
@@ -37,9 +37,9 @@ bool MeshImporter::CleanUp()
 	return true;
 }
 
-Mesh* MeshImporter::Load(const char * exported_file)
+ResourceMesh* MeshImporter::Load(const char * exported_file)
 {
-	Mesh* resource = new Mesh();
+	ResourceMesh* resource = new ResourceMesh(90, Resource::RESOURCE_TYPE::R_MESH);
 
 	std::string path = LIBRARY_MESH_FOLDER;
 	path.append(exported_file);
@@ -93,9 +93,9 @@ Mesh* MeshImporter::Load(const char * exported_file)
 	return resource;
 }
 
-Mesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
+ResourceMesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 {
-	Mesh* resource = new Mesh();
+	ResourceMesh* resource = new ResourceMesh(90, Resource::RESOURCE_TYPE::R_MESH);
 
 	//Load vertices
 	resource->total_vertices = mesh->mNumVertices;
@@ -159,7 +159,7 @@ Mesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 	return resource;
 }
 
-bool MeshImporter::SaveMesh(Mesh* mesh)
+bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 {
 	// amount of indices / vertices / colors / normals / texture_coords / AABB
 	uint ranges[4] = { mesh->total_indices, mesh->total_vertices, mesh->total_normal, mesh->total_uv };
@@ -207,9 +207,9 @@ bool MeshImporter::SaveMesh(Mesh* mesh)
 }
 
 
-Mesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
+ResourceMesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 {
-	Mesh* new_mesh = new Mesh();
+	ResourceMesh* new_mesh = new ResourceMesh(90, Resource::RESOURCE_TYPE::R_MESH);
 	par_shapes_mesh* primitive_mesh = nullptr;
 
 	switch (type)

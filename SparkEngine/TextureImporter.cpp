@@ -1,7 +1,8 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
-#include "Texture.h"
+#include "ResourceTexture.h"
 
+#include "glew\glew.h"
 #define ILUT_USE_OPENGL
 #include "DeviL/include/ilut.h"
 
@@ -40,19 +41,19 @@ bool TextureImporter::CleanUp()
 	return true;
 }
 
-Texture* TextureImporter::Load(const char* file)
+ResourceTexture* TextureImporter::Load(const char* file)
 {
-	Texture* tex = new Texture();
+	ResourceTexture* tex = new ResourceTexture(90, Resource::RESOURCE_TYPE::R_TEXTURE);
 	uint image_id;
 
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
 	if (ilLoadImage(file))
 	{
-		tex->id = ilutGLBindTexImage();
+		tex->buffer_id = ilutGLBindTexImage();
 		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
 		tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
-		tex->path = file;
+		//tex->path = file;
 		tex->mips = ilGetInteger(IL_NUM_MIPMAPS);
 		tex->depth = ilGetInteger(IL_IMAGE_DEPTH);
 
@@ -73,7 +74,7 @@ Texture* TextureImporter::Load(const char* file)
 		tex->size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->path.c_str(), tex->width, tex->height, tex->format.c_str(), tex->size);
+		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", file, tex->width, tex->height, tex->format.c_str(), tex->size);
 	}
 	else
 	{
@@ -93,6 +94,8 @@ bool TextureImporter::Import(const void * buffer, uint size, std::string & outpu
 
 bool TextureImporter::Import(const char* import_file, std::string& output_file)
 {
+	bool ret = false;
+
 	uint image_id;
 
 	ilGenImages(1, &image_id); // Grab a new image name.
@@ -110,22 +113,22 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file)
 			std::string file;
 			App->fsystem->SplitFilePath(import_file, nullptr, &file, nullptr);
 			output_file = LIBRARY_TEXTURES_FOLDER + file + ".dds";
-			App->fsystem->Save(output_file.c_str(), data, size);
+			ret = App->fsystem->Save(output_file.c_str(), data, size);
 		}
 		RELEASE_ARRAY(data);
 	}
 	ilDeleteImages(1, &image_id);
 
-	return true;
+	return ret;
 }
 
-Texture* TextureImporter::LoadDefault()
+ResourceTexture* TextureImporter::LoadDefault()
 {
 	if (!default_texture)
 	{
-		default_texture = new Texture();
+		default_texture = new ResourceTexture(90, Resource::RESOURCE_TYPE::R_TEXTURE);
 
-		default_texture->path = "CheckersTexture";
+		//default_texture->path = "CheckersTexture";
 		default_texture->width = 128;
 		default_texture->height = 128;
 		GLubyte checkImage[128][128][4];
@@ -143,8 +146,8 @@ Texture* TextureImporter::LoadDefault()
 		}
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glGenTextures(1, &default_texture->id);
-		glBindTexture(GL_TEXTURE_2D, default_texture->id);
+		glGenTextures(1, &default_texture->buffer_id);
+		glBindTexture(GL_TEXTURE_2D, default_texture->buffer_id);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

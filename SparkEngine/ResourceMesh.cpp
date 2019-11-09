@@ -1,6 +1,14 @@
 #include "glew\glew.h"
 #include "ResourceMesh.h"
 
+ResourceMesh::~ResourceMesh()
+{
+}
+
+ResourceMesh::ResourceMesh(uint id, Resource::RESOURCE_TYPE type) : Resource(id,type)
+{
+}
+
 void ResourceMesh::PrepareBuffers()
 {
 	glGenBuffers(BUFF_TOTAL, buffers);

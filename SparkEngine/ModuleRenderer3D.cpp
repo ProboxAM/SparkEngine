@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "Texture.h"
+#include "ResourceTexture.h"
 #include "glew\glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include "MathGeoLib/Math/float4x4.h"
@@ -8,7 +8,7 @@
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
-#include "Mesh.h"
+#include "ResourceMesh.h"
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib  */
@@ -266,7 +266,7 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 }
 
 //Draws a mesh and binds texture to it
-void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x4& mtransform) const
+void ModuleRenderer3D::DrawMesh(const ResourceMesh* m, const ResourceTexture* tex, const float4x4& mtransform) const
 {
 	glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());
@@ -289,7 +289,7 @@ void ModuleRenderer3D::DrawMesh(const Mesh* m, const Texture* tex, const float4x
 		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
 	}
 	if(tex)
-		glBindTexture(GL_TEXTURE_2D, tex->id);
+		glBindTexture(GL_TEXTURE_2D, tex->buffer_id);
 
 	glDrawElements(GL_TRIANGLES, m->total_indices, GL_UNSIGNED_INT, nullptr);
 
@@ -313,7 +313,7 @@ bool ModuleRenderer3D::IsWireframeEnabled() const {
 	return wireframe;
 }
 
-void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, const float4x4& mtransform) const
+void ModuleRenderer3D::DebugVertexNormals(const ResourceMesh* m, const float4x4& mtransform) const
 {
 	/*glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());
@@ -328,7 +328,7 @@ void ModuleRenderer3D::DebugVertexNormals(const Mesh* m, const float4x4& mtransf
 	glPopMatrix();*/
 }
 
-void ModuleRenderer3D::DebugFaceNormals(const Mesh* m, const float4x4& mtransform) const
+void ModuleRenderer3D::DebugFaceNormals(const ResourceMesh* m, const float4x4& mtransform) const
 {
 	/*glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());

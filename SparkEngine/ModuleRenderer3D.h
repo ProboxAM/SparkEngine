@@ -4,11 +4,11 @@
 #include "Module.h"
 #include "glmath.h"
 #include "Light.h"
-#include "Texture.h"
+#include "ResourceTexture.h"
 #define MAX_LIGHTS 8
 
 typedef struct par_shapes_mesh_s par_shapes_mesh;
-class Mesh;
+class ResourceMesh;
 
 class ModuleRenderer3D : public Module
 {
@@ -29,9 +29,9 @@ public:
 
 	void SetWireframeMode(bool on);
 
-	void DrawMesh(const Mesh* m, const Texture* tex, const float4x4& mtransform) const;
-	void DebugVertexNormals(const Mesh* m, const float4x4& mtransform) const;
-	void DebugFaceNormals(const Mesh* m, const float4x4& mtransform) const;
+	void DrawMesh(const ResourceMesh* m, const ResourceTexture* tex, const float4x4& mtransform) const;
+	void DebugVertexNormals(const ResourceMesh* m, const float4x4& mtransform) const;
+	void DebugFaceNormals(const ResourceMesh* m, const float4x4& mtransform) const;
 	void DebugDrawCube(const float3 * vertices, Color color) const;
 
 	void ResizeScene(float w, float h);

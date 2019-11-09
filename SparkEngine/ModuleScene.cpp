@@ -2,7 +2,8 @@
 #include "ModuleImporter.h"
 
 #include "GameObject.h"
-#include "Mesh.h"
+#include "ResourceMesh.h"
+#include "ResourceTexture.h"
 
 #include "Component.h"
 #include "ComponentMesh.h"
@@ -149,7 +150,7 @@ GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObj
 	}
 
 	GameObject* obj = CreateGameObject(parent, name);
-	Mesh* mesh = App->importer->mesh->LoadPrimitive(type);
+	ResourceMesh* mesh = App->importer->mesh->LoadPrimitive(type);
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
 	c_mesh->AddMesh(mesh);
 	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);

@@ -4,7 +4,6 @@
 #include <vector>
 #include "Module.h"
 
-class Importer;
 class MeshImporter;
 class TextureImporter;
 class SceneImporter;

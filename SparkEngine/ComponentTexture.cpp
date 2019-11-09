@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "ModuleImporter.h"
-#include "Texture.h"
+#include "ResourceTexture.h"
 #include "Importer.h"
 #include "TextureImporter.h"
 #include "ComponentTexture.h"
@@ -18,7 +18,7 @@ ComponentTexture::~ComponentTexture()
 {
 }
 
-Texture* ComponentTexture::GetTexture()
+ResourceTexture* ComponentTexture::GetTexture()
 {
 	if(debug_texture)
 		return App->importer->texture->LoadDefault();
@@ -26,7 +26,7 @@ Texture* ComponentTexture::GetTexture()
 		return tex;
 }
 
-void ComponentTexture::AddTexture(Texture * tex)
+void ComponentTexture::AddTexture(ResourceTexture * tex)
 {
 	this->tex = tex;
 }
@@ -38,7 +38,7 @@ void ComponentTexture::SetDebugMode()
 
 std::string ComponentTexture::GetTexturePath()
 {
-	return tex->path;
+	return " ";
 }
 std::string ComponentTexture::GetTextureFormat()
 {
@@ -50,7 +50,7 @@ int ComponentTexture::GetTextureSize()
 }
 int ComponentTexture::GetTextureID()
 {
-	return GetTexture()->id;
+	return GetTexture()->buffer_id;
 }
 uint ComponentTexture::GetTextureWidth()
 {

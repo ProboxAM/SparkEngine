@@ -1,7 +1,7 @@
 #ifndef _COMPONENT_TEXTURE_H_
 #define _COMPONENT_TEXTURE_H_
 
-struct Texture;
+struct ResourceTexture;
 typedef unsigned int uint;
 #include "Component.h"
 #include "Globals.h"
@@ -12,8 +12,8 @@ public:
 	ComponentTexture(GameObject* gameobject);
 	~ComponentTexture();
 
-	Texture* GetTexture();
-	void AddTexture(Texture* tex);
+	ResourceTexture* GetTexture();
+	void AddTexture(ResourceTexture* tex);
 	void SetDebugMode();
 
 	std::string GetTexturePath();
@@ -29,7 +29,7 @@ public:
 	bool Save(const nlohmann::json::iterator& it);
 
 private:
-	Texture * tex = nullptr;
+	ResourceTexture * tex = nullptr;
 public:
 	bool debug_texture = false;
 

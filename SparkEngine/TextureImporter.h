@@ -3,7 +3,7 @@
 
 #include "Importer.h"
 
-struct Texture;
+struct ResourceTexture;
 
 class TextureImporter :
 	public Importer
@@ -18,13 +18,13 @@ public:
 	bool Import(const char* file, std::string& output_file);
 	bool Import(const void* buffer, uint size, std::string& output_file);
 
-	Texture* Load(const char* exported_file);
-	Texture* LoadDefault();
+	ResourceTexture* Load(const char* exported_file);
+	ResourceTexture* LoadDefault();
 
 	int version;
 private:
 
-	Texture* default_texture = nullptr;
+	ResourceTexture* default_texture = nullptr;
 };
 
 

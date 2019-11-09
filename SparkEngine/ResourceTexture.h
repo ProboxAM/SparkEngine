@@ -3,9 +3,13 @@
 
 #include "Resource.h"
 
-struct ResourceTexture : public Resource
+class ResourceTexture : public Resource
 {
 public:
+	~ResourceTexture();
+	ResourceTexture(uint id, Resource::RESOURCE_TYPE type);
+
+	uint buffer_id;
 	uint width, height, depth, bpp, mips;
 	int size;
 	std::string format;
