@@ -1,8 +1,7 @@
-#ifndef _MESH_H_
-#define _MESH_H_
+#ifndef _RESOURCE_MESH_H_
+#define _RESOURCE_MESH_H_
 
-#include <vector>
-#include "Globals.h"
+#include "Resource.h"
 
 enum BUFFER_TYPE
 {
@@ -15,7 +14,7 @@ enum BUFFER_TYPE
 	BUFF_TOTAL
 };
 
-class Mesh
+class ResourceMesh : public Resource
 {
 public:
 	float3* vertices;

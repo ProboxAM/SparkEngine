@@ -1,8 +1,7 @@
 #include "glew\glew.h"
-#include "Texture.h"
-#include "Mesh.h"
+#include "ResourceMesh.h"
 
-void Mesh::PrepareBuffers()
+void ResourceMesh::PrepareBuffers()
 {
 	glGenBuffers(BUFF_TOTAL, buffers);
 
