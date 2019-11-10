@@ -3,15 +3,26 @@
 #include "ModuleInput.h"
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
-#include "ModuleRenderer3D.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
-#include "ComponentCamera.h"
 #include "ModuleCamera3D.h"
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
 	name = "Camera3D";
+
+	CalculateViewMatrix();
+
+	X = vec3(1.0f, 0.0f, 0.0f);
+	Y = vec3(0.0f, 1.0f, 0.0f);
+	Z = vec3(0.0f, 0.0f, 1.0f);
+
+	Position = vec3(0.0f, 3.0f, 5.0f);
+	Reference = vec3(0.0f, 3.0f, 5.0f);
+
+	Y = rotate(Y, -20, X);
+	Z = rotate(Z, -20, X);
+	Position = Reference + Z * length(Position);
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -23,13 +34,6 @@ bool ModuleCamera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
-	c_camera = new ComponentCamera(nullptr);
-
-	c_camera->frustum.pos = { 20.f, 50.f, 0.f };
-	LookAt({ 0.f, 0.f, 0.f });
-
-	App->renderer3D->c_camera = c_camera;
-
 	return ret;
 }
 
@@ -37,8 +41,6 @@ bool ModuleCamera3D::Start()
 bool ModuleCamera3D::CleanUp()
 {
 	LOG("Cleaning camera");
-
-	App->renderer3D->c_camera = nullptr;
 
 	return true;
 }
@@ -75,18 +77,18 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
-	new_position = { 0, 0, 0 };
+	newPos = { 0, 0, 0 };
 	speed = movement_speed * dt;
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = movement_speed * 2 * dt;
 
-	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) new_position.y += speed;
+	//if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		if (App->scene->selected_gameobject)
 		{
 			SelectedGOAsReference();
-			LookAt(reference);
+			LookAt(Reference);
 			focusing = true;
 			camera_inputs_active = false;
 		}
@@ -97,8 +99,8 @@ update_status ModuleCamera3D::Update(float dt)
 
 	CameraInputs();
 
-	c_camera->frustum.pos += new_position;
-	reference += new_position;
+	Position += newPos;
+	Reference += newPos;
 
 	// Mouse motion ----------------
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
@@ -113,31 +115,81 @@ update_status ModuleCamera3D::Update(float dt)
 		RotateAroundReference();
 	}
 
+	// Recalculate matrix -------------
+	CalculateViewMatrix();
+
 	return UPDATE_CONTINUE;
 }
 
 // -----------------------------------------------------------------
-void ModuleCamera3D::LookAt(const float3 &spot)
+void ModuleCamera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference)
 {
-	c_camera->LookAt(spot);
-	reference = spot;
+	this->Position = Position;
+	this->Reference = Reference;
+
+	Z = normalize(Position - Reference);
+	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
+	Y = cross(Z, X);
+
+	if(!RotateAroundReference)
+	{
+		this->Reference = this->Position;
+		this->Position += Z * 0.05f;
+	}
+													  
+	CalculateViewMatrix();
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::LookAt(const vec3 &Spot)
+{
+	Reference = Spot;
+
+	float3 aux = { Position.x - Reference.x, Position.y - Reference.y, Position.z - Reference.z };
+	aux.Normalize();
+	float3 b = { 0, 1, 0 };
+
+	if (!aux.Equals(b)) {
+		Z = normalize(Position - Reference);
+		X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
+		Y = cross(Z, X);
+	}
+
+
+	CalculateViewMatrix();
+}
+
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::Move(const vec3 &Movement)
+{
+	Position += Movement;
+	Reference += Movement;
+
+	CalculateViewMatrix();
+}
+
+// -----------------------------------------------------------------
+float* ModuleCamera3D::GetViewMatrix()
+{
+	return &ViewMatrix;
 }
 
 void ModuleCamera3D::CameraInputs()
 {
 	if (camera_inputs_active)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) new_position += c_camera->frustum.front * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) new_position -= c_camera->frustum.front * speed;
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) new_position -= c_camera->frustum.WorldRight() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) new_position += c_camera->frustum.WorldRight() * speed;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
 		if (App->editor->IsInsideSceneWindow(math::float2(App->input->GetMouseX(), App->input->GetMouseY())))
 		{
-			if (App->input->GetMouseZ() > 0) new_position -= c_camera->frustum.front * speed;
-			if (App->input->GetMouseZ() < 0) new_position += c_camera->frustum.front * speed;
+			if (App->input->GetMouseZ() > 0) newPos -= Z * speed;
+			if (App->input->GetMouseZ() < 0) newPos += Z * speed;
 		}
 	}
 }
@@ -145,8 +197,8 @@ void ModuleCamera3D::CameraInputs()
 void ModuleCamera3D::Focus()//If theres a selected game object the camera looks at the target and moves to it. It moves slower as the camera gets closer to the target
 {
 	SelectedGOAsReference();
-	float3 end_position = { reference.x, reference.y, reference.z };
-	float3 position = { c_camera->frustum.pos.x, c_camera->frustum.pos.y, c_camera->frustum.pos.z };
+	float3 end_position = { Reference.x, Reference.y, Reference.z };
+	float3 position = { Position.x, Position.y, Position.z };
 	float distance = position.Distance(end_position);
 	speed = speed * distance * focus_factor;
 	float bb_distance_aux = 0;
@@ -166,16 +218,16 @@ void ModuleCamera3D::Focus()//If theres a selected game object the camera looks 
 
 	if (distance + threshold <= min_distance || distance - threshold >= min_distance) {
 		if (distance < min_distance) {
-			new_position -= c_camera->frustum.front * speed;
-			if (distance + new_position.z >= min_distance)
+			newPos += Z * speed;
+			if (distance + newPos.z >= min_distance)
 			{
 				focusing = false;
 				camera_inputs_active = true;
 			}
 		}
 		else if (distance > min_distance) {
-			new_position += c_camera->frustum.front * speed;
-			if (distance - new_position.z <= min_distance)
+			newPos -= Z * speed;
+			if (distance - newPos.z <= min_distance)
 			{
 				focusing = false;
 				camera_inputs_active = true;
@@ -191,25 +243,49 @@ void ModuleCamera3D::Focus()//If theres a selected game object the camera looks 
 
 void ModuleCamera3D::RotateAroundReference()
 {
-	//TODO using teacher's code atm, must be changed.
 	int dx = -App->input->GetMouseXMotion();
 	int dy = -App->input->GetMouseYMotion();
 
-	float3 vector = c_camera->frustum.pos - reference;
+	float Sensitivity = 0.25f;
 
-	Quat quat_y(c_camera->frustum.up, dx * 0.003);
-	Quat quat_x(c_camera->frustum.WorldRight(), dy * 0.003);
+	Position -= Reference;
 
-	vector = quat_x.Transform(vector);
-	vector = quat_y.Transform(vector);
+	if (dx != 0)
+	{
+		float DeltaX = (float)dx * Sensitivity;
 
-	c_camera->frustum.pos = vector + reference;
-	LookAt(reference);
+		X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+	}
+
+	if (dy != 0)
+	{
+		float DeltaY = (float)dy * Sensitivity;
+
+		Y = rotate(Y, DeltaY, X);
+		Z = rotate(Z, DeltaY, X);
+
+		if (Y.y < 0.0f)
+		{
+			Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+			Y = cross(Z, X);
+		}
+	}
+
+	Position = Reference + Z * length(Position);
+}
+
+// -----------------------------------------------------------------
+void ModuleCamera3D::CalculateViewMatrix()
+{
+	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
+	ViewMatrixInverse = inverse(ViewMatrix);
 }
 
 void ModuleCamera3D::SelectedGOAsReference()
 {
 	if (App->scene->selected_gameobject) {
-		reference = { App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z };
+		Reference = { App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z };
 	}
 }

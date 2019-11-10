@@ -1367,10 +1367,10 @@ namespace ImGuizmo
 
                // compute projected mouse position on plan
                const float len = IntersectRayPlane(gContext.mRayOrigin, gContext.mRayVector, gContext.mBoundsPlan);
-               vec_t new_position = gContext.mRayOrigin + gContext.mRayVector * len;
+               vec_t newPos = gContext.mRayOrigin + gContext.mRayVector * len;
 
                // compute a reference and delta vectors base on mouse move
-               vec_t deltaVector = (new_position - gContext.mBoundsPivot).Abs();
+               vec_t deltaVector = (newPos - gContext.mBoundsPivot).Abs();
                vec_t referenceVector = (gContext.mBoundsAnchor - gContext.mBoundsPivot).Abs();
 
                // for 1 or 2 axes, compute a ratio that's used for scale and snap it based on resulting length
@@ -1553,12 +1553,12 @@ namespace ImGuizmo
       {
          ImGui::CaptureMouseFromApp();
          const float len = fabsf(IntersectRayPlane(gContext.mRayOrigin, gContext.mRayVector, gContext.mTranslationPlan)); // near plan
-         vec_t new_position = gContext.mRayOrigin + gContext.mRayVector * len;
+         vec_t newPos = gContext.mRayOrigin + gContext.mRayVector * len;
 
 
 
          // compute delta
-         vec_t newOrigin = new_position - gContext.mRelativeOrigin * gContext.mScreenFactor;
+         vec_t newOrigin = newPos - gContext.mRelativeOrigin * gContext.mScreenFactor;
          vec_t delta = newOrigin - gContext.mModel.v.position;
 
          // 1 axis constraint
@@ -1676,8 +1676,8 @@ namespace ImGuizmo
       {
          ImGui::CaptureMouseFromApp();
          const float len = IntersectRayPlane(gContext.mRayOrigin, gContext.mRayVector, gContext.mTranslationPlan);
-         vec_t new_position = gContext.mRayOrigin + gContext.mRayVector * len;
-         vec_t newOrigin = new_position - gContext.mRelativeOrigin * gContext.mScreenFactor;
+         vec_t newPos = gContext.mRayOrigin + gContext.mRayVector * len;
+         vec_t newOrigin = newPos - gContext.mRelativeOrigin * gContext.mScreenFactor;
          vec_t delta = newOrigin - gContext.mModel.v.position;
 
          // 1 axis constraint

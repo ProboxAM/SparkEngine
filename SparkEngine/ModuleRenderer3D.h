@@ -9,7 +9,6 @@
 
 typedef struct par_shapes_mesh_s par_shapes_mesh;
 class Mesh;
-class ComponentCamera;
 
 class ModuleRenderer3D : public Module
 {
@@ -54,8 +53,6 @@ public:
 	uint scene_buffer_id = -1;
 	uint scene_texture_id;
 	float3 bkg_color = float3(0.1f, 0.1f, 0.1f);
-
-	ComponentCamera* c_camera;
 
 private:
 	bool wireframe;
