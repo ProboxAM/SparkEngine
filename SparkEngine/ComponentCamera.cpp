@@ -19,18 +19,11 @@ ComponentCamera::ComponentCamera(GameObject* gameobject) : Component(gameobject)
 	frustum.farPlaneDistance = 1000.0f;
 
 	SetFrustumFOV(90);
-
-	UpdateFrustumTransform();
 }
 
 
 ComponentCamera::~ComponentCamera()
 {
-}
-
-Frustum ComponentCamera::GetFrustum()
-{
-	return frustum;
 }
 
 void ComponentCamera::SetFrustumNearPlaneDistance(float distance)
@@ -97,6 +90,7 @@ float ComponentCamera::GetFrustumAspectRatio()
 
 void ComponentCamera::LookAt(float3 position)
 {
+	//TODO using teacher's code atm, must be changed.
 	float3 vector = position - frustum.pos;
 
 	float3x3 matrix = float3x3::LookAt(frustum.front, vector.Normalized(), frustum.up, float3::unitY);
@@ -105,13 +99,10 @@ void ComponentCamera::LookAt(float3 position)
 	frustum.up = (matrix.MulDir(frustum.up).Normalized());
 }
 
-void ComponentCamera::Focus(AABB object_bb)
-{
-}
-
 float4x4 ComponentCamera::GetOpenGLViewMatrix()
 {
-	return frustum.ViewMatrix().Transposed3();
+	float4x4 matrix = frustum.ViewMatrix();
+	return matrix.Transposed();
 }
 
 float4x4 ComponentCamera::GetOpenGLProjectionMatrix()
@@ -128,7 +119,9 @@ void ComponentCamera::DrawFrustum()
 
 void ComponentCamera::UpdateFrustumTransform()
 {
-	float4x4 transform_matrix = gameobject->transform->GetTransformMatrix();
+	float4x4 transform_matrix;
+	if(gameobject) transform_matrix = gameobject->transform->GetTransformMatrix();
+	else transform_matrix = float4x4::identity;
 	frustum.pos = transform_matrix.TranslatePart();
 	frustum.up = transform_matrix.WorldY();
 	frustum.front = transform_matrix.WorldZ();

@@ -9,6 +9,7 @@
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
 #include "Mesh.h"
+#include "ComponentCamera.h"
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib  */
@@ -129,10 +130,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf((float*)&c_camera->GetOpenGLViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(c_camera->frustum.pos.x, c_camera->frustum.pos.y, c_camera->frustum.pos.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();

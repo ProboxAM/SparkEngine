@@ -12,8 +12,6 @@ public:
 	ComponentCamera(GameObject* gameobject);
 	~ComponentCamera();
 
-	Frustum GetFrustum();
-
 	void SetFrustumNearPlaneDistance(float distance);
 	void SetFrustumFarPlaneDistance(float distance);
 	void SetFrustumFOV(float fov, bool degrees = false);
@@ -27,15 +25,15 @@ public:
 	float GetFrustumAspectRatio();
 
 	void LookAt(float3 position);
-	void Focus(AABB object_bb);
 
 	float4x4 GetOpenGLViewMatrix();
 	float4x4 GetOpenGLProjectionMatrix();
 
 	void UpdateFrustumTransform();
 
-private:
 	Frustum frustum;
+
+private:
 
 	bool active_camera = false;
 
