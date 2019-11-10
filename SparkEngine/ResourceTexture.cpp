@@ -4,6 +4,6 @@ ResourceTexture::~ResourceTexture()
 {
 }
 
-ResourceTexture::ResourceTexture(uint id, Resource::RESOURCE_TYPE type) : Resource(id, type)
+ResourceTexture::ResourceTexture(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_TEXTURE)
 {
 }

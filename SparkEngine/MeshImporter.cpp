@@ -39,7 +39,7 @@ bool MeshImporter::CleanUp()
 
 ResourceMesh* MeshImporter::Load(const char * exported_file)
 {
-	ResourceMesh* resource = new ResourceMesh(90, Resource::RESOURCE_TYPE::R_MESH);
+	ResourceMesh* resource = new ResourceMesh(90);
 
 	std::string path = LIBRARY_MESH_FOLDER;
 	path.append(exported_file);
@@ -95,7 +95,7 @@ ResourceMesh* MeshImporter::Load(const char * exported_file)
 
 ResourceMesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 {
-	ResourceMesh* resource = new ResourceMesh(90, Resource::RESOURCE_TYPE::R_MESH);
+	ResourceMesh* resource = new ResourceMesh(90);
 
 	//Load vertices
 	resource->total_vertices = mesh->mNumVertices;
@@ -209,7 +209,7 @@ bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 
 ResourceMesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 {
-	ResourceMesh* new_mesh = new ResourceMesh(90, Resource::RESOURCE_TYPE::R_MESH);
+	ResourceMesh* new_mesh = new ResourceMesh(90);
 	par_shapes_mesh* primitive_mesh = nullptr;
 
 	switch (type)

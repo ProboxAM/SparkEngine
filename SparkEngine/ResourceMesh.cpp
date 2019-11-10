@@ -5,7 +5,7 @@ ResourceMesh::~ResourceMesh()
 {
 }
 
-ResourceMesh::ResourceMesh(uint id, Resource::RESOURCE_TYPE type) : Resource(id,type)
+ResourceMesh::ResourceMesh(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_MESH)
 {
 }
 

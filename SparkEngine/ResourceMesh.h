@@ -18,7 +18,7 @@ class ResourceMesh : public Resource
 {
 public:
 	~ResourceMesh();
-	ResourceMesh(uint id, Resource::RESOURCE_TYPE type);
+	ResourceMesh(uint id);
 
 	float3* vertices;
 	float2* uv;

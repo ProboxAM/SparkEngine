@@ -124,7 +124,7 @@ void SceneImporter::LoadNode(const aiNode* node, const aiScene* scene, GameObjec
 			{
 				std::string file;
 				App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file);
-				new_texture = App->importer->texture->Load(std::string(LIBRARY_TEXTURES_FOLDER + file + ".dds").c_str());
+				//new_texture = App->importer->texture->Load(std::string(LIBRARY_TEXTURES_FOLDER + file + ".dds").c_str());
 			}
 			else
 			{

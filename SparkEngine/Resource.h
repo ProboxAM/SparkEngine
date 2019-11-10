@@ -23,8 +23,9 @@ public:
 	const char* GetFile() const;
 	const char* GetExportedFile() const;
 	bool IsLoaded() const;
-	bool Load();
-	uint CountReferences() const;
+	void AddReference();
+	void SetFile(std::string f);
+	void SetExportedFile(std::string f);
 
 protected:
 	//virtual void Save(Config& config) const;
@@ -36,7 +37,7 @@ protected:
 	std::string file;
 	std::string exported_file;
 	RESOURCE_TYPE type = RESOURCE_TYPE::R_NONE;
-	bool loaded = false;
+	uint references = 0;
 };
 
 #endif // !_RESOURCE_H_

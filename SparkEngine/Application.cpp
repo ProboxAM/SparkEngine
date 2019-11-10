@@ -7,6 +7,7 @@
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
 #include "ModuleFileSystem.h"
+#include "ModuleResources.h"
 #include "ModuleScene.h"
 #include "Application.h"
 #include "nlohmann\json.hpp"
@@ -24,12 +25,14 @@ Application::Application()
 	importer = new ModuleImporter(true);
 	fsystem = new ModuleFileSystem(ASSETS_FOLDER);
 	scene = new ModuleScene(true);
+	resources = new ModuleResources(true);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
 
 	// Main Modules
 	AddModule(window);
+	AddModule(resources);
 	AddModule(editor);
 	AddModule(camera);
 	AddModule(input);

@@ -17,6 +17,7 @@ class ModuleFileSystem;
 class ModuleScene;
 class ModuleTextures;
 class ModuleMeshes;
+class ModuleResources;
 
 class Application
 {
@@ -31,6 +32,7 @@ public:
 	ModuleScene* scene;
 	ModuleTextures* textures;
 	ModuleMeshes* meshes;
+	ModuleResources* resources;
 
 private:
 	std::string		app_name;

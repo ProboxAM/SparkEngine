@@ -3,7 +3,7 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ModuleEditor.h"
-#include "ModuleImporter.h"
+#include "ModuleResources.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
 #define MAX_KEYS 300
@@ -133,7 +133,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE: 
 			{			
 				drop_filepath = e.drop.file;
-				App->importer->ImportFile(drop_filepath.c_str());
+				App->resources->ImportFileToAssets(drop_filepath.c_str());
 				SDL_free(e.drop.file);
 			}break;
 		}

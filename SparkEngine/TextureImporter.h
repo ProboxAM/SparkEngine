@@ -15,10 +15,10 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	bool Import(const char* file, std::string& output_file);
+	bool Import(const char* file, std::string& output_file, uint id);
 	bool Import(const void* buffer, uint size, std::string& output_file);
 
-	ResourceTexture* Load(const char* exported_file);
+	bool Load(ResourceTexture* resource);
 	ResourceTexture* LoadDefault();
 
 	int version;

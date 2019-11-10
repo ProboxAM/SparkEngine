@@ -4,21 +4,32 @@
 #include "Module.h"
 #include "Resource.h"
 
+struct MetaInfo
+{
+	std::string original_file;
+	uint id;
+};
+
 class ModuleResources : public Module
 {
 public:
-	ModuleResources();
+	ModuleResources(bool active);
 	~ModuleResources();
+
+	bool Start();
 
 	uint Find(const char* file_in_assets) const;
 	bool ImportFileToAssets(const char* path);
 	bool ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type);
 	uint GenerateNewUID();
 	Resource* Get(uint uid);
-	Resource* CreateNewResource(Resource::RESOURCE_TYPE type, uint force_uid = 0);
+	Resource* CreateResource(Resource::RESOURCE_TYPE type, uint id);
 
 private:
-	Resource::RESOURCE_TYPE GetTypeFromExtension(const char* extension);
+	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);
+	bool LoadResource(Resource* resource);
+	void LoadAssets();
+	void CreateMeta(std::string file, uint id);
 
 private:
 	uint last_id = 1;

@@ -46,11 +46,11 @@
     <Filter Include="Sources\Importers">
       <UniqueIdentifier>{69f4e9cf-b079-49f4-a2b9-93b4397a388d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\ImGuizmo">
-      <UniqueIdentifier>{4f102ebf-ce3b-433f-8e7a-43447deadbc8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Resources">
-      <UniqueIdentifier>{3113dc3c-c5cd-422c-82ea-e3b034fffada}</UniqueIdentifier>
+      <UniqueIdentifier>{df09f81e-32b9-4fc9-8e7b-60f8ddeedd43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\ImGuizmo">
+      <UniqueIdentifier>{c9651052-382f-499c-8ee3-2dc30c7bb4c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +267,9 @@
     <ClInclude Include="ModuleFileSystem.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleImporter.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Panel.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
@@ -375,11 +378,8 @@
     <ClInclude Include="SceneImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuizmo.h">
-      <Filter>Sources\ImGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="pcg_uint128.hpp">
-      <Filter>Sources\Externals</Filter>
+    <ClInclude Include="ModuleResources.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Sources\Resources</Filter>
@@ -390,14 +390,14 @@
     <ClInclude Include="ResourceTexture.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleResources.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="PanelProject.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleImporter.h">
-      <Filter>Sources\Modules</Filter>
+    <ClInclude Include="pcg_uint128.hpp">
+      <Filter>Sources\Externals</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmo.h">
+      <Filter>Sources\ImGuizmo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -599,8 +599,8 @@
     <ClCompile Include="SceneImporter.cpp">
       <Filter>Sources\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuizmo.cpp">
-      <Filter>Sources\ImGuizmo</Filter>
+    <ClCompile Include="ModuleResources.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Resource.cpp">
       <Filter>Sources\Resources</Filter>
@@ -608,14 +608,14 @@
     <ClCompile Include="ResourceMesh.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleResources.cpp">
-      <Filter>Sources\Modules</Filter>
+    <ClCompile Include="ResourceTexture.cpp">
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="PanelProject.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceTexture.cpp">
-      <Filter>Sources\Resources</Filter>
+    <ClCompile Include="ImGuizmo.cpp">
+      <Filter>Sources\ImGuizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

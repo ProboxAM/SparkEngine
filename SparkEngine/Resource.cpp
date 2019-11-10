@@ -32,15 +32,18 @@ const char * Resource::GetExportedFile() const
 
 bool Resource::IsLoaded() const
 {
-	return loaded;
+	return references>0;
 }
 
-bool Resource::Load()
+void Resource::AddReference()
 {
-	return false;
+	references++;
 }
 
-uint Resource::CountReferences() const
+void Resource::SetFile(std::string f)
 {
-	return uint();
+}
+
+void Resource::SetExportedFile(std::string f)
+{
 }

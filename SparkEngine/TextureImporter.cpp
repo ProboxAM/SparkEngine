@@ -41,14 +41,13 @@ bool TextureImporter::CleanUp()
 	return true;
 }
 
-ResourceTexture* TextureImporter::Load(const char* file)
+bool TextureImporter::Load(ResourceTexture* tex)
 {
-	ResourceTexture* tex = new ResourceTexture(90, Resource::RESOURCE_TYPE::R_TEXTURE);
 	uint image_id;
 
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
-	if (ilLoadImage(file))
+	if (ilLoadImage(tex->GetExportedFile()))
 	{
 		tex->buffer_id = ilutGLBindTexImage();
 		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
@@ -74,12 +73,12 @@ ResourceTexture* TextureImporter::Load(const char* file)
 		tex->size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", file, tex->width, tex->height, tex->format.c_str(), tex->size);
+		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->GetExportedFile(), tex->width, tex->height, tex->format.c_str(), tex->size);
 	}
 	else
 	{
 		tex = LoadDefault();
-		LOG("Error loading texture %s. Applied default texture instead.", file);
+		LOG("Error loading texture %s. Applied default texture instead.", tex->GetExportedFile());
 	}
 
 	ilDeleteImages(1, &image_id);
@@ -92,7 +91,7 @@ bool TextureImporter::Import(const void * buffer, uint size, std::string & outpu
 	return true;
 }
 
-bool TextureImporter::Import(const char* import_file, std::string& output_file)
+bool TextureImporter::Import(const char* import_file, std::string& output_file, uint id)
 {
 	bool ret = false;
 
@@ -110,9 +109,8 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file)
 		data = new ILubyte[size]; // allocate data buffer   
 		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
 		{
-			std::string file;
-			App->fsystem->SplitFilePath(import_file, nullptr, &file, nullptr);
-			output_file = LIBRARY_TEXTURES_FOLDER + file + ".dds";
+			std::string file_name = std::to_string(id);
+			output_file = LIBRARY_TEXTURES_FOLDER + file_name + ".dds";
 			ret = App->fsystem->Save(output_file.c_str(), data, size);
 		}
 		RELEASE_ARRAY(data);
@@ -126,7 +124,7 @@ ResourceTexture* TextureImporter::LoadDefault()
 {
 	if (!default_texture)
 	{
-		default_texture = new ResourceTexture(90, Resource::RESOURCE_TYPE::R_TEXTURE);
+		default_texture = new ResourceTexture(90);
 
 		//default_texture->path = "CheckersTexture";
 		default_texture->width = 128;
