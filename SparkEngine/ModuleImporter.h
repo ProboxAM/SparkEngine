@@ -6,7 +6,7 @@
 
 class MeshImporter;
 class TextureImporter;
-class SceneImporter;
+class ModelImporter;
 
 class ModuleImporter : public Module
 {
@@ -21,7 +21,7 @@ public:
 public:
 	MeshImporter* mesh;
 	TextureImporter* texture;
-	SceneImporter* scene;
+	ModelImporter* scene;
 };
 
 #endif

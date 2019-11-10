@@ -110,7 +110,8 @@
     <ClInclude Include="PanelProject.h" />
     <ClInclude Include="pcg_uint128.hpp" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SceneImporter.h" />
+    <ClInclude Include="ResourceModel.h" />
+    <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="TextureImporter.h" />
     <ClInclude Include="MathGeoLib\Algorithm\Random\LCG.h" />
     <ClInclude Include="MathGeoLib\Geometry\AABB.h" />
@@ -215,8 +216,9 @@
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="PanelProject.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />
-    <ClCompile Include="SceneImporter.cpp" />
+    <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="TextureImporter.cpp" />
     <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp" />
     <ClCompile Include="MathGeoLib\Geometry\AABB.cpp" />

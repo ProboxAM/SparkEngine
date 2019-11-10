@@ -23,7 +23,7 @@ public:
 	bool ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type);
 	uint GenerateNewUID();
 	Resource* Get(uint uid);
-	Resource* CreateResource(Resource::RESOURCE_TYPE type, uint id);
+	Resource* CreateResource(Resource::RESOURCE_TYPE type);
 
 private:
 	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);

@@ -375,9 +375,6 @@
     <ClInclude Include="TextureImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="SceneImporter.h">
-      <Filter>Sources\Importers</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleResources.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -398,6 +395,12 @@
     </ClInclude>
     <ClInclude Include="ImGuizmo.h">
       <Filter>Sources\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceModel.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelImporter.h">
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -596,9 +599,6 @@
     <ClCompile Include="TextureImporter.cpp">
       <Filter>Sources\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="SceneImporter.cpp">
-      <Filter>Sources\Importers</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleResources.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
@@ -616,6 +616,12 @@
     </ClCompile>
     <ClCompile Include="ImGuizmo.cpp">
       <Filter>Sources\ImGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceModel.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelImporter.cpp">
+      <Filter>Sources\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

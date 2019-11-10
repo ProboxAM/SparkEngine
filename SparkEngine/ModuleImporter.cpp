@@ -1,4 +1,4 @@
-#include "SceneImporter.h"
+#include "ModelImporter.h"
 #include "TextureImporter.h"
 #include "MeshImporter.h"
 
@@ -16,7 +16,7 @@ ModuleImporter::~ModuleImporter()
 bool ModuleImporter::Init(const nlohmann::json::iterator& it)
 {
 	// init importers
-	scene = new SceneImporter();
+	scene = new ModelImporter();
 	texture = new TextureImporter();
 	mesh = new MeshImporter();
 

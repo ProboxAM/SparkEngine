@@ -2,7 +2,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleImporter.h"
 
-#include "SceneImporter.h"
+#include "ModelImporter.h"
 #include "TextureImporter.h"
 #include "MeshImporter.h"
 
@@ -58,16 +58,16 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
 {
 	std::string output_file;
-	uint id = ++last_id;
+	Resource* resource = CreateResource(type);
 
 	bool import_success = false;
 	switch (type)
 	{
 		case Resource::R_TEXTURE:
-			import_success = App->importer->texture->Import(new_file_in_assets, output_file, id);
+			import_success = App->importer->texture->Import(new_file_in_assets, output_file, resource->GetID());
 			break;
-		case Resource::R_MESH:
-			import_success = App->importer->scene->Import(new_file_in_assets, output_file);
+		case Resource::R_MODEL:
+			import_success = App->importer->scene->Import(new_file_in_assets, output_file, resource->GetID());
 			break;
 		case Resource::R_SCENE:
 			break;
@@ -79,8 +79,7 @@ bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 
 	if (import_success)
 	{
-		CreateMeta(new_file_in_assets, id);
-		Resource* resource = CreateResource(type, id);
+		CreateMeta(new_file_in_assets, resource->GetID());
 		resource->SetFile(new_file_in_assets);
 		resource->SetExportedFile(output_file);
 	}
@@ -110,9 +109,10 @@ Resource * ModuleResources::Get(uint id)
 	return nullptr;
 }
 
-Resource * ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
+Resource * ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
 {
 	Resource* r = nullptr;
+	uint id = ++last_id;
 
 	switch (type)
 	{
@@ -121,6 +121,9 @@ Resource * ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id
 			break;
 		case Resource::R_MESH:
 			r = new ResourceMesh(id);
+			break;
+		case Resource::R_MODEL:
+			r = new ResourceModel(id);
 			break;
 		case Resource::R_SCENE:
 			break;
@@ -145,7 +148,7 @@ Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extens
 	else if (extension == "dds" || extension == "DDS")
 		return Resource::RESOURCE_TYPE::R_TEXTURE;
 	else if (extension == "fbx" || extension == "FBX")
-		return Resource::RESOURCE_TYPE::R_MESH;
+		return Resource::RESOURCE_TYPE::R_MODEL;
 
 	return Resource::RESOURCE_TYPE::R_NONE;
 }
@@ -173,7 +176,7 @@ bool ModuleResources::LoadResource(Resource* resource)
 
 void ModuleResources::LoadAssets()
 {
-	// get all files, check if they have meta or not, if they have meta 
+	// get all files, check if they have meta or not, if they have meta
 }
 
 void ModuleResources::CreateMeta(std::string file, uint id)

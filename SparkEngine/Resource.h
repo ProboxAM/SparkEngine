@@ -11,6 +11,7 @@ public:
 	enum RESOURCE_TYPE {
 		R_TEXTURE,
 		R_MESH,
+		R_MODEL,
 		R_SCENE,
 		R_NONE
 	};

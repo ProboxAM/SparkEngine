@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ModuleResources.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -93,9 +94,9 @@ ResourceMesh* MeshImporter::Load(const char * exported_file)
 	return resource;
 }
 
-ResourceMesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
+uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 {
-	ResourceMesh* resource = new ResourceMesh(90);
+	ResourceMesh* resource = (ResourceMesh*) App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
 
 	//Load vertices
 	resource->total_vertices = mesh->mNumVertices;
@@ -156,7 +157,7 @@ ResourceMesh* MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 
 	SaveMesh(resource);
 
-	return resource;
+	return resource->GetID();
 }
 
 bool MeshImporter::SaveMesh(ResourceMesh* mesh)
