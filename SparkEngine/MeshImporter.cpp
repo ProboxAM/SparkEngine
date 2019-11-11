@@ -201,7 +201,9 @@ bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 		cursor += bytes;
 	}
 
-	uint ret = App->fsystem->Save(std::string(LIBRARY_MESH_FOLDER"mesh.spk").c_str(), data, size);
+	std::string file = LIBRARY_MESH_FOLDER;
+	file += std::to_string(mesh->GetID()) + ".spk";
+	uint ret = App->fsystem->Save(file.c_str(), data, size);
 	RELEASE_ARRAY(data);
 
 	return true;

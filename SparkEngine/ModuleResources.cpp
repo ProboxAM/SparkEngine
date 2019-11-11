@@ -58,16 +58,16 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
 {
 	std::string output_file;
-	Resource* resource = CreateResource(type);
+	uint id = ++last_id;
 
 	bool import_success = false;
 	switch (type)
 	{
 		case Resource::R_TEXTURE:
-			import_success = App->importer->texture->Import(new_file_in_assets, output_file, resource->GetID());
+			import_success = App->importer->texture->Import(new_file_in_assets, output_file, id);
 			break;
 		case Resource::R_MODEL:
-			import_success = App->importer->scene->Import(new_file_in_assets, output_file, resource->GetID());
+			import_success = App->importer->scene->Import(new_file_in_assets, output_file, id);
 			break;
 		case Resource::R_SCENE:
 			break;
@@ -79,12 +79,13 @@ bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 
 	if (import_success)
 	{
+		Resource* resource = CreateResource(type, id);
 		CreateMeta(new_file_in_assets, resource->GetID());
 		resource->SetFile(new_file_in_assets);
 		resource->SetExportedFile(output_file);
 	}
 
-	return true;
+	return import_success;
 }
 
 uint ModuleResources::GenerateNewUID()
@@ -109,10 +110,38 @@ Resource * ModuleResources::Get(uint id)
 	return nullptr;
 }
 
-Resource * ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
+Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
 {
 	Resource* r = nullptr;
 	uint id = ++last_id;
+
+	switch (type)
+	{
+	case Resource::R_TEXTURE:
+		r = new ResourceTexture(id);
+		break;
+	case Resource::R_MESH:
+		r = new ResourceMesh(id);
+		break;
+	case Resource::R_MODEL:
+		r = new ResourceModel(id);
+		break;
+	case Resource::R_SCENE:
+		break;
+	case Resource::R_NONE:
+		break;
+	default:
+		break;
+	}
+	if (r != nullptr)
+		resources.emplace(id, r);
+
+	return r;
+}
+
+Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
+{
+	Resource* r = nullptr;
 
 	switch (type)
 	{

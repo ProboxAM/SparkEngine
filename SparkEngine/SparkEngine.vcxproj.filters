@@ -402,6 +402,9 @@
     <ClInclude Include="ModelImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceMaterial.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -622,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="ModelImporter.cpp">
       <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMaterial.cpp">
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

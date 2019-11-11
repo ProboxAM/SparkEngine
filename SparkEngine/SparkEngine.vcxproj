@@ -110,6 +110,7 @@
     <ClInclude Include="PanelProject.h" />
     <ClInclude Include="pcg_uint128.hpp" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="TextureImporter.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="PanelProject.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="ModelImporter.cpp" />

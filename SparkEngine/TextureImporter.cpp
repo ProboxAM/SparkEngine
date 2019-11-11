@@ -99,23 +99,24 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
-	ilLoadImage(import_file);
-
-	ILuint size;
-	ILubyte *data;
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use 
-	size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer 
-	if (size > 0) {
-		data = new ILubyte[size]; // allocate data buffer   
-		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
-		{
-			std::string file_name = std::to_string(id);
-			output_file = LIBRARY_TEXTURES_FOLDER + file_name + ".dds";
-			ret = App->fsystem->Save(output_file.c_str(), data, size);
+	if (ilLoadImage(import_file))
+	{
+		ILuint size;
+		ILubyte *data;
+		ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use 
+		size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer 
+		if (size > 0) {
+			data = new ILubyte[size]; // allocate data buffer   
+			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
+			{
+				std::string file_name = std::to_string(id);
+				output_file = LIBRARY_TEXTURES_FOLDER + file_name + ".dds";
+				ret = App->fsystem->Save(output_file.c_str(), data, size);
+			}
+			RELEASE_ARRAY(data);
 		}
-		RELEASE_ARRAY(data);
+		ilDeleteImages(1, &image_id);
 	}
-	ilDeleteImages(1, &image_id);
 
 	return ret;
 }

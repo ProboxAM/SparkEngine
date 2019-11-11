@@ -24,6 +24,7 @@ public:
 	uint GenerateNewUID();
 	Resource* Get(uint uid);
 	Resource* CreateResource(Resource::RESOURCE_TYPE type);
+	Resource* CreateResource(Resource::RESOURCE_TYPE type, uint id);
 
 private:
 	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);

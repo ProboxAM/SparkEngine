@@ -13,6 +13,7 @@ public:
 		R_MESH,
 		R_MODEL,
 		R_SCENE,
+		R_MATERIAL,
 		R_NONE
 	};
 public:
