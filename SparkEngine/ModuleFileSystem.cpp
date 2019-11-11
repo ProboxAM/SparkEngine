@@ -123,6 +123,46 @@ void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::str
 	PHYSFS_freeList(rc);
 }
 
+void ModuleFileSystem::GetFilesFiltered(const char* directory, std::vector<std::string> & file_list, std::string filter)
+{
+	char **rc = PHYSFS_enumerateFiles(directory);
+	char **i;
+
+	std::string dir(directory);
+
+	for (i = rc; *i != nullptr; i++)
+	{
+		if (!PHYSFS_isDirectory((dir + *i).c_str()) && !HasExtension((*i), filter))
+			file_list.push_back(*i);
+	}
+
+	PHYSFS_freeList(rc);
+}
+
+void ModuleFileSystem::GetFilesOfExtension(const char* directory, std::vector<std::string> & file_list, std::string extension)
+{
+	char **rc = PHYSFS_enumerateFiles(directory);
+	char **i;
+
+	std::string dir(directory);
+
+	for (i = rc; *i != nullptr; i++)
+	{
+		if (!PHYSFS_isDirectory((dir + *i).c_str()) && HasExtension((*i), extension))
+			file_list.push_back(*i);
+	}
+
+	PHYSFS_freeList(rc);
+}
+
+bool ModuleFileSystem::HasExtension(const char* path, std::string extension)
+{
+	std::string path_extension;
+	SplitFilePath(path, nullptr, nullptr, &path_extension);
+
+	return path_extension == extension;
+}
+
 bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * destination)
 {
 	// Only place we acces non virtual filesystem

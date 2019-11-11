@@ -52,7 +52,6 @@ bool TextureImporter::Load(ResourceTexture* tex)
 		tex->buffer_id = ilutGLBindTexImage();
 		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
 		tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
-		//tex->path = file;
 		tex->mips = ilGetInteger(IL_NUM_MIPMAPS);
 		tex->depth = ilGetInteger(IL_IMAGE_DEPTH);
 
@@ -73,14 +72,13 @@ bool TextureImporter::Load(ResourceTexture* tex)
 		tex->size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->GetExportedFile(), tex->width, tex->height, tex->format.c_str(), tex->size);
+		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->GetFile(), tex->width, tex->height, tex->format.c_str(), tex->size);
 	}
 	else
 	{
 		tex = LoadDefault();
-		LOG("Error loading texture %s. Applied default texture instead.", tex->GetExportedFile());
+		LOG("Error loading texture %s. Applied default texture instead.", tex->GetFile());
 	}
-
 	ilDeleteImages(1, &image_id);
 
 	return tex;
@@ -97,20 +95,19 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 
 	uint image_id;
 
-	ilGenImages(1, &image_id); // Grab a new image name.
-	ilBindImage(image_id);
 	if (ilLoadImage(import_file))
 	{
+		ilEnable(IL_FILE_OVERWRITE);
 		ILuint size;
 		ILubyte *data;
 		ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use 
 		size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer 
 		if (size > 0) {
-			data = new ILubyte[size]; // allocate data buffer   
+			data = new ILubyte[size]; // allocate data buffer 
 			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
 			{
 				std::string file_name = std::to_string(id);
-				output_file = LIBRARY_TEXTURES_FOLDER + file_name + ".dds";
+				output_file = LIBRARY_TEXTURES_FOLDER + file_name + TEXTURE_EXTENSION;
 				ret = App->fsystem->Save(output_file.c_str(), data, size);
 			}
 			RELEASE_ARRAY(data);

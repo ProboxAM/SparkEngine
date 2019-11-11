@@ -64,3 +64,8 @@ enum update_status
 #define LIBRARY_MODEL_FOLDER "Library/Models/"
 #define LIBRARY_MATERIAL_FOLDER "Library/Materials/"
 #define LIBRARY_STATE_MACHINE_FOLDER "Library/StateMachines/"
+#define MESH_EXTENSION ".sprk"
+#define MODEL_EXTENSION ".msprk"
+#define TEXTURE_EXTENSION ".dds"
+#define MATERIAL_EXTENSION ".mat"
+#define SCENE_EXTENSION ".scene"

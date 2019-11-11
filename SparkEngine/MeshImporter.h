@@ -27,7 +27,7 @@ public:
 	uint Import(const aiScene* scene, const aiMesh* mesh);
 	bool SaveMesh(ResourceMesh* mesh);
 
-	ResourceMesh* Load(const char* exported_file);
+	bool Load(ResourceMesh* resources);
 	ResourceMesh* LoadPrimitive(PRIMITIVE_TYPE type);
 };
 

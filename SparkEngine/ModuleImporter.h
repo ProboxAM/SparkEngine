@@ -21,7 +21,7 @@ public:
 public:
 	MeshImporter* mesh;
 	TextureImporter* texture;
-	ModelImporter* scene;
+	ModelImporter* model;
 };
 
 #endif

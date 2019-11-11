@@ -57,17 +57,22 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 
 bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
 {
-	std::string output_file;
-	uint id = ++last_id;
-
-	bool import_success = false;
-	switch (type)
+	std::string meta_file = new_file_in_assets;
+	meta_file.append(".meta");
+	
+	if (!App->fsystem->Exists(meta_file.c_str())) //no meta we import 
 	{
+		std::string output_file;
+		uint id = ++last_id;
+
+		bool import_success = false;
+		switch (type)
+		{
 		case Resource::R_TEXTURE:
 			import_success = App->importer->texture->Import(new_file_in_assets, output_file, id);
 			break;
 		case Resource::R_MODEL:
-			import_success = App->importer->scene->Import(new_file_in_assets, output_file, id);
+			import_success = App->importer->model->Import(new_file_in_assets, output_file, id);
 			break;
 		case Resource::R_SCENE:
 			break;
@@ -75,15 +80,18 @@ bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 			break;
 		default:
 			break;
+		}
+
+		if (import_success)
+		{
+			Resource* resource = CreateResource(type, id);
+			CreateMeta(new_file_in_assets, resource->GetID());
+			resource->SetFile(new_file_in_assets);
+			resource->SetExportedFile(output_file);
+		}
 	}
 
-	if (import_success)
-	{
-		Resource* resource = CreateResource(type, id);
-		CreateMeta(new_file_in_assets, resource->GetID());
-		resource->SetFile(new_file_in_assets);
-		resource->SetExportedFile(output_file);
-	}
+
 
 	return import_success;
 }
@@ -190,9 +198,13 @@ bool ModuleResources::LoadResource(Resource* resource)
 			App->importer->texture->Load((ResourceTexture*)resource);
 			break;
 		case Resource::RESOURCE_TYPE::R_MESH:
-			App->importer->mesh->Load(resource->GetExportedFile());
+			App->importer->mesh->Load((ResourceMesh*)resource);
+			break;
+		case Resource::RESOURCE_TYPE::R_MODEL:
+			App->importer->model->Load((ResourceModel*)resource);
 			break;
 		case Resource::RESOURCE_TYPE::R_SCENE:
+			
 			break;
 		case Resource::RESOURCE_TYPE::R_NONE:
 			break;
@@ -206,6 +218,17 @@ bool ModuleResources::LoadResource(Resource* resource)
 void ModuleResources::LoadAssets()
 {
 	// get all files, check if they have meta or not, if they have meta
+	std::vector<std::string> files;
+	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, ".meta");
+
+	for each(std::string file in files)
+	{
+		std::string extension;
+		App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
+		ImportFile((ASSETS_FOLDER+file).c_str(), GetTypeFromExtension(extension));
+	}
+
+	LOG("imported all assets");
 }
 
 void ModuleResources::CreateMeta(std::string file, uint id)

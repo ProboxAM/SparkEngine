@@ -16,11 +16,11 @@ ModuleImporter::~ModuleImporter()
 bool ModuleImporter::Init(const nlohmann::json::iterator& it)
 {
 	// init importers
-	scene = new ModelImporter();
+	model = new ModelImporter();
 	texture = new TextureImporter();
 	mesh = new MeshImporter();
 
-	scene->Init();
+	model->Init();
 	texture->Init();
 	mesh->Init();
 

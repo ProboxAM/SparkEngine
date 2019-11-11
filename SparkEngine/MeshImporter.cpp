@@ -38,12 +38,10 @@ bool MeshImporter::CleanUp()
 	return true;
 }
 
-ResourceMesh* MeshImporter::Load(const char * exported_file)
+bool MeshImporter::Load(ResourceMesh* resource)
 {
-	ResourceMesh* resource = new ResourceMesh(90);
-
 	std::string path = LIBRARY_MESH_FOLDER;
-	path.append(exported_file);
+	path.append(resource->GetExportedFile());
 
 	char* buffer;
 	uint size = App->fsystem->Load(path.c_str(), &buffer);
@@ -133,7 +131,6 @@ uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 	//resource->debug_vertex_normals.push_back(resource->vertices[i]);
 	//resource->debug_vertex_normals.push_back(resource->vertices[i] + (resource->normal[i].Normalized() * DEBUG_NORMAL_LENGTH));
 
-
 	//Calculate center of face
 	/*float center_x = (resource->vertices[face.mIndices[0]].x + resource->vertices[face.mIndices[1]].x + resource->vertices[face.mIndices[2]].x) / 3;
 	float center_y = (resource->vertices[face.mIndices[0]].y + resource->vertices[face.mIndices[1]].y + resource->vertices[face.mIndices[2]].y) / 3;
@@ -153,8 +150,6 @@ uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
 	resource->debug_face_normals.push_back(center);*/
 
 	LOG("New mesh with %d vertices", resource->total_vertices);
-	resource->PrepareBuffers();
-
 	SaveMesh(resource);
 
 	return resource->GetID();
@@ -202,7 +197,7 @@ bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 	}
 
 	std::string file = LIBRARY_MESH_FOLDER;
-	file += std::to_string(mesh->GetID()) + ".spk";
+	file += std::to_string(mesh->GetID()) + MESH_EXTENSION;
 	uint ret = App->fsystem->Save(file.c_str(), data, size);
 	RELEASE_ARRAY(data);
 

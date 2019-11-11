@@ -54,9 +54,47 @@ bool ModelImporter::CleanUp()
 	return false;
 }
 
-bool ModelImporter::Load(const char * exported_file)
+bool ModelImporter::Load(ResourceModel* resource)
 {
-	return false;
+	std::string path = resource->GetExportedFile();
+
+	std::ifstream i(path);
+	nlohmann::json j = nlohmann::json::parse(i);
+
+	for (nlohmann::json::iterator it = j.begin(); it != j.end(); ++it)
+	{
+		LoadNode(it, resource);
+	}
+
+	return true;
+}
+
+bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resource)
+{
+	ResourceModel::ModelNode node;
+
+	node.name = (*it)["name"].get<std::string>();
+
+	node.position.x = (*it)["position"][0];
+	node.position.y = (*it)["position"][1];
+	node.position.z = (*it)["position"][2];
+
+	node.scale.x = (*it)["scale"][0];
+	node.scale.y = (*it)["scale"][1];
+	node.scale.z = (*it)["scale"][2];
+
+	node.rotation.x = (*it)["rotation"][0];
+	node.rotation.y = (*it)["rotation"][1];
+	node.rotation.z = (*it)["rotation"][2];
+	node.rotation.w = (*it)["rotation"][3];
+
+	node.parent = (*it)["parent"];
+	node.texture = (*it)["texture"];
+	node.mesh = (*it)["mesh"];
+
+	resource->nodes.push_back(node);
+
+	return true;
 }
 
 
@@ -68,7 +106,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
 	{
 		std::vector<ResourceModel::ModelNode> nodes;
 		ImportNode(scene->mRootNode, scene, 0, nodes);
-		output_file = LIBRARY_MODEL_FOLDER + std::to_string(id) + ".spkmodel";
+		output_file = LIBRARY_MODEL_FOLDER + std::to_string(id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
 		aiReleaseImport(scene);
 		return true;
@@ -134,12 +172,13 @@ void ModelImporter::FixScaleUnits(float3 &scale)
 bool ModelImporter::Save(std::string file, std::vector<ResourceModel::ModelNode> nodes)
 {
 	nlohmann::json json;
+
 	for each (ResourceModel::ModelNode node in nodes)
 	{
 		nlohmann::json object;
-		object = {
+		object["nodes"] = {
 			{ "name", node.name},
-			{ "position", {node.position.x, node.position.y, node.position.z} },
+			{ "position", { node.position.x, node.position.y, node.position.z} },
 			{ "scale",{ node.scale.x, node.scale.y, node.scale.z } },
 			{ "rotation",{ node.rotation.x, node.rotation.y, node.rotation.z, node.rotation.w } },
 			{ "parent", node.parent },

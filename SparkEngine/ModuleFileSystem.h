@@ -32,6 +32,9 @@ public:
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) const;
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
+	bool HasExtension(const char* path, std::string extension);
+	void GetFilesFiltered(const char* directory, std::vector<std::string> & file_list, std::string filter);
+	void GetFilesOfExtension(const char* directory, std::vector<std::string> & file_list, std::string extension);
 
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) const;
