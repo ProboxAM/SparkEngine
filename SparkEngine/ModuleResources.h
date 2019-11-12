@@ -4,12 +4,6 @@
 #include "Module.h"
 #include "Resource.h"
 
-struct MetaInfo
-{
-	std::string original_file;
-	uint id;
-};
-
 class ModuleResources : public Module
 {
 public:
@@ -30,7 +24,7 @@ private:
 	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);
 	bool LoadResource(Resource* resource);
 	void LoadAssets();
-	void CreateMeta(std::string file, uint id);
+	uint GetIDFromMeta(std::string file);
 
 private:
 	uint last_id = 1;

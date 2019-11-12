@@ -20,6 +20,7 @@ public:
 
 	bool Load(ResourceTexture* resource);
 	ResourceTexture* LoadDefault();
+	bool CreateMeta(std::string file, uint id);
 
 	int version;
 private:

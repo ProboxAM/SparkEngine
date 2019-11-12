@@ -8,6 +8,9 @@
 
 #include "TextureImporter.h"
 
+#include <fstream>
+#include <iomanip>
+
 #pragma comment (lib,"DeviL/lib/DevIL.lib")
 #pragma comment (lib,"DeviL/lib/ILUT.lib")
 #pragma comment (lib,"DeviL/lib/ILU.lib")
@@ -109,6 +112,7 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 				std::string file_name = std::to_string(id);
 				output_file = LIBRARY_TEXTURES_FOLDER + file_name + TEXTURE_EXTENSION;
 				ret = App->fsystem->Save(output_file.c_str(), data, size);
+				CreateMeta(std::string(import_file), id);
 			}
 			RELEASE_ARRAY(data);
 		}
@@ -159,4 +163,18 @@ ResourceTexture* TextureImporter::LoadDefault()
 	}
 
 	return default_texture;
+}
+
+bool TextureImporter::CreateMeta(std::string file, uint id)
+{
+	nlohmann::json meta_file;
+	meta_file = {
+		{ "original_file", file },
+		{ "id", id }
+	};
+
+	std::ofstream o(file + ".meta");
+	o << std::setw(4) << meta_file << std::endl;
+
+	return true;
 }

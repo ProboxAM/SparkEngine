@@ -102,12 +102,15 @@ bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
 {
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 
+	//TODO CREATE META WITH ID OF EACH MESH FILE TO CHECK IF MESH ALRDY WAS IMPORTED AND REIMPORT WITHT THAT ID
+
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		std::vector<ResourceModel::ModelNode> nodes;
 		ImportNode(scene->mRootNode, scene, 0, nodes);
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
+		CreateMeta(std::string(file), id, nodes);
 		aiReleaseImport(scene);
 		return true;
 	}
@@ -169,7 +172,7 @@ void ModelImporter::FixScaleUnits(float3 &scale)
 }
 
 
-bool ModelImporter::Save(std::string file, std::vector<ResourceModel::ModelNode> nodes)
+bool ModelImporter::Save(std::string file, const std::vector<ResourceModel::ModelNode>& nodes)
 {
 	nlohmann::json json;
 
@@ -190,6 +193,28 @@ bool ModelImporter::Save(std::string file, std::vector<ResourceModel::ModelNode>
 
 	std::ofstream o(file);
 	o << std::setw(4) << json << std::endl;
+
+	return true;
+}
+
+bool ModelImporter::CreateMeta(std::string file, uint id, const std::vector<ResourceModel::ModelNode>& nodes)
+{
+	nlohmann::json meta_file;
+	meta_file = {
+		{ "original_file", file },
+		{ "id", id },
+		{ "meshes",{}}
+	};
+	nlohmann::json meshes = nlohmann::json::array();
+	for each (ResourceModel::ModelNode node in nodes)
+	{
+		meshes.push_back(node.mesh);
+	}
+	nlohmann::json::iterator it = meta_file.find("meshes");
+	(*it).push_back(meshes);
+
+	std::ofstream o(file + ".meta");
+	o << std::setw(4) << meta_file << std::endl;
 
 	return true;
 }

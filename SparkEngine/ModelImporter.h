@@ -20,7 +20,8 @@ public:
 
 	bool Import(const char* file, std::string& output_file, uint id);
 	bool Load(ResourceModel* resource);
-	bool Save(std::string file, std::vector<ResourceModel::ModelNode> nodes);
+	bool Save(std::string file, const std::vector<ResourceModel::ModelNode>& nodes);
+	bool CreateMeta(std::string file, uint id, const std::vector<ResourceModel::ModelNode>& nodes);
 
 private:
 	bool LoadNode(nlohmann::json::iterator it, ResourceModel* resource);

@@ -59,39 +59,40 @@ bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 {
 	std::string meta_file = new_file_in_assets;
 	meta_file.append(".meta");
-	
-	if (!App->fsystem->Exists(meta_file.c_str())) //no meta we import 
+	uint id;
+
+	if (App->fsystem->Exists(meta_file.c_str()))
 	{
-		std::string output_file;
-		uint id = ++last_id;
+		id = GetIDFromMeta(meta_file);
+		++last_id;
+	}
+	else
+		id = ++last_id;
 
-		bool import_success = false;
-		switch (type)
-		{
-		case Resource::R_TEXTURE:
-			import_success = App->importer->texture->Import(new_file_in_assets, output_file, id);
-			break;
-		case Resource::R_MODEL:
-			import_success = App->importer->model->Import(new_file_in_assets, output_file, id);
-			break;
-		case Resource::R_SCENE:
-			break;
-		case Resource::R_NONE:
-			break;
-		default:
-			break;
-		}
-
-		if (import_success)
-		{
-			Resource* resource = CreateResource(type, id);
-			CreateMeta(new_file_in_assets, resource->GetID());
-			resource->SetFile(new_file_in_assets);
-			resource->SetExportedFile(output_file);
-		}
+	bool import_success = false;
+	std::string output_file;
+	switch (type)
+	{
+	case Resource::R_TEXTURE:
+		import_success = App->importer->texture->Import(new_file_in_assets, output_file, id);
+		break;
+	case Resource::R_MODEL:
+		import_success = App->importer->model->Import(new_file_in_assets, output_file, id);
+		break;
+	case Resource::R_SCENE:
+		break;
+	case Resource::R_NONE:
+		break;
+	default:
+		break;
 	}
 
-
+	if (import_success)
+	{
+		Resource* resource = CreateResource(type, id);
+		resource->SetFile(new_file_in_assets);
+		resource->SetExportedFile(output_file);
+	}
 
 	return import_success;
 }
@@ -231,18 +232,10 @@ void ModuleResources::LoadAssets()
 	LOG("imported all assets");
 }
 
-void ModuleResources::CreateMeta(std::string file, uint id)
+uint ModuleResources::GetIDFromMeta(std::string file)
 {
-	MetaInfo meta;
-	meta.id = id;
-	meta.original_file = file;
+	std::ifstream i(file);
+	nlohmann::json j = nlohmann::json::parse(i);
 
-	nlohmann::json meta_file;
-	meta_file = {
-		{"original_file", meta.original_file},
-		{"id",meta.id}
-	};
-
-	std::ofstream o(file+".meta");
-	o << std::setw(4) << meta_file << std::endl;
+	return j["id"];
 }
