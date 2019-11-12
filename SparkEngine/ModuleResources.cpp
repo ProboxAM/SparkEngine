@@ -55,7 +55,7 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 	return true;
 }
 
-bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
+uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
 {
 	std::string meta_file = new_file_in_assets;
 	meta_file.append(".meta");
@@ -94,7 +94,7 @@ bool ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 		resource->SetExportedFile(output_file);
 	}
 
-	return import_success;
+	return id;
 }
 
 uint ModuleResources::GenerateNewUID()

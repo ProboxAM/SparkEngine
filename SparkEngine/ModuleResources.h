@@ -14,7 +14,7 @@ public:
 
 	uint Find(const char* file_in_assets) const;
 	bool ImportFileToAssets(const char* path);
-	bool ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type);
+	uint ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type);
 	uint GenerateNewUID();
 	Resource* Get(uint uid);
 	Resource* CreateResource(Resource::RESOURCE_TYPE type);

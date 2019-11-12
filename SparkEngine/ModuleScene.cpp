@@ -208,7 +208,7 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		if (node.texture > 0)
 		{
 			ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
-			c_text->AddTexture((ResourceTexture*)App->resources->Get(node.mesh));
+			c_text->AddTexture((ResourceTexture*)App->resources->Get(node.texture));
 		}
 
 		gameobjects.push_back(go);

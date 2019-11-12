@@ -13,6 +13,8 @@ public:
 	uint width, height, depth, bpp, mips;
 	int size;
 	std::string format;
+
+	void UnLoad();
 };
 
 
