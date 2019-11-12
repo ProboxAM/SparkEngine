@@ -1,9 +1,11 @@
 #include "Application.h"
 #include "ModuleImporter.h"
+#include "ModuleResources.h"
 
 #include "GameObject.h"
 #include "ResourceMesh.h"
 #include "ResourceTexture.h"
+#include "ResourceModel.h"
 
 #include "Component.h"
 #include "ComponentMesh.h"
@@ -16,7 +18,6 @@
 #include "ModuleImporter.h"
 
 #include "ModuleInput.h"
-
 #include "ModuleScene.h"
 
 #include "glew/glew.h"
@@ -64,6 +65,12 @@ update_status ModuleScene::UpdateScene(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		SaveScene();
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		ResourceModel* res = (ResourceModel*) App->resources->Get(8);
+		CreateGameObject(res, root);
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -165,6 +172,52 @@ GameObject * ModuleScene::CreateRootGameObject()
 	go->SetName("root");
 	gameobjects.push_back(go);
 	return go;
+}
+
+GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject* parent)
+{
+	std::vector<GameObject*> temp_go;
+	uint count = 0;
+
+	for each (ResourceModel::ModelNode node in resource->nodes)
+	{
+		GameObject* go = new GameObject();
+
+		if (count > 0)
+		{
+			go->transform->SetParent(temp_go[node.parent]->transform);
+			temp_go[node.parent]->transform->AddChild(go->transform);
+		}
+		else
+		{
+			go->transform->SetParent(parent->transform);
+			parent->transform->AddChild(go->transform);
+		}		
+
+		go->SetName(node.name);
+		go->transform->local_position = node.position;
+		go->transform->local_rotation = node.rotation;
+		go->transform->local_scale = node.scale;
+		go->transform->local_euler_rotation = node.rotation.ToEulerXYZ()*RADTODEG;
+
+		if (node.mesh > 0)
+		{
+			ComponentMesh* c_mesh = (ComponentMesh*)go->AddComponent(COMPONENT_TYPE::MESH);
+			c_mesh->AddMesh((ResourceMesh*)App->resources->Get(node.mesh));
+		}
+		if (node.texture > 0)
+		{
+			ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
+			c_text->AddTexture((ResourceTexture*)App->resources->Get(node.mesh));
+		}
+
+		gameobjects.push_back(go);
+		temp_go.push_back(go);
+		go->transform->UpdateTransformMatrix();
+		count++;
+	}
+
+	return temp_go[0];
 }
 
 void ModuleScene::GenerateGrid()

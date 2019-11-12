@@ -116,7 +116,7 @@ Resource * ModuleResources::Get(uint id)
 		ret->AddReference();
 	}
 
-	return nullptr;
+	return ret;
 }
 
 Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)

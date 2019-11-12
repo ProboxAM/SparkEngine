@@ -7,6 +7,7 @@
 #include <vector>
 
 class GameObject;
+class ResourceModel;
 enum PRIMITIVE_TYPE;
 
 #define GRID_SIZE 40
@@ -41,6 +42,7 @@ public:
 	);
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
+	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent);
 
 	std::vector<float3> grid_points;
 	uint grid_id;

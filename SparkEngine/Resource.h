@@ -28,6 +28,7 @@ public:
 	void AddReference();
 	void SetFile(std::string f);
 	void SetExportedFile(std::string f);
+	virtual void UnLoad() {}
 
 protected:
 	//virtual void Save(Config& config) const;

@@ -45,3 +45,20 @@ void ResourceMesh::PrepareBuffers()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+void ResourceMesh::UnLoad()
+{
+	delete[] vertices;
+	vertices = nullptr;
+
+	delete[] indices;
+	indices = nullptr;
+
+	delete[] normal;
+	normal = nullptr;
+
+	delete[] uv;
+	uv = nullptr;
+
+	glDeleteBuffers(BUFF_TOTAL, buffers);
+}

@@ -40,11 +40,8 @@ bool MeshImporter::CleanUp()
 
 bool MeshImporter::Load(ResourceMesh* resource)
 {
-	std::string path = LIBRARY_MESH_FOLDER;
-	path.append(resource->GetExportedFile());
-
 	char* buffer;
-	uint size = App->fsystem->Load(path.c_str(), &buffer);
+	uint size = App->fsystem->Load(resource->GetExportedFile(), &buffer);
 
 	char* cursor = buffer;
 	// amount of indices / vertices / colors / normals / texture_coords
@@ -155,6 +152,7 @@ uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh, uint id)
 
 	LOG("New mesh with %d vertices", resource->total_vertices);
 	SaveMesh(resource);
+	resource->UnLoad();
 
 	return resource->GetID();
 }
@@ -204,6 +202,8 @@ bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 	file += std::to_string(mesh->GetID()) + MESH_EXTENSION;
 	uint ret = App->fsystem->Save(file.c_str(), data, size);
 	RELEASE_ARRAY(data);
+
+	mesh->SetExportedFile(file);
 
 	return true;
 }

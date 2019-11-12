@@ -102,11 +102,10 @@ bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
 {
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 
-	//TODO CREATE META WITH ID OF EACH MESH FILE TO CHECK IF MESH ALRDY WAS IMPORTED AND REIMPORT WITHT THAT ID
 	std::vector<uint> meshes_id;
 	std::string meta_file = file;
 	meta_file += ".meta";
-	if (App->fsystem->Exists(meta_file.c_str()))
+	if (App->fsystem->Exists(meta_file.c_str())) //Read meta to get meshes ids
 		GetMeshesID(meta_file, meshes_id);
 
 	if (scene != nullptr && scene->HasMeshes())
@@ -166,7 +165,12 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		{
 			aiString texture_path;
 			scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
-			resource_node.texture = App->resources->ImportFile(texture_path.C_Str(), Resource::RESOURCE_TYPE::R_TEXTURE);
+			if (texture_path.length > 0)
+			{
+				std::string assets_path = ASSETS_FOLDER;
+				assets_path.append(texture_path.C_Str());
+				resource_node.texture = App->resources->ImportFile(assets_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
+			}
 		}
 	}
 	nodes.push_back(resource_node);
@@ -196,7 +200,7 @@ bool ModelImporter::Save(std::string file, const std::vector<ResourceModel::Mode
 	for each (ResourceModel::ModelNode node in nodes)
 	{
 		nlohmann::json object;
-		object["nodes"] = {
+		object = {
 			{ "name", node.name},
 			{ "position", { node.position.x, node.position.y, node.position.z} },
 			{ "scale",{ node.scale.x, node.scale.y, node.scale.z } },

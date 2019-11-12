@@ -42,8 +42,10 @@ void Resource::AddReference()
 
 void Resource::SetFile(std::string f)
 {
+	file = f;
 }
 
 void Resource::SetExportedFile(std::string f)
 {
+	exported_file = f;
 }
