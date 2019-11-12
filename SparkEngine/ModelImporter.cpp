@@ -103,11 +103,16 @@ bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
 	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	//TODO CREATE META WITH ID OF EACH MESH FILE TO CHECK IF MESH ALRDY WAS IMPORTED AND REIMPORT WITHT THAT ID
+	std::vector<uint> meshes_id;
+	std::string meta_file = file;
+	meta_file += ".meta";
+	if (App->fsystem->Exists(meta_file.c_str()))
+		GetMeshesID(meta_file, meshes_id);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		std::vector<ResourceModel::ModelNode> nodes;
-		ImportNode(scene->mRootNode, scene, 0, nodes);
+		ImportNode(scene->mRootNode, scene, 0, nodes, meshes_id);
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
 		CreateMeta(std::string(file), id, nodes);
@@ -119,7 +124,19 @@ bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
 	return false;
 }
 
-void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes)
+void ModelImporter::GetMeshesID(std::string file, std::vector<uint>& meshes_id)
+{
+	std::ifstream i(file);
+	nlohmann::json json = nlohmann::json::parse(i);
+
+	nlohmann::json meshes = json.find("meshes").value();
+	for (nlohmann::json::iterator it = meshes.begin(); it != meshes.end(); ++it)
+	{
+		meshes_id.push_back(it.value());
+	}
+}
+
+void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, std::vector<uint> meshes_id)
 {
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
@@ -143,7 +160,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	if (node->mNumMeshes > 0)
 	{
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now, sry
-		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh);
+		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meshes_id.size() > 0 ? meshes_id[index] : 0);
 
 		if (current_mesh->mMaterialIndex >= 0) //Check for material, and then load texture if it has, otherwise apply default texture
 		{
@@ -158,7 +175,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	{
 		for (int i = 0; i < node->mNumChildren; i++)
 		{
-			ImportNode(node->mChildren[i], scene, index, nodes);
+			ImportNode(node->mChildren[i], scene, index, nodes, meshes_id);
 		}
 	}
 }
@@ -205,13 +222,11 @@ bool ModelImporter::CreateMeta(std::string file, uint id, const std::vector<Reso
 		{ "id", id },
 		{ "meshes",{}}
 	};
-	nlohmann::json meshes = nlohmann::json::array();
+	nlohmann::json::iterator meshes = meta_file.find("meshes");
 	for each (ResourceModel::ModelNode node in nodes)
 	{
-		meshes.push_back(node.mesh);
+		meshes.value().push_back(node.mesh);
 	}
-	nlohmann::json::iterator it = meta_file.find("meshes");
-	(*it).push_back(meshes);
 
 	std::ofstream o(file + ".meta");
 	o << std::setw(4) << meta_file << std::endl;

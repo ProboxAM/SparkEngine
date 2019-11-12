@@ -24,7 +24,7 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	uint Import(const aiScene* scene, const aiMesh* mesh);
+	uint Import(const aiScene* scene, const aiMesh* mesh, uint id);
 	bool SaveMesh(ResourceMesh* mesh);
 
 	bool Load(ResourceMesh* resources);

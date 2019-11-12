@@ -92,9 +92,13 @@ bool MeshImporter::Load(ResourceMesh* resource)
 	return resource;
 }
 
-uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh)
+uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh, uint id)
 {
-	ResourceMesh* resource = (ResourceMesh*) App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	ResourceMesh* resource;
+	if(id > 0)
+		resource = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, id);
+	else
+		resource = (ResourceMesh*) App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
 
 	//Load vertices
 	resource->total_vertices = mesh->mNumVertices;
