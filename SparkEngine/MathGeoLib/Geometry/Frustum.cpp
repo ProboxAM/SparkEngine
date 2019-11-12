@@ -601,6 +601,31 @@ Polyhedron Frustum::ToPolyhedron() const
 	return p;
 }
 
+bool Frustum::ContainsOrIntersectsAABB(AABB aabb)
+{
+	math::float3 corners[8];
+	aabb.GetCornerPoints(corners);
+
+	for (int i = 0; i < 6; ++i)
+	{
+		int points_inside_this_plane = 8;
+
+		for (int j = 0; j < 8; ++j)
+		{
+			if (GetPlane(i).IsOnPositiveSide(corners[j])) {
+				--points_inside_this_plane;
+			}
+		}
+
+		//if not a single of the points of the object is in the right side of one of the planes we are out.
+		if (points_inside_this_plane == 0)
+			return false;
+	}
+
+	//if one or more points are in the right side of every plane, the object is intersecting or totally inside the frustum.
+	return true;
+}
+
 bool Frustum::Intersects(const Ray &ray) const
 {
 	///@todo This is a naive test. Implement a faster version.

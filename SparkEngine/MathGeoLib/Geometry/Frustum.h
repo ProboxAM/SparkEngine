@@ -21,6 +21,7 @@
 #include "../Math/float2.h"
 #include "../Math/float3.h"
 #include "Ray.h"
+#include "../../Globals.h"
 
 #ifdef MATH_TINYXML_INTEROP
 #include "Config/tinyxml/tinyxml.h"
@@ -362,6 +363,8 @@ public:
 		Polyhedron represents exactly the same set of points than this Frustum.
 		@see MinimalEnclosingAABB(), MinimalEnclosingOBB(). */
 	Polyhedron ToPolyhedron() const;
+
+	bool ContainsOrIntersectsAABB(AABB bbox);
 
 	/// Tests if the given object is fully contained inside this Frustum.
 	/** This function returns true if the given object lies inside this Frustum, and false otherwise.

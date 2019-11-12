@@ -5,6 +5,7 @@
 #include "ResourceMesh.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 
 #include "glew\glew.h"
 
@@ -23,7 +24,7 @@ void ComponentMesh::Update(float dt)
 {
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
-	if (mesh)
+	if (mesh && App->renderer3D->c_camera->frustum.ContainsOrIntersectsAABB(gameobject->global_aabb))
 		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr , transform);
 
 	if (debug_vertex_normal)
