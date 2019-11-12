@@ -38,7 +38,7 @@ void ComponentTexture::SetDebugMode()
 
 std::string ComponentTexture::GetTexturePath()
 {
-	return " ";
+	return this->tex->GetFile();
 }
 std::string ComponentTexture::GetTextureFormat()
 {
