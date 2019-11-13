@@ -81,7 +81,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	mouse_position = { ((float)App->input->GetMouseX() - (screen_position.x + (ps->GetScreenWidth()/2))), ((float)App->input->GetMouseY() - (screen_position.y + (ps->image_h/2)))};
 
-	normalized_mouse_position = { mouse_position.x / ps->GetScreenWidth()*2, mouse_position.y / ps->image_h*2 };
+	normalized_mouse_position = { mouse_position.x / ps->image_w*2, mouse_position.y / ps->image_h*2 };
 
 	LOG("x: %f, y: %f", normalized_mouse_position.x, normalized_mouse_position.y);
 
