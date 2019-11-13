@@ -27,6 +27,7 @@ public:
 	uint GetTextureDepth();
 
 	bool Save(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json comp);
 
 private:
 	ResourceTexture * tex = nullptr;

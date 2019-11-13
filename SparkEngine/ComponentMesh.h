@@ -27,6 +27,7 @@ public:
 	AABB GetAABB();
 
 	bool Save(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json comp);
 
 private:
 	ResourceMesh* mesh = nullptr;

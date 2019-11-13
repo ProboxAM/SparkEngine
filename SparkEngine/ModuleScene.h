@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
-#include <vector>
+
 
 class GameObject;
 class ResourceModel;
@@ -18,7 +18,8 @@ class ModuleScene :
 public:
 	GameObject * root = nullptr;
 	GameObject* selected_gameobject = nullptr;
-	std::vector<GameObject*> gameobjects;
+	std::map<uint,GameObject*> gameobjects;
+
 public:
 	ModuleScene(bool start_enabled = true);
 	~ModuleScene();
@@ -32,6 +33,7 @@ public:
 	bool Save(nlohmann::json &it);
 
 	bool SaveScene();
+	bool LoadScene();
 
 	GameObject* CreateGameObject(
 		GameObject* parent = nullptr, 
@@ -40,9 +42,12 @@ public:
 		Quat rotation = Quat::identity,
 		float3 scale = {1.0f, 1.0f, 1.0f}	
 	);
+
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
+	GameObject* CreateRootGameObject(uint id);
 	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent);
+	GameObject* CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id);
 
 	std::vector<float3> grid_points;
 	uint grid_id;

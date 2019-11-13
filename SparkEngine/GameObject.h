@@ -18,11 +18,12 @@ private:
 	std::string tag = "Untagged";
 	std::string layer = "Default";
 	bool active = true;
-	uint id = -1;
+	uint id = 0;
 	bool is_static = false;
 	std::vector<Component*> components;
 public:
 	GameObject();
+	GameObject(uint id);
 	~GameObject();
 
 	void Update(float dt);

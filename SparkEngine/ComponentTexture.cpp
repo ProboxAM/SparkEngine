@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleImporter.h"
+#include "ModuleResources.h"
 #include "ResourceTexture.h"
 #include "Importer.h"
 #include "TextureImporter.h"
@@ -83,10 +84,19 @@ bool ComponentTexture::Save(const nlohmann::json::iterator & it)
 		{"debug_tex", debug_texture},
 		{"resource", tex->GetID()},
 		{"type",type},
-		{"texture", GetTexturePath() }
 	};
 
 	it.value().push_back(object);
+
+	return true;
+}
+
+bool ComponentTexture::Load(const nlohmann::json comp)
+{
+	active = comp["active"];
+	type = comp["type"];
+	tex = (ResourceTexture*)App->resources->Get(comp["resource"]);
+	debug_texture = comp["debug_tex"];
 
 	return true;
 }

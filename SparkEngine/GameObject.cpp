@@ -142,7 +142,7 @@ bool GameObject::Save(const nlohmann::json::iterator& it)
 	LOG("Saving gameobject: %s", name.c_str());
 	nlohmann::json object = {
 		{"id", id},
-		{"parent_id", transform->GetParent()? transform->GetParent()->gameobject->GetId() : -1},
+		{"parent", transform->GetParent()? transform->GetParent()->gameobject->GetId() : 0},
 		{"name", name},
 		{"components", nlohmann::json::array()},
 		{"layer", layer},
@@ -188,6 +188,12 @@ GameObject::GameObject()
 {
 	this->transform = (ComponentTransform*)AddComponent(COMPONENT_TYPE::TRANSFORM);
 	id = App->GenerateRandomNumber();
+}
+
+GameObject::GameObject(uint id)
+{
+	this->transform = (ComponentTransform*)AddComponent(COMPONENT_TYPE::TRANSFORM);
+	this->id = id;
 }
 
 

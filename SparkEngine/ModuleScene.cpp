@@ -65,6 +65,8 @@ update_status ModuleScene::UpdateScene(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		SaveScene();
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		LoadScene();
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
@@ -113,7 +115,59 @@ bool ModuleScene::SaveScene()
 	return true;
 }
 
-GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name, float3 position, Quat rotation, float3 scale)
+bool ModuleScene::LoadScene()
+{
+	LOG("Loading scene...");
+	std::ifstream i(ASSETS_FOLDER"Scene.scene");
+	nlohmann::json j = nlohmann::json::parse(i);
+
+	nlohmann::json game_objects = j.find("GameObjects").value();
+	for (nlohmann::json::iterator it = game_objects.begin(); it != game_objects.end(); ++it)
+	{
+		nlohmann::json object = it.value();
+		std::string name = object["name"];
+		uint parent_id = object["parent"];
+		uint id = object["id"];
+
+		if (parent_id != 0)
+		{
+			float3 position, scale;
+			Quat rotation;
+			
+			//TODO: clean this
+			position = float3(object["components"][COMPONENT_TYPE::TRANSFORM]["position"][0], object["components"][COMPONENT_TYPE::TRANSFORM]["position"][1],
+				object["components"][COMPONENT_TYPE::TRANSFORM]["position"][2]);
+			rotation = Quat(object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][0], object["components"][0]["rotation"][1],
+				object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][2], object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][3]);
+			scale = float3(object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][0], object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][1],
+				object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][2]);
+
+			GameObject* parent_go = gameobjects.find(parent_id)->second;
+			GameObject* go = CreateGameObject(parent_go, name, position, rotation, scale, id);
+
+			for (nlohmann::json::iterator components_it = object["components"].begin(); components_it != object["components"].end(); ++components_it)
+			{
+				nlohmann::json component = components_it.value();
+
+				if (component["type"] == COMPONENT_TYPE::TRANSFORM)
+					continue;
+
+				Component* comp = go->AddComponent(component["type"]);
+				comp->Load(component);
+			}
+		}
+		else
+		{
+			root = CreateRootGameObject(id);
+		}
+
+		LOG("Created GameObject %s", name);
+	}
+
+	return true;
+}
+
+GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale)
 {
 	if (!parent)
 		parent = root;
@@ -125,9 +179,31 @@ GameObject * ModuleScene::CreateGameObject(GameObject * parent, std::string name
 	go->transform->local_position = position;
 	go->transform->local_rotation = rotation;
 	go->transform->local_scale = scale;
-	go->transform->local_euler_rotation = rotation.ToEulerXYZ()*RADTODEG;
-	gameobjects.push_back(go);
+	go->transform->local_euler_rotation = rotation.ToEulerXYZ() * RADTODEG;
+
+	gameobjects.emplace(go->GetId(), go);
 	go->transform->UpdateTransformMatrix();
+
+	return go;
+}
+
+GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id)
+{
+	if (!parent)
+		parent = root;
+
+	GameObject* go = new GameObject(id);
+	go->transform->SetParent(parent->transform);
+	parent->transform->AddChild(go->transform);
+	go->SetName(name);
+	go->transform->local_position = position;
+	go->transform->local_rotation = rotation;
+	go->transform->local_scale = scale;
+	go->transform->local_euler_rotation = rotation.ToEulerXYZ() * RADTODEG;
+
+	gameobjects.emplace(go->GetId(), go);
+	go->transform->UpdateTransformMatrix();
+
 	return go;
 }
 
@@ -170,7 +246,16 @@ GameObject * ModuleScene::CreateRootGameObject()
 {
 	GameObject* go = new GameObject();
 	go->SetName("root");
-	gameobjects.push_back(go);
+	gameobjects.emplace(go->GetId(), go);
+	return go;
+}
+
+GameObject * ModuleScene::CreateRootGameObject(uint id)
+{
+	GameObject* go = new GameObject(id);
+	go->SetName("root");
+	gameobjects.emplace(go->GetId(), go);
+
 	return go;
 }
 
@@ -211,7 +296,7 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 			c_text->AddTexture((ResourceTexture*)App->resources->Get(node.texture));
 		}
 
-		gameobjects.push_back(go);
+		gameobjects.emplace(go->GetId(),go);
 		temp_go.push_back(go);
 		go->transform->UpdateTransformMatrix();
 		count++;

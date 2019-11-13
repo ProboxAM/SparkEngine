@@ -21,6 +21,7 @@ public:
 	virtual void Update(float dt);
 	virtual void Disable() { active = false; }
 	virtual bool Save(const nlohmann::json::iterator& it) { return true; }
+	virtual bool Load(const nlohmann::json comp) { return true; }
 };
 
 #endif // !_COMPONENT_H_
