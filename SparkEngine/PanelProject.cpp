@@ -1,12 +1,13 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ModuleEditor.h"
+#include "ModuleScene.h"
 #include "ModuleImporter.h"
 #include "ModuleResources.h"
 #include "TextureImporter.h"
 #include "ResourceTexture.h"
 
 #include "PanelProject.h"
-
 
 
 PanelProject::PanelProject(bool active): Panel(active)
@@ -39,7 +40,6 @@ void PanelProject::DrawFiles()
 	ImVec2 pos = ImGui::GetCursorPos();
 
 	std::vector<std::string> files;
-	std::vector<std::string> folders;
 	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
 
 	int line = 0;
@@ -51,7 +51,15 @@ void PanelProject::DrawFiles()
 		ImGui::SetCursorPosX(pos.x + (i - (line * columns)) * (image_size + spacing) + offset);
 		ImGui::SetCursorPosY(pos.y + line * (image_size + spacing) + offset);
 
-		ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id, ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id,
+			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+		{
+			uint id = (uint)App->resources->GetID(ASSETS_FOLDER + files[i]);
+			ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &id, sizeof(uint));
+			ImGui::EndDragDropSource();
+		}
 
 		ImGui::SetCursorPosX(pos.x + (i - (line * columns)) * (image_size + spacing) + offset);
 		ImGui::SetCursorPosY(pos.y + line * (image_size + spacing) + image_size + offset + offset);

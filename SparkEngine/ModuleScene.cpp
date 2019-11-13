@@ -70,8 +70,8 @@ update_status ModuleScene::UpdateScene(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		ResourceModel* res = (ResourceModel*) App->resources->Get(8);
-		CreateGameObject(res, root);
+		ResourceModel* res = (ResourceModel*) App->resources->Get(11);
+		CreateGameObject(res);
 	}
 
 	return UPDATE_CONTINUE;
@@ -269,6 +269,8 @@ GameObject * ModuleScene::CreateRootGameObject(uint id)
 
 GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject* parent)
 {
+	if (parent == nullptr)
+		parent = root;
 	std::vector<GameObject*> temp_go;
 	uint count = 0;
 
@@ -297,12 +299,14 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		{
 			ComponentMesh* c_mesh = (ComponentMesh*)go->AddComponent(COMPONENT_TYPE::MESH);
 			c_mesh->AddMesh((ResourceMesh*)App->resources->Get(node.mesh));
-		}
-		if (node.texture > 0)
-		{
+
 			ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
-			c_text->AddTexture((ResourceTexture*)App->resources->Get(node.texture));
+			if (node.texture > 0)
+				c_text->AddTexture((ResourceTexture*)App->resources->Get(node.texture));
+			else
+				c_text->AddTexture((ResourceTexture*)App->resources->Get(App->importer->texture->checkers));
 		}
+
 
 		gameobjects.emplace(go->GetId(),go);
 		temp_go.push_back(go);

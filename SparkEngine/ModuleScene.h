@@ -46,7 +46,7 @@ public:
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
 	GameObject* CreateRootGameObject(uint id);
-	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent);
+	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent = nullptr);
 	GameObject* CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id);
 
 	std::vector<float3> grid_points;

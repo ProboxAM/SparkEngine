@@ -120,6 +120,15 @@ Resource * ModuleResources::Get(uint id)
 	return ret;
 }
 
+uint ModuleResources::GetID(std::string file)
+{
+	for (std::map<uint, Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
+		if (it->second->GetFile() == file)
+			return it->first;
+
+	return 0;
+}
+
 Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
 {
 	Resource* r = nullptr;

@@ -235,7 +235,6 @@ void Application::LoadSettings()
 
 uint Application::GenerateRandomNumber()
 {
-	std::uniform_int_distribution<uint> uniform_dist;
-	uint n = uniform_dist(random);
+	uint n = random();
 	return n;
 }

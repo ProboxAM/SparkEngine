@@ -17,6 +17,7 @@ public:
 	uint ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type);
 	uint GenerateNewUID();
 	Resource* Get(uint uid);
+	uint GetID(std::string file);
 	Resource* CreateResource(Resource::RESOURCE_TYPE type);
 	Resource* CreateResource(Resource::RESOURCE_TYPE type, uint id);
 

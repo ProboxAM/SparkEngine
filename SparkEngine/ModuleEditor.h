@@ -7,6 +7,7 @@
 
 class Panel;
 enum KEY_STATE;
+class ImRect;
 
 enum Panel_Type {
 	CONFIG,
@@ -35,6 +36,7 @@ public:
 	void LogDebug(const char* text);
 	void LogFrame(float fps, float ms);
 	bool IsInsideSceneWindow(float2 pos);
+	ImRect GetSceneRect();
 
 private:
 	std::vector<Panel*> panels;

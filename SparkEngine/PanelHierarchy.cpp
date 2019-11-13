@@ -4,8 +4,6 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 
-#include "ImGui/imgui_internal.h"
-
 PanelHierarchy::PanelHierarchy(bool a) : Panel(a)
 {
 

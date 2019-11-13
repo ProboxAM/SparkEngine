@@ -2,6 +2,7 @@
 #define _PANEL_H_
 
 #include "ImGui/imgui.h"
+#include "ImGui/imgui_internal.h"
 
 class Panel
 {
@@ -23,6 +24,10 @@ public:
 
 	bool IsActive() {
 		return active;
+	}
+
+	virtual ImRect GetRect() {
+		return ImRect( 0,0,0,0 );
 	}
 
 	virtual void Draw() {};

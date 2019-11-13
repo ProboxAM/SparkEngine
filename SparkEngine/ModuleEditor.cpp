@@ -17,6 +17,7 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_stdlib.h"
+#include "ImGui/imgui_internal.h"
 
 
 
@@ -182,6 +183,10 @@ bool ModuleEditor::IsInsideSceneWindow(float2 pos)
 	return ((PanelScene*)panels[SCENE])->IsInside(pos);
 }
 
+ImRect ModuleEditor::GetSceneRect()
+{
+	return panels[SCENE]->GetRect();
+}
 
 void ModuleEditor::BeginDockSpace()
 {
