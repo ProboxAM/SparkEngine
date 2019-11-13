@@ -24,7 +24,6 @@ void PanelScene::Draw()
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight();
 	screen_pos = ImGui::GetCursorScreenPos();
-	int image_w, image_h;
 	GetSizeWithAspectRatio(App->window->GetWindowWidth(), App->window->GetWindowHeight(), w, h, image_w, image_h);
 	ImGui::GetWindowDrawList()->AddImage(
 		(void *)App->renderer3D->scene_texture_id,
