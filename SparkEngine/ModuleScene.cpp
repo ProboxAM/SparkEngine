@@ -61,7 +61,6 @@ update_status ModuleScene::UpdateScene(float dt)
 		DrawGrid();
 
 	root->Update(dt);
-	App->renderer3D->DebugDrawLines(lines);
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		SaveScene();
@@ -171,8 +170,6 @@ GameObject * ModuleScene::CreateRootGameObject()
 void ModuleScene::OnMousePicking(const LineSegment &line)
 {
 	//TODO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	lines.push_back(line.a);
-	lines.push_back(line.b);
 	std::vector<GameObject*> candidates;
 	for (int i = 0; i < gameobjects.size(); i++) {
 		if (gameobjects[i]->HasComponent(COMPONENT_TYPE::MESH)) {
