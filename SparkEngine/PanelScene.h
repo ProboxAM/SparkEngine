@@ -13,6 +13,11 @@ public:
 	void Start();
 	bool IsInside(const float2& pos) const;
 
+	void GetScreenPos(float &x, float &y) {
+		x = screen_pos.x;
+		y = screen_pos.y;
+	}
+
 private:
 	void GetSizeWithAspectRatio(int current_width, int current_height, int wanted_width, int wanted_height, int& new_width, int& new_height);
 

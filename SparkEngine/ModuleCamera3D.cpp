@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "PanelScene.h"
 #include "ModuleCamera3D.h"
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
@@ -73,6 +74,18 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
+	float2 mouse_position, normalized_mouse_position, screen_position;
+
+	mouse_position = { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() };
+
+	PanelScene* ps = (PanelScene*)App->editor->GetPanels()[SCENE];
+	ps->GetScreenPos(screen_position.x, screen_position.y);
+	normalized_mouse_position = { mouse_position.x - screen_position.x, mouse_position.y - screen_position.y };
+
+	LOG("x: %f, y: %f", normalized_mouse_position.x, normalized_mouse_position.y);
+
+	LineSegment picking = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, normalized_mouse_position.y);
+
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 	new_position = { 0, 0, 0 };

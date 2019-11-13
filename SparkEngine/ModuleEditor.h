@@ -34,6 +34,9 @@ public:
 	void LogDebug(const char* text);
 	void LogFrame(float fps, float ms);
 	bool IsInsideSceneWindow(float2 pos);
+	std::vector<Panel*> GetPanels() {
+		return panels;
+	}
 
 private:
 	std::vector<Panel*> panels;
