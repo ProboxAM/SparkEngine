@@ -15,6 +15,7 @@ public:
 	~ModuleImporter();
 
 	bool Init(const nlohmann::json::iterator& it);
+	bool Start();
 	bool CleanUp();
 	void ImportFile(const char* path);
 

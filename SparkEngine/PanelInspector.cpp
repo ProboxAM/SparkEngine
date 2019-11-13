@@ -95,7 +95,7 @@ void PanelInspector::Draw()
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("With: " + std::to_string(c_texture->GetTextureWidth()) + " |").c_str());
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Height: " + std::to_string(c_texture->GetTextureHeight())).c_str());
-					ImGui::TextColored({ 255, 255, 0, 255 }, ("Path: " + c_texture->GetTexturePath()).c_str());
+					ImGui::TextColored({ 255, 255, 0, 255 }, ("File: " + c_texture->GetTexturePath()).c_str());
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Size: " + std::to_string(c_texture->GetTextureSize()) + "b |").c_str());
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Depth: " + std::to_string(c_texture->GetTextureDepth())).c_str());

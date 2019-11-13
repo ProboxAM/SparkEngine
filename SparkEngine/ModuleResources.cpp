@@ -152,6 +152,7 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
 Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 {
 	Resource* r = nullptr;
+	++last_id;
 
 	switch (type)
 	{

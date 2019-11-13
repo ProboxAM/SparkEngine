@@ -10,6 +10,7 @@ public:
 	~Importer() {}
 
 	virtual bool Init() { return true; }
+	virtual bool Start() { return true; }
 	virtual bool CleanUp() { return true; }
 
 	virtual bool Import(const char* file) { return true; }

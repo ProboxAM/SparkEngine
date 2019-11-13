@@ -33,6 +33,41 @@ bool MeshImporter::Init()
 	return true;
 }
 
+bool MeshImporter::Start()
+{
+	ResourceMesh* mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	LoadPrimitive(PRIMITIVE_TYPE::P_CUBE, mesh);
+	mesh->AddReference();
+	mesh->SetFile("Cube");
+	cube = mesh->GetID();
+
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	LoadPrimitive(PRIMITIVE_TYPE::P_SPHERE, mesh);
+	mesh->AddReference();
+	mesh->SetFile("Sphere");
+	sphere = mesh->GetID();
+
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	LoadPrimitive(PRIMITIVE_TYPE::P_CYLINDER, mesh);
+	mesh->AddReference();
+	mesh->SetFile("Cylinder");
+	cylinder = mesh->GetID();
+
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	LoadPrimitive(PRIMITIVE_TYPE::P_CONE, mesh);
+	mesh->AddReference();
+	mesh->SetFile("Cone");
+	cone = mesh->GetID();
+
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	LoadPrimitive(PRIMITIVE_TYPE::P_PLANE, mesh);
+	mesh->AddReference();
+	mesh->SetFile("Plane");
+	plane = mesh->GetID();
+
+	return true;
+}
+
 bool MeshImporter::CleanUp()
 {
 	return true;
@@ -209,9 +244,8 @@ bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 }
 
 
-ResourceMesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
+ResourceMesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type, ResourceMesh* mesh)
 {
-	ResourceMesh* new_mesh = new ResourceMesh(90);
 	par_shapes_mesh* primitive_mesh = nullptr;
 
 	switch (type)
@@ -236,27 +270,27 @@ ResourceMesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 	}
 
 	//Load vertices
-	new_mesh->total_vertices = primitive_mesh->npoints;
-	new_mesh->vertices = new float3[new_mesh->total_vertices];
-	memcpy(new_mesh->vertices, primitive_mesh->points, sizeof(float3) * new_mesh->total_vertices);
+	mesh->total_vertices = primitive_mesh->npoints;
+	mesh->vertices = new float3[mesh->total_vertices];
+	memcpy(mesh->vertices, primitive_mesh->points, sizeof(float3) * mesh->total_vertices);
 
 	//Load uv
 	if (primitive_mesh->tcoords)
 	{
-		new_mesh->total_uv = primitive_mesh->npoints;
-		new_mesh->uv = new float2[new_mesh->total_uv];
-		memcpy(new_mesh->uv, primitive_mesh->tcoords, sizeof(float2) * new_mesh->total_uv);
+		mesh->total_uv = primitive_mesh->npoints;
+		mesh->uv = new float2[mesh->total_uv];
+		memcpy(mesh->uv, primitive_mesh->tcoords, sizeof(float2) * mesh->total_uv);
 	}
 	if (primitive_mesh->normals)
 	{
-		new_mesh->total_normal = primitive_mesh->npoints;
-		new_mesh->normal = new float3[new_mesh->total_normal];
-		memcpy(new_mesh->normal, primitive_mesh->normals, sizeof(float3) * new_mesh->total_normal);
+		mesh->total_normal = primitive_mesh->npoints;
+		mesh->normal = new float3[mesh->total_normal];
+		memcpy(mesh->normal, primitive_mesh->normals, sizeof(float3) * mesh->total_normal);
 	}	
 
-	new_mesh->total_indices = primitive_mesh->ntriangles * 3;
-	new_mesh->indices = new uint[new_mesh->total_indices];
-	memcpy(new_mesh->indices, primitive_mesh->triangles, sizeof(uint) * new_mesh->total_indices);
+	mesh->total_indices = primitive_mesh->ntriangles * 3;
+	mesh->indices = new uint[mesh->total_indices];
+	memcpy(mesh->indices, primitive_mesh->triangles, sizeof(uint) * mesh->total_indices);
 
 	//DEBUG	
 	/*for (int i = 0; i < primitive_mesh->ntriangles * 3;)
@@ -284,7 +318,7 @@ ResourceMesh* MeshImporter::LoadPrimitive(PRIMITIVE_TYPE type)
 	}*/
 
 	par_shapes_free_mesh(primitive_mesh);
-	new_mesh->PrepareBuffers();
+	mesh->PrepareBuffers();
 
-	return new_mesh;
+	return mesh;
 }

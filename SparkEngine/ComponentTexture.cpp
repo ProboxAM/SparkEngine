@@ -22,7 +22,7 @@ ComponentTexture::~ComponentTexture()
 ResourceTexture* ComponentTexture::GetTexture()
 {
 	if(debug_texture)
-		return App->importer->texture->LoadDefault();
+		return (ResourceTexture*) App->resources->Get(App->importer->texture->checkers);
 	else
 		return tex;
 }

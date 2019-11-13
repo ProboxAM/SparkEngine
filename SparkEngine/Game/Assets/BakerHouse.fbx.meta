@@ -1,9 +1,9 @@
 {
-    "id": 2,
+    "id": 11,
     "meshes": [
         0,
-        3,
-        5
+        12,
+        15
     ],
-    "original_file": "Assets/BakerHouse.fbx"
+    "original_file": "Assets/bakerhouse.fbx"
 }

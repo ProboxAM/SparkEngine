@@ -1012,7 +1012,7 @@ par_shapes_mesh* par_shapes_create_tetrahedron()
 
 par_shapes_mesh* par_shapes_create_cube()
 {
-    static float verts[8 * 3] = {
+    /*static float verts[8 * 3] = { // OLD CODE
         0, 0, 0, // 0
         0, 1, 0, // 1
         1, 1, 0, // 2
@@ -1047,7 +1047,38 @@ par_shapes_mesh* par_shapes_create_cube()
         *tris++ = quad[2];
         *tris++ = quad[3];
         *tris++ = quad[0];
-    }
+    }*/
+
+	par_shapes_mesh* mesh = par_shapes_create_plane(10, 10);
+	par_shapes_mesh* top = par_shapes_create_plane(10, 10);
+	par_shapes_mesh* bottom = par_shapes_create_plane(10, 10);
+	par_shapes_mesh* back = par_shapes_create_plane(10, 10);
+	par_shapes_mesh* left = par_shapes_create_plane(10, 10);
+	par_shapes_mesh* right = par_shapes_create_plane(10, 10);
+
+	par_shapes_translate(mesh, -0.5f, -0.5f, 0.5f);
+
+	par_shapes_rotate(top, -float(PAR_PI*0.5), (float*)&float3::unitX);
+	par_shapes_translate(top, -0.5f, 0.5f, 0.5f);
+
+	par_shapes_rotate(bottom, float(PAR_PI*0.5), (float*)&float3::unitX);
+	par_shapes_translate(bottom, -0.5f, -0.5f, -0.5f);
+
+	par_shapes_rotate(back, float(PAR_PI), (float*)&float3::unitX);
+	par_shapes_translate(back, -0.5f, 0.5f, -0.5f);
+
+	par_shapes_rotate(left, float(-PAR_PI * 0.5), (float*)&float3::unitY);
+	par_shapes_translate(left, -0.5f, -0.5f, -0.5f);
+
+	par_shapes_rotate(right, float(PAR_PI*0.5), (float*)&float3::unitY);
+	par_shapes_translate(right, 0.5f, -0.5f, 0.5f);
+
+	par_shapes_merge_and_free(mesh, top);
+	par_shapes_merge_and_free(mesh, bottom);
+	par_shapes_merge_and_free(mesh, back);
+	par_shapes_merge_and_free(mesh, left);
+	par_shapes_merge_and_free(mesh, right);
+
     return mesh;
 }
 

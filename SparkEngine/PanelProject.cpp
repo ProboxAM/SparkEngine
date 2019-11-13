@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
 #include "ModuleImporter.h"
+#include "ModuleResources.h"
 #include "TextureImporter.h"
 #include "ResourceTexture.h"
 
@@ -50,7 +51,7 @@ void PanelProject::DrawFiles()
 		ImGui::SetCursorPosX(pos.x + (i - (line * columns)) * (image_size + spacing) + offset);
 		ImGui::SetCursorPosY(pos.y + line * (image_size + spacing) + offset);
 
-		ImGui::Image((void*)(intptr_t)App->importer->texture->LoadDefault()->buffer_id, ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id, ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
 
 		ImGui::SetCursorPosX(pos.x + (i - (line * columns)) * (image_size + spacing) + offset);
 		ImGui::SetCursorPosY(pos.y + line * (image_size + spacing) + image_size + offset + offset);

@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ModuleResources.h"
 #include "ResourceTexture.h"
 
 #include "glew\glew.h"
@@ -35,6 +36,17 @@ bool TextureImporter::Init()
 
 	version = ilGetInteger(IL_VERSION_NUM);
 	LOG("Initialized DevIL version: %i", version);
+
+	return true;
+}
+
+bool TextureImporter::Start()
+{
+	ResourceTexture* texture = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE);
+	LoadDefault(texture);
+	texture->AddReference();
+	texture->SetFile("Checkers");
+	checkers = texture->GetID();
 
 	return true;
 }
@@ -79,8 +91,8 @@ bool TextureImporter::Load(ResourceTexture* tex)
 	}
 	else
 	{
-		tex = LoadDefault();
-		LOG("Error loading texture %s. Applied default texture instead.", tex->GetFile());
+		tex = (ResourceTexture*) App->resources->Get(checkers);
+		LOG("Error loading texture. Applied default texture instead.");
 	}
 	ilDeleteImages(1, &image_id);
 
@@ -122,47 +134,39 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 	return ret;
 }
 
-ResourceTexture* TextureImporter::LoadDefault()
+void TextureImporter::LoadDefault(ResourceTexture* resource)
 {
-	if (!default_texture)
+	resource->width = 128;
+	resource->height = 128;
+	GLubyte checkImage[128][128][4];
+
+	for (int i = 0; i < 128; i++)
 	{
-		default_texture = new ResourceTexture(90);
-
-		//default_texture->path = "CheckersTexture";
-		default_texture->width = 128;
-		default_texture->height = 128;
-		GLubyte checkImage[128][128][4];
-
-		for (int i = 0; i < 128; i++)
+		for (int j = 0; j < 128; j++)
 		{
-			for (int j = 0; j < 128; j++)
-			{
-				int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-				checkImage[i][j][0] = (GLubyte)c;
-				checkImage[i][j][1] = (GLubyte)c;
-				checkImage[i][j][2] = (GLubyte)c;
-				checkImage[i][j][3] = (GLubyte)255;
-			}
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
 		}
-
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glGenTextures(1, &default_texture->buffer_id);
-		glBindTexture(GL_TEXTURE_2D, default_texture->buffer_id);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		default_texture->mips = 0;
-		default_texture->depth = 0;
-		default_texture->format = "rgba";
-		default_texture->bpp = 0;
-		default_texture->size = sizeof(GLubyte) * 4 * 128 * 128;
 	}
 
-	return default_texture;
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &resource->buffer_id);
+	glBindTexture(GL_TEXTURE_2D, resource->buffer_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	resource->mips = 0;
+	resource->depth = 0;
+	resource->format = "rgba";
+	resource->bpp = 0;
+	resource->size = sizeof(GLubyte) * 4 * 128 * 128;
 }
 
 bool TextureImporter::CreateMeta(std::string file, uint id)

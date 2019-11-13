@@ -70,7 +70,7 @@ update_status ModuleScene::UpdateScene(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		ResourceModel* res = (ResourceModel*) App->resources->Get(2);
+		ResourceModel* res = (ResourceModel*) App->resources->Get(8);
 		CreateGameObject(res, root);
 	}
 
@@ -210,34 +210,42 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject * parent)
 {
 	std::string name;
+	uint shape_id;
 	switch (type)
 	{
 	case P_CUBE:
 		name = "Cube";
+		shape_id = App->importer->mesh->cube;
 		break;
 	case P_SPHERE:
 		name = "Sphere";
+		shape_id = App->importer->mesh->sphere;
 		break;
 	case P_CYLINDER:
 		name = "Cylinder";
+		shape_id = App->importer->mesh->cylinder;
 		break;
 	case P_PLANE:
 		name = "Plane";
+		shape_id = App->importer->mesh->plane;
 		break;
 	case P_CONE:
 		name = "Cone";
+		shape_id = App->importer->mesh->cone;
 		break;
 	default:
 		name = "GameObject";
+		shape_id = App->importer->mesh->cube;
 		break;
 	}
 
 	GameObject* obj = CreateGameObject(parent, name);
-	ResourceMesh* mesh = App->importer->mesh->LoadPrimitive(type);
+
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
-	c_mesh->AddMesh(mesh);
+	c_mesh->AddMesh((ResourceMesh*)App->resources->Get(shape_id));
+
 	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
-	c_text->AddTexture(App->importer->texture->LoadDefault());
+	c_text->AddTexture((ResourceTexture*)App->resources->Get(App->importer->texture->checkers));
 
 	return obj;
 }

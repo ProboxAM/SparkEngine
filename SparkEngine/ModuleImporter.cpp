@@ -27,6 +27,15 @@ bool ModuleImporter::Init(const nlohmann::json::iterator& it)
 	return true;
 }
 
+bool ModuleImporter::Start()
+{
+	model->Start();
+	texture->Start();
+	mesh->Start();
+
+	return true;
+}
+
 bool ModuleImporter::CleanUp()
 {	
 	//clean importers
