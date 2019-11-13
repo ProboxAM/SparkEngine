@@ -81,8 +81,9 @@ bool ComponentTexture::Save(const nlohmann::json::iterator & it)
 	nlohmann::json object = {
 		{"active",active},
 		{"debug_tex", debug_texture},
+		{"resource", tex->GetID()},
 		{"type",type},
-		{"texture", GetTexturePath() },
+		{"texture", GetTexturePath() }
 	};
 
 	it.value().push_back(object);

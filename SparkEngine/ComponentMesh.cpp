@@ -95,7 +95,8 @@ bool ComponentMesh::Save(const nlohmann::json::iterator & it)
 {
 	nlohmann::json object = {
 		{"active", active },
-		{"type",type},
+		{"type", type},
+		{"resource", mesh->GetID()},
 		{"debug_bb", debug_bounding_box},
 		{"debug_face_n", debug_face_normal },
 		{"debug_vertex_n", debug_vertex_normal }

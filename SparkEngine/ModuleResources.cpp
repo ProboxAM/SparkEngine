@@ -220,7 +220,7 @@ void ModuleResources::LoadAssets()
 {
 	// get all files, check if they have meta or not, if they have meta
 	std::vector<std::string> files;
-	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, ".meta");
+	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
 
 	for each(std::string file in files)
 	{

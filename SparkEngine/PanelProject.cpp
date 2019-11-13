@@ -39,7 +39,7 @@ void PanelProject::DrawFiles()
 
 	std::vector<std::string> files;
 	std::vector<std::string> folders;
-	App->fsystem->DiscoverFiles(ASSETS_FOLDER, files, folders);
+	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
 
 	int line = 0;
 

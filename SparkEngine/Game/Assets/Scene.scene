@@ -1,0 +1,154 @@
+{
+    "GameObjects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 299691812,
+            "layer": "Default",
+            "name": "root",
+            "parent_id": 4294967295,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3654803104,
+            "layer": "Default",
+            "name": "RootNode",
+            "parent_id": 299691812,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4,
+                    "texture": "Assets/Baker_house.png",
+                    "type": 2
+                }
+            ],
+            "id": 1017706782,
+            "layer": "Default",
+            "name": "Chimney",
+            "parent_id": 3654803104,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 5,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4,
+                    "texture": "Assets/Baker_house.png",
+                    "type": 2
+                }
+            ],
+            "id": 2017993642,
+            "layer": "Default",
+            "name": "Baker_house",
+            "parent_id": 3654803104,
+            "static": false,
+            "tag": "Untagged"
+        }
+    ]
+}
