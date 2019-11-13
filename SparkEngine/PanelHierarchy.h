@@ -5,6 +5,7 @@
 
 class ComponentTransform;
 
+enum MOUSE_INPUT {LEFT_CLICK, RIGHT_CLICK};
 class PanelHierarchy :
 	public Panel
 {
@@ -18,6 +19,8 @@ public:
 	void SetDragAndDropTarget(ComponentTransform* target);
 	void SetDragAndDropSource(ComponentTransform* target);
 	void SetDragAndDropTargetCustom();
+
+	void OnNodeRightClick();
 
 	int node_iterator = -1;
 };

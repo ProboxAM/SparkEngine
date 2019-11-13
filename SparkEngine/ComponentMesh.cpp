@@ -105,3 +105,8 @@ bool ComponentMesh::Save(const nlohmann::json::iterator & it)
 
 	return true;
 }
+
+Mesh * ComponentMesh::GetMesh()
+{
+	return mesh;
+}

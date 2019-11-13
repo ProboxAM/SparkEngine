@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "MathGeoLib/Math/float4x4.h"
 #include "MathGeoLib/Math/Quat.h"
+#include "MathGeoLib/Geometry/LineSegment.h"
+#include "MathGeoLib/Geometry/Triangle.h"
 #include <vector>
 
 class GameObject;
@@ -42,11 +44,14 @@ public:
 	GameObject* CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject* parent = nullptr);
 	GameObject* CreateRootGameObject();
 
+	void OnMousePicking(const LineSegment &line);
+
 	std::vector<float3> grid_points;
 	uint grid_id;
 	void GenerateGrid();
 	void DrawGrid();
 	bool show_grid = true;
+	std::vector<float3> lines;
 
 };
 

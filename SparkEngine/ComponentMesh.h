@@ -28,6 +28,8 @@ public:
 
 	bool Save(const nlohmann::json::iterator& it);
 
+	Mesh* GetMesh();
+
 private:
 	Mesh* mesh = nullptr;
 

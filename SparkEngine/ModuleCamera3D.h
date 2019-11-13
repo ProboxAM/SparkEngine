@@ -2,6 +2,7 @@
 #define _MODULE_CAMERA_3D_H_
 
 #include "Module.h"
+#include "MathGeoLib/Geometry/LineSegment.h"
 
 class ComponentCamera;
 
@@ -43,8 +44,9 @@ public:
 	float speed;
 
 private:
-
+	LineSegment picking;
 	ComponentCamera* c_camera;
+	std::list<bool> hits;
 };
 
 #endif // !_MODULE_CAMERA_3D_H_

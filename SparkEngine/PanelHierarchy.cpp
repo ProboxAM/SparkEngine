@@ -40,6 +40,7 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 	const bool is_selected = (selection_mask & (1 << node_iterator)) != 0;
 	if(is_selected)
 		node_flags |= ImGuiTreeNodeFlags_Selected;
+
 	if (ct->GetChildCount() > 0)
 	{
 		bool node_open = ImGui::TreeNodeEx(ct->gameobject->GetName().c_str(), node_flags);
@@ -48,11 +49,14 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		SetDragAndDropTarget(ct);
 		SetDragAndDropTargetCustom();
 
-		if (ImGui::IsItemClicked()) {
+		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
 			node_selected = node_iterator;
 			App->scene->selected_gameobject = ct->gameobject;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
+
+		OnNodeRightClick();
+
 		if (node_open) {
 			for (int i = 0; i < ct->GetChildCount(); i++)
 			{
@@ -66,15 +70,17 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
 		ImGui::TreeNodeEx(ct->gameobject->GetName().c_str(), node_flags);
 
-
 		SetDragAndDropSource(ct);
 		SetDragAndDropTarget(ct);
 
-		if (ImGui::IsItemClicked()) {
+		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
 			node_selected = node_iterator;
 			App->scene->selected_gameobject = ct->gameobject;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
+
+		OnNodeRightClick();
+
 	}
 
 	if (node_selected != -1)
@@ -95,7 +101,7 @@ void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
 		{
 			ComponentTransform* payload_n = *(ComponentTransform**)payload->Data;
 
-			if (!payload_n->IsChild(target))
+			if (!payload_n->IsChild(target) && target != payload_n)
 			{
 				payload_n->GetParent()->RemoveChild(payload_n);
 				target->AddChild(payload_n);
@@ -123,17 +129,28 @@ void PanelHierarchy::SetDragAndDropTargetCustom()
 	{
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
 		{
+			App->scene->selected_gameobject->transform->GetParent()->RemoveChild(App->scene->selected_gameobject->transform);
+			App->scene->root->transform->AddChild(App->scene->selected_gameobject->transform);
 
-			if (!App->scene->selected_gameobject->transform->IsChild(App->scene->root->transform))
-			{
-				App->scene->selected_gameobject->transform->GetParent()->RemoveChild(App->scene->selected_gameobject->transform);
-				App->scene->root->transform->AddChild(App->scene->selected_gameobject->transform);
-
-				App->scene->selected_gameobject->transform->SetParent(App->scene->root->transform);
-				App->scene->selected_gameobject->transform->UpdateTransformMatrix();
-			}
+			App->scene->selected_gameobject->transform->SetParent(App->scene->root->transform);
+			App->scene->selected_gameobject->transform->UpdateTransformMatrix();
 		}
 		ImGui::EndDragDropTarget();
+	}
+}
+
+void PanelHierarchy::OnNodeRightClick()
+{
+	if (ImGui::BeginPopupContextItem(nullptr, RIGHT_CLICK)) {
+		if (ImGui::Selectable("Create Empty")) {
+			App->scene->CreateGameObject(App->scene->selected_gameobject);
+			ImGui::CloseCurrentPopup();
+		}
+		if (ImGui::Selectable("Delete")) {
+			App->scene->selected_gameobject->transform->GetParent()->RemoveChild(App->scene->selected_gameobject->transform);
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
 	}
 }
 

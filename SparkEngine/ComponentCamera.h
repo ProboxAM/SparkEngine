@@ -33,6 +33,8 @@ public:
 
 	Frustum frustum;
 
+	bool update_camera_projection = false;
+
 private:
 
 	bool active_camera = false;

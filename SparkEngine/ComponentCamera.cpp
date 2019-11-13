@@ -15,10 +15,10 @@ ComponentCamera::ComponentCamera(GameObject* gameobject) : Component(gameobject)
 	frustum.front = float3::unitZ;
 	frustum.up = float3::unitY;
 
-	frustum.nearPlaneDistance = 1.0f;
-	frustum.farPlaneDistance = 1000.0f;
+	frustum.nearPlaneDistance = .1f;
+	frustum.farPlaneDistance = 500.0f;
 
-	SetFrustumFOV(90);
+	SetFrustumFOV(60, true);
 }
 
 
@@ -43,6 +43,8 @@ void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
 	else frustum.verticalFov = fov;
 
 	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
+
+	update_camera_projection = true;
 }
 
 
