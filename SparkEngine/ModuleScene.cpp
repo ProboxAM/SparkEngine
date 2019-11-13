@@ -68,7 +68,7 @@ update_status ModuleScene::UpdateScene(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		ResourceModel* res = (ResourceModel*) App->resources->Get(8);
+		ResourceModel* res = (ResourceModel*) App->resources->Get(2);
 		CreateGameObject(res, root);
 	}
 
