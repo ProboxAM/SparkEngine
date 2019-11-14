@@ -3,6 +3,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleImporter.h"
 #include "MeshImporter.h"
+#include "TextureImporter.h"
 
 #include "ResourceModel.h"
 
@@ -137,6 +138,7 @@ void ModelImporter::GetMeshesID(std::string file, std::vector<uint>& meshes_id)
 
 void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, std::vector<uint> meshes_id)
 {
+	LOG("importing node %s", node->mName.C_Str());
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
 
@@ -161,17 +163,22 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now, sry
 		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meshes_id.size() > 0 ? meshes_id[index] : 0);
 
-		if (current_mesh->mMaterialIndex >= 0) //Check for material, and then load texture if it has, otherwise apply default texture
+		 //Check for material, and then load texture if it has, otherwise apply default texture
+		
+		aiString texture_path;
+		scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+		if (texture_path.length > 0)
 		{
-			aiString texture_path;
-			scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
-			if (texture_path.length > 0)
-			{
-				std::string assets_path = ASSETS_FOLDER;
-				assets_path.append(texture_path.C_Str());
-				resource_node.texture = App->resources->ImportFile(assets_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
-			}
+			std::string assets_path = ASSETS_FOLDER;
+			std::string file, extension;
+			App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file, &extension);
+			assets_path += file + "." + extension;
+			resource_node.texture = App->resources->ImportFile(assets_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
 		}
+		else
+			resource_node.texture = App->importer->texture->checkers;
+		
+
 	}
 	nodes.push_back(resource_node);
 

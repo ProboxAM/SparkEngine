@@ -192,7 +192,7 @@ Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extens
 {
 	if (extension == "jpg" || extension == "JPG")
 		return Resource::RESOURCE_TYPE::R_TEXTURE;
-	else if (extension == "png" || extension == "PNG")
+	else if (extension == "png" || extension == "PNG" || extension == "tga")
 		return Resource::RESOURCE_TYPE::R_TEXTURE;
 	else if (extension == "dds" || extension == "DDS")
 		return Resource::RESOURCE_TYPE::R_TEXTURE;

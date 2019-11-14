@@ -19,6 +19,12 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
+#define CUBE_ID 999998
+#define SPHERE_ID 999997
+#define CYLINDER_ID 999996
+#define CONE_ID 999995
+#define PLANE_ID 999994
+
 MeshImporter::MeshImporter()
 {
 }
@@ -35,31 +41,31 @@ bool MeshImporter::Init()
 
 bool MeshImporter::Start()
 {
-	ResourceMesh* mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	ResourceMesh* mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CUBE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CUBE, mesh);
 	mesh->AddReference();
 	mesh->SetFile("Cube");
 	cube = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, SPHERE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_SPHERE, mesh);
 	mesh->AddReference();
 	mesh->SetFile("Sphere");
 	sphere = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CYLINDER_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CYLINDER, mesh);
 	mesh->AddReference();
 	mesh->SetFile("Cylinder");
 	cylinder = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CONE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CONE, mesh);
 	mesh->AddReference();
 	mesh->SetFile("Cone");
 	cone = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, PLANE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_PLANE, mesh);
 	mesh->AddReference();
 	mesh->SetFile("Plane");
@@ -142,11 +148,10 @@ uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh, uint id)
 	{
 		resource->total_uv = mesh->mNumVertices;
 		resource->uv = new float2[resource->total_uv];
-
+		memcpy(resource->vertices, mesh->mVertices, sizeof(float2) * resource->total_vertices);
 		for (unsigned int i = 0; i < resource->total_uv; i++)
 		{
-			float2 uv = float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
-			resource->uv[i] = uv;
+			memcpy(&resource->uv[i], &mesh->mTextureCoords[0][i], sizeof(float2));
 		}
 	}
 	if (mesh->HasNormals())
@@ -156,12 +161,16 @@ uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh, uint id)
 		memcpy(resource->normal, mesh->mNormals, sizeof(float3) * resource->total_normal);
 	}
 
-	resource->total_indices = mesh->mNumFaces * 3;
-	resource->indices = new uint[resource->total_indices];
-	for (uint i = 0; i < mesh->mNumFaces; i++) //ASSUME FACE IS TRIANGLE
+	if (mesh->HasFaces())
 	{
-		memcpy(&resource->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+		resource->total_indices = mesh->mNumFaces * 3;
+		resource->indices = new uint[resource->total_indices];
+		for (uint i = 0; i < mesh->mNumFaces; i++) //ASSUME FACE IS TRIANGLE
+		{
+			memcpy(&resource->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+		}
 	}
+
 
 	//DEBUG NORMAL VERTEX
 	//resource->debug_vertex_normals.push_back(resource->vertices[i]);

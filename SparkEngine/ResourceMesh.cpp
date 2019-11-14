@@ -54,11 +54,17 @@ void ResourceMesh::UnLoad()
 	delete[] indices;
 	indices = nullptr;
 
-	delete[] normal;
-	normal = nullptr;
+	if (normal)
+	{
+		delete[] normal;
+		normal = nullptr;
+	}
 
-	delete[] uv;
-	uv = nullptr;
+	if (uv)
+	{
+		delete[] uv;
+		uv = nullptr;
+	}
 
 	glDeleteBuffers(BUFF_TOTAL, buffers);
 }

@@ -20,15 +20,15 @@ public:
 	~ResourceMesh();
 	ResourceMesh(uint id);
 
-	float3* vertices;
-	float2* uv;
-	float3* normal;
-	uint* indices;
+	float3* vertices = nullptr;
+	float2* uv = nullptr;
+	float3* normal = nullptr;
+	uint* indices = nullptr;
 
-	uint total_vertices;
-	uint total_uv;
-	uint total_normal;
-	uint total_indices;
+	uint total_vertices = 0;
+	uint total_uv = 0;
+	uint total_normal = 0;
+	uint total_indices = 0;
 
 	//std::vector<float3> debug_vertex_normals;
 	//std::vector<float3> debug_face_normals;
