@@ -53,6 +53,7 @@ public:
 	uint grid_id;
 	void GenerateGrid();
 	void DrawGrid();
+	void DeleteGameObjects();
 	bool show_grid = true;
 
 };

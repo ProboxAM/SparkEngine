@@ -183,11 +183,6 @@ bool ModuleEditor::IsInsideSceneWindow(float2 pos)
 	return ((PanelScene*)panels[SCENE])->IsInside(pos);
 }
 
-ImRect ModuleEditor::GetSceneRect()
-{
-	return panels[SCENE]->GetRect();
-}
-
 void ModuleEditor::BeginDockSpace()
 {
 	ImGuiViewport* viewport = ImGui::GetMainViewport();

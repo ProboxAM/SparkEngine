@@ -106,6 +106,7 @@ ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobj
 
 ComponentTransform::~ComponentTransform()
 {
+
 }
 
 void ComponentTransform::Update(float dt)

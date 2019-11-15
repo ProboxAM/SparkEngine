@@ -40,6 +40,15 @@ void Resource::AddReference()
 	references++;
 }
 
+void Resource::RemoveReference()
+{
+	references--;
+	if (references == 0)
+	{
+		UnLoad();
+	}
+}
+
 void Resource::SetFile(std::string f)
 {
 	file = f;

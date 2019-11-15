@@ -118,6 +118,9 @@ bool ModuleScene::SaveScene()
 bool ModuleScene::LoadScene()
 {
 	LOG("Loading scene...");
+
+	DeleteGameObjects();
+
 	std::ifstream i(ASSETS_FOLDER"Scene.scene");
 	nlohmann::json j = nlohmann::json::parse(i);
 
@@ -163,6 +166,7 @@ bool ModuleScene::LoadScene()
 
 		LOG("Created GameObject %s", name);
 	}
+	LOG("Finished loading scene.");
 
 	return true;
 }
@@ -346,4 +350,11 @@ void ModuleScene::DrawGrid()
 	glDrawArrays(GL_LINES, 0, grid_points.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void ModuleScene::DeleteGameObjects()
+{
+	root->Delete();
+	gameobjects.clear();
+	root = nullptr;
 }

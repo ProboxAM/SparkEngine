@@ -23,6 +23,24 @@ void GameObject::Update(float dt)
 	}
 }
 
+void GameObject::Delete()
+{
+	std::vector<ComponentTransform*> children = transform->GetChildren();
+	for each (ComponentTransform* trans in children)
+	{
+		trans->gameobject->Delete();
+	}
+
+	for (uint i = 0; i < components.size(); i++)
+	{
+		delete components[i];
+		components[i] = nullptr;
+	}
+
+	transform = nullptr;
+	delete this;
+}
+
 Component* GameObject::AddComponent(COMPONENT_TYPE type)
 {
 	Component* c;

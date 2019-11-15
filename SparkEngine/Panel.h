@@ -26,10 +26,6 @@ public:
 		return active;
 	}
 
-	virtual ImRect GetRect() {
-		return ImRect( 0,0,0,0 );
-	}
-
 	virtual void Draw() {};
 
 protected:

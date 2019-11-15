@@ -24,7 +24,6 @@ void PanelScene::Draw()
 	ImGui::Begin("Scene", &active, ImGuiWindowFlags_MenuBar);
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight();
-	rect = ImGui::GetCurrentWindow()->Rect();
 	screen_pos = ImGui::GetCursorScreenPos();
 	int image_w, image_h;
 	GetSizeWithAspectRatio(App->window->GetWindowWidth(), App->window->GetWindowHeight(), w, h, image_w, image_h);
@@ -67,11 +66,6 @@ bool PanelScene::IsInside(const float2& pos) const
 {
 	AABB2D box(float2(screen_pos.x, screen_pos.y), float2(screen_pos.x + w, screen_pos.y + h));
 	return math::Contains(box, float3(pos.x, pos.y, 0));
-}
-
-ImRect PanelScene::GetRect()
-{
-	return rect;
 }
 
 

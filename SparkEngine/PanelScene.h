@@ -12,14 +12,12 @@ public:
 	void Draw();
 	void Start();
 	bool IsInside(const float2& pos) const;
-	ImRect GetRect();
 
 private:
 	void GetSizeWithAspectRatio(int current_width, int current_height, int wanted_width, int wanted_height, int& new_width, int& new_height);
 
 private:
 	ImVec2 screen_pos;
-	ImRect rect;
 	float w, h;
 };
 

@@ -17,6 +17,8 @@ ComponentTexture::ComponentTexture(GameObject* gameobject):Component(gameobject)
 
 ComponentTexture::~ComponentTexture()
 {
+	tex->RemoveReference();
+	tex = nullptr;
 }
 
 ResourceTexture* ComponentTexture::GetTexture()

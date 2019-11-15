@@ -138,7 +138,6 @@ void ModelImporter::GetMeshesID(std::string file, std::vector<uint>& meshes_id)
 
 void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, std::vector<uint> meshes_id)
 {
-	LOG("importing node %s", node->mName.C_Str());
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
 
@@ -163,8 +162,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now, sry
 		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meshes_id.size() > 0 ? meshes_id[index] : 0);
 
-		 //Check for material, and then load texture if it has, otherwise apply default texture
-		
+		//Check for material, and then load texture if it has, otherwise apply default texture	
 		aiString texture_path;
 		scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
 		if (texture_path.length > 0)
@@ -177,8 +175,6 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		}
 		else
 			resource_node.texture = App->importer->texture->checkers;
-		
-
 	}
 	nodes.push_back(resource_node);
 

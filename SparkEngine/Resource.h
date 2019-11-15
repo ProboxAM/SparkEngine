@@ -16,6 +16,7 @@ public:
 		R_MATERIAL,
 		R_NONE
 	};
+
 public:
 	~Resource();
 	Resource(uint id, RESOURCE_TYPE type);
@@ -26,6 +27,7 @@ public:
 	const char* GetExportedFile() const;
 	bool IsLoaded() const;
 	void AddReference();
+	void RemoveReference();
 	void SetFile(std::string f);
 	void SetExportedFile(std::string f);
 	virtual void UnLoad() {}
