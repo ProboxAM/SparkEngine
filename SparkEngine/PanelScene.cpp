@@ -9,6 +9,7 @@
 
 #include "PanelScene.h"
 
+#define CHECKBOX_SIZE 50
 
 PanelScene::PanelScene(bool active): Panel(active)
 {
@@ -22,15 +23,16 @@ PanelScene::~PanelScene()
 void PanelScene::Draw()
 {
 	ImGui::Begin("Scene", &active, ImGuiWindowFlags_MenuBar);
+
 	w = ImGui::GetWindowWidth();
-	h = ImGui::GetWindowHeight();
+	h = ImGui::GetWindowHeight() - CHECKBOX_SIZE;
 	screen_pos = ImGui::GetCursorScreenPos();
 	GetSizeWithAspectRatio(App->window->GetWindowWidth(), App->window->GetWindowHeight(), w, h, image_w, image_h);
 	ImGui::GetWindowDrawList()->AddImage(
 		(void *)App->renderer3D->scene_texture_id,
 		screen_pos,
 		ImVec2(screen_pos.x + image_w, screen_pos.y + image_h),
-		ImVec2(0, 1), 
+		ImVec2(0, 1),
 		ImVec2(1, 0));
 
 	if (ImGui::BeginDragDropTargetCustom(ImGui::GetCurrentWindow()->Rect(), (ImGuiID)"Scene"))
@@ -54,6 +56,7 @@ void PanelScene::Draw()
 			App->renderer3D->SetWireframeMode(wireframe);
 		ImGui::EndMenuBar();
 	}
+
 	ImGui::End();
 }
 
