@@ -34,8 +34,10 @@ public:
 	void DebugVertexNormals(const ResourceMesh* m, const float4x4& mtransform) const;
 	void DebugFaceNormals(const ResourceMesh* m, const float4x4& mtransform) const;
 	void DebugDrawCube(const float3 * vertices, Color color) const;
+	void DebugDrawLines(std::vector<float3> lines);
 
 	void ResizeScene(float w, float h);
+	void UpdateProjectionMatrix();
 
 	bool IsWireframeEnabled() const;
 	bool GetVsync() const;

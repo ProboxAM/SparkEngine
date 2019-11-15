@@ -7,7 +7,10 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "PanelScene.h"
 #include "ModuleCamera3D.h"
+
+#include "glew/glew.h"
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
@@ -73,6 +76,25 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) {
+
+		float2 mouse_position, normalized_mouse_position, screen_position;
+
+		PanelScene* ps = (PanelScene*)App->editor->GetPanels()[SCENE];
+		ps->GetScreenPos(screen_position.x, screen_position.y);
+
+		mouse_position = { ((float)App->input->GetMouseX() - (screen_position.x + (ps->GetScreenWidth() / 2))),
+			((float)App->input->GetMouseY() - (screen_position.y + (ps->image_h / 2))) };
+
+		normalized_mouse_position = { mouse_position.x / ps->image_w * 2, mouse_position.y / ps->image_h * 2 };
+
+		LOG("x: %f, y: %f", normalized_mouse_position.x, normalized_mouse_position.y);
+
+		picking = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, -normalized_mouse_position.y);
+
+		App->scene->OnMousePicking(picking);
+	}
+
 	// Implement a debug camera with keys and mouse
 	// Now we can make this movememnt frame rate independant!
 	new_position = { 0, 0, 0 };
@@ -90,6 +112,10 @@ update_status ModuleCamera3D::Update(float dt)
 			focusing = true;
 			camera_inputs_active = false;
 		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		c_camera->SetFrustumFOV(90, true);
 	}
 
 	if (focusing) Focus();
@@ -136,8 +162,8 @@ void ModuleCamera3D::CameraInputs()
 
 		if (App->editor->IsInsideSceneWindow(math::float2(App->input->GetMouseX(), App->input->GetMouseY())))
 		{
-			if (App->input->GetMouseZ() > 0) new_position -= c_camera->frustum.front * speed;
-			if (App->input->GetMouseZ() < 0) new_position += c_camera->frustum.front * speed;
+			if (App->input->GetMouseZ() > 0) new_position += c_camera->frustum.front * speed;
+			if (App->input->GetMouseZ() < 0) new_position -= c_camera->frustum.front * speed;
 		}
 	}
 }

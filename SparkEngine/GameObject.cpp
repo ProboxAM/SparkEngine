@@ -103,6 +103,11 @@ std::vector<Component*> GameObject::GetComponents(COMPONENT_TYPE type)
 	return aux;
 }
 
+std::vector<Component*> GameObject::GetComponents()
+{
+	return components;
+}
+
 bool GameObject::HasComponent(COMPONENT_TYPE type)
 {
 	bool ret = false;

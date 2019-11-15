@@ -29,6 +29,8 @@ public:
 	bool Save(const nlohmann::json::iterator& it);
 	bool Load(const nlohmann::json comp);
 
+	Mesh* GetMesh();
+
 private:
 	ResourceMesh* mesh = nullptr;
 

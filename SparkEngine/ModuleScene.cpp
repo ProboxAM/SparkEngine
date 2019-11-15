@@ -18,6 +18,7 @@
 #include "ModuleImporter.h"
 
 #include "ModuleInput.h"
+#include "ModuleRenderer3D.h"
 #include "ModuleScene.h"
 
 #include "glew/glew.h"
@@ -291,7 +292,7 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		{
 			go->transform->SetParent(parent->transform);
 			parent->transform->AddChild(go->transform);
-		}		
+		}
 
 		go->SetName(node.name);
 		go->transform->local_position = node.position;
@@ -312,13 +313,54 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		}
 
 
-		gameobjects.emplace(go->GetId(),go);
+		gameobjects.emplace(go->GetId(), go);
 		temp_go.push_back(go);
 		go->transform->UpdateTransformMatrix();
 		count++;
 	}
-
 	return temp_go[0];
+}
+
+void ModuleScene::OnMousePicking(const LineSegment &line)
+{
+	//TODO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	std::vector<GameObject*> candidates;
+	for (int i = 0; i < gameobjects.size(); i++) {
+		if (gameobjects[i]->HasComponent(COMPONENT_TYPE::MESH)) {
+			if (line.Intersects(gameobjects[i]->global_aabb)) {
+				float hit_near, hit_far;
+				if (line.Intersects(gameobjects[i]->global_obb, hit_near, hit_far))
+					candidates.push_back(gameobjects[i]);
+			}
+		}
+	}
+
+	for (int i = 0; i < candidates.size(); i++) {
+		ComponentMesh* c_mesh = (ComponentMesh*)candidates[i]->GetComponent(COMPONENT_TYPE::MESH);
+		if (c_mesh) {
+
+			LineSegment local = line;
+			local.Transform(candidates[i]->transform->GetTransformMatrix().Inverted());
+
+			for (int j = 0; j < c_mesh->GetMesh()->buffers[BUFFER_TYPE::BUFF_IND]; j += 3) {
+				uint index_a = c_mesh->GetMesh()->indices[j] * 3;
+				float3 a = c_mesh->GetMesh()->vertices[index_a];
+
+				uint index_b = c_mesh->GetMesh()->indices[j + 1] * 3;
+				float3 b = c_mesh->GetMesh()->vertices[index_b];
+
+				uint index_c = c_mesh->GetMesh()->indices[j + 2] * 3;
+				float3 c = c_mesh->GetMesh()->vertices[index_c];
+
+				Triangle t(a, b, c);
+
+				if (local.Intersects(t, nullptr, nullptr)) {
+					selected_gameobject = candidates[i];
+					LOG("%s", selected_gameobject->GetName().c_str());
+				}
+			}
+		}
+	}
 }
 
 void ModuleScene::GenerateGrid()

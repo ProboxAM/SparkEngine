@@ -37,7 +37,7 @@ void PanelInspector::Draw()
 
 		ImGui::Separator();
 
-		std::vector<Component*> comp = App->scene->selected_gameobject->GetComponents(COMPONENT_TYPE::NONE);
+		std::vector<Component*> comp = App->scene->selected_gameobject->GetComponents();
 		GameObject* go = App->scene->selected_gameobject;
 		for (int i = 0; i < comp.size(); i++)
 		{

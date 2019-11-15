@@ -128,6 +128,10 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
+	if (c_camera->update_camera_projection) {
+		UpdateProjectionMatrix();
+		c_camera->update_camera_projection = false;
+	}
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf((float*)&c_camera->GetOpenGLViewMatrix());
@@ -177,14 +181,8 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glViewport(0, 0, width, height);
 
 	ResizeScene(width, height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	
+	//UpdateProjectionMatrix();
 }
 
 bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
@@ -397,6 +395,22 @@ void ModuleRenderer3D::DebugDrawCube(const float3 * vertices, Color color) const
 	App->renderer3D->SetWireframeMode(false);
 }
 
+void ModuleRenderer3D::DebugDrawLines(std::vector<float3> lines)
+{
+	glColor3f(0.f, 1.0f, 0.0f);
+	glBegin(GL_LINES);
+	glLineWidth(5.0f);
+
+	for (int i = 0; i < lines.size(); i++)
+	{
+		glVertex3f((GLfloat)lines[i].x, (GLfloat)lines[i].y, (GLfloat)lines[i].z);
+	}
+
+	glLineWidth(1.0f);
+	glColor3f(1.f, 1.f, 1.f);
+	glEnd();
+}
+
 //Resize texture buffer of Scene rendering
 void ModuleRenderer3D::ResizeScene(float w, float h)
 {
@@ -405,6 +419,17 @@ void ModuleRenderer3D::ResizeScene(float w, float h)
 
 	glBindRenderbuffer(GL_RENDERBUFFER, scene_depth_id);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, w, h);
+}
+
+void ModuleRenderer3D::UpdateProjectionMatrix()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	glLoadMatrixf((float*)&c_camera->GetOpenGLProjectionMatrix());
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 //Creates a Frame Buffer for rendering into Scene window
