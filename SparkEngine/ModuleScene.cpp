@@ -325,12 +325,13 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 {
 	//TODO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	std::vector<GameObject*> candidates;
-	for (int i = 0; i < gameobjects.size(); i++) {
-		if (gameobjects[i]->HasComponent(COMPONENT_TYPE::MESH)) {
-			if (line.Intersects(gameobjects[i]->global_aabb)) {
+	for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
+	{
+		if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
+			if (line.Intersects(it->second->global_aabb)) {
 				float hit_near, hit_far;
-				if (line.Intersects(gameobjects[i]->global_obb, hit_near, hit_far))
-					candidates.push_back(gameobjects[i]);
+				if (line.Intersects(it->second->global_obb, hit_near, hit_far))
+					candidates.push_back(it->second);
 			}
 		}
 	}

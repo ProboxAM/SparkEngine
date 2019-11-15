@@ -121,7 +121,6 @@ bool ComponentMesh::Load(const nlohmann::json comp)
 
 	return true;
 }
-
 ResourceMesh * ComponentMesh::GetMesh()
 {
 	return mesh;
