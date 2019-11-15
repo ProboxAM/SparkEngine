@@ -138,13 +138,14 @@ bool ModuleScene::LoadScene()
 			float3 position, scale;
 			Quat rotation;
 			
-			//TODO: clean this
+			//TODO: Clean this ////////////////////////
 			position = float3(object["components"][COMPONENT_TYPE::TRANSFORM]["position"][0], object["components"][COMPONENT_TYPE::TRANSFORM]["position"][1],
 				object["components"][COMPONENT_TYPE::TRANSFORM]["position"][2]);
 			rotation = Quat(object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][0], object["components"][0]["rotation"][1],
 				object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][2], object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][3]);
 			scale = float3(object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][0], object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][1],
 				object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][2]);
+			///////////////////////////////////////////
 
 			GameObject* parent_go = gameobjects.find(parent_id)->second;
 			GameObject* go = CreateGameObject(parent_go, name, position, rotation, scale, id);

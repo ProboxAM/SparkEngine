@@ -119,8 +119,8 @@ bool ComponentTransform::Save(const nlohmann::json::iterator& it)
 	nlohmann::json object = {
 		{"type",type},
 		{"position", { local_position.x, local_position.y, local_position.z }},
-		{"rotation", { rotation.x, rotation.y, rotation.z, rotation.w} },
-		{"scale", { scale.x, scale.y, scale.z} }
+		{"rotation", { local_rotation.x, local_rotation.y, local_rotation.z, local_rotation.w} },
+		{"scale", { local_scale.x, local_scale.y, local_scale.z} }
 	};
 
 	it.value().push_back(object);
