@@ -323,41 +323,41 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 
 void ModuleScene::OnMousePicking(const LineSegment &line)
 {
-	//TODO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	std::vector<GameObject*> candidates;
+	std::map<float, GameObject*> candidates;
 	for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
 	{
 		if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
 			if (line.Intersects(it->second->global_aabb)) {
 				float hit_near, hit_far;
-				if (line.Intersects(it->second->global_obb, hit_near, hit_far))
-					candidates.push_back(it->second);
+				if (line.Intersects(it->second->global_obb, hit_near, hit_far)) {
+					candidates.emplace(hit_near, it->second);
+				}
 			}
 		}
 	}
 
-	for (int i = 0; i < candidates.size(); i++) {
-		ComponentMesh* c_mesh = (ComponentMesh*)candidates[i]->GetComponent(COMPONENT_TYPE::MESH);
+	for (std::map<float, GameObject*>::iterator it = candidates.begin(); it != candidates.end(); ++it) {
+		ComponentMesh* c_mesh = (ComponentMesh*)it->second->GetComponent(COMPONENT_TYPE::MESH);
 		if (c_mesh) {
 
 			LineSegment local = line;
-			local.Transform(candidates[i]->transform->GetTransformMatrix().Inverted());
+			local.Transform(it->second->transform->GetTransformMatrix().Inverted());
 
-			for (int j = 0; j < c_mesh->GetMesh()->buffers[BUFFER_TYPE::BUFF_IND]; j += 3) {
-				uint index_a = c_mesh->GetMesh()->indices[j] * 3;
+			for (int j = 0; j < c_mesh->GetMesh()->total_indices; j += 3) {
+				uint index_a = c_mesh->GetMesh()->indices[j];
 				float3 a = c_mesh->GetMesh()->vertices[index_a];
 
-				uint index_b = c_mesh->GetMesh()->indices[j + 1] * 3;
+				uint index_b = c_mesh->GetMesh()->indices[j + 1];
 				float3 b = c_mesh->GetMesh()->vertices[index_b];
 
-				uint index_c = c_mesh->GetMesh()->indices[j + 2] * 3;
+				uint index_c = c_mesh->GetMesh()->indices[j + 2];
 				float3 c = c_mesh->GetMesh()->vertices[index_c];
 
 				Triangle t(a, b, c);
 
 				if (local.Intersects(t, nullptr, nullptr)) {
-					selected_gameobject = candidates[i];
-					LOG("%s", selected_gameobject->GetName().c_str());
+					selected_gameobject = it->second;
+					return;
 				}
 			}
 		}

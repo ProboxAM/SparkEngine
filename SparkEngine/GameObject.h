@@ -29,7 +29,7 @@ public:
 	void Update(float dt);
 	void Delete();
 	Component* AddComponent(COMPONENT_TYPE type);
-	Component* GetComponent(COMPONENT_TYPE type);
+	Component* GetComponent(COMPONENT_TYPE type) const;
 	std::vector<Component*> GetComponents(COMPONENT_TYPE type);
 	std::vector<Component*> GetComponents();
 	bool HasComponent(COMPONENT_TYPE type);

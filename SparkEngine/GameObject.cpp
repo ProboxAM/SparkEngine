@@ -70,7 +70,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE type)
 	return c;
 }
 
-Component * GameObject::GetComponent(COMPONENT_TYPE type)
+Component * GameObject::GetComponent(COMPONENT_TYPE type) const
 {
 	Component* aux = nullptr;
 	for (int i = 0; i < components.size(); i++)
