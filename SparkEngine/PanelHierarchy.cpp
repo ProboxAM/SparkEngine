@@ -29,15 +29,21 @@ void PanelHierarchy::Draw()
 
 void PanelHierarchy::DrawNode(ComponentTransform * ct)
 {
-	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-	static int selection_mask = (1 << 2);
-	static int node_selected = -1;
+	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_SpanAvailWidth;
 	node_iterator++;
 
 	ImGuiTreeNodeFlags node_flags = base_flags;
-	const bool is_selected = (selection_mask & (1 << node_iterator)) != 0;
-	if(is_selected)
-		node_flags |= ImGuiTreeNodeFlags_Selected;
+
+	if (App->scene->selected_gameobject)
+	{
+		if (App->scene->selected_gameobject == ct->gameobject) {
+			node_flags |= ImGuiTreeNodeFlags_Selected;
+		}
+		if (!ct->IsChild(App->scene->selected_gameobject->transform)) {
+			node_flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+		}
+		else node_flags |= ImGuiTreeNodeFlags_DefaultOpen;
+	}
 
 	if (ct->GetChildCount() > 0)
 	{
@@ -48,7 +54,6 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		SetDragAndDropTargetCustom();
 
 		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
-			node_selected = node_iterator;
 			App->scene->selected_gameobject = ct->gameobject;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
@@ -72,7 +77,6 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		SetDragAndDropTarget(ct);
 
 		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
-			node_selected = node_iterator;
 			App->scene->selected_gameobject = ct->gameobject;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
@@ -81,14 +85,6 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 
 	}
 
-	if (node_selected != -1)
-	{
-		// Update selection state. Process outside of tree loop to avoid visual inconsistencies during the clicking-frame.
-		if (ImGui::GetIO().KeyCtrl)
-			selection_mask ^= (1 << node_selected);          // CTRL+click to toggle
-		else //if (!(selection_mask & (1 << node_clicked))) // Depending on selection behavior you want, this commented bit preserve selection when clicking on item that is part of the selection
-			selection_mask = (1 << node_selected);           // Click to single-select
-	}
 }
 
 void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)

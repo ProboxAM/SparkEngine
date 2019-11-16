@@ -76,7 +76,7 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && !ImGuizmo::IsOver()) {
 
 		if (App->editor->IsInsideSceneWindow({ (float)App->input->GetMouseX(), (float)App->input->GetMouseY() })) {
 
