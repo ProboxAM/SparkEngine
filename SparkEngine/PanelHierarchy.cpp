@@ -29,21 +29,16 @@ void PanelHierarchy::Draw()
 
 void PanelHierarchy::DrawNode(ComponentTransform * ct)
 {
-	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_SpanAvailWidth;
+	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;;
 	node_iterator++;
 
 	ImGuiTreeNodeFlags node_flags = base_flags;
 
 	if (App->scene->selected_gameobject)
 	{
-		if (!ct->IsChild(App->scene->selected_gameobject->transform)) {
-			node_flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-		}
-		else node_flags |= ImGuiTreeNodeFlags_DefaultOpen;
-
 		if (App->scene->selected_gameobject == ct->gameobject) {
 			node_flags |= ImGuiTreeNodeFlags_Selected;
-		}
+		}	
 	}
 
 	if (ct->GetChildCount() > 0)

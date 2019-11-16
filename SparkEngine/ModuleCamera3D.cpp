@@ -29,6 +29,7 @@ bool ModuleCamera3D::Start()
 	c_camera = new ComponentCamera(nullptr);
 
 	c_camera->frustum.pos = { 20.f, 50.f, 0.f };
+	c_camera->SetFrustumFarPlaneDistance(1000.0f);
 	LookAt({ 0.f, 0.f, 0.f });
 
 	App->renderer3D->c_camera = c_camera;
