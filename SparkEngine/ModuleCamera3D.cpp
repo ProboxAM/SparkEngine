@@ -78,21 +78,24 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) {
 
-		float2 mouse_position, normalized_mouse_position, screen_position;
+		if (App->editor->IsInsideSceneWindow({ (float)App->input->GetMouseX(), (float)App->input->GetMouseY() })) {
 
-		PanelScene* ps = (PanelScene*)App->editor->GetPanels()[SCENE];
-		ps->GetScreenPos(screen_position.x, screen_position.y);
+			float2 mouse_position, normalized_mouse_position, screen_position;
 
-		mouse_position = { ((float)App->input->GetMouseX() - (screen_position.x + (ps->GetScreenWidth() / 2))),
-			((float)App->input->GetMouseY() - (screen_position.y + (ps->image_h / 2))) };
+			PanelScene* ps = (PanelScene*)App->editor->GetPanels()[SCENE];
+			ps->GetScreenPos(screen_position.x, screen_position.y);
 
-		normalized_mouse_position = { mouse_position.x / ps->image_w * 2, mouse_position.y / ps->image_h * 2 };
+			mouse_position = { ((float)App->input->GetMouseX() - (screen_position.x + (ps->GetScreenWidth() / 2))),
+				((float)App->input->GetMouseY() - (screen_position.y + (ps->image_h / 2))) };
 
-		LOG("x: %f, y: %f", normalized_mouse_position.x, normalized_mouse_position.y);
+			normalized_mouse_position = { mouse_position.x / ps->image_w * 2, mouse_position.y / ps->image_h * 2 };
 
-		picking = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, -normalized_mouse_position.y);
+			LOG("x: %f, y: %f", normalized_mouse_position.x, normalized_mouse_position.y);
 
-		App->scene->OnMousePicking(picking);
+			picking = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, -normalized_mouse_position.y);
+
+			App->scene->OnMousePicking(picking);
+		}
 	}
 
 	// Implement a debug camera with keys and mouse

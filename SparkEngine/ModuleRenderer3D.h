@@ -36,6 +36,8 @@ public:
 	void DebugDrawCube(const float3 * vertices, Color color) const;
 	void DebugDrawLines(std::vector<float3> lines);
 
+	void DrawOutline(const ResourceMesh* m, const Color color, const float4x4& mtransform) const;
+
 	void ResizeScene(float w, float h);
 	void UpdateProjectionMatrix();
 
