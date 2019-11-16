@@ -130,7 +130,7 @@ update_status ModuleCamera3D::Update(float dt)
 	reference += new_position;
 
 	// Mouse motion ----------------
-	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		SelectedGOAsReference();//We set the select game object as reference so we now rotate around it.
 		RotateAroundReference();
@@ -156,12 +156,14 @@ void ModuleCamera3D::CameraInputs()
 {
 	if (camera_inputs_active)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) new_position += c_camera->frustum.front * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) new_position -= c_camera->frustum.front * speed;
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) new_position += c_camera->frustum.front * speed;
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) new_position -= c_camera->frustum.front * speed;
 
 
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) new_position -= c_camera->frustum.WorldRight() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) new_position += c_camera->frustum.WorldRight() * speed;
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) new_position -= c_camera->frustum.WorldRight() * speed;
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) new_position += c_camera->frustum.WorldRight() * speed;
+		}
 
 		if (App->editor->IsInsideSceneWindow(math::float2(App->input->GetMouseX(), App->input->GetMouseY())))
 		{
@@ -239,6 +241,6 @@ void ModuleCamera3D::RotateAroundReference()
 void ModuleCamera3D::SelectedGOAsReference()
 {
 	if (App->scene->selected_gameobject) {
-		reference = { App->scene->selected_gameobject->transform->position.x,  App->scene->selected_gameobject->transform->position.y, App->scene->selected_gameobject->transform->position.z };
+		reference = { App->scene->selected_gameobject->transform->GetPosition().x,  App->scene->selected_gameobject->transform->GetPosition().y, App->scene->selected_gameobject->transform->GetPosition().z };
 	}
 }

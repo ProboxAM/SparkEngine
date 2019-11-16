@@ -3,8 +3,13 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
 #include "ModuleScene.h"
+#include "ModuleInput.h"
+#include "ComponentCamera.h"
+#include "ComponentTransform.h"
+#include "GameObject.h"
 #include "MathGeoLib\Math\float3.h"
 #include "MathGeoLib\Geometry\AABB2D.h"
+#include "ImGui/imgui.h"
 #include "glew/glew.h"
 
 #include "PanelScene.h"
@@ -18,11 +23,14 @@ PanelScene::PanelScene(bool active): Panel(active)
 
 PanelScene::~PanelScene()
 {
+	guizmo_mode = ImGuizmo::MODE::LOCAL;
+	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 }
 
 void PanelScene::Draw()
 {
 	ImGui::Begin("Scene", &active, ImGuiWindowFlags_MenuBar);
+	ImGui::ShowDemoWindow();
 
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight() - CHECKBOX_SIZE;
@@ -34,6 +42,11 @@ void PanelScene::Draw()
 		ImVec2(screen_pos.x + image_w, screen_pos.y + image_h),
 		ImVec2(0, 1),
 		ImVec2(1, 0));
+
+	if (App->scene->selected_gameobject) {
+		HandleTransformInputs();
+		DrawTransformGuizmo();
+	}
 
 	if (ImGui::BeginDragDropTargetCustom(ImGui::GetCurrentWindow()->Rect(), (ImGuiID)"Scene"))
 	{
@@ -80,4 +93,44 @@ void PanelScene::GetSizeWithAspectRatio(int current_width, int current_height, i
 
 	new_width = current_width * scale;
 	new_height = current_height * scale;
+}
+
+void PanelScene::HandleTransformInputs()
+{
+	if (!ImGuizmo::IsUsing())
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+			guizmo_operation = ImGuizmo::OPERATION::SCALE;
+	}
+}
+
+void PanelScene::DrawTransformGuizmo()
+{
+	//ImGuizmo::BeginFrame();
+	ImGuizmo::Enable(true);
+	float4x4 delta, transform, view, projection;
+
+	transform = App->scene->selected_gameobject->transform->GetTransformMatrix().Transposed();
+	projection = App->renderer3D->c_camera->GetOpenGLProjectionMatrix();
+	view = App->renderer3D->c_camera->GetOpenGLViewMatrix();
+
+	ImGuiIO& io = ImGui::GetIO();
+	ImGuizmo::SetRect(float(ImGui::GetCursorScreenPos().x), float(ImGui::GetCursorScreenPos().y), float(w), float(h));
+	ImGuizmo::SetDrawlist();
+	ImGuizmo::Manipulate((const float*)&view,
+		(const float*)&projection,
+		guizmo_operation, 
+		guizmo_mode, 
+		(float*)&transform,
+		(float*)&delta
+	);
+
+	if (ImGuizmo::IsUsing())
+	{
+		App->scene->selected_gameobject->transform->SetTransformMatrix(transform.Transposed());
+	}
 }

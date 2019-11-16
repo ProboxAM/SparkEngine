@@ -3,6 +3,8 @@
 
 class ImVec2;
 #include "Panel.h"
+#include "ImGuizmo.h"
+
 
 class PanelScene : public Panel
 {
@@ -12,6 +14,9 @@ public:
 	void Draw();
 	void Start();
 	bool IsInside(const float2& pos) const;
+
+	ImGuizmo::OPERATION guizmo_operation;
+	ImGuizmo::MODE guizmo_mode;
 
 	void GetScreenPos(float &x, float &y) {
 		x = screen_pos.x;
@@ -30,6 +35,8 @@ public:
 
 private:
 	void GetSizeWithAspectRatio(int current_width, int current_height, int wanted_width, int wanted_height, int& new_width, int& new_height);
+	void HandleTransformInputs();
+	void DrawTransformGuizmo();
 
 private:
 	ImVec2 screen_pos;

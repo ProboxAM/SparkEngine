@@ -182,10 +182,9 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 	go->transform->SetParent(parent->transform);
 	parent->transform->AddChild(go->transform);
 	go->SetName(name);
-	go->transform->local_position = position;
-	go->transform->local_rotation = rotation;
-	go->transform->local_scale = scale;
-	go->transform->local_euler_rotation = rotation.ToEulerXYZ() * RADTODEG;
+	go->transform->SetLocalPosition(position);
+	go->transform->SetLocalRotation(rotation);
+	go->transform->SetLocalScale(scale);
 
 	gameobjects.emplace(go->GetId(), go);
 	go->transform->UpdateTransformMatrix();
@@ -202,10 +201,9 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 	go->transform->SetParent(parent->transform);
 	parent->transform->AddChild(go->transform);
 	go->SetName(name);
-	go->transform->local_position = position;
-	go->transform->local_rotation = rotation;
-	go->transform->local_scale = scale;
-	go->transform->local_euler_rotation = rotation.ToEulerXYZ() * RADTODEG;
+	go->transform->SetLocalPosition(position);
+	go->transform->SetLocalRotation(rotation);
+	go->transform->SetLocalScale(scale);
 
 	gameobjects.emplace(go->GetId(), go);
 	go->transform->UpdateTransformMatrix();
@@ -296,10 +294,9 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		}
 
 		go->SetName(node.name);
-		go->transform->local_position = node.position;
-		go->transform->local_rotation = node.rotation;
-		go->transform->local_scale = node.scale;
-		go->transform->local_euler_rotation = node.rotation.ToEulerXYZ()*RADTODEG;
+		go->transform->SetLocalPosition(node.position);
+		go->transform->SetLocalRotation(node.rotation);
+		go->transform->SetLocalScale(node.scale);
 
 		if (node.mesh > 0)
 		{

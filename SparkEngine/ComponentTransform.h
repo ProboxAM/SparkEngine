@@ -15,19 +15,17 @@ private:
 	float4x4 local_transform_matrix;
 	float4x4 transform_matrix;
 
-public:
 	//global
 	float3 position;
-	float3 euler_rotation;
 	Quat rotation;
 	float3 scale;
 
 	//local
 	float3 local_position;
-	float3 local_euler_rotation;
 	Quat local_rotation;
 	float3 local_scale;
 
+public:
 	int GetChildCount();
 	void SetParent(ComponentTransform* parent);
 	ComponentTransform* GetParent();
@@ -38,7 +36,32 @@ public:
 	float3 EulerAngles();
 
 	void UpdateTransformMatrix();
+	void UpdateLocalTransformMatrix();
+	void UpdateChildrenTransformMatrix();
+	void UpdateOtherComponentsTransform();
+
 	float4x4 GetTransformMatrix();
+	void SetTransformMatrix(float4x4 transform_matrix);
+	float4x4 GetLocalTransformMatrix();
+	void SetLocalTransformMatrix(float4x4 local_transform_matrix);
+
+	//global
+	float3 GetPosition();
+	Quat GetRotation();
+	float3 GetScale();
+	void SetRotation(Quat rotation);
+	void SetPosition(float3 position);
+	void SetScale(float3 scale);
+
+	//local
+	float3 GetLocalPosition();
+	Quat GetLocalRotation();
+	float3 GetLocalRotationToEuler();
+	float3 GetLocalScale();
+	void SetLocalRotationFromEuler(float3 euler_rotation);
+	void SetLocalRotation(Quat rotation);
+	void SetLocalPosition(float3 position);
+	void SetLocalScale(float3 scale);
 
 	bool Save(const nlohmann::json::iterator& it);
 

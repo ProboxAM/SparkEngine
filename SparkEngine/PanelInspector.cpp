@@ -45,19 +45,19 @@ void PanelInspector::Draw()
 			{
 				if (ImGui::CollapsingHeader("Transform"))
 				{
-					float* p = (float*)&go->transform->local_position;
+					float* p = (float*)&go->transform->GetLocalPosition();
 					if (ImGui::InputFloat3("Position", p, 2)) {
-						go->transform->UpdateTransformMatrix();
+						go->transform->SetLocalPosition((float3)p);
 					}
 
-					float* r = (float*)&go->transform->local_euler_rotation;
+					float* r = (float*)&go->transform->GetLocalRotationToEuler();
 					if(ImGui::InputFloat3("Rotation", r, 2)) {
-						go->transform->UpdateTransformMatrix();
+						go->transform->SetLocalRotationFromEuler((float3)r);
 					}
 
-					float* s = (float*)&go->transform->local_scale;
+					float* s = (float*)&go->transform->GetLocalScale();
 					if (ImGui::InputFloat3("Scale", s, 2)) {
-						go->transform->UpdateTransformMatrix();
+						go->transform->SetLocalScale((float3)s);
 					}
 				}
 			}

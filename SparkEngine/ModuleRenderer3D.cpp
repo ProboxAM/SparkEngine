@@ -444,6 +444,31 @@ void ModuleRenderer3D::DrawOutline(const ResourceMesh * m, const Color color, co
 	glLineWidth(1);
 
 	glPopMatrix();*/
+
+
+	glColor3f((GLfloat)color.r, (GLfloat)color.g, (GLfloat)color.b);
+	glLineWidth(2.f);
+
+	glPolygonMode(GL_FRONT, GL_LINE);
+
+	glPushMatrix();
+	glMultMatrixf((float*)&mtransform.Transposed());
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
+	glVertexPointer(3, GL_FLOAT, 0, nullptr);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
+
+	glDrawElements(GL_TRIANGLES, m->total_indices, GL_UNSIGNED_INT, nullptr);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glColor3f(1.f, 1.f, 1.f);
+	glLineWidth(1.f);
+
+	glPopMatrix();
+
 }
 
 //Resize texture buffer of Scene rendering

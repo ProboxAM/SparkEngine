@@ -29,12 +29,9 @@ void ComponentMesh::Update(float dt)
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
 	if (mesh && App->renderer3D->c_camera->frustum.ContainsOrIntersectsAABB(gameobject->global_aabb)) {
-		if (App->scene->selected_gameobject == gameobject) {
-			float4x4 transform_scaled = float4x4::FromTRS(gameobject->transform->position, gameobject->transform->rotation,
-				{ gameobject->transform->scale.x + 0.1f, gameobject->transform->scale.y + 0.1f, gameobject->transform->scale.z + 0.1f });
-			App->renderer3D->DrawOutline(mesh, { 0.f, 1.f, 0.f }, transform_scaled);
-		}
 		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform);
+		if (App->scene->selected_gameobject == gameobject)
+			App->renderer3D->DrawOutline(mesh, { 0.9f, 1.f, 0.1f }, transform);
 	}
 
 	if (debug_vertex_normal)
