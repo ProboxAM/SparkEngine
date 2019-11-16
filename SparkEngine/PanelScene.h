@@ -42,7 +42,6 @@ private:
 private:
 	ImVec2 screen_pos;
 	float w, h;
-	std::string mode;
 };
 
 #endif // !_PANEL_SCENE_H_

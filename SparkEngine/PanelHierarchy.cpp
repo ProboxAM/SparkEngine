@@ -36,13 +36,14 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 
 	if (App->scene->selected_gameobject)
 	{
-		if (App->scene->selected_gameobject == ct->gameobject) {
-			node_flags |= ImGuiTreeNodeFlags_Selected;
-		}
 		if (!ct->IsChild(App->scene->selected_gameobject->transform)) {
 			node_flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		}
 		else node_flags |= ImGuiTreeNodeFlags_DefaultOpen;
+
+		if (App->scene->selected_gameobject == ct->gameobject) {
+			node_flags |= ImGuiTreeNodeFlags_Selected;
+		}
 	}
 
 	if (ct->GetChildCount() > 0)
