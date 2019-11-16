@@ -215,7 +215,7 @@ bool MeshImporter::SaveMesh(ResourceMesh* mesh)
 	// First store ranges
 	uint bytes = sizeof(ranges); 
 	memcpy(cursor, ranges, bytes);
-	cursor += bytes; 
+	cursor += bytes;
 	
 	// Store indices
 	bytes = sizeof(uint) * mesh->total_indices;

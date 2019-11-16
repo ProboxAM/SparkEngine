@@ -60,25 +60,21 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 {
 	std::string meta_file = new_file_in_assets;
 	meta_file.append(".meta");
-	uint id;
+
+	Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type); ;
 
 	if (App->fsystem->Exists(meta_file.c_str()))
-	{
-		id = GetIDFromMeta(meta_file);
-		++last_id;
-	}
-	else
-		id = ++last_id;
+		LoadMeta(meta_file.c_str(), meta, type);	
 
 	bool import_success = false;
 	std::string output_file;
 	switch (type)
 	{
 	case Resource::R_TEXTURE:
-		import_success = App->importer->texture->Import(new_file_in_assets, output_file, id);
+		import_success = App->importer->texture->Import(new_file_in_assets, output_file, (ResourceTexture::TextureMetaFile*) meta);
 		break;
 	case Resource::R_MODEL:
-		import_success = App->importer->model->Import(new_file_in_assets, output_file, id);
+		import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*) meta);
 		break;
 	case Resource::R_SCENE:
 		break;
@@ -90,12 +86,13 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 
 	if (import_success)
 	{
-		Resource* resource = CreateResource(type, id);
+		Resource* resource = CreateResource(type, meta->id);
 		resource->SetFile(new_file_in_assets);
 		resource->SetExportedFile(output_file);
+		resource->meta = meta;
 	}
 
-	return id;
+	return meta->id;
 }
 
 uint ModuleResources::GenerateNewUID()
@@ -161,7 +158,6 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
 Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 {
 	Resource* r = nullptr;
-	++last_id;
 
 	switch (type)
 	{
@@ -249,4 +245,51 @@ uint ModuleResources::GetIDFromMeta(std::string file)
 	nlohmann::json j = nlohmann::json::parse(i);
 
 	return j["id"];
+}
+
+bool ModuleResources::LoadMeta(const char* file, Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
+{
+	switch (type)
+	{
+	case Resource::RESOURCE_TYPE::R_TEXTURE:
+		App->importer->texture->LoadMeta(file, (ResourceTexture::TextureMetaFile*) meta);
+		break;
+	case Resource::RESOURCE_TYPE::R_MODEL:
+		App->importer->model->LoadMeta(file, (ResourceModel::ModelMetaFile*) meta);
+		break;
+	case Resource::RESOURCE_TYPE::R_SCENE:
+
+		break;
+	case Resource::RESOURCE_TYPE::R_NONE:
+		break;
+	default:
+		break;
+	}
+
+	return true;
+}
+
+Resource::MetaFile* ModuleResources::CreateMeta(const char* file, Resource::RESOURCE_TYPE type)
+{
+	Resource::MetaFile* meta;
+	switch (type)
+	{
+	case Resource::RESOURCE_TYPE::R_TEXTURE:
+		meta = new ResourceTexture::TextureMetaFile();
+		break;
+	case Resource::RESOURCE_TYPE::R_MODEL:
+		meta = new ResourceModel::ModelMetaFile();
+		break;
+	case Resource::RESOURCE_TYPE::R_SCENE:
+
+		break;
+	case Resource::RESOURCE_TYPE::R_NONE:
+		break;
+	default:
+		break;
+	}
+
+	meta->id = ++last_id;
+
+	return meta;
 }

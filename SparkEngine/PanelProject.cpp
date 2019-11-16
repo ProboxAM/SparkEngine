@@ -80,14 +80,12 @@ std::string PanelProject::FitTextToImage(std::string text)
 	uint length = text.size();
 
 	uint text_size = ImGui::CalcTextSize(text.c_str()).x;
-	uint dots_size = ImGui::CalcTextSize("...").x;
 
 	if (text_size > image_size)
 	{
 		uint char_size = text_size / length;
-		uint new_length = ((image_size - dots_size) / char_size);
+		uint new_length = (image_size / char_size);
 		fitted_text = fitted_text.substr(0, new_length);
-		fitted_text.append("...");
 	}
 
 	return fitted_text;
