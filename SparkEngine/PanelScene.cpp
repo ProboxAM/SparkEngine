@@ -23,8 +23,7 @@ PanelScene::PanelScene(bool active): Panel(active)
 
 PanelScene::~PanelScene()
 {
-	guizmo_mode = ImGuizmo::MODE::LOCAL;
-	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+
 }
 
 void PanelScene::Draw()
@@ -75,6 +74,8 @@ void PanelScene::Draw()
 
 void PanelScene::Start()
 {
+	guizmo_mode = ImGuizmo::MODE::LOCAL;
+	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 }
 
 bool PanelScene::IsInside(const float2& pos) const
