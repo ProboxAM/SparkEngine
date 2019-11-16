@@ -133,6 +133,11 @@ Quat ComponentTransform::GetRotation()
 	return rotation;
 }
 
+float3 ComponentTransform::GetRotationToEuler()
+{
+	return rotation.ToEulerXYZ() * RADTODEG;
+}
+
 float3 ComponentTransform::GetScale()
 {
 	return scale;
@@ -141,16 +146,26 @@ float3 ComponentTransform::GetScale()
 void ComponentTransform::SetRotation(Quat rotation)
 {
 	this->rotation = rotation;
+	SetTransformMatrix(float4x4::FromTRS(position, this->rotation, scale));
+}
+
+void ComponentTransform::SetRotationFromEuler(float3 euler_rotation)
+{
+	rotation = Quat::FromEulerXYZ(euler_rotation.x * DEGTORAD, euler_rotation.y* DEGTORAD, euler_rotation.z* DEGTORAD);
+	SetTransformMatrix(float4x4::FromTRS(position, this->rotation, scale));
 }
 
 void ComponentTransform::SetPosition(float3 position)
 {
 	this->position = position;
+	SetTransformMatrix(float4x4::FromTRS(this->position, rotation, scale));
+
 }
 
 void ComponentTransform::SetScale(float3 scale)
 {
 	this->scale = scale;
+	SetTransformMatrix(float4x4::FromTRS(position, rotation, this->scale));
 }
 
 float3 ComponentTransform::GetLocalPosition()

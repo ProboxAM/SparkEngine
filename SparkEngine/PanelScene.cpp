@@ -66,6 +66,9 @@ void PanelScene::Draw()
 		bool wireframe = App->renderer3D->IsWireframeEnabled();
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
+		if (ImGui::Checkbox(mode.c_str(), &App->scene->global_mode)) {
+			SetGlobalMode(App->scene->global_mode);
+		}
 		ImGui::EndMenuBar();
 	}
 
@@ -76,6 +79,7 @@ void PanelScene::Start()
 {
 	guizmo_mode = ImGuizmo::MODE::LOCAL;
 	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+	mode = "Local";
 }
 
 bool PanelScene::IsInside(const float2& pos) const
@@ -133,5 +137,17 @@ void PanelScene::DrawTransformGuizmo()
 	if (ImGuizmo::IsUsing())
 	{
 		App->scene->selected_gameobject->transform->SetTransformMatrix(transform.Transposed());
+	}
+}
+
+void PanelScene::SetGlobalMode(bool on)
+{
+	if (on) {
+		mode = "World";
+		guizmo_mode = ImGuizmo::MODE::WORLD;
+	}
+	else {
+		mode = "Local";
+		guizmo_mode = ImGuizmo::MODE::LOCAL;
 	}
 }

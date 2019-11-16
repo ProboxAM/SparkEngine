@@ -21,6 +21,8 @@ public:
 	GameObject* selected_gameobject = nullptr;
 	std::map<uint,GameObject*> gameobjects;
 
+	bool global_mode = false;
+
 public:
 	ModuleScene(bool start_enabled = true);
 	~ModuleScene();

@@ -48,8 +48,10 @@ public:
 	//global
 	float3 GetPosition();
 	Quat GetRotation();
+	float3 GetRotationToEuler();
 	float3 GetScale();
 	void SetRotation(Quat rotation);
+	void SetRotationFromEuler(float3 euler_rotation);
 	void SetPosition(float3 position);
 	void SetScale(float3 scale);
 

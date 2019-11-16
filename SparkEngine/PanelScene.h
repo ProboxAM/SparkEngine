@@ -37,10 +37,12 @@ private:
 	void GetSizeWithAspectRatio(int current_width, int current_height, int wanted_width, int wanted_height, int& new_width, int& new_height);
 	void HandleTransformInputs();
 	void DrawTransformGuizmo();
+	void SetGlobalMode(bool on);
 
 private:
 	ImVec2 screen_pos;
 	float w, h;
+	std::string mode;
 };
 
 #endif // !_PANEL_SCENE_H_
