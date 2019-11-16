@@ -41,7 +41,7 @@ public:
 	void SetExportedFile(std::string f);
 	virtual void UnLoad() {}
 
-	MetaFile* meta;
+	MetaFile* meta = nullptr;
 protected:
 	//virtual void Save(Config& config) const;
 	//virtual void Load(const Config& config);

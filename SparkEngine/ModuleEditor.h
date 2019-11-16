@@ -39,6 +39,7 @@ public:
 	std::vector<Panel*> GetPanels() {
 		return panels;
 	}
+	Panel* GetPanel(Panel_Type type);
 
 private:
 	std::vector<Panel*> panels;

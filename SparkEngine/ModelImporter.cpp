@@ -115,13 +115,17 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
 
-		for each (ResourceModel::ModelNode node in nodes)
+		if (!meta->loaded)
 		{
-			meta->meshes.push_back(node.mesh);
+			for each (ResourceModel::ModelNode node in nodes)
+			{
+				meta->meshes.push_back(node.mesh);
+			}
+			meta->exported_file = output_file;
+			meta->original_file = file;
+			meta->file = std::string(file) + ".meta";
 		}
-		meta->exported_file = output_file;
-		meta->original_file = file;
-		meta->file = std::string(file) + ".meta";
+
 		SaveMeta(meta);
 
 		aiReleaseImport(scene);
