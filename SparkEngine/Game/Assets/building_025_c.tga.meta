@@ -1,4 +1,10 @@
 {
-    "id": 17,
-    "original_file": "Assets/building_025_c.tga"
+    "compression": 2,
+    "exported_file": "Library/Textures/12.dds",
+    "id": 12,
+    "mag_filter": 0,
+    "min_filter": 0,
+    "original_file": "Assets/building_025_c.tga.meta",
+    "wrap_s": 0,
+    "wrap_t": 0
 }

@@ -63,11 +63,18 @@ bool TextureImporter::Load(ResourceTexture* tex)
 {
 	uint image_id;
 
+	ResourceTexture::TextureMetaFile* meta = (ResourceTexture::TextureMetaFile*) tex->meta;
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
 	if (ilLoadImage(tex->GetExportedFile()))
 	{
 		tex->buffer_id = ilutGLBindTexImage();
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, meta->GetWrapModeS());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, meta->GetWrapModeT());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, meta->GetMagFilter());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, meta->GetMinFilter());
+
 		tex->width = ilGetInteger(IL_IMAGE_WIDTH);
 		tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
 		tex->mips = ilGetInteger(IL_NUM_MIPMAPS);
@@ -88,6 +95,7 @@ bool TextureImporter::Load(ResourceTexture* tex)
 
 		tex->bpp = ilGetInteger(IL_IMAGE_BPP);
 		tex->size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->GetFile(), tex->width, tex->height, tex->format.c_str(), tex->size);
@@ -107,7 +115,7 @@ bool TextureImporter::Import(const void * buffer, uint size, std::string & outpu
 	return true;
 }
 
-bool TextureImporter::Import(const char* import_file, std::string& output_file, uint id)
+bool TextureImporter::Import(const char* import_file, std::string& output_file, ResourceTexture::TextureMetaFile* meta)
 {
 	bool ret = false;
 
@@ -118,16 +126,22 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 		ilEnable(IL_FILE_OVERWRITE);
 		ILuint size;
 		ILubyte *data;
-		ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use 
+
+		ilSetInteger(IL_DXTC_FORMAT, meta->GetCompression()); // To pick a specific DXT compression use 
+
 		size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer 
 		if (size > 0) {
 			data = new ILubyte[size]; // allocate data buffer 
 			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
 			{
-				std::string file_name = std::to_string(id);
+				std::string file_name = std::to_string(meta->id);
 				output_file = LIBRARY_TEXTURES_FOLDER + file_name + TEXTURE_EXTENSION;
 				ret = App->fsystem->Save(output_file.c_str(), data, size);
-				CreateMeta(std::string(import_file), id);
+
+				meta->exported_file = output_file;
+				meta->original_file = import_file;
+				meta->file = std::string(import_file) + ".meta";
+				SaveMeta(meta);
 			}
 			RELEASE_ARRAY(data);
 		}
@@ -172,15 +186,42 @@ void TextureImporter::LoadDefault(ResourceTexture* resource)
 	resource->size = sizeof(GLubyte) * 4 * 128 * 128;
 }
 
-bool TextureImporter::CreateMeta(std::string file, uint id)
+bool TextureImporter::LoadMeta(const char * file, ResourceTexture::TextureMetaFile* meta)
+{
+	std::ifstream i(file);
+	nlohmann::json json = nlohmann::json::parse(i);
+
+	meta->file = file;
+	meta->exported_file = json["exported_file"].get<std::string>();
+	meta->original_file = json["original_file"].get<std::string>();
+	meta->id = json["id"];
+
+	meta->min_filter = json["min_filter"];
+	meta->mag_filter = json["mag_filter"];
+	meta->wrap_s = json["wrap_s"];
+	meta->wrap_t = json["wrap_t"];
+	meta->compression = json["compression"];
+
+	meta->loaded = true;
+
+	return true;
+}
+
+bool TextureImporter::SaveMeta(ResourceTexture::TextureMetaFile* meta)
 {
 	nlohmann::json meta_file;
 	meta_file = {
-		{ "original_file", file },
-		{ "id", id }
+		{ "original_file", meta->file },
+		{ "exported_file", meta->exported_file },
+		{ "id", meta->id },
+		{ "min_filter", meta->min_filter },
+		{ "mag_filter", meta->mag_filter },
+		{ "wrap_s", meta->wrap_s },
+		{ "wrap_t", meta->wrap_t },
+		{ "compression", meta->compression }
 	};
 
-	std::ofstream o(file + ".meta");
+	std::ofstream o(meta->file);
 	o << std::setw(4) << meta_file << std::endl;
 
 	return true;

@@ -1,7 +1,9 @@
 #include "PanelInspector.h"
 #include "Application.h"
+#include "ModuleEditor.h"
 #include "ModuleScene.h"
 #include "GameObject.h"
+#include "PanelProject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
@@ -154,6 +156,11 @@ void PanelInspector::Draw()
 
 			ImGui::EndPopup();
 		}
+	}
+	else if (((PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT))->selected_file != "")
+	{
+		std::string file = ((PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT))->selected_file;
+		ImGui::Text(file.c_str());
 	}
 	ImGui::End();
 }

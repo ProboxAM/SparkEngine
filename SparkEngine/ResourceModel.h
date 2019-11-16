@@ -18,6 +18,34 @@ public:
 		uint mesh = 0;
 		uint texture = 0;
 	};
+
+	struct ModelMetaFile : public MetaFile
+	{
+		std::vector<uint> meshes;
+
+		enum MODEL_IMPORT_SETTING { MAX_QUALITY, QUALITY, FAST, CUSTOM };
+		MODEL_IMPORT_SETTING setting = MAX_QUALITY;
+
+		bool find_instances = true;
+		bool validate_structures = true;
+		bool optimize_meshes = true;
+		bool calc_tangent_space = true;
+		bool gen_smooth_normals = true;
+		bool join_vertices = true;
+		bool improve_cache_locality = true;
+		bool limit_bone_weigths = true;
+		bool remove_redundant_mats = true;
+		bool split_large_meshes = true;
+		bool triangulate = true;
+		bool gen_uv_coords = true;
+		bool sort_by_type = true;
+		bool find_degenerates = true;
+		bool find_invalid_data = true;
+
+		uint GetImportSettings();
+		void SetImportSettings(MODEL_IMPORT_SETTING setting);
+	};
+
 public:
 	ResourceModel(uint id);
 	~ResourceModel();

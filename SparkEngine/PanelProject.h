@@ -3,15 +3,7 @@
 
 #include "Panel.h"
 
-struct ProjectNode
-{
-	std::string name;
-	ProjectNode* parent;
-	std::vector<ProjectNode*> childs;
-};
-
-class PanelProject :
-	public Panel
+class PanelProject : public Panel
 {
 public:
 	PanelProject(bool active);
@@ -19,10 +11,11 @@ public:
 
 	void Draw();
 	void DrawFiles();
-	std::string FitTextToImage(std::string text);
+	
+	std::string selected_file = "";
 
 private:
-	uint columns, image_size, spacing, offset;
+	uint text_size, image_size;
 };
 
 

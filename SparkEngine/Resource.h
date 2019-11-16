@@ -17,6 +17,15 @@ public:
 		R_NONE
 	};
 
+	struct MetaFile {
+		bool loaded = false;
+
+		std::string file;
+		std::string original_file;
+		std::string exported_file;
+		uint id;
+	};
+
 public:
 	~Resource();
 	Resource(uint id, RESOURCE_TYPE type);
@@ -32,6 +41,7 @@ public:
 	void SetExportedFile(std::string f);
 	virtual void UnLoad() {}
 
+	MetaFile* meta = nullptr;
 protected:
 	//virtual void Save(Config& config) const;
 	//virtual void Load(const Config& config);

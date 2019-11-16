@@ -183,6 +183,11 @@ bool ModuleEditor::IsInsideSceneWindow(float2 pos)
 	return ((PanelScene*)panels[SCENE])->IsInside(pos);
 }
 
+Panel * ModuleEditor::GetPanel(Panel_Type type)
+{
+	return panels[type];
+}
+
 void ModuleEditor::BeginDockSpace()
 {
 	ImGuiViewport* viewport = ImGui::GetMainViewport();

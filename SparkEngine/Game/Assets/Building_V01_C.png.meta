@@ -1,4 +1,10 @@
 {
+    "compression": 2,
+    "exported_file": "Library/Textures/2.dds",
     "id": 2,
-    "original_file": "Assets/Building_V01_C.png"
+    "mag_filter": 0,
+    "min_filter": 0,
+    "original_file": "Assets/Building_V01_C.png.meta",
+    "wrap_s": 0,
+    "wrap_t": 0
 }

@@ -20,7 +20,7 @@ uint Resource::GetID() const
 	return id;
 }
 
-const char * Resource::GetFile() const
+const char* Resource::GetFile() const
 {
 	return file.c_str();
 }

@@ -99,23 +99,35 @@ bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resourc
 }
 
 
-bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
+bool ModelImporter::Import(const char* file, std::string& output_file, ResourceModel::ModelMetaFile* meta)
 {
-	const aiScene* scene = aiImportFile(file, aiProcessPreset_TargetRealtime_MaxQuality);
+	uint flags;
 
-	std::vector<uint> meshes_id;
-	std::string meta_file = file;
-	meta_file += ".meta";
-	if (App->fsystem->Exists(meta_file.c_str())) //Read meta to get meshes ids
-		GetMeshesID(meta_file, meshes_id);
+	flags = meta->GetImportSettings();
+
+	const aiScene* scene = aiImportFile(file, flags);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		std::vector<ResourceModel::ModelNode> nodes;
-		ImportNode(scene->mRootNode, scene, 0, nodes, meshes_id);
-		output_file = LIBRARY_MODEL_FOLDER + std::to_string(id) + MODEL_EXTENSION;
+		ImportNode(scene->mRootNode, scene, 0, nodes, meta);
+
+		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
-		CreateMeta(std::string(file), id, nodes);
+
+		if (!meta->loaded)
+		{
+			for each (ResourceModel::ModelNode node in nodes)
+			{
+				meta->meshes.push_back(node.mesh);
+			}
+			meta->exported_file = output_file;
+			meta->original_file = file;
+			meta->file = std::string(file) + ".meta";
+		}
+
+		SaveMeta(meta);
+
 		aiReleaseImport(scene);
 		return true;
 	}
@@ -124,19 +136,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, uint id)
 	return false;
 }
 
-void ModelImporter::GetMeshesID(std::string file, std::vector<uint>& meshes_id)
-{
-	std::ifstream i(file);
-	nlohmann::json json = nlohmann::json::parse(i);
-
-	nlohmann::json meshes = json.find("meshes").value();
-	for (nlohmann::json::iterator it = meshes.begin(); it != meshes.end(); ++it)
-	{
-		meshes_id.push_back(it.value());
-	}
-}
-
-void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, std::vector<uint> meshes_id)
+void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile* meta)
 {
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
@@ -160,7 +160,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	if (node->mNumMeshes > 0)
 	{
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now, sry
-		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meshes_id.size() > 0 ? meshes_id[index] : 0);
+		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : 0);
 
 		//Check for material, and then load texture if it has, otherwise apply default texture	
 		aiString texture_path;
@@ -182,7 +182,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	{
 		for (int i = 0; i < node->mNumChildren; i++)
 		{
-			ImportNode(node->mChildren[i], scene, index, nodes, meshes_id);
+			ImportNode(node->mChildren[i], scene, index, nodes, meta);
 		}
 	}
 }
@@ -221,22 +221,78 @@ bool ModelImporter::Save(std::string file, const std::vector<ResourceModel::Mode
 	return true;
 }
 
-bool ModelImporter::CreateMeta(std::string file, uint id, const std::vector<ResourceModel::ModelNode>& nodes)
+bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 {
 	nlohmann::json meta_file;
 	meta_file = {
-		{ "original_file", file },
-		{ "id", id },
+		{ "original_file", meta->file },
+		{ "exported_file", meta->exported_file},
+		{ "id", meta->id },
+		{ "setting", meta->setting },
+		{ "find_instances", meta->find_instances },
+		{ "validate_structures", meta->validate_structures },
+		{ "optimize_meshes", meta->optimize_meshes },
+		{ "calc_tangent_space", meta->calc_tangent_space },
+		{ "gen_smooth_normals", meta->gen_smooth_normals },
+		{ "join_vertices", meta->join_vertices },
+		{ "improve_cache_locality", meta->improve_cache_locality },
+		{ "limit_bone_weigths", meta->limit_bone_weigths },
+		{ "remove_redundant_mats", meta->remove_redundant_mats },
+		{ "split_large_meshes" ,meta->split_large_meshes },
+		{ "triangulate", meta->triangulate },
+		{ "gen_uv_coords", meta->gen_uv_coords },
+		{ "sort_by_type", meta->sort_by_type },
+		{ "find_degenerates", meta->find_degenerates },
+		{ "find_invalid_data", meta->find_invalid_data },
 		{ "meshes",{}}
 	};
+
 	nlohmann::json::iterator meshes = meta_file.find("meshes");
-	for each (ResourceModel::ModelNode node in nodes)
+	for each (uint mesh in meta->meshes)
 	{
-		meshes.value().push_back(node.mesh);
+		meshes.value().push_back(mesh);
 	}
 
-	std::ofstream o(file + ".meta");
+	std::ofstream o(meta->file);
 	o << std::setw(4) << meta_file << std::endl;
 
 	return true;
+}
+
+bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* meta)
+{
+	std::ifstream i(file);
+	nlohmann::json json = nlohmann::json::parse(i);
+
+	meta->file = file;
+	meta->exported_file = json["exported_file"].get<std::string>();
+	meta->original_file = json["original_file"].get<std::string>();
+	meta->id = json["id"];
+
+	meta->setting = json["setting"];
+	meta->find_instances = json["find_instances"];
+	meta->validate_structures = json["validate_structures"];
+	meta->optimize_meshes = json["optimize_meshes"];
+	meta->calc_tangent_space = json["calc_tangent_space"];
+	meta->gen_smooth_normals = json["gen_smooth_normals"];
+	meta->join_vertices = json["join_vertices"];
+	meta->improve_cache_locality = json["improve_cache_locality"];
+	meta->limit_bone_weigths = json["limit_bone_weigths"];
+	meta->remove_redundant_mats = json["remove_redundant_mats"];
+	meta->split_large_meshes = json["split_large_meshes"];
+	meta->triangulate = json["triangulate"];
+	meta->gen_uv_coords = json["gen_uv_coords"];
+	meta->sort_by_type = json["sort_by_type"];
+	meta->find_degenerates = json["find_degenerates"];
+	meta->find_invalid_data = json["find_invalid_data"];
+
+	nlohmann::json meshes = json.find("meshes").value();
+	for (nlohmann::json::iterator it = meshes.begin(); it != meshes.end(); ++it)
+	{
+		meta->meshes.push_back(it.value());
+	}
+
+	meta->loaded = true;
+
+	return meta;
 }

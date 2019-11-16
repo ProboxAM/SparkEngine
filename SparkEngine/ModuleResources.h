@@ -27,6 +27,10 @@ private:
 	void LoadAssets();
 	uint GetIDFromMeta(std::string file);
 
+	bool LoadMeta(const char * file, Resource::MetaFile* meta, Resource::RESOURCE_TYPE type);
+
+	Resource::MetaFile* CreateMeta(const char * file, Resource::RESOURCE_TYPE type);
+
 private:
 	uint last_id = 1;
 	std::map<uint, Resource*> resources;
