@@ -33,6 +33,7 @@ public:
 	void AddChild(ComponentTransform* child);
 	void RemoveChild(ComponentTransform* child);
 	bool IsChild(ComponentTransform* ct);
+	bool IsDirectChild(ComponentTransform* ct);
 	float3 EulerAngles();
 
 	void UpdateTransformMatrix();

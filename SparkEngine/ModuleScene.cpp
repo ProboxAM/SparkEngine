@@ -355,6 +355,7 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 
 				if (local.Intersects(t, nullptr, nullptr)) {
 					selected_gameobject = it->second;
+					user_selected_GO = true;
 					return;
 				}
 			}

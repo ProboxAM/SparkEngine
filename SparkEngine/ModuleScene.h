@@ -62,6 +62,7 @@ public:
 	bool show_grid = true;
 	std::vector<float3> lines;
 
+	bool user_selected_GO = false;
 };
 
 #endif // !_MODULE_SCENE_H_
