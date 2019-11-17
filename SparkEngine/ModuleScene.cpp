@@ -22,6 +22,7 @@
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
 #include "PanelProject.h"
+#include "Quadtree.h"
 
 #include "glew/glew.h"
 
@@ -56,6 +57,9 @@ bool ModuleScene::Start()
 
 	GenerateGrid();
 
+	quad_tree = new Quadtree();
+	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
+
 	return true;
 }
 
@@ -82,6 +86,8 @@ bool ModuleScene::Draw()
 		DrawGrid();
 
 	root->Draw();
+
+	quad_tree->Draw();
 
 	return true;
 }
