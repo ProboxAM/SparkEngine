@@ -29,20 +29,20 @@ void PanelHierarchy::Draw()
 
 void PanelHierarchy::DrawNode(ComponentTransform * ct)
 {
-	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_SpanAvailWidth;
+	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 	node_iterator++;
 
 	ImGuiTreeNodeFlags node_flags = base_flags;
+
 
 	if (App->scene->selected_gameobject)
 	{
 		if (App->scene->selected_gameobject == ct->gameobject) {
 			node_flags |= ImGuiTreeNodeFlags_Selected;
 		}
-		if (!ct->IsChild(App->scene->selected_gameobject->transform)) {
-			node_flags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-		}
-		else node_flags |= ImGuiTreeNodeFlags_DefaultOpen;
+
+		if (ct->IsChild(App->scene->selected_gameobject->transform) && App->scene->user_selected_GO)ImGui::SetNextTreeNodeOpen(true);
+		if (ct->IsDirectChild(App->scene->selected_gameobject->transform) && App->scene->user_selected_GO) App->scene->user_selected_GO = false;
 	}
 
 	if (ct->GetChildCount() > 0)
@@ -53,8 +53,10 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		SetDragAndDropTarget(ct);
 		SetDragAndDropTargetCustom();
 
-		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
+		if (ImGui::IsItemClicked() && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing())
+		{
 			App->scene->selected_gameobject = ct->gameobject;
+			node_flags |= ImGuiTreeNodeFlags_Selected;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
 
@@ -78,13 +80,13 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 
 		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
 			App->scene->selected_gameobject = ct->gameobject;
+			node_flags |= ImGuiTreeNodeFlags_Selected;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
 
 		OnNodeRightClick();
 
 	}
-
 }
 
 void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)

@@ -66,8 +66,8 @@ void PanelScene::Draw()
 		bool wireframe = App->renderer3D->IsWireframeEnabled();
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
-		if (ImGui::Checkbox(mode.c_str(), &App->scene->global_mode)) {
-			SetGlobalMode(App->scene->global_mode);
+		if (ImGui::Button(mode.c_str())) {
+			SetGlobalMode(!App->scene->global_mode);
 		}
 		ImGui::EndMenuBar();
 	}
@@ -145,9 +145,11 @@ void PanelScene::SetGlobalMode(bool on)
 	if (on) {
 		mode = "World";
 		guizmo_mode = ImGuizmo::MODE::WORLD;
+		App->scene->global_mode = true;
 	}
 	else {
 		mode = "Local";
 		guizmo_mode = ImGuizmo::MODE::LOCAL;
+		App->scene->global_mode = false;
 	}
 }

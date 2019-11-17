@@ -51,6 +51,19 @@ bool ComponentTransform::IsChild(ComponentTransform * ct)
 	return ret;
 }
 
+bool ComponentTransform::IsDirectChild(ComponentTransform * ct)
+{
+	bool ret = false;
+
+	for (int i = 0; i < children.size() && !ret; i++)
+	{
+		if (children[i] == ct)
+			return true;
+	}
+
+	return ret;
+}
+
 float3 ComponentTransform::EulerAngles()
 {
 	return local_rotation.ToEulerXYZ();

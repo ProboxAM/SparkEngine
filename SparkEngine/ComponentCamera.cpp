@@ -92,10 +92,9 @@ float ComponentCamera::GetFrustumAspectRatio()
 
 void ComponentCamera::LookAt(float3 position)
 {
-	//TODO using teacher's code atm, must be changed.
-	float3 vector = position - frustum.pos;
+	float3 direction = position - frustum.pos;
 
-	float3x3 matrix = float3x3::LookAt(frustum.front, vector.Normalized(), frustum.up, float3::unitY);
+	float3x3 matrix = float3x3::LookAt(frustum.front, direction.Normalized(), frustum.up, float3::unitY);
 
 	frustum.front = (matrix.MulDir(frustum.front).Normalized());
 	frustum.up = (matrix.MulDir(frustum.up).Normalized());
