@@ -34,9 +34,10 @@ public:
 private:
 
 	void SelectedGOAsReference();
-	void CameraInputs();
+	void HandleCameraInputs();
 	void Focus();
 	void RotateAroundReference();
+	void HandleMouseClicking();
 
 public:
 
