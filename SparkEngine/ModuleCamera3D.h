@@ -30,6 +30,7 @@ public:
 
 	bool camera_inputs_active = true;
 	float movement_speed, focus_factor;
+	float sensibility = 0.005f;
 
 private:
 

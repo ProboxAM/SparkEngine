@@ -192,19 +192,18 @@ void ModuleCamera3D::Focus()//If theres a selected game object the camera looks 
 
 void ModuleCamera3D::RotateAroundReference()
 {
-	//TODO using teacher's code atm, must be changed.
 	int dx = -App->input->GetMouseXMotion();
 	int dy = -App->input->GetMouseYMotion();
 
-	float3 vector = c_camera->frustum.pos - reference;
+	float3 direction = c_camera->frustum.pos - reference;
 
-	Quat quat_y(c_camera->frustum.up, dx * 0.003);
-	Quat quat_x(c_camera->frustum.WorldRight(), dy * 0.003);
+	Quat quat_y(c_camera->frustum.up, dx*sensibility);
+	Quat quat_x(c_camera->frustum.WorldRight(), dy*sensibility);
 
-	vector = quat_x.Transform(vector);
-	vector = quat_y.Transform(vector);
+	direction = quat_x.Transform(direction);
+	direction = quat_y.Transform(direction);
 
-	c_camera->frustum.pos = vector + reference;
+	c_camera->frustum.pos = direction + reference;
 	LookAt(reference);
 }
 
