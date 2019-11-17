@@ -43,6 +43,12 @@ void PanelInspector::Draw()
 		if (ImGui::InputText("", &obj_name, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
 			App->scene->selected_gameobject->SetName(obj_name);
 		ImGui::PopID();
+		ImGui::SameLine();
+		bool is_static = App->scene->selected_gameobject->isStatic();
+		if(ImGui::Checkbox("Static:", &is_static))
+		{
+			App->scene->SetGameObjectStatic(App->scene->selected_gameobject, is_static);
+		}
 
 		ImGui::Separator();
 

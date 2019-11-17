@@ -64,6 +64,9 @@ public:
 	void GenerateGrid();
 	void DrawGrid();
 	void DeleteGameObjects();
+	void DeleteGameObject(GameObject * go);
+	void SetGameObjectStatic(GameObject * go, bool state);
+	void SetGameObjectStatic(GameObject * go);
 	bool show_grid = true;
 	std::vector<float3> lines;
 

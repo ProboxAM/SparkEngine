@@ -331,13 +331,16 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 void ModuleScene::OnMousePicking(const LineSegment &line)
 {
 	std::map<float, GameObject*> candidates;
-	for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
+	std::vector<GameObject*> intersections;
+	quad_tree->CollectIntersections(intersections, line);
+
+	for (std::vector<GameObject*>::iterator it = intersections.begin(); it != intersections.end(); ++it)
 	{
-		if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
-			if (line.Intersects(it->second->global_aabb)) {
+		if ((*it)->HasComponent(COMPONENT_TYPE::MESH)) {
+			if (line.Intersects((*it)->global_aabb)) {
 				float hit_near, hit_far;
-				if (line.Intersects(it->second->global_obb, hit_near, hit_far)) {
-					candidates.emplace(hit_near, it->second);
+				if (line.Intersects((*it)->global_obb, hit_near, hit_far)) {
+					candidates.emplace(hit_near, (*it));
 				}
 			}
 		}
@@ -413,4 +416,26 @@ void ModuleScene::DeleteGameObjects()
 	root->Delete();
 	gameobjects.clear();
 	root = nullptr;
+}
+
+void ModuleScene::DeleteGameObject(GameObject* go)
+{
+	for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
+	{
+		if (it->second == go)
+		{
+			it->second->Delete();
+			it = gameobjects.erase(it);
+			break;
+		}
+	}
+}
+
+void ModuleScene::SetGameObjectStatic(GameObject* go, bool state)
+{
+	go->SetStatic(state);
+	if (state)
+		quad_tree->InsertGameObject(go);
+	else
+		quad_tree->RemoveGameObject(go);
 }

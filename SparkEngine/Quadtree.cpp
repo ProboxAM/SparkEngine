@@ -1,5 +1,7 @@
+#include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "GameObject.h"
 #include "Quadtree.h"
 
 
@@ -33,6 +35,7 @@ void Quadtree::InsertGameObject(const GameObject * gameobject)
 
 void Quadtree::RemoveGameObject(const GameObject * gameobject)
 {
+	root->RemoveGameObject(gameobject);
 }
 
 void Quadtree::Draw()
@@ -42,9 +45,7 @@ void Quadtree::Draw()
 
 QuadtreeNode::QuadtreeNode()
 {
-	for (int i = 0; i < CHILDREN_SIZE; i++) {
-		children[i] = nullptr;
-	}
+
 }
 
 QuadtreeNode::~QuadtreeNode()
@@ -79,12 +80,22 @@ void QuadtreeNode::InsertGameObject(const GameObject * gameobject)
 
 void QuadtreeNode::RemoveGameObject(const GameObject * gameobject)
 {
-	
+	for (std::vector<const GameObject*>::iterator it = bucket.begin(); it != bucket.end();) {
+		if ((*it) == gameobject)
+		{
+			it = bucket.erase(it);
+			return;
+		}
+	}
+
+	for (int i = 0; i < CHILDREN_SIZE; i++) {
+		children[i]->RemoveGameObject(gameobject);
+	}
 }
 
 void QuadtreeNode::Draw()
 {
-	float3* corners;
+	float3 corners[8];
 	box.GetCornerPoints(corners);
 	App->renderer3D->DebugDrawCube(corners, { 0.0f, 1.0f, 0.0f });
 
@@ -100,37 +111,47 @@ void QuadtreeNode::Split()
 	AABB child_box;
 	float3 center = box.CenterPoint();
 
-	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y, center.z - (box.HalfSize().z / 2) }, box.HalfSize());
+	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y, center.z - (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
 	children[0] = new QuadtreeNode();
 	children[0]->Create(child_box);
 
-	child_box.SetFromCenterAndSize({center.x + (box.HalfSize().x/2), center.y, center.z - (box.HalfSize().z / 2) }, box.HalfSize());
+	child_box.SetFromCenterAndSize({ center.x + (box.HalfSize().x / 2), center.y, center.z - (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
 	children[1] = new QuadtreeNode();
 	children[1]->Create(child_box);
 
-	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y, center.z + (box.HalfSize().z / 2) }, box.HalfSize());
+	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y, center.z + (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
 	children[2] = new QuadtreeNode();
 	children[2]->Create(child_box);
 
-	child_box.SetFromCenterAndSize({center.x + (box.HalfSize().x/2), center.y, center.z + (box.HalfSize().z / 2) }, box.HalfSize());
+	child_box.SetFromCenterAndSize({center.x + (box.HalfSize().x/2), center.y, center.z + (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
 	children[3] = new QuadtreeNode();
 	children[3]->Create(child_box);
 }
 
 void QuadtreeNode::DistributeChildren()
 {
-	uint total_intersections = 0;
+	std::vector<uint> intersections;
 	for (std::vector<const GameObject*>::iterator it = bucket.begin(); it != bucket.end();) {
 		for (int i = 0; i < CHILDREN_SIZE; i++) {
 			if ((*it)->global_aabb.Intersects(children[i]->box)) {
-				children[i]->InsertGameObject((*it));
-				total_intersections++;
+				intersections.push_back(i);
 			}
-		}
-		
+		}	
 		//object intersects in every child box, so we keep it in the father
-		if (total_intersections < 4) {
-			it = bucket.erase(it);
+		if (intersections.size() == 4)
+			++it;
+		else
+		{
+			for each (uint index in intersections)
+			{
+				children[index]->InsertGameObject((*it));
+			}
+			it = bucket.erase(it);	
 		}
+		intersections.clear();
 	}
 }

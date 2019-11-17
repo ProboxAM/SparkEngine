@@ -16,6 +16,8 @@ public:
 	void SetFrustumFarPlaneDistance(float distance);
 	void SetFrustumFOV(float fov, bool degrees = false);
 
+	bool Intersects(AABB box);
+
 	Plane GetFrustumNearPlane();
 	float GetFrustumNearPlaneDistance();
 	Plane GetFrustumFarPlane();

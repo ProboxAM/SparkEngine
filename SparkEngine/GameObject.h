@@ -36,13 +36,14 @@ public:
 	bool HasComponent(COMPONENT_TYPE type);
 
 	void SetName(std::string name);
-	std::string GetName();
+	std::string GetName() const;
 
 	void SetTag(std::string tag);
-	std::string GetTag();
+	std::string GetTag() const;
 
-	bool isActive();
-	bool isStatic();
+	bool isActive() const;
+	bool isStatic() const;
+	void SetStatic(bool state);
 	void SetActive(bool active);
 	bool CompareTag(std::string tag);
 	bool Save(const nlohmann::json::iterator& it);

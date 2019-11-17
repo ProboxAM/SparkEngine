@@ -143,7 +143,7 @@ void GameObject::SetName(std::string name)
 	this->name = name;
 }
 
-std::string GameObject::GetName()
+std::string GameObject::GetName() const
 {
 	return name;
 }
@@ -153,19 +153,24 @@ void GameObject::SetTag(std::string tag)
 	this->tag = tag;
 }
 
-std::string GameObject::GetTag()
+std::string GameObject::GetTag() const
 {
 	return tag;
 }
 
-bool GameObject::isActive()
+bool GameObject::isActive() const
 {
 	return active;
 }
 
-bool GameObject::isStatic()
+bool GameObject::isStatic() const
 {
 	return is_static;
+}
+
+void GameObject::SetStatic(bool state)
+{
+	is_static = state;
 }
 
 void GameObject::SetActive(bool active)

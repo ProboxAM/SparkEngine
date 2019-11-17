@@ -65,13 +65,13 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 	{
 		LoadMeta(meta_file.c_str(), meta, type);
 		std::string mod_date;
-		App->fsystem->GetFileModificationDate(new_file_in_assets, mod_date);
+		/*App->fsystem->GetFileModificationDate(new_file_in_assets, mod_date);
 		if (meta->modification_date == mod_date)
 		{
 			needs_import = false;
 			import_success = true;
 			output_file = meta->exported_file;
-		}			
+		}	*/		
 	}
 		
 	if (needs_import)

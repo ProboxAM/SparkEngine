@@ -33,7 +33,7 @@ void ComponentMesh::Draw()
 {
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
-	if (mesh && App->renderer3D->c_camera->frustum.ContainsOrIntersectsAABB(gameobject->global_aabb)) {
+	if (mesh && App->renderer3D->c_camera->Intersects(gameobject->global_aabb)) {
 		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform);
 		if (App->scene->selected_gameobject == gameobject)
 			App->renderer3D->DrawOutline(mesh, { 0.9f, 1.f, 0.1f }, transform);
