@@ -138,6 +138,7 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 				output_file = LIBRARY_TEXTURES_FOLDER + file_name + TEXTURE_EXTENSION;
 				ret = App->fsystem->Save(output_file.c_str(), data, size);
 
+				App->fsystem->GetFileModificationDate(import_file, meta->modification_date);
 				meta->exported_file = output_file;
 				meta->original_file = import_file;
 				meta->file = std::string(import_file) + ".meta";
@@ -195,6 +196,7 @@ bool TextureImporter::LoadMeta(const char * file, ResourceTexture::TextureMetaFi
 	meta->exported_file = json["exported_file"].get<std::string>();
 	meta->original_file = json["original_file"].get<std::string>();
 	meta->id = json["id"];
+	meta->modification_date = json["modification_date"].get<std::string>();
 
 	meta->min_filter = json["min_filter"];
 	meta->mag_filter = json["mag_filter"];
@@ -214,6 +216,7 @@ bool TextureImporter::SaveMeta(ResourceTexture::TextureMetaFile* meta)
 		{ "original_file", meta->file },
 		{ "exported_file", meta->exported_file },
 		{ "id", meta->id },
+		{ "modification_date", meta->modification_date},
 		{ "min_filter", meta->min_filter },
 		{ "mag_filter", meta->mag_filter },
 		{ "wrap_s", meta->wrap_s },

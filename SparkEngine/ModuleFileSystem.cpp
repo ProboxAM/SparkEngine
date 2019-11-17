@@ -129,7 +129,6 @@ void ModuleFileSystem::GetFilesFiltered(const char* directory, std::vector<std::
 	char **i;
 
 	std::string dir(directory);
-
 	for (i = rc; *i != nullptr; i++)
 	{
 		if (!PHYSFS_isDirectory((dir + *i).c_str()) && !HasExtension((*i), filter))
@@ -161,6 +160,12 @@ bool ModuleFileSystem::HasExtension(const char* path, std::string extension)
 	SplitFilePath(path, nullptr, nullptr, &path_extension);
 
 	return path_extension == extension;
+}
+
+bool ModuleFileSystem::GetFileModificationDate(const char* path, std::string& date)
+{
+	date = std::to_string(PHYSFS_getLastModTime(path));
+	return true;
 }
 
 bool ModuleFileSystem::CopyFromOutsideFS(const char * full_path, const char * destination)

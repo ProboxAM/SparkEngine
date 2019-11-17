@@ -121,6 +121,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 			{
 				meta->meshes.push_back(node.mesh);
 			}
+			App->fsystem->GetFileModificationDate(file, meta->modification_date);
 			meta->exported_file = output_file;
 			meta->original_file = file;
 			meta->file = std::string(file) + ".meta";
@@ -228,6 +229,7 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 		{ "original_file", meta->file },
 		{ "exported_file", meta->exported_file},
 		{ "id", meta->id },
+		{ "modification_date", meta->modification_date },
 		{ "setting", meta->setting },
 		{ "find_instances", meta->find_instances },
 		{ "validate_structures", meta->validate_structures },
@@ -268,6 +270,7 @@ bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* met
 	meta->exported_file = json["exported_file"].get<std::string>();
 	meta->original_file = json["original_file"].get<std::string>();
 	meta->id = json["id"];
+	meta->modification_date = json["modification_date"].get<std::string>();
 
 	meta->setting = json["setting"];
 	meta->find_instances = json["find_instances"];

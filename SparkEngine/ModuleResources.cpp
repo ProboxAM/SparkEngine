@@ -53,30 +53,44 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 
 uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
 {
-	std::string meta_file = new_file_in_assets;
-	meta_file.append(".meta");
-
-	Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type); ;
-
-	if (App->fsystem->Exists(meta_file.c_str()))
-		LoadMeta(meta_file.c_str(), meta, type);	
-
+	bool needs_import = true;
 	bool import_success = false;
 	std::string output_file;
-	switch (type)
+
+	std::string meta_file = new_file_in_assets;
+	meta_file.append(".meta");
+	Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
+
+	if (App->fsystem->Exists(meta_file.c_str()))
 	{
-	case Resource::R_TEXTURE:
-		import_success = App->importer->texture->Import(new_file_in_assets, output_file, (ResourceTexture::TextureMetaFile*) meta);
-		break;
-	case Resource::R_MODEL:
-		import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*) meta);
-		break;
-	case Resource::R_SCENE:
-		break;
-	case Resource::R_NONE:
-		break;
-	default:
-		break;
+		LoadMeta(meta_file.c_str(), meta, type);
+		std::string mod_date;
+		App->fsystem->GetFileModificationDate(new_file_in_assets, mod_date);
+		if (meta->modification_date == mod_date)
+		{
+			needs_import = false;
+			import_success = true;
+			output_file = meta->exported_file;
+		}			
+	}
+		
+	if (needs_import)
+	{
+		switch (type)
+		{
+		case Resource::R_TEXTURE:
+			import_success = App->importer->texture->Import(new_file_in_assets, output_file, (ResourceTexture::TextureMetaFile*) meta);
+			break;
+		case Resource::R_MODEL:
+			import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*) meta);
+			break;
+		case Resource::R_SCENE:
+			break;
+		case Resource::R_NONE:
+			break;
+		default:
+			break;
+		}
 	}
 
 	if (import_success)
