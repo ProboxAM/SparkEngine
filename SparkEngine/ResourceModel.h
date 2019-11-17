@@ -44,6 +44,12 @@ public:
 
 		uint GetImportSettings();
 		void SetImportSettings(MODEL_IMPORT_SETTING setting);
+		uint GetSelectedPreset() {
+			return setting;
+		}
+		void SetDefault() {
+			SetImportSettings(MAX_QUALITY);
+		}
 	};
 
 public:

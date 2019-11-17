@@ -18,13 +18,13 @@ uint ResourceModel::ModelMetaFile::GetImportSettings()
 	switch (setting)
 	{
 	case MAX_QUALITY:
-		flags |= aiProcessPreset_TargetRealtime_Fast;
+		flags |= aiProcessPreset_TargetRealtime_MaxQuality;
 		break;
 	case QUALITY:
 		flags |= aiProcessPreset_TargetRealtime_Quality;
 		break;
 	case FAST:
-		flags |= aiProcessPreset_TargetRealtime_MaxQuality;
+		flags |= aiProcessPreset_TargetRealtime_Fast;
 		break;
 	case CUSTOM:
 		if (calc_tangent_space)
@@ -69,12 +69,57 @@ void ResourceModel::ModelMetaFile::SetImportSettings(MODEL_IMPORT_SETTING set)
 	{
 		case MAX_QUALITY:
 			setting = set;
+			find_instances = true;
+			validate_structures = true;
+			optimize_meshes = true;
+			calc_tangent_space = true;
+			gen_smooth_normals = true;
+			join_vertices = true;
+			improve_cache_locality = true;
+			limit_bone_weigths = true;
+			remove_redundant_mats = true;
+			split_large_meshes = true;
+			triangulate = true;
+			gen_uv_coords = true;
+			sort_by_type = true;
+			find_degenerates = true;
+			find_invalid_data = true;
 			break; 
 		case QUALITY:
 			setting = set;
+			find_instances = false;
+			validate_structures = false;
+			optimize_meshes = false;
+			calc_tangent_space = true;
+			gen_smooth_normals = true;
+			join_vertices = true;
+			improve_cache_locality = true;
+			limit_bone_weigths = true;
+			remove_redundant_mats = true;
+			split_large_meshes = true;
+			triangulate = true;
+			gen_uv_coords = true;
+			sort_by_type = true;
+			find_degenerates = true;
+			find_invalid_data = true;
 			break; 
 		case FAST:
 			setting = set;
+			find_instances = false;
+			validate_structures = false;
+			optimize_meshes = false;
+			calc_tangent_space = true;
+			gen_smooth_normals = false;
+			join_vertices = true;
+			improve_cache_locality = false;
+			limit_bone_weigths = false;
+			remove_redundant_mats = false;
+			split_large_meshes = false;
+			triangulate = true;
+			gen_uv_coords = true;
+			sort_by_type = true;
+			find_degenerates = false;
+			find_invalid_data = false;
 			break; 
 		case CUSTOM:
 			setting = set;

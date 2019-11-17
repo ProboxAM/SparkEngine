@@ -5,6 +5,7 @@
 #include "ModuleScene.h"
 #include "ModuleImporter.h"
 #include "TextureImporter.h"
+#include "ModelImporter.h"
 #include "GameObject.h"
 #include "PanelProject.h"
 #include "ComponentTransform.h"
@@ -200,6 +201,7 @@ void PanelInspector::Draw()
 void PanelInspector::ShowTextureImportSettings(Resource* res)
 {
 	ResourceTexture::TextureMetaFile* meta = (ResourceTexture::TextureMetaFile*) res->meta;
+
 	
 	ImGui::BeginChild("settings", { ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 2 }, false, ImGuiWindowFlags_NoScrollWithMouse);
 	const char* compressions[] = { "DXT1", "DXT2", "DXT5"};
@@ -216,7 +218,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 		ImGui::EndPopup();
 	}
 
-	const char* wrap_modes[] = { "REPEAT", "MIRRORED_REPEAT", "CLAMP", "CLAMP_TO_BORDER" };
+	const char* wrap_modes[] = { "Repeat", "Mirrored Repeat", "Clamp", "Clamp to Border" };
 	
 	ImGui::PushID("wrap_s");
 	ImGui::Text("Wrap Mode S: ");
@@ -246,10 +248,10 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	}
 	ImGui::PopID();
 
-	const char* filter_modes[] = { "NEAREST", "LINEAR"};
+	const char* filter_modes[] = { "Nearest", "Linear"};
 
 	ImGui::PushID("filter_min");
-	ImGui::Text("Min Filter:");
+	ImGui::Text("Min Filter:  ");
 	ImGui::SameLine();
 	if (ImGui::Button(filter_modes[meta->min_filter]))
 		ImGui::OpenPopup("filter_min");
@@ -263,7 +265,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	ImGui::PopID();
 
 	ImGui::PushID("filter_mag");
-	ImGui::Text("Mag Filter:");
+	ImGui::Text("Mag Filter:  ");
 	ImGui::SameLine();
 	if (ImGui::Button(filter_modes[meta->mag_filter]))
 		ImGui::OpenPopup("mag_filter");
@@ -275,6 +277,16 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 		ImGui::EndPopup();
 	}
 	ImGui::PopID();
+
+	ImGui::Separator();
+	if (ImGui::Button("Save")) {
+		App->importer->texture->SaveMeta(meta);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Reset")) {
+		meta->SetDefault();
+	}
+
 	ImGui::EndChild();
 
 	ImGui::SameLine();
@@ -287,5 +299,54 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 {
 	ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*) res->meta;
 
+	const char* presets[] = { "Max Quality", "Quality", "Fast", "Custom" };
 
+	ImGui::Text("Import Preset: ");
+	ImGui::SameLine();
+	if (ImGui::Button(presets[meta->GetSelectedPreset()]))
+		ImGui::OpenPopup("Import_preset");
+	if (ImGui::BeginPopup("Import_preset"))
+	{
+		for (int i = 0; i < 4; i++)
+			if (ImGui::Selectable(presets[i]))
+				meta->SetImportSettings((ResourceModel::ModelMetaFile::MODEL_IMPORT_SETTING)i);
+		ImGui::EndPopup();
+	}
+
+	bool disabled = meta->GetSelectedPreset() != ResourceModel::ModelMetaFile::CUSTOM;
+	if (disabled)
+	{
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+	}
+
+	ImGui::Checkbox("Generate Smooth Normals", &meta->gen_smooth_normals);
+	ImGui::Checkbox("Optimize Meshes", &meta->optimize_meshes);
+	ImGui::Checkbox("Join Vertices", &meta->join_vertices);
+	ImGui::Checkbox("Validate Structures", &meta->validate_structures);
+	ImGui::Checkbox("Split Large Meshes", &meta->split_large_meshes);
+	ImGui::Checkbox("Generate UV Coords", &meta->gen_uv_coords);
+	ImGui::Checkbox("Limit Bone Weights", &meta->limit_bone_weigths);
+	ImGui::Checkbox("Remove Redundant Mats", &meta->remove_redundant_mats);
+	ImGui::Checkbox("Triangulate", &meta->triangulate);
+	ImGui::Checkbox("Sort by Type", &meta->sort_by_type);
+	ImGui::Checkbox("Improve Cache Locality", &meta->improve_cache_locality);
+	ImGui::Checkbox("Find Degenerates", &meta->find_degenerates);
+	ImGui::Checkbox("Find Invalid Data", &meta->find_invalid_data);
+	ImGui::Checkbox("Find Instances", &meta->find_instances);
+
+	if (disabled)
+	{
+		ImGui::PopItemFlag();
+		ImGui::PopStyleVar();
+	}
+
+	ImGui::Separator();
+	if (ImGui::Button("Save")) {
+		App->importer->model->SaveMeta(meta);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Reset")) {
+		meta->SetDefault();
+	}
 }

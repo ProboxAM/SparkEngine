@@ -12,7 +12,6 @@ public:
 
 	bool Start();
 
-	uint Find(const char* file_in_assets) const;
 	bool ImportFileToAssets(const char* path);
 	uint ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type);
 	uint GenerateNewUID();

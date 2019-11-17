@@ -24,6 +24,8 @@ public:
 		std::string original_file;
 		std::string exported_file;
 		uint id;
+
+		virtual void SetDefault() {}
 	};
 
 public:

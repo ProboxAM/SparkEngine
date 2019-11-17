@@ -60,8 +60,7 @@ void PanelProject::DrawFiles()
 			selected_file = files[i];
 
 			uint id = App->resources->GetID(ASSETS_FOLDER + files[i]);
-			if(id > 0)
-				selected_resource = App->resources->Get(id);
+			selected_resource = App->resources->Get(id);
 
 			App->scene->selected_gameobject = nullptr;
 		}

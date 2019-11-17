@@ -25,6 +25,15 @@ public:
 		int GetWrapModeT();
 		int GetMinFilter();
 		int GetMagFilter();
+
+		void SetDefault()
+		{
+			compression = DXT5;
+			wrap_s = REPEAT;
+			wrap_t = REPEAT;
+			min_filter = NEAREST;
+			mag_filter = NEAREST;
+		}
 	};
 
 public:
