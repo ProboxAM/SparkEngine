@@ -9,6 +9,7 @@
 
 class GameObject;
 class ResourceModel;
+class Quadtree;
 enum PRIMITIVE_TYPE;
 
 #define GRID_SIZE 40
@@ -22,6 +23,8 @@ public:
 	std::map<uint,GameObject*> gameobjects;
 
 	bool global_mode = false;
+
+	Quadtree* quad_tree = nullptr;
 
 public:
 	ModuleScene(bool start_enabled = true);
