@@ -41,6 +41,25 @@ void GameObject::Delete()
 	delete this;
 }
 
+void GameObject::Draw()
+{
+	if (active)
+	{
+		std::vector<Component*> meshes = GetComponents(COMPONENT_TYPE::MESH);
+
+		for each(ComponentMesh* mesh in meshes)
+		{
+			mesh->Draw();
+		}
+
+		for (int i = 0; i < transform->GetChildCount(); i++)
+		{
+			transform->GetChildren()[i]->gameobject->Draw();
+		}
+	}
+		
+}
+
 Component* GameObject::AddComponent(COMPONENT_TYPE type)
 {
 	Component* c;

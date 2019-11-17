@@ -28,6 +28,7 @@ public:
 
 	void Update(float dt);
 	void Delete();
+	void Draw();
 	Component* AddComponent(COMPONENT_TYPE type);
 	Component* GetComponent(COMPONENT_TYPE type) const;
 	std::vector<Component*> GetComponents(COMPONENT_TYPE type);

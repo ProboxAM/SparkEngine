@@ -77,6 +77,21 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::Draw()
 {
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+update_status ModuleEditor::PreUpdate(float dt)
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame(App->window->window);
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleEditor::Update(float dt)
+{
+	ImGui::NewFrame();
 	BeginDockSpace();
 
 	if (ImGui::BeginMainMenuBar())
@@ -136,27 +151,7 @@ void ModuleEditor::Draw()
 
 	//End Dockspace
 	ImGui::End();
-
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 	ImGui::EndFrame();
-}
-
-update_status ModuleEditor::PreUpdate(float dt)
-{
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
-	ImGui::NewFrame();
-
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleEditor::Update(float dt)
-{
-	
-
 	return UPDATE_CONTINUE;
 }
 

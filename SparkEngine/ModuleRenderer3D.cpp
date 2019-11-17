@@ -153,7 +153,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	App->scene->UpdateScene(dt); //Update/Draw scene should probably split it in the future
+	App->scene->Draw(); //Draw scene
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

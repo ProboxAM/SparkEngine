@@ -3,6 +3,8 @@
 
 #include "Panel.h"
 
+class Resource;
+
 class PanelProject : public Panel
 {
 public:

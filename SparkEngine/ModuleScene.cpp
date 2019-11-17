@@ -20,6 +20,8 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleScene.h"
+#include "ModuleEditor.h"
+#include "PanelProject.h"
 
 #include "glew/glew.h"
 
@@ -57,11 +59,8 @@ bool ModuleScene::Start()
 	return true;
 }
 
-update_status ModuleScene::UpdateScene(float dt)
+update_status ModuleScene::Update(float dt)
 {
-	if(show_grid)
-		DrawGrid();
-
 	root->Update(dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -74,6 +73,16 @@ update_status ModuleScene::UpdateScene(float dt)
 
 bool ModuleScene::CleanUp()
 {
+	return true;
+}
+
+bool ModuleScene::Draw()
+{
+	if (show_grid)
+		DrawGrid();
+
+	root->Draw();
+
 	return true;
 }
 
@@ -350,6 +359,11 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 				if (local.Intersects(t, nullptr, nullptr)) {
 					selected_gameobject = it->second;
 					user_selected_GO = true;
+
+					PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
+					panel_project->selected_file = "";
+					panel_project->selected_resource = nullptr;
+
 					return;
 				}
 			}

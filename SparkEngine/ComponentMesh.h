@@ -12,6 +12,7 @@ public:
 	~ComponentMesh();
 
 	void Update(float dt);
+	void Draw();
 	void AddMesh(ResourceMesh* tex);
 
 	void SetDebugVertexNormal();

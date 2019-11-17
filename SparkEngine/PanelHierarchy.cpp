@@ -1,9 +1,10 @@
-#include "PanelHierarchy.h"
 #include "Application.h"
 #include "ModuleScene.h"
+#include "ModuleEditor.h"
+#include "PanelProject.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
-
+#include "PanelHierarchy.h"
 PanelHierarchy::PanelHierarchy(bool a) : Panel(a)
 {
 
@@ -82,6 +83,10 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 			App->scene->selected_gameobject = ct->gameobject;
 			node_flags |= ImGuiTreeNodeFlags_Selected;
 			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
+
+			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
+			panel_project->selected_file = "";
+			panel_project->selected_resource = nullptr;
 		}
 
 		OnNodeRightClick();

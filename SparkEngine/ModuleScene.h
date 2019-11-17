@@ -29,8 +29,10 @@ public:
 
 	bool Init(const nlohmann::json::iterator& it);
 	bool Start();
-	update_status UpdateScene(float dt);
+	update_status Update(float dt);
 	bool CleanUp();
+
+	bool Draw();
 
 	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);

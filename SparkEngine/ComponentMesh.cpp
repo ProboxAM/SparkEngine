@@ -26,6 +26,11 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Update(float dt)
 {
+
+}
+
+void ComponentMesh::Draw()
+{
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
 	if (mesh && App->renderer3D->c_camera->frustum.ContainsOrIntersectsAABB(gameobject->global_aabb)) {
@@ -41,7 +46,7 @@ void ComponentMesh::Update(float dt)
 	if (debug_bounding_box) {
 		static float3 corners[8];
 		gameobject->global_aabb.GetCornerPoints(corners);
-		App->renderer3D->DebugDrawCube(corners, {255, 0, 0, 255});
+		App->renderer3D->DebugDrawCube(corners, { 255, 0, 0, 255 });
 		gameobject->global_obb.GetCornerPoints(corners);
 		App->renderer3D->DebugDrawCube(corners, { 0, 0, 255, 255 });
 	}
