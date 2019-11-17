@@ -33,11 +33,6 @@ bool ModuleResources::Start()
 	return true;
 }
 
-uint ModuleResources::Find(const char * file_in_assets) const
-{
-	return uint();
-}
-
 bool ModuleResources::ImportFileToAssets(const char * path)
 {
 	std::string normalized_path = path;
@@ -100,7 +95,7 @@ uint ModuleResources::GenerateNewUID()
 	return uint();
 }
 
-Resource * ModuleResources::Get(uint id)
+Resource* ModuleResources::GetAndLoad(uint id)
 {
 	Resource* ret = nullptr;
 	std::map<uint, Resource*>::iterator it = resources.find(id);
@@ -113,6 +108,17 @@ Resource * ModuleResources::Get(uint id)
 
 		ret->AddReference();
 	}
+
+	return ret;
+}
+
+Resource* ModuleResources::Get(uint id)
+{
+	Resource* ret = nullptr;
+	std::map<uint, Resource*>::iterator it = resources.find(id);
+
+	if (it != resources.end())
+		ret = it->second;
 
 	return ret;
 }

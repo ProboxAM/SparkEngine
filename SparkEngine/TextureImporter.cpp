@@ -102,7 +102,7 @@ bool TextureImporter::Load(ResourceTexture* tex)
 	}
 	else
 	{
-		tex = (ResourceTexture*) App->resources->Get(checkers);
+		tex = (ResourceTexture*) App->resources->GetAndLoad(checkers);
 		LOG("Error loading texture. Applied default texture instead.");
 	}
 	ilDeleteImages(1, &image_id);

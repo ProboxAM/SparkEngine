@@ -118,7 +118,7 @@ bool ComponentMesh::Load(const nlohmann::json comp)
 {
 	active = comp["active"];
 	type = comp["type"];
-	AddMesh((ResourceMesh*)App->resources->Get(comp["resource"]));
+	AddMesh((ResourceMesh*)App->resources->GetAndLoad(comp["resource"]));
 	debug_bounding_box = comp["debug_bb"];
 	debug_face_normal = comp["debug_face_n"];
 	debug_vertex_normal = comp["debug_vertex_n"];

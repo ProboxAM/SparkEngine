@@ -13,6 +13,7 @@ public:
 	void DrawFiles();
 	
 	std::string selected_file = "";
+	Resource* selected_resource = nullptr;
 
 private:
 	uint text_size, image_size;

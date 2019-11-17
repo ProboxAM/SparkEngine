@@ -9,7 +9,7 @@ public:
 	struct TextureMetaFile : public MetaFile
 	{
 		//texture import settings
-		enum TEXTURE_COMPRESSION { DXT1, DXT3, DXT5 };
+		enum TEXTURE_COMPRESSION { DXT1, DXT3, DXT5};
 		TEXTURE_COMPRESSION compression = DXT5;
 
 		enum TEXTURE_WRAP_MODE { REPEAT, MIRRORED_REPEAT, CLAMP, CLAMP_TO_BORDER };

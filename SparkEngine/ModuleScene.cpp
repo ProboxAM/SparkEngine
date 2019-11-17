@@ -69,12 +69,6 @@ update_status ModuleScene::UpdateScene(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		LoadScene();
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		ResourceModel* res = (ResourceModel*) App->resources->Get(11);
-		CreateGameObject(res);
-	}
-
 	return UPDATE_CONTINUE;
 }
 
@@ -246,10 +240,10 @@ GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObj
 	GameObject* obj = CreateGameObject(parent, name);
 
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
-	c_mesh->AddMesh((ResourceMesh*)App->resources->Get(shape_id));
+	c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndLoad(shape_id));
 
 	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
-	c_text->AddTexture((ResourceTexture*)App->resources->Get(App->importer->texture->checkers));
+	c_text->AddTexture((ResourceTexture*)App->resources->GetAndLoad(App->importer->texture->checkers));
 
 	return obj;
 }
@@ -301,13 +295,13 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		if (node.mesh > 0)
 		{
 			ComponentMesh* c_mesh = (ComponentMesh*)go->AddComponent(COMPONENT_TYPE::MESH);
-			c_mesh->AddMesh((ResourceMesh*)App->resources->Get(node.mesh));
+			c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndLoad(node.mesh));
 
 			ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
 			if (node.texture > 0)
-				c_text->AddTexture((ResourceTexture*)App->resources->Get(node.texture));
+				c_text->AddTexture((ResourceTexture*)App->resources->GetAndLoad(node.texture));
 			else
-				c_text->AddTexture((ResourceTexture*)App->resources->Get(App->importer->texture->checkers));
+				c_text->AddTexture((ResourceTexture*)App->resources->GetAndLoad(App->importer->texture->checkers));
 		}
 
 

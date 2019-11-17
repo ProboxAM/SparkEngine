@@ -1,13 +1,19 @@
 #include "PanelInspector.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+#include "ModuleResources.h"
 #include "ModuleScene.h"
+#include "ModuleImporter.h"
+#include "TextureImporter.h"
 #include "GameObject.h"
 #include "PanelProject.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
 #include "ComponentCamera.h"
+#include "ResourceModel.h"
+#include "ResourceTexture.h"
+
 #include "ImGui/imgui_stdlib.h"
 
 #include <iomanip>
@@ -168,8 +174,118 @@ void PanelInspector::Draw()
 	}
 	else if (((PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT))->selected_file != "")
 	{
-		std::string file = ((PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT))->selected_file;
+		PanelProject* project_panel = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
+		std::string file = project_panel->selected_file;
 		ImGui::Text(file.c_str());
+		if (project_panel->selected_resource)
+		{
+			ImGui::SameLine();
+			ImGui::Text("Import Settings");
+			ImGui::Separator();
+
+			switch (project_panel->selected_resource->GetType())
+			{
+				case Resource::RESOURCE_TYPE::R_TEXTURE:
+					ShowTextureImportSettings(project_panel->selected_resource);
+					break;
+				case Resource::RESOURCE_TYPE::R_MODEL:
+					ShowModelImportSettings(project_panel->selected_resource);
+					break;
+			}
+		}
 	}
 	ImGui::End();
+}
+
+void PanelInspector::ShowTextureImportSettings(Resource* res)
+{
+	ResourceTexture::TextureMetaFile* meta = (ResourceTexture::TextureMetaFile*) res->meta;
+	
+	ImGui::BeginChild("settings", { ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 2 }, false, ImGuiWindowFlags_NoScrollWithMouse);
+	const char* compressions[] = { "DXT1", "DXT2", "DXT5"};
+
+	ImGui::Text("Compression: ");
+	ImGui::SameLine();
+	if (ImGui::Button(compressions[meta->compression]))
+		ImGui::OpenPopup("Compression_popup");
+	if (ImGui::BeginPopup("Compression_popup"))
+	{
+		for (int i = 0; i < 3; i++)
+			if (ImGui::Selectable(compressions[i]))
+				meta->compression = (ResourceTexture::TextureMetaFile::TEXTURE_COMPRESSION) i;
+		ImGui::EndPopup();
+	}
+
+	const char* wrap_modes[] = { "REPEAT", "MIRRORED_REPEAT", "CLAMP", "CLAMP_TO_BORDER" };
+	
+	ImGui::PushID("wrap_s");
+	ImGui::Text("Wrap Mode S: ");
+	ImGui::SameLine();
+	if (ImGui::Button(wrap_modes[meta->wrap_s]))
+		ImGui::OpenPopup("wrap_mode_s");
+	if (ImGui::BeginPopup("wrap_mode_s"))
+	{
+		for (int i = 0; i < 4; i++)
+			if (ImGui::Selectable(wrap_modes[i]))
+				meta->wrap_s = (ResourceTexture::TextureMetaFile::TEXTURE_WRAP_MODE) i;
+		ImGui::EndPopup();
+	}
+	ImGui::PopID();
+
+	ImGui::PushID("wrap_t");
+	ImGui::Text("Wrap Mode T: ");
+	ImGui::SameLine();
+	if (ImGui::Button(wrap_modes[meta->wrap_t]))
+		ImGui::OpenPopup("wrap_mode_t");
+	if (ImGui::BeginPopup("wrap_mode_t"))
+	{
+		for (int i = 0; i < 4; i++)
+			if (ImGui::Selectable(wrap_modes[i]))
+				meta->wrap_t = (ResourceTexture::TextureMetaFile::TEXTURE_WRAP_MODE) i;
+		ImGui::EndPopup();
+	}
+	ImGui::PopID();
+
+	const char* filter_modes[] = { "NEAREST", "LINEAR"};
+
+	ImGui::PushID("filter_min");
+	ImGui::Text("Min Filter:");
+	ImGui::SameLine();
+	if (ImGui::Button(filter_modes[meta->min_filter]))
+		ImGui::OpenPopup("filter_min");
+	if (ImGui::BeginPopup("filter_min"))
+	{
+		for (int i = 0; i < 2; i++)
+			if (ImGui::Selectable(filter_modes[i]))
+				meta->min_filter = (ResourceTexture::TextureMetaFile::TEXTURE_FILTER_MODE) i;
+		ImGui::EndPopup();
+	}
+	ImGui::PopID();
+
+	ImGui::PushID("filter_mag");
+	ImGui::Text("Mag Filter:");
+	ImGui::SameLine();
+	if (ImGui::Button(filter_modes[meta->mag_filter]))
+		ImGui::OpenPopup("mag_filter");
+	if (ImGui::BeginPopup("mag_filter"))
+	{
+		for (int i = 0; i < 2; i++)
+			if (ImGui::Selectable(filter_modes[i]))
+				meta->mag_filter = (ResourceTexture::TextureMetaFile::TEXTURE_FILTER_MODE) i;
+		ImGui::EndPopup();
+	}
+	ImGui::PopID();
+	ImGui::EndChild();
+
+	ImGui::SameLine();
+	ImGui::BeginChild("image", { ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 2 }, false, ImGuiWindowFlags_NoScrollWithMouse);
+	ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::EndChild();
+}
+
+void PanelInspector::ShowModelImportSettings(Resource* res)
+{
+	ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*) res->meta;
+
+
 }
