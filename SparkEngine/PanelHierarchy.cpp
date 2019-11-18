@@ -54,11 +54,10 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		SetDragAndDropTarget(ct);
 		SetDragAndDropTargetCustom();
 
-		if (ImGui::IsItemClicked() && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing())
+		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK) && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing())
 		{
 			App->scene->selected_gameobject = ct->gameobject;
 			node_flags |= ImGuiTreeNodeFlags_Selected;
-			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 		}
 
 		OnNodeRightClick();
@@ -79,10 +78,9 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		SetDragAndDropSource(ct);
 		SetDragAndDropTarget(ct);
 
-		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK)) {
+		if (ImGui::IsItemClicked(LEFT_CLICK) || ImGui::IsItemClicked(RIGHT_CLICK) && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing()) {
 			App->scene->selected_gameobject = ct->gameobject;
 			node_flags |= ImGuiTreeNodeFlags_Selected;
-			LOG("Current selected object: %s", App->scene->selected_gameobject->GetName().c_str());
 
 			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
 			panel_project->selected_file = "";
@@ -142,17 +140,20 @@ void PanelHierarchy::SetDragAndDropTargetCustom()
 
 void PanelHierarchy::OnNodeRightClick()
 {
-	if (ImGui::BeginPopupContextItem(nullptr, RIGHT_CLICK)) {
-		if (ImGui::Selectable("Create Empty")) {
-			App->scene->CreateGameObject(App->scene->selected_gameobject);
-			ImGui::CloseCurrentPopup();
+	if ((ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing())
+	{
+		if (ImGui::BeginPopupContextItem(nullptr, RIGHT_CLICK)) {
+			if (ImGui::Selectable("Create Empty")) {
+				App->scene->CreateGameObject(App->scene->selected_gameobject);
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::Selectable("Delete")) {
+				App->scene->DeleteGameObject(App->scene->selected_gameobject);
+				App->scene->selected_gameobject = nullptr;
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
 		}
-		if (ImGui::Selectable("Delete")) {
-			App->scene->DeleteGameObject(App->scene->selected_gameobject);
-			App->scene->selected_gameobject = nullptr;
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::EndPopup();
 	}
 }
 

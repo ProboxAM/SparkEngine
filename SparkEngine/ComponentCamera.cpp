@@ -49,7 +49,7 @@ void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
 
 bool ComponentCamera::Intersects(AABB box)
 {
-	return frustum.ContainsOrIntersectsAABB(box);
+	return frustum.Intersects(box);
 }
 
 Plane ComponentCamera::GetFrustumNearPlane()

@@ -350,23 +350,24 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 
 void ModuleScene::OnMousePicking(const LineSegment &line)
 {
-	std::map<float, GameObject*> candidates;
-	std::vector<GameObject*> intersections;
-	quad_tree->CollectIntersections(intersections, line);
+	std::map<float, GameObject*> objects_hit;
+	quad_tree->CollectIntersections(objects_hit, line);
 
-	for (std::vector<GameObject*>::iterator it = intersections.begin(); it != intersections.end(); ++it)
+	for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
 	{
-		if ((*it)->HasComponent(COMPONENT_TYPE::MESH)) {
-			if (line.Intersects((*it)->global_aabb)) {
-				float hit_near, hit_far;
-				if (line.Intersects((*it)->global_obb, hit_near, hit_far)) {
-					candidates.emplace(hit_near, (*it));
+		if (!it->second->isStatic()) {
+			if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
+				if (line.Intersects(it->second->global_aabb)) {
+					float distance_near, distance_far;
+					if (line.Intersects(it->second->global_obb, distance_near, distance_far)) {
+						objects_hit.emplace(distance_near, it->second);
+					}
 				}
 			}
 		}
 	}
 
-	for (std::map<float, GameObject*>::iterator it = candidates.begin(); it != candidates.end(); ++it) {
+	for (std::map<float, GameObject*>::iterator it = objects_hit.begin(); it != objects_hit.end(); ++it) {
 		ComponentMesh* c_mesh = (ComponentMesh*)it->second->GetComponent(COMPONENT_TYPE::MESH);
 		if (c_mesh) {
 
