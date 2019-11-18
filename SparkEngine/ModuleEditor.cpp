@@ -107,7 +107,6 @@ update_status ModuleEditor::Update(float dt)
 			}
 			if (ImGui::MenuItem("Save")) 
 			{ 
-				std::string scene_file = ASSETS_FOLDER + App->scene->GetName() + SCENE_EXTENSION;
 				if (App->scene->HasFile())
 					App->scene->SaveScene();
 				else
@@ -161,23 +160,44 @@ update_status ModuleEditor::Update(float dt)
 		ImGui::EndMainMenuBar();
 	}
 
+	//Save scene popup
 	static std::string scene_name;
 	if (open_save_popup)
 	{
 		ImGui::OpenPopup("Save as");
 		scene_name = App->scene->GetName();
 	}		
-
 	if (ImGui::BeginPopupModal("Save as"))
 	{
 		ImGui::InputText("Name", &scene_name, ImGuiInputTextFlags_CharsNoBlank);
 
 		if (ImGui::Button("Save", ImVec2(120, 0))) {
-			App->scene->SetName(scene_name);
-			App->scene->SaveScene();
-			ImGui::CloseCurrentPopup();
+
+			std::string scene_file = ASSETS_FOLDER + scene_name + SCENE_EXTENSION;
+			bool exists = App->fsystem->Exists(scene_file.c_str());
+			if (exists)
+				ImGui::OpenPopup("Overwrite");
+			if (!exists)
+			{
+				App->scene->SetName(scene_name);
+				App->scene->SaveScene();
+				ImGui::CloseCurrentPopup();
+			}			
 		}
-		ImGui::SetItemDefaultFocus();
+		if (ImGui::BeginPopupModal("Overwrite"))
+		{
+			ImGui::Text("A file with that name already exists. Do you want to overwrite it?");
+			if (ImGui::Button("Yes", ImVec2(120, 0)))
+			{
+				App->scene->SetName(scene_name);
+				App->scene->SaveScene();
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("No", ImVec2(120, 0)))
+				ImGui::CloseCurrentPopup();
+			ImGui::EndPopup();
+		}
 		ImGui::SameLine();
 		if (ImGui::Button("Cancel", ImVec2(120, 0))) {
 			ImGui::CloseCurrentPopup();
