@@ -45,11 +45,9 @@ void GameObject::Draw()
 {
 	if (active)
 	{
-		std::vector<Component*> meshes = GetComponents(COMPONENT_TYPE::MESH);
-
-		for each(ComponentMesh* mesh in meshes)
+		for each(Component* comp in components)
 		{
-			mesh->Draw();
+			comp->Draw();
 		}
 
 		for (int i = 0; i < transform->GetChildCount(); i++)

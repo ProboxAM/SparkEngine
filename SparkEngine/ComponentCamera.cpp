@@ -131,7 +131,38 @@ void ComponentCamera::UpdateFrustumTransform()
 	frustum.front = transform_matrix.WorldZ();
 }
 
-void ComponentCamera::Update(float dt)
+bool ComponentCamera::Save(const nlohmann::json::iterator & it)
+{
+	nlohmann::json object = {
+	{ "active", active },
+	{ "type", type },
+	{ "active_camera", active_camera },
+	{ "fov", frustum.verticalFov },
+	{ "near_distance", frustum.nearPlaneDistance },
+	{ "far_distance", frustum.farPlaneDistance }
+	};
+
+	it.value().push_back(object);
+
+	return true;
+}
+
+bool ComponentCamera::Load(const nlohmann::json comp)
+{
+	active = comp["active"];
+	type = comp["type"];
+	active_camera = comp["active_camera"];
+
+	SetFrustumNearPlaneDistance(comp["near_distance"]);
+	SetFrustumFarPlaneDistance(comp["far_distance"]);
+	SetFrustumFOV(comp["fov"]);
+
+	UpdateFrustumTransform();
+
+	return true;
+}
+
+void ComponentCamera::Draw()
 {
 	DrawFrustum();
 }

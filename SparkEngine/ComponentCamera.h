@@ -37,13 +37,16 @@ public:
 
 	bool update_camera_projection = false;
 
+	bool Save(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json comp);
+
 private:
 
 	bool active_camera = false;
 
 	void DrawFrustum();
 
-	void Update(float dt);
+	void Draw();
 	
 };
 

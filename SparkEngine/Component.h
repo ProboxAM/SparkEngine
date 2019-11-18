@@ -19,6 +19,7 @@ public:
 
 	virtual void Enable() { active = true; }
 	virtual void Update(float dt);
+	virtual void Draw() {}
 	virtual void Disable() { active = false; }
 	virtual bool Save(const nlohmann::json::iterator& it) { return true; }
 	virtual bool Load(const nlohmann::json comp) { return true; }

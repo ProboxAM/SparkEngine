@@ -2099,6 +2099,44 @@
             "parent": 2765291505,
             "static": false,
             "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        71.7060546875,
+                        -3.0251855850219727,
+                        -4.269922256469727
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "active_camera": false,
+                    "far_distance": 500.0,
+                    "fov": 1.0471975803375244,
+                    "near_distance": 0.10000000149011612,
+                    "type": 4
+                }
+            ],
+            "id": 477308060,
+            "layer": "Default",
+            "name": "GameObject",
+            "parent": 3863362104,
+            "static": false,
+            "tag": "Untagged"
         }
     ]
 }
