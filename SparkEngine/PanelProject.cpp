@@ -55,19 +55,13 @@ void PanelProject::DrawFiles()
 		ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id,
 			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
 
-		if (ImGui::IsItemClicked())
-		{
-			selected_file = files[i];
-
-			uint id = App->resources->GetID(ASSETS_FOLDER + files[i]);
-			selected_resource = App->resources->Get(id);
-
-			App->scene->selected_gameobject = nullptr;
-		}
+		ManageClicksForItem(files[i]);
 
 		ImGui::Text(files[i].c_str());
 
-		if (ImGui::IsItemClicked())
+		ManageClicksForItem(files[i]);
+
+		if (ImGui::IsItemClicked()) //clicked text
 		{
 			selected_file = files[i];
 
@@ -78,5 +72,29 @@ void PanelProject::DrawFiles()
 		}
 
 		ImGui::EndChild();
+	}
+}
+
+void PanelProject::ManageClicksForItem(std::string file)
+{
+	if (ImGui::IsItemClicked()) //clicked image
+	{
+		if (ImGui::IsMouseDoubleClicked(0))
+		{
+			std::string extension;
+			App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
+
+			if (extension == "scene")
+				App->scene->LoadScene(ASSETS_FOLDER + file);
+		}
+		else
+		{
+			selected_file = file;
+
+			uint id = App->resources->GetID(ASSETS_FOLDER + file);
+			selected_resource = App->resources->Get(id);
+
+			App->scene->selected_gameobject = nullptr;
+		}
 	}
 }

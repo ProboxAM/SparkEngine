@@ -42,7 +42,7 @@ public:
 	bool Save(nlohmann::json &it);
 
 	bool SaveScene();
-	bool LoadScene();
+	bool LoadScene(std::string file);
 
 	std::string GetName();
 	void SetName(std::string);
