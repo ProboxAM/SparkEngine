@@ -58,6 +58,10 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		{
 			App->scene->selected_gameobject = ct->gameobject;
 			node_flags |= ImGuiTreeNodeFlags_Selected;
+
+			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
+			panel_project->selected_file = "";
+			panel_project->selected_resource = nullptr;
 		}
 
 		OnNodeRightClick();
