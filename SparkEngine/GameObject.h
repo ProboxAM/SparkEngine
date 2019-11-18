@@ -19,6 +19,7 @@ private:
 	std::string layer = "Default";
 	bool active = true;
 	uint id = 0;
+	uint test = 0;
 	bool is_static = false;
 	std::vector<Component*> components;
 public:
@@ -47,6 +48,8 @@ public:
 	void SetActive(bool active);
 	bool CompareTag(std::string tag);
 	bool Save(const nlohmann::json::iterator& it);
+
+	float GetDistanceFromAABB();
 
 	uint GetId();
 
