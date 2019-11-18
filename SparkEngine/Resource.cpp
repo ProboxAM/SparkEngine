@@ -58,3 +58,8 @@ void Resource::SetExportedFile(std::string f)
 {
 	exported_file = f;
 }
+
+uint Resource::GetReferences()
+{
+	return references;
+}

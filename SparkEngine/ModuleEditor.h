@@ -17,6 +17,7 @@ enum Panel_Type {
 	INSPECTOR,
 	SCENE,
 	PROJECT,
+	RESOURCES,
 	TOTAL
 };
 

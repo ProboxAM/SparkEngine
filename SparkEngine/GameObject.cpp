@@ -26,16 +26,16 @@ void GameObject::Update(float dt)
 void GameObject::Delete()
 {
 	std::vector<ComponentTransform*> children = transform->GetChildren();
-	for each (ComponentTransform* trans in children)
+	for (std::vector<ComponentTransform*>::iterator it = children.begin(); it != children.end(); ++it)
 	{
-		trans->gameobject->Delete();
+		(*it)->gameobject->Delete();
 	}
 
-	for (uint i = 0; i < components.size(); i++)
+	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
-		delete components[i];
-		components[i] = nullptr;
+		delete (*it);
 	}
+	components.clear();
 
 	transform = nullptr;
 	delete this;
@@ -45,11 +45,9 @@ void GameObject::Draw()
 {
 	if (active)
 	{
-		std::vector<Component*> meshes = GetComponents(COMPONENT_TYPE::MESH);
-
-		for each(ComponentMesh* mesh in meshes)
+		for each(Component* comp in components)
 		{
-			mesh->Draw();
+			comp->Draw();
 		}
 
 		for (int i = 0; i < transform->GetChildCount(); i++)

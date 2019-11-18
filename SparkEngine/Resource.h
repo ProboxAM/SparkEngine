@@ -43,6 +43,8 @@ public:
 	void SetFile(std::string f);
 	void SetExportedFile(std::string f);
 	virtual void UnLoad() {}
+	uint GetReferences();
+	virtual std::string GetTypeString() { return ""; }
 
 	MetaFile* meta = nullptr;
 protected:

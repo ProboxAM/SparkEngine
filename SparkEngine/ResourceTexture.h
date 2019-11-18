@@ -46,6 +46,7 @@ public:
 	std::string format;
 
 	void UnLoad();
+	std::string GetTypeString();
 };
 
 

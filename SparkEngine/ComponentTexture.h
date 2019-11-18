@@ -10,7 +10,7 @@ class ComponentTexture : public Component
 {
 public:
 	ComponentTexture(GameObject* gameobject);
-	~ComponentTexture();
+	virtual ~ComponentTexture();
 
 	ResourceTexture* GetTexture();
 	void AddTexture(ResourceTexture* tex);
