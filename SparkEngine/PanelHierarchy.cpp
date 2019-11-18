@@ -148,7 +148,8 @@ void PanelHierarchy::OnNodeRightClick()
 			ImGui::CloseCurrentPopup();
 		}
 		if (ImGui::Selectable("Delete")) {
-			App->scene->selected_gameobject->transform->GetParent()->RemoveChild(App->scene->selected_gameobject->transform);
+			App->scene->DeleteGameObject(App->scene->selected_gameobject);
+			App->scene->selected_gameobject = nullptr;
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();

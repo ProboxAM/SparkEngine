@@ -69,8 +69,15 @@ update_status ModuleScene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		SaveScene();
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		LoadScene();
+
+	if (App->input->GetKey(SDL_SCANCODE_DELETE) && selected_gameobject)
+	{
+		DeleteGameObject(selected_gameobject);
+		selected_gameobject = nullptr;
+	}
+
 
 	return UPDATE_CONTINUE;
 }
@@ -420,15 +427,21 @@ void ModuleScene::DeleteGameObjects()
 
 void ModuleScene::DeleteGameObject(GameObject* go)
 {
-	for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
+	go->transform->GetParent()->RemoveChild(go->transform);
+	RecursiveErase(go);
+	go->Delete();
+
+	go = nullptr;
+}
+
+void ModuleScene::RecursiveErase(GameObject* go)
+{
+	std::vector<ComponentTransform*> children = go->transform->GetChildren();
+	for each (ComponentTransform* child in children)
 	{
-		if (it->second == go)
-		{
-			it->second->Delete();
-			it = gameobjects.erase(it);
-			break;
-		}
+		RecursiveErase(child->gameobject);
 	}
+	gameobjects.erase(go->GetId());
 }
 
 void ModuleScene::SetGameObjectStatic(GameObject* go, bool state)

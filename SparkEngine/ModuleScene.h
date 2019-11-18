@@ -65,12 +65,15 @@ public:
 	void DrawGrid();
 	void DeleteGameObjects();
 	void DeleteGameObject(GameObject * go);
+
 	void SetGameObjectStatic(GameObject * go, bool state);
-	void SetGameObjectStatic(GameObject * go);
 	bool show_grid = true;
 	std::vector<float3> lines;
 
 	bool user_selected_GO = false;
+
+private:
+	void RecursiveErase(GameObject * go);
 };
 
 #endif // !_MODULE_SCENE_H_
