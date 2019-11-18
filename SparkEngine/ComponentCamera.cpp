@@ -47,6 +47,11 @@ void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
 	update_camera_projection = true;
 }
 
+void ComponentCamera::SetFrustumAspectRatio(float aspect_ratio)
+{
+	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
+}
+
 bool ComponentCamera::Intersects(AABB box)
 {
 	return frustum.Intersects(box);

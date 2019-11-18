@@ -59,7 +59,7 @@ public:
 	uint scene_texture_id;
 	float3 bkg_color = float3(0.1f, 0.1f, 0.1f);
 
-	ComponentCamera* c_camera;
+	ComponentCamera* c_camera = nullptr;
 
 private:
 	bool wireframe;

@@ -93,6 +93,11 @@ update_status ModuleCamera3D::Update(float dt)
 			LookAt(reference);
 			focusing = true;
 			camera_inputs_active = false;
+
+			if (App->scene->selected_gameobject->GetComponent(MESH))
+				min_distance = App->scene->selected_gameobject->GetDistanceFromAABB() * focus_margin;
+			else min_distance = focus_distance;
+
 		}
 	}
 
@@ -151,19 +156,6 @@ void ModuleCamera3D::Focus()//If theres a selected game object the camera looks 
 	float3 position = { c_camera->frustum.pos.x, c_camera->frustum.pos.y, c_camera->frustum.pos.z };
 	float distance = position.Distance(end_position);
 	speed = speed * distance * focus_factor;
-	float bb_distance_aux = 0;
-	if(App->scene->selected_gameobject->GetComponent(MESH))
-		min_distance = App->scene->selected_gameobject->global_aabb.Size().Length()*focus_margin;
-	else if (App->scene->selected_gameobject->transform->GetChildCount() > 0)
-	{
-		for (int i = 0; i < App->scene->selected_gameobject->transform->GetChildCount(); i++)
-		{
-			if (bb_distance_aux < App->scene->selected_gameobject->transform->GetChildren()[i]->gameobject->global_aabb.Size().Length()*focus_margin) {
-				bb_distance_aux = App->scene->selected_gameobject->transform->GetChildren()[i]->gameobject->global_aabb.Size().Length()*focus_margin;
-			}
-		}
-		min_distance = bb_distance_aux;
-	}
 
 	if (distance + threshold*distance/2 <= min_distance || distance - threshold*distance/2 >= min_distance) {
 		if (distance < min_distance) {

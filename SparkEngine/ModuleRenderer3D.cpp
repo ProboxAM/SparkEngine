@@ -179,10 +179,13 @@ bool ModuleRenderer3D::CleanUp()
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-
 	ResizeScene(width, height);
-	
-	//UpdateProjectionMatrix();
+
+	if (c_camera) {
+		float aspect_ratio = width / height;
+		c_camera->SetFrustumAspectRatio(aspect_ratio);
+		UpdateProjectionMatrix();
+	}
 }
 
 bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)

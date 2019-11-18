@@ -214,6 +214,18 @@ bool GameObject::Save(const nlohmann::json::iterator& it)
 	return true;
 }
 
+float GameObject::GetDistanceFromAABB()
+{
+	float distance = 0;
+
+	if (HasComponent(COMPONENT_TYPE::MESH)) {
+		distance = global_aabb.Size().Length();
+	}
+	else LOG("Object has no mesh, cant return a valid AABB distance");
+
+	return distance;
+}
+
 uint GameObject::GetId()
 {
 	return id;
