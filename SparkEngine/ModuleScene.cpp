@@ -67,10 +67,8 @@ update_status ModuleScene::Update(float dt)
 {
 	root->Update(dt);
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		SaveScene();
-	else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		LoadScene();
 
 	if (App->input->GetKey(SDL_SCANCODE_DELETE) && selected_gameobject)
 	{
@@ -135,13 +133,13 @@ bool ModuleScene::SaveScene()
 	return true;
 }
 
-bool ModuleScene::LoadScene()
+bool ModuleScene::LoadScene(std::string file)
 {
 	LOG("Loading scene...");
 
 	DeleteGameObjects();
 
-	std::ifstream i(ASSETS_FOLDER"Scene.scene");
+	std::ifstream i(file);
 	nlohmann::json j = nlohmann::json::parse(i);
 
 	nlohmann::json game_objects = j.find("GameObjects").value();

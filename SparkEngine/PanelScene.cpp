@@ -52,7 +52,12 @@ void PanelScene::Draw()
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
 		{
 			uint* id = (uint*)payload->Data;
-			App->scene->CreateGameObject((ResourceModel*)App->resources->GetAndLoad((*id)));
+			Resource* res = App->resources->GetAndLoad((*id));
+			if (res)
+			{
+				if(res->GetType() == Resource::RESOURCE_TYPE::R_MODEL)
+					App->scene->CreateGameObject((ResourceModel*) res);
+			}		
 		}
 		ImGui::EndDragDropTarget();
 	}
