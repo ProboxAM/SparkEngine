@@ -12,6 +12,11 @@ ResourceModel::~ResourceModel()
 
 }
 
+std::string ResourceModel::GetTypeString()
+{
+	return "Model";
+}
+
 uint ResourceModel::ModelMetaFile::GetImportSettings()
 {
 	uint flags = 0;

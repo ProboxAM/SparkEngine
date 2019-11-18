@@ -19,11 +19,11 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-#define CUBE_ID 999998
-#define SPHERE_ID 999997
-#define CYLINDER_ID 999996
-#define CONE_ID 999995
-#define PLANE_ID 999994
+#define CUBE_ID 4294967294
+#define SPHERE_ID 4294967293
+#define CYLINDER_ID 4294967292
+#define CONE_ID 4294967291
+#define PLANE_ID 4294967290
 
 MeshImporter::MeshImporter()
 {

@@ -21,6 +21,11 @@ void ResourceTexture::UnLoad()
 	}
 }
 
+std::string ResourceTexture::GetTypeString()
+{
+	return "Texture";
+}
+
 int ResourceTexture::TextureMetaFile::GetCompression()
 {
 	int ret;

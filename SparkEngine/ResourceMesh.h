@@ -32,7 +32,7 @@ public:
 
 	//std::vector<float3> debug_vertex_normals;
 	//std::vector<float3> debug_face_normals;
-
+	std::string GetTypeString();
 	uint buffers[BUFF_TOTAL];
 	void PrepareBuffers();
 	void UnLoad();

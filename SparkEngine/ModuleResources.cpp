@@ -277,6 +277,11 @@ uint ModuleResources::GetIDFromMeta(std::string file)
 	return j["id"];
 }
 
+std::map<uint, Resource*> ModuleResources::GetResources()
+{
+	return resources;
+}
+
 bool ModuleResources::LoadMeta(const char* file, Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
 {
 	switch (type)

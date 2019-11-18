@@ -110,6 +110,7 @@
     <ClInclude Include="ModuleImporter.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="PanelProject.h" />
+    <ClInclude Include="PanelResources.h" />
     <ClInclude Include="pcg_uint128.hpp" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resource.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="PanelProject.cpp" />
+    <ClCompile Include="PanelResources.cpp" />
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceMaterial.cpp" />

@@ -15,7 +15,7 @@ public:
 	GameObject* gameobject = nullptr;
 public:
 	Component(GameObject* gameobject);
-	~Component();
+	virtual ~Component();
 
 	virtual void Enable() { active = true; }
 	virtual void Update(float dt);

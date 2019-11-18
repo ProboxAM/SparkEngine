@@ -57,6 +57,7 @@ public:
 	~ResourceModel();
 
 	std::vector<ModelNode> nodes;
+	std::string GetTypeString();
 };
 
 

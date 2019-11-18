@@ -9,7 +9,7 @@ class ComponentMesh : public Component
 {
 public:
 	ComponentMesh(GameObject* gameobject);
-	~ComponentMesh();
+	virtual ~ComponentMesh();
 
 	void Update(float dt);
 	void Draw();

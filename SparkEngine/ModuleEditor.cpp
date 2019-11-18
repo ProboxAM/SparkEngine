@@ -13,6 +13,7 @@
 #include "PanelHierarchy.h"
 #include "PanelInspector.h"
 #include "PanelProject.h"
+#include "PanelResources.h"
 #include "MeshImporter.h"
 
 #include "ImGui/imgui_impl_sdl.h"
@@ -54,6 +55,7 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[INSPECTOR] = new PanelInspector(true);
 	panels[SCENE] = new PanelScene(true);
 	panels[PROJECT] = new PanelProject(true);
+	panels[RESOURCES] = new PanelResources(true);
 
 	return true;
 }
@@ -130,6 +132,10 @@ update_status ModuleEditor::Update(float dt)
 				panels[INSPECTOR]->Activate();
 			if (ImGui::MenuItem("Scene", nullptr, panels[SCENE]->IsActive()))
 				panels[SCENE]->Activate();
+			if (ImGui::MenuItem("Project", nullptr, panels[PROJECT]->IsActive()))
+				panels[PROJECT]->Activate();
+			if (ImGui::MenuItem("Resources", nullptr, panels[RESOURCES]->IsActive()))
+				panels[RESOURCES]->Activate();
 			ImGui::EndMenu();
 		}
 

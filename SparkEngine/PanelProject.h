@@ -14,8 +14,6 @@ public:
 	void Draw();
 	void DrawFiles();
 
-
-	
 	std::string selected_file = "";
 	Resource* selected_resource = nullptr;
 

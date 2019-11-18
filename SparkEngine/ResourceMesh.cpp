@@ -9,6 +9,11 @@ ResourceMesh::ResourceMesh(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_ME
 {
 }
 
+std::string ResourceMesh::GetTypeString()
+{
+	return "Mesh";
+}
+
 void ResourceMesh::PrepareBuffers()
 {
 	glGenBuffers(BUFF_TOTAL, buffers);

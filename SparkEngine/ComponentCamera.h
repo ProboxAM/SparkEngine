@@ -10,7 +10,7 @@ class ComponentCamera :
 {
 public:
 	ComponentCamera(GameObject* gameobject);
-	~ComponentCamera();
+	virtual ~ComponentCamera();
 
 	void SetFrustumNearPlaneDistance(float distance);
 	void SetFrustumFarPlaneDistance(float distance);

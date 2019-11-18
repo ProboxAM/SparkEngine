@@ -16,7 +16,7 @@
 #pragma comment (lib,"DeviL/lib/ILUT.lib")
 #pragma comment (lib,"DeviL/lib/ILU.lib")
 
-#define CHECKERS_ID 999999
+#define CHECKERS_ID 4294967295
 
 TextureImporter::TextureImporter()
 {
