@@ -23,6 +23,10 @@ void PanelResources::Draw()
 	{
 		ImGui::Separator();
 		ImGui::Text("Resource: %s", it->second->GetFile());
+		ImGui::Text("Library file: %s", it->second->GetExportedFile());
+		ImGui::Text("Type: %s", it->second->GetTypeString().c_str());
+		ImGui::Text("ID: %u", it->first);
+		ImGui::Text("References: %i", it->second->GetReferences());
 
 		ImGui::SameLine();
 		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
@@ -31,11 +35,6 @@ void PanelResources::Draw()
 		ImGui::Checkbox("Loaded", &loaded);
 		ImGui::PopItemFlag();
 		ImGui::PopStyleVar();
-
-		ImGui::Text("Library file: %s", it->second->GetExportedFile());
-		ImGui::Text("Type: %s", it->second->GetTypeString().c_str());
-		ImGui::Text("ID: %u", it->first);
-		ImGui::Text("References: %i", it->second->GetReferences());
 	}
 
 	ImGui::End();
