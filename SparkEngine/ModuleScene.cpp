@@ -365,6 +365,11 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 		}
 	}
 
+	if (objects_hit.size() == 0) {
+		selected_gameobject = nullptr;
+		return;
+	}
+
 	for (std::map<float, GameObject*>::iterator it = objects_hit.begin(); it != objects_hit.end(); ++it) {
 		ComponentMesh* c_mesh = (ComponentMesh*)it->second->GetComponent(COMPONENT_TYPE::MESH);
 		if (c_mesh) {
