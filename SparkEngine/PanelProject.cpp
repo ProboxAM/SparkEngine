@@ -54,22 +54,10 @@ void PanelProject::DrawFiles()
 
 		ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id,
 			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
-
 		ManageClicksForItem(files[i]);
 
 		ImGui::Text(files[i].c_str());
-
 		ManageClicksForItem(files[i]);
-
-		if (ImGui::IsItemClicked()) //clicked text
-		{
-			selected_file = files[i];
-
-			uint id = App->resources->GetID(ASSETS_FOLDER + files[i]);
-			selected_resource = App->resources->Get(id);
-
-			App->scene->selected_gameobject = nullptr;
-		}
 
 		ImGui::EndChild();
 	}
@@ -77,7 +65,7 @@ void PanelProject::DrawFiles()
 
 void PanelProject::ManageClicksForItem(std::string file)
 {
-	if (ImGui::IsItemClicked()) //clicked image
+	if (ImGui::IsItemClicked())
 	{
 		if (ImGui::IsMouseDoubleClicked(0))
 		{
