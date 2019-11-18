@@ -186,7 +186,6 @@ bool GameObject::CompareTag(std::string tag)
 
 bool GameObject::Save(const nlohmann::json::iterator& it)
 {
-	LOG("Saving gameobject: %s", name.c_str());
 	nlohmann::json object = {
 		{"id", id},
 		{"parent", transform->GetParent()? transform->GetParent()->gameobject->GetId() : 0},
@@ -204,7 +203,6 @@ bool GameObject::Save(const nlohmann::json::iterator& it)
 	}
 
 	it.value().push_back(object);
-	LOG("Finished saving gameobject: %s", name.c_str())
 
 	//Save children
 	std::vector<ComponentTransform*>childs = transform->GetChildren();

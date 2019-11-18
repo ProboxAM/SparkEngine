@@ -65,6 +65,7 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 		import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*&) meta);
 		break;
 	case Resource::R_SCENE:
+		return 0;
 		break;
 	case Resource::R_NONE:
 		break;
@@ -164,6 +165,8 @@ Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extens
 		return Resource::RESOURCE_TYPE::R_TEXTURE;
 	else if (extension == "fbx" || extension == "FBX")
 		return Resource::RESOURCE_TYPE::R_MODEL;
+	else if (extension=="scene")
+		return Resource::RESOURCE_TYPE::R_SCENE;
 
 	return Resource::RESOURCE_TYPE::R_NONE;
 }

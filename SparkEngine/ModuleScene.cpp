@@ -124,10 +124,13 @@ bool ModuleScene::SaveScene()
 
 	root->Save(j.find("GameObjects"));
 
-	std::ofstream o(ASSETS_FOLDER"Scene.scene");
+	std::string scene_path = ASSETS_FOLDER + scene_name + SCENE_EXTENSION;
+	std::ofstream o(scene_path);
 	o << std::setw(4) << j << std::endl;
 
-	LOG("Scene saved to %s", ASSETS_FOLDER"Scene.scene");
+	LOG("Scene saved to %s", scene_path.c_str());
+
+	has_file = true;
 
 	return true;
 }
@@ -181,12 +184,22 @@ bool ModuleScene::LoadScene()
 		{
 			root = CreateRootGameObject(id);
 		}
-
-		LOG("Created GameObject %s", name);
 	}
 	LOG("Finished loading scene.");
 
+	has_file = true;
+
 	return true;
+}
+
+std::string ModuleScene::GetName()
+{
+	return scene_name;
+}
+
+void ModuleScene::SetName(std::string new_name)
+{
+	scene_name = new_name;
 }
 
 GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale)
@@ -227,7 +240,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 	return go;
 }
 
-GameObject * ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject * parent)
+GameObject* ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject * parent)
 {
 	std::string name;
 	uint shape_id;
@@ -434,6 +447,11 @@ void ModuleScene::DeleteGameObject(GameObject* go)
 	go = nullptr;
 }
 
+bool ModuleScene::HasFile()
+{
+	return has_file;
+}
+
 void ModuleScene::RecursiveErase(GameObject* go)
 {
 	std::vector<ComponentTransform*> children = go->transform->GetChildren();
@@ -451,4 +469,14 @@ void ModuleScene::SetGameObjectStatic(GameObject* go, bool state)
 		quad_tree->InsertGameObject(go);
 	else
 		quad_tree->RemoveGameObject(go);
+}
+
+void ModuleScene::ResetScene()
+{
+	DeleteGameObjects();
+	quad_tree->Clear();
+	scene_name = DEFAULT_NAME;
+
+	root = CreateRootGameObject();
+	has_file = false;
 }

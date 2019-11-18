@@ -4,6 +4,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleEditor.h"
 #include "ModuleScene.h"
+#include "ModuleFileSystem.h"
 #include "Panel.h"
 #include "PanelConfiguration.h"
 #include "PanelAbout.h"
@@ -94,10 +95,27 @@ update_status ModuleEditor::Update(float dt)
 	ImGui::NewFrame();
 	BeginDockSpace();
 
+	bool open_save_popup = false;
+
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
 		{
+			if (ImGui::MenuItem("New Scene"))
+			{
+				App->scene->ResetScene();
+			}
+			if (ImGui::MenuItem("Save")) 
+			{ 
+				std::string scene_file = ASSETS_FOLDER + App->scene->GetName() + SCENE_EXTENSION;
+				if (App->scene->HasFile())
+					App->scene->SaveScene();
+				else
+					open_save_popup = true;
+			}
+			if (ImGui::MenuItem("Save as...")) {
+				open_save_popup = true;
+			}
 			if (ImGui::MenuItem("Exit")) { App->exit = true; }
 			ImGui::EndMenu();
 		}
@@ -141,6 +159,30 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
+	}
+
+	static std::string scene_name;
+	if (open_save_popup)
+	{
+		ImGui::OpenPopup("Save as");
+		scene_name = App->scene->GetName();
+	}		
+
+	if (ImGui::BeginPopupModal("Save as"))
+	{
+		ImGui::InputText("Name", &scene_name, ImGuiInputTextFlags_CharsNoBlank);
+
+		if (ImGui::Button("Save", ImVec2(120, 0))) {
+			App->scene->SetName(scene_name);
+			App->scene->SaveScene();
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SetItemDefaultFocus();
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
 	}
 
 	for (std::vector<Panel*>::iterator it = panels.begin(); it != panels.end(); ++it)

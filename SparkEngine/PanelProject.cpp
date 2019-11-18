@@ -67,6 +67,16 @@ void PanelProject::DrawFiles()
 
 		ImGui::Text(files[i].c_str());
 
+		if (ImGui::IsItemClicked())
+		{
+			selected_file = files[i];
+
+			uint id = App->resources->GetID(ASSETS_FOLDER + files[i]);
+			selected_resource = App->resources->Get(id);
+
+			App->scene->selected_gameobject = nullptr;
+		}
+
 		ImGui::EndChild();
 	}
 }

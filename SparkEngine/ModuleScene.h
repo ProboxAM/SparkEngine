@@ -13,6 +13,7 @@ class Quadtree;
 enum PRIMITIVE_TYPE;
 
 #define GRID_SIZE 40
+#define DEFAULT_NAME "Scene"
 
 class ModuleScene :
 	public Module
@@ -43,6 +44,9 @@ public:
 	bool SaveScene();
 	bool LoadScene();
 
+	std::string GetName();
+	void SetName(std::string);
+
 	GameObject* CreateGameObject(
 		GameObject* parent = nullptr, 
 		std::string name = "GameObject",
@@ -67,12 +71,17 @@ public:
 	void DeleteGameObject(GameObject * go);
 
 	void SetGameObjectStatic(GameObject * go, bool state);
+	void ResetScene();
 	bool show_grid = true;
 	std::vector<float3> lines;
 
 	bool user_selected_GO = false;
 
+	bool HasFile();
+
 private:
+	std::string scene_name = "Scene";
+	bool has_file = false;
 	void RecursiveErase(GameObject * go);
 };
 
