@@ -364,8 +364,6 @@ public:
 		@see MinimalEnclosingAABB(), MinimalEnclosingOBB(). */
 	Polyhedron ToPolyhedron() const;
 
-	bool ContainsOrIntersectsAABB(AABB bbox);
-
 	/// Tests if the given object is fully contained inside this Frustum.
 	/** This function returns true if the given object lies inside this Frustum, and false otherwise.
 		@note The comparison is performed using less-or-equal, so the faces of this Frustum count as being inside, but
