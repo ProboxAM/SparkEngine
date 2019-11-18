@@ -115,7 +115,7 @@ bool TextureImporter::Import(const void * buffer, uint size, std::string & outpu
 	return true;
 }
 
-bool TextureImporter::Import(const char* import_file, std::string& output_file, ResourceTexture::TextureMetaFile* meta)
+bool TextureImporter::Import(const char* import_file, std::string& output_file, ResourceTexture::TextureMetaFile*& meta)
 {
 	bool ret = false;
 
@@ -127,13 +127,20 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 		ILuint size;
 		ILubyte *data;
 
-		ilSetInteger(IL_DXTC_FORMAT, meta->GetCompression()); // To pick a specific DXT compression use 
+		ilSetInteger(IL_DXTC_FORMAT, meta ? meta->GetCompression() : IL_DXT5); // To pick a specific DXT compression use 
 
 		size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer 
 		if (size > 0) {
 			data = new ILubyte[size]; // allocate data buffer 
 			if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function        
 			{
+				if (!meta) //If there was no meta, we create a new one for this resource and generate id.
+				{
+					ResourceTexture::TextureMetaFile* new_meta_file = new ResourceTexture::TextureMetaFile();
+					meta = new_meta_file;
+					meta->id = App->GenerateID();
+				}				
+
 				std::string file_name = std::to_string(meta->id);
 				output_file = LIBRARY_TEXTURES_FOLDER + file_name + TEXTURE_EXTENSION;
 				ret = App->fsystem->Save(output_file.c_str(), data, size);
@@ -213,7 +220,7 @@ bool TextureImporter::SaveMeta(ResourceTexture::TextureMetaFile* meta)
 {
 	nlohmann::json meta_file;
 	meta_file = {
-		{ "original_file", meta->file },
+		{ "original_file", meta->original_file },
 		{ "exported_file", meta->exported_file },
 		{ "id", meta->id },
 		{ "modification_date", meta->modification_date},

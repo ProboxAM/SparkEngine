@@ -233,7 +233,7 @@ void Application::LoadSettings()
 	}
 }
 
-uint Application::GenerateRandomNumber()
+uint Application::GenerateID()
 {
 	uint n = random();
 	return n;

@@ -51,46 +51,25 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 	return true;
 }
 
-uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type)
+uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type, Resource::MetaFile* meta)
 {
-	bool needs_import = true;
 	bool import_success = false;
 	std::string output_file;
-
-	std::string meta_file = new_file_in_assets;
-	meta_file.append(".meta");
-	Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
-
-	if (App->fsystem->Exists(meta_file.c_str()))
-	{
-		LoadMeta(meta_file.c_str(), meta, type);
-		std::string mod_date;
-		/*App->fsystem->GetFileModificationDate(new_file_in_assets, mod_date);
-		if (meta->modification_date == mod_date)
-		{
-			needs_import = false;
-			import_success = true;
-			output_file = meta->exported_file;
-		}	*/		
-	}
 		
-	if (needs_import)
+	switch (type)
 	{
-		switch (type)
-		{
-		case Resource::R_TEXTURE:
-			import_success = App->importer->texture->Import(new_file_in_assets, output_file, (ResourceTexture::TextureMetaFile*) meta);
-			break;
-		case Resource::R_MODEL:
-			import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*) meta);
-			break;
-		case Resource::R_SCENE:
-			break;
-		case Resource::R_NONE:
-			break;
-		default:
-			break;
-		}
+	case Resource::R_TEXTURE:
+		import_success = App->importer->texture->Import(new_file_in_assets, output_file, (ResourceTexture::TextureMetaFile*&) meta);
+		break;
+	case Resource::R_MODEL:
+		import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*&) meta);
+		break;
+	case Resource::R_SCENE:
+		break;
+	case Resource::R_NONE:
+		break;
+	default:
+		break;
 	}
 
 	if (import_success)
@@ -144,35 +123,6 @@ uint ModuleResources::GetID(std::string file)
 			return it->first;
 
 	return 0;
-}
-
-Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type)
-{
-	Resource* r = nullptr;
-	uint id = ++last_id;
-
-	switch (type)
-	{
-	case Resource::R_TEXTURE:
-		r = new ResourceTexture(id);
-		break;
-	case Resource::R_MESH:
-		r = new ResourceMesh(id);
-		break;
-	case Resource::R_MODEL:
-		r = new ResourceModel(id);
-		break;
-	case Resource::R_SCENE:
-		break;
-	case Resource::R_NONE:
-		break;
-	default:
-		break;
-	}
-	if (r != nullptr)
-		resources.emplace(id, r);
-
-	return r;
 }
 
 Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
@@ -245,18 +195,75 @@ bool ModuleResources::LoadResource(Resource* resource)
 
 void ModuleResources::LoadAssets()
 {
-	// get all files, check if they have meta or not, if they have meta
+	// Get all files in assets that are not meta
 	std::vector<std::string> files;
 	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
 
 	for each(std::string file in files)
 	{
+		std::string asset_file = (ASSETS_FOLDER + file).c_str();
+		std::string meta_file = asset_file + ".meta";
 		std::string extension;
 		App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
-		ImportFile((ASSETS_FOLDER+file).c_str(), GetTypeFromExtension(extension));
+		Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
+
+		if (App->fsystem->Exists(meta_file.c_str())) //File has meta.
+		{
+			//Load meta
+			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
+			LoadMeta(meta_file.c_str(), meta, type);
+
+			std::string mod_date;
+			App->fsystem->GetFileModificationDate(asset_file.c_str(), mod_date);
+			bool is_modified = meta->modification_date != mod_date; // Check if asset file has been modified
+			bool missing_files = !ImportedLibraryFilesExist(meta, type); // Check if any file in library is missing
+
+			if (is_modified || missing_files)
+				ImportFile(asset_file.c_str(), type, meta); //Reimport asset with ids from meta.
+			else
+				CreateResourcesFromMeta(meta, type); //No need to import, just create resources
+		}
+		else
+			ImportFile(asset_file.c_str(), GetTypeFromExtension(extension)); //New asset, needs import
 	}
 
-	LOG("imported all assets");
+	LOG("Loaded all assets");
+}
+
+bool ModuleResources::ImportedLibraryFilesExist(Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
+{
+	bool ret = false;
+
+	switch (type)
+	{
+	case Resource::RESOURCE_TYPE::R_TEXTURE:
+		ret = App->fsystem->Exists(meta->exported_file.c_str());
+		break;
+	case Resource::RESOURCE_TYPE::R_MODEL:
+	{
+		ResourceModel::ModelMetaFile* model_meta = (ResourceModel::ModelMetaFile*) meta;
+		for each (uint mesh in model_meta->meshes)
+		{
+			if (mesh != 0)
+			{
+				std::string mesh_file = LIBRARY_MESH_FOLDER + std::to_string(mesh) + MESH_EXTENSION;
+				ret = App->fsystem->Exists(mesh_file.c_str());
+
+				if (!ret)
+					break;
+			}
+		}
+	}
+		break;
+	case Resource::RESOURCE_TYPE::R_SCENE:
+		break;
+	case Resource::RESOURCE_TYPE::R_NONE:
+		break;
+	default:
+		break;
+	}
+
+	return ret;
 }
 
 uint ModuleResources::GetIDFromMeta(std::string file)
@@ -278,7 +285,6 @@ bool ModuleResources::LoadMeta(const char* file, Resource::MetaFile* meta, Resou
 		App->importer->model->LoadMeta(file, (ResourceModel::ModelMetaFile*) meta);
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:
-
 		break;
 	case Resource::RESOURCE_TYPE::R_NONE:
 		break;
@@ -309,7 +315,43 @@ Resource::MetaFile* ModuleResources::CreateMeta(const char* file, Resource::RESO
 		break;
 	}
 
-	meta->id = ++last_id;
-
 	return meta;
+}
+
+void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
+{
+	Resource* resource;
+	switch (type)
+	{
+	case Resource::RESOURCE_TYPE::R_TEXTURE:
+		resource = CreateResource(type, meta->id);
+		break;
+	case Resource::RESOURCE_TYPE::R_MODEL:
+	{
+		resource = CreateResource(type, meta->id);
+
+		ResourceModel::ModelMetaFile* model_meta = (ResourceModel::ModelMetaFile*) meta;
+		for each (uint mesh in model_meta->meshes)
+		{
+			if (mesh != 0)
+			{
+				Resource* mesh_resource = CreateResource(Resource::RESOURCE_TYPE::R_MESH, mesh);
+				mesh_resource->SetExportedFile(LIBRARY_MESH_FOLDER + std::to_string(mesh) + MESH_EXTENSION);
+			}			
+		}
+
+	}
+		break;
+	case Resource::RESOURCE_TYPE::R_SCENE:
+
+		break;
+	case Resource::RESOURCE_TYPE::R_NONE:
+		break;
+	default:
+		break;
+	}
+
+	resource->SetFile(meta->original_file);
+	resource->SetExportedFile(meta->exported_file);
+	resource->meta = meta;
 }

@@ -99,34 +99,36 @@ bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resourc
 }
 
 
-bool ModelImporter::Import(const char* file, std::string& output_file, ResourceModel::ModelMetaFile* meta)
+bool ModelImporter::Import(const char* file, std::string& output_file, ResourceModel::ModelMetaFile*& meta)
 {
-	uint flags;
-
-	flags = meta->GetImportSettings();
+	uint flags = aiProcessPreset_TargetRealtime_MaxQuality;
+	if(meta)
+		flags = meta->GetImportSettings();
 
 	const aiScene* scene = aiImportFile(file, flags);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
+		if (!meta) //If there was no meta, we create a new one for this resource and generate id.
+		{
+			meta = new ResourceModel::ModelMetaFile();
+			meta->id = App->GenerateID();
+		}
+
 		std::vector<ResourceModel::ModelNode> nodes;
 		ImportNode(scene->mRootNode, scene, 0, nodes, meta);
 
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
 
-		if (!meta->loaded)
+		for each (ResourceModel::ModelNode node in nodes)
 		{
-			for each (ResourceModel::ModelNode node in nodes)
-			{
-				meta->meshes.push_back(node.mesh);
-			}
-			App->fsystem->GetFileModificationDate(file, meta->modification_date);
-			meta->exported_file = output_file;
-			meta->original_file = file;
-			meta->file = std::string(file) + ".meta";
+			meta->meshes.push_back(node.mesh);
 		}
-
+		App->fsystem->GetFileModificationDate(file, meta->modification_date);
+		meta->exported_file = output_file;
+		meta->original_file = file;
+		meta->file = std::string(file) + ".meta";
 		SaveMeta(meta);
 
 		aiReleaseImport(scene);
@@ -137,7 +139,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	return false;
 }
 
-void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile* meta)
+void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta)
 {
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
@@ -161,7 +163,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	if (node->mNumMeshes > 0)
 	{
 		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now, sry
-		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : 0);
+		resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : App->GenerateID());
 
 		//Check for material, and then load texture if it has, otherwise apply default texture	
 		aiString texture_path;
@@ -172,7 +174,17 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 			std::string file, extension;
 			App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file, &extension);
 			assets_path += file + "." + extension;
-			resource_node.texture = App->resources->ImportFile(assets_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
+
+			if (App->fsystem->Exists(assets_path.c_str())) //Check if asset of texture exists
+			{
+				std::string meta_file = assets_path + ".meta";
+				if (App->fsystem->Exists(meta_file.c_str())) //Check if meta exista associated to the asset
+				{
+					resource_node.texture = App->resources->GetIDFromMeta(meta_file);
+				}
+				else
+					resource_node.texture = App->resources->ImportFile(assets_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
+			}
 		}
 		else
 			resource_node.texture = App->importer->texture->checkers;
@@ -226,7 +238,7 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 {
 	nlohmann::json meta_file;
 	meta_file = {
-		{ "original_file", meta->file },
+		{ "original_file", meta->original_file },
 		{ "exported_file", meta->exported_file},
 		{ "id", meta->id },
 		{ "modification_date", meta->modification_date },

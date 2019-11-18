@@ -234,7 +234,7 @@ void GameObject::UpdateBBox()
 GameObject::GameObject()
 {
 	this->transform = (ComponentTransform*)AddComponent(COMPONENT_TYPE::TRANSFORM);
-	id = App->GenerateRandomNumber();
+	id = App->GenerateID();
 }
 
 GameObject::GameObject(uint id)

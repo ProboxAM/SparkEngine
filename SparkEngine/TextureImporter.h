@@ -15,7 +15,7 @@ public:
 	bool CleanUp();
 	bool Start();
 
-	bool Import(const char* file, std::string& output_file, ResourceTexture::TextureMetaFile* meta);
+	bool Import(const char* file, std::string& output_file, ResourceTexture::TextureMetaFile*& meta);
 	bool Import(const void* buffer, uint size, std::string& output_file);
 
 	bool Load(ResourceTexture* resource);

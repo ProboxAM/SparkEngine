@@ -15,8 +15,8 @@ public:
 
 	void Create(const AABB limits);
 	void Clear();
-	void InsertGameObject(const GameObject* gameobject);
-	void RemoveGameObject(const GameObject* gameobject);
+	void InsertGameObject(GameObject* gameobject);
+	void RemoveGameObject(GameObject* gameobject);
 
 	template<typename PRIMITIVE>
 	void CollectIntersections(std::vector<GameObject*>&, const PRIMITIVE & primitive);
@@ -27,7 +27,7 @@ private:
 	QuadtreeNode* children[4] = { nullptr,nullptr,nullptr,nullptr };
 	QuadtreeNode* parent = nullptr;
 
-	std::vector<const GameObject*> bucket;
+	std::vector<GameObject*> bucket;
 
 public:
 	AABB box;
@@ -42,8 +42,8 @@ public:
 
 	void Create(const AABB limits);
 	void Clear();
-	void InsertGameObject(const GameObject* gameobject);
-	void RemoveGameObject(const GameObject* gameobject);
+	void InsertGameObject(GameObject* gameobject);
+	void RemoveGameObject(GameObject* gameobject);
 
 	template<typename PRIMITIVE>
 	void CollectIntersections(std::vector<GameObject*>&, const PRIMITIVE & primitive);
@@ -56,7 +56,7 @@ private:
 template<typename PRIMITIVE>
 inline void Quadtree::CollectIntersections(std::vector<GameObject*>& objects, const PRIMITIVE & primitive)
 {
-	root->Intersect(objects, primitive);
+	root->CollectIntersections(objects, primitive);
 }
 
 template<typename PRIMITIVE>
@@ -64,13 +64,13 @@ inline void QuadtreeNode::CollectIntersections(std::vector<GameObject*>& objects
 {
 	if (primitive.Intersects(box))
 	{
-		for (std::list<GameObject*>::iterator it = bucket.begin(); it != bucket.end(); ++it)
+		for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end(); ++it)
 		{
 			if (primitive.Intersects((*it)->global_aabb))
 				objects.push_back(*it);
 		}
 		for (int i = 0; i < 4; ++i)
-			if (childs[i] != nullptr) childs[i]->Intersect(objects, primitive);
+			if (children[i] != nullptr) children[i]->CollectIntersections(objects, primitive);
 	}
 }
 

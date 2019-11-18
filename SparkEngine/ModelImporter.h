@@ -18,7 +18,7 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	bool Import(const char * file, std::string & output_file, ResourceModel::ModelMetaFile* meta);
+	bool Import(const char * file, std::string & output_file, ResourceModel::ModelMetaFile*& meta);
 	bool Load(ResourceModel* resource);
 	bool Save(std::string file, const std::vector<ResourceModel::ModelNode>& nodes);
 
@@ -27,7 +27,7 @@ public:
 
 private:
 	bool LoadNode(nlohmann::json::iterator it, ResourceModel* resource);
-	void ImportNode(const aiNode * node, const aiScene * scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile* meta);
+	void ImportNode(const aiNode * node, const aiScene * scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta);
 	void FixScaleUnits(float3 &scale);
 };
 

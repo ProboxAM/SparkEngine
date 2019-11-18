@@ -72,7 +72,7 @@ public:
 	int GetFPSCap();
 
 	void OpenWebURL(std::string path);
-	uint GenerateRandomNumber();
+	uint GenerateID();
 
 private:
 
