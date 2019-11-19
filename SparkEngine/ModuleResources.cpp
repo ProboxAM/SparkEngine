@@ -35,15 +35,21 @@ bool ModuleResources::Start()
 
 bool ModuleResources::ImportFileToAssets(const char * path)
 {
-	if (App->fsystem->CopyFromOutsideFS(path, ASSETS_FOLDER))
-	{
-		std::string extension, file;
-		App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
-		file += "." + extension;
+	std::string extension, file;
+	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
+	file += "." + extension;
 
-		Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
-		ImportFile(std::string(ASSETS_FOLDER + file).c_str(), type);
+	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str()))
+	{
+		LOG("Importing new file to Assets...");
+		if (App->fsystem->CopyFromOutsideFS(path, ASSETS_FOLDER))
+		{
+			Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
+			ImportFile(std::string(ASSETS_FOLDER + file).c_str(), type);
+		}
 	}
+	else
+		LOG("File is already in Assets, not importing again.");
 
 	return true;
 }

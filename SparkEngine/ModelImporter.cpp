@@ -122,9 +122,12 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
 
-		for each (ResourceModel::ModelNode node in nodes)
+		if (meta->meshes.empty())
 		{
-			meta->meshes.push_back(node.mesh);
+			for each (ResourceModel::ModelNode node in nodes)
+			{
+				meta->meshes.push_back(node.mesh);
+			}
 		}
 		App->fsystem->GetFileModificationDate(file, meta->modification_date);
 		meta->exported_file = output_file;
