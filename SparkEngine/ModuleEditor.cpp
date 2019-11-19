@@ -57,6 +57,8 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[PROJECT] = new PanelProject(true);
 	panels[RESOURCES] = new PanelResources(true);
 
+	mode = "Local";
+
 	return true;
 }
 
@@ -66,6 +68,10 @@ bool ModuleEditor::Start()
 	{
 		(*it)->Start();
 	}
+
+	guizmo_mode = ImGuizmo::MODE::LOCAL;
+	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+
 	return true;
 }
 
@@ -97,6 +103,9 @@ update_status ModuleEditor::Update(float dt)
 	ImGui::NewFrame();
 
 	bool open_save_popup = false;
+
+	if(App->scene->selected_gameobject)
+		HandleTransformInputs();
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -213,12 +222,21 @@ update_status ModuleEditor::Update(float dt)
 
 	if (ImGui::BeginMenuBar())
 	{
-		ImGui::Button("Test");
-		ImGui::Button("Test2");
-		ImGui::Button("Test3");
-		ImGui::Button("Test4");
-		ImGui::Button("Test5");
-		ImGui::Button("Test6");
+		if (ImGui::Button("Translate")) {
+			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+		}
+
+		if(ImGui::Button("Rotate")) {
+			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+		}
+
+		if (ImGui::Button("Scale")) {
+			guizmo_operation = ImGuizmo::OPERATION::SCALE;
+		}
+
+		if (ImGui::Button(mode.c_str())) {
+			SetGlobalMode(!App->scene->global_mode);
+		}
 		ImGui::EndMenuBar();
 	}
 
@@ -262,6 +280,20 @@ Panel * ModuleEditor::GetPanel(Panel_Type type)
 	return panels[type];
 }
 
+void ModuleEditor::SetGlobalMode(const bool on)
+{
+	if (on) {
+		mode = "World";
+		guizmo_mode = ImGuizmo::MODE::WORLD;
+		App->scene->global_mode = true;
+	}
+	else {
+		mode = "Local";
+		guizmo_mode = ImGuizmo::MODE::LOCAL;
+		App->scene->global_mode = false;
+	}
+}
+
 void ModuleEditor::BeginDockSpace()
 {
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -283,4 +315,18 @@ void ModuleEditor::BeginDockSpace()
 	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
 	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+}
+
+
+void ModuleEditor::HandleTransformInputs()
+{
+	if (!ImGuizmo::IsUsing())
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+			guizmo_operation = ImGuizmo::OPERATION::SCALE;
+	}
 }
