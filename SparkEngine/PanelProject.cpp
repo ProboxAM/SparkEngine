@@ -71,8 +71,10 @@ void PanelProject::ManageClicksForItem(std::string file)
 		{
 			std::string extension;
 			App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
+			std::string dot_extension = ".";
+			dot_extension += extension;
 
-			if (extension == "scene")
+			if (dot_extension == SCENE_EXTENSION)
 				App->scene->LoadScene(ASSETS_FOLDER + file);
 		}
 		else

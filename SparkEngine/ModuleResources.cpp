@@ -174,15 +174,12 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 
 Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extension)
 {
-	if (extension == "jpg" || extension == "JPG")
+	App->fsystem->NormalizePath(extension);
+	if (extension == "png" ||extension == "tga" || extension == "dds" || extension == "jpg")
 		return Resource::RESOURCE_TYPE::R_TEXTURE;
-	else if (extension == "png" || extension == "PNG" || extension == "tga")
-		return Resource::RESOURCE_TYPE::R_TEXTURE;
-	else if (extension == "dds" || extension == "DDS")
-		return Resource::RESOURCE_TYPE::R_TEXTURE;
-	else if (extension == "fbx" || extension == "FBX")
+	else if (extension == "fbx")
 		return Resource::RESOURCE_TYPE::R_MODEL;
-	else if (extension=="scene")
+	else if (extension=="spk")
 		return Resource::RESOURCE_TYPE::R_SCENE;
 
 	return Resource::RESOURCE_TYPE::R_NONE;
