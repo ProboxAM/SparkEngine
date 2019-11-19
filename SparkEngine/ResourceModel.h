@@ -57,6 +57,7 @@ public:
 	~ResourceModel();
 
 	void UnLoad();
+	void ReLoad();
 
 	std::vector<ModelNode> nodes;
 	std::string GetTypeString();

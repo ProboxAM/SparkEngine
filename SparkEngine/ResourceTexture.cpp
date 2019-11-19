@@ -1,3 +1,6 @@
+#include "Application.h"
+#include "ModuleImporter.h"
+#include "TextureImporter.h"
 #include "ResourceTexture.h"
 #include "glew\glew.h"
 
@@ -119,4 +122,10 @@ int ResourceTexture::TextureMetaFile::GetMagFilter()
 	}
 
 	return ret;
+}
+
+void ResourceTexture::ReLoad()
+{
+	UnLoad();
+	App->importer->texture->Load(this);
 }

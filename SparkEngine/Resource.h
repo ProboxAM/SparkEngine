@@ -45,6 +45,7 @@ public:
 	virtual void UnLoad() {}
 	uint GetReferences();
 	virtual std::string GetTypeString() { return ""; }
+	virtual void ReLoad() {}
 
 	MetaFile* meta = nullptr;
 protected:

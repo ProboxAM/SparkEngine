@@ -56,6 +56,8 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 
 uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type, Resource::MetaFile* meta)
 {
+	LOG("Importing file %s", new_file_in_assets);
+
 	bool import_success = false;
 	std::string output_file;
 		
@@ -135,7 +137,14 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 	
 	std::map<uint,Resource*>::iterator it = resources.find(id);
 	if (it != resources.end())
+	{
 		r = it->second;
+		if (r->IsLoaded())
+		{
+			LOG("Reloading resource %u", id);
+			r->ReLoad();
+		}		
+	}
 	else
 	{
 		switch (type)
@@ -206,12 +215,14 @@ bool ModuleResources::LoadResource(Resource* resource)
 
 void ModuleResources::LoadAssets()
 {
+	LOG("Loading resources...");
 	// Get all files in assets that are not meta
 	std::vector<std::string> files;
 	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
 
 	for each(std::string file in files)
 	{
+		LOG("Loading resource %s", file.c_str());
 		std::string asset_file = (ASSETS_FOLDER + file).c_str();
 		std::string meta_file = asset_file + ".meta";
 		std::string extension;
@@ -220,6 +231,7 @@ void ModuleResources::LoadAssets()
 
 		if (App->fsystem->Exists(meta_file.c_str())) //File has meta.
 		{
+			LOG("Resource has meta, loading meta file...");
 			//Load meta
 			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
 			LoadMeta(meta_file.c_str(), meta, type);
@@ -230,7 +242,10 @@ void ModuleResources::LoadAssets()
 			bool missing_files = !ImportedLibraryFilesExist(meta, type); // Check if any file in library is missing
 
 			if (is_modified || missing_files)
+			{
+				LOG("Resource needs reimporting");
 				ImportFile(asset_file.c_str(), type, meta); //Reimport asset with ids from meta.
+			}		
 			else
 				CreateResourcesFromMeta(meta, type); //No need to import, just create resources
 		}

@@ -1,3 +1,6 @@
+#include "Application.h"
+#include "ModuleImporter.h"
+#include "ModelImporter.h"
 #include "ResourceModel.h"
 #include "Assimp/include/postprocess.h"
 
@@ -135,4 +138,10 @@ void ResourceModel::ModelMetaFile::SetImportSettings(MODEL_IMPORT_SETTING set)
 			setting = set;
 			break;
 	}
+}
+
+void ResourceModel::ReLoad()
+{
+	UnLoad();
+	App->importer->model->Load(this);
 }
