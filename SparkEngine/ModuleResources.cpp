@@ -35,15 +35,12 @@ bool ModuleResources::Start()
 
 bool ModuleResources::ImportFileToAssets(const char * path)
 {
-	std::string normalized_path = path;
-	App->fsystem->NormalizePath(normalized_path);;
-	
-	std::string extension, file;
-	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
-	file += "." + extension;
-
-	if (App->fsystem->CopyFromOutsideFS(normalized_path.c_str(), ASSETS_FOLDER))
+	if (App->fsystem->CopyFromOutsideFS(path, ASSETS_FOLDER))
 	{
+		std::string extension, file;
+		App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
+		file += "." + extension;
+
 		Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
 		ImportFile(std::string(ASSETS_FOLDER + file).c_str(), type);
 	}

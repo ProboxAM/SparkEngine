@@ -95,7 +95,6 @@ update_status ModuleEditor::PreUpdate(float dt)
 update_status ModuleEditor::Update(float dt)
 {
 	ImGui::NewFrame();
-	BeginDockSpace();
 
 	bool open_save_popup = false;
 
@@ -165,7 +164,6 @@ update_status ModuleEditor::Update(float dt)
 		}
 		ImGui::EndMainMenuBar();
 	}
-
 	//Save scene popup
 	static std::string scene_name;
 	if (open_save_popup)
@@ -209,6 +207,19 @@ update_status ModuleEditor::Update(float dt)
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
+	}
+
+	BeginDockSpace();
+
+	if (ImGui::BeginMenuBar())
+	{
+		ImGui::Button("Test");
+		ImGui::Button("Test2");
+		ImGui::Button("Test3");
+		ImGui::Button("Test4");
+		ImGui::Button("Test5");
+		ImGui::Button("Test6");
+		ImGui::EndMenuBar();
 	}
 
 	for (std::vector<Panel*>::iterator it = panels.begin(); it != panels.end(); ++it)
@@ -260,7 +271,7 @@ void ModuleEditor::BeginDockSpace()
 	ImGui::SetNextWindowBgAlpha(0.0f);
 
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
