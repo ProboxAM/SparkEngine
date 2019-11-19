@@ -22,6 +22,17 @@ enum Panel_Type {
 	TOTAL
 };
 
+//enum IMAGE_TYPE {
+//	PLAY,
+//	PAUSE,
+//	TRANSLATE,
+//	ROTATE,
+//	SCALE,
+//	SCENE,
+//	MODEL,
+//	TOTAL
+//};
+
 class ModuleEditor : public Module
 {
 public:
@@ -47,6 +58,8 @@ public:
 
 	ImGuizmo::OPERATION guizmo_operation;
 	ImGuizmo::MODE guizmo_mode;
+
+	float4 button_section[TOTAL];
 
 private:
 	std::vector<Panel*> panels;
