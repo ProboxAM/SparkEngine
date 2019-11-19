@@ -17,6 +17,7 @@ ResourceTexture::ResourceTexture(uint id) : Resource(id, Resource::RESOURCE_TYPE
 
 void ResourceTexture::UnLoad()
 {
+	LOG("Unloading Texture %s", exported_file.c_str());
 	if (buffer_id != 0)
 	{
 		glDeleteTextures(1, &buffer_id);
