@@ -10,6 +10,7 @@
 typedef struct par_shapes_mesh_s par_shapes_mesh;
 class ResourceMesh;
 class ComponentCamera;
+class ComponentMesh;
 
 class ModuleRenderer3D : public Module
 {
@@ -66,6 +67,7 @@ private:
 	bool vsync;
 	bool depth_test, cull_face, lighting, color_material, texture2d;
 	uint scene_depth_id;
+	std::vector<ComponentMesh*> meshes;
 
 };
 

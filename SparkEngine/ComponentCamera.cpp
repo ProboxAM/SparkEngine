@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleWindow.h"
+#include "ModuleScene.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
@@ -135,6 +136,12 @@ void ComponentCamera::UpdateFrustumTransform()
 	frustum.pos = transform_matrix.TranslatePart();
 	frustum.up = transform_matrix.WorldY();
 	frustum.front = transform_matrix.WorldZ();
+}
+
+void ComponentCamera::SetAsMainCamera()
+{
+	App->scene->main_game_camera->active_camera = false;
+	App->scene->main_game_camera = this;
 }
 
 bool ComponentCamera::Save(const nlohmann::json::iterator & it)

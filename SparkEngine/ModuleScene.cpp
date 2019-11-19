@@ -11,6 +11,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 
 #include "Importer.h"
 #include "MeshImporter.h"
@@ -18,6 +19,7 @@
 #include "ModuleImporter.h"
 
 #include "ModuleInput.h"
+#include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
@@ -60,12 +62,16 @@ bool ModuleScene::Start()
 	quad_tree = new Quadtree();
 	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
 
+	main_game_camera = App->camera->c_camera;
+
 	return true;
 }
 
 update_status ModuleScene::Update(float dt)
 {
 	root->Update(dt);
+
+	AccelerateFrustumCulling();
 
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		SaveScene();
@@ -464,6 +470,40 @@ void ModuleScene::RecursiveErase(GameObject* go)
 		RecursiveErase(child->gameobject);
 	}
 	gameobjects.erase(go->GetId());
+}
+
+void ModuleScene::AccelerateFrustumCulling()
+{
+	//if the main camera has fustrum culling enabled
+	if (main_game_camera->enable_frustum_culling) {
+		std::vector<GameObject*> objects_hit;
+		quad_tree->CollectIntersections(objects_hit, main_game_camera->frustum); //first collect static objects that intersect with the frustum
+
+		for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
+		{
+			if (!it->second->isStatic()) {//then we test it with the dynamic objects
+				if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
+					if (main_game_camera->frustum.Intersects(it->second->global_aabb)) {
+						objects_hit.push_back(it->second);
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < objects_hit.size(); ++i) {
+			ComponentMesh* c_mesh = (ComponentMesh*)objects_hit[i]->GetComponent(COMPONENT_TYPE::MESH);//for every object intersecting with the frustum, we set to_draw true so it will be rendered.
+			c_mesh->to_draw = true;
+		}
+	}
+	else {
+		for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
+		{
+			if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
+				ComponentMesh* c_mesh = (ComponentMesh*)it->second->GetComponent(COMPONENT_TYPE::MESH);//else we draw every object in the scene
+				c_mesh->to_draw = true;
+			}
+		}
+	}
 }
 
 void ModuleScene::SetGameObjectStatic(GameObject* go, bool state)

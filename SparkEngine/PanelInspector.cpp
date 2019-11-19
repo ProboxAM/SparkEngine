@@ -148,6 +148,14 @@ void PanelInspector::Draw()
 					ImGui::Checkbox("Active", &c_camera->active);
 					ImGui::PopID();
 
+					ImGui::SameLine();
+					if (ImGui::Checkbox("Main Camera", &c_camera->active_camera)) {
+						c_camera->SetAsMainCamera();
+					}
+
+					ImGui::SameLine();
+					ImGui::Checkbox("Enable Frustum Culling", &c_camera->enable_frustum_culling);
+
 					float npd = c_camera->GetFrustumNearPlaneDistance();
 					if (ImGui::SliderFloat("Near plane distance: ", &npd, 0.1f, 1.0f, "%.2f")) {
 						c_camera->SetFrustumNearPlaneDistance(npd);

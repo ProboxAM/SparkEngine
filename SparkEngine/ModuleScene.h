@@ -9,6 +9,7 @@
 
 class GameObject;
 class ResourceModel;
+class ComponentCamera;
 class Quadtree;
 enum PRIMITIVE_TYPE;
 
@@ -79,10 +80,13 @@ public:
 
 	bool HasFile();
 
+	ComponentCamera* main_game_camera = nullptr;
+
 private:
 	std::string scene_name = "Scene";
 	bool has_file = false;
 	void RecursiveErase(GameObject * go);
+	void AccelerateFrustumCulling();
 };
 
 #endif // !_MODULE_SCENE_H_

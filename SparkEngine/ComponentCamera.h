@@ -34,6 +34,8 @@ public:
 
 	void UpdateFrustumTransform();
 
+	void SetAsMainCamera();
+
 	Frustum frustum;
 
 	bool update_camera_projection = false;
@@ -41,10 +43,10 @@ public:
 	bool Save(const nlohmann::json::iterator& it);
 	bool Load(const nlohmann::json comp);
 
-private:
-
 	bool active_camera = false;
+	bool enable_frustum_culling = false;
 
+private:
 	void DrawFrustum();
 
 	void Draw();

@@ -163,6 +163,10 @@ update_status ModuleEditor::Update(float dt)
 					App->scene->CreatePrimitiveGameObject(P_CONE);
 				ImGui::EndMenu();
 			}
+
+			if (ImGui::Selectable("Create Empty")) {
+				App->scene->CreateGameObject(App->scene->root);
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))

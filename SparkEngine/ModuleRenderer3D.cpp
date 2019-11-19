@@ -10,6 +10,7 @@
 #include "ModuleImporter.h"
 #include "ResourceMesh.h"
 #include "ComponentCamera.h"
+#include "ComponentMesh.h"
 #include "ModuleRenderer3D.h"
 
 #pragma comment (lib, "glew/glew32.lib")    /* link OpenGL Utility lib  */

@@ -44,10 +44,10 @@ public:
 
 	float3 reference, new_position;
 	float speed;
+	ComponentCamera* c_camera;
 
 private:
 	LineSegment picking;
-	ComponentCamera* c_camera;
 	std::list<bool> hits;
 };
 

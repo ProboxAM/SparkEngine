@@ -4,10 +4,12 @@
 #include "ModuleScene.h"
 #include "ComponentTexture.h"
 #include "GameObject.h"
+#include "Quadtree.h"
 #include "ResourceMesh.h"
-#include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+
+#include "ComponentMesh.h"
 
 #include "glew\glew.h"
 
@@ -33,7 +35,7 @@ void ComponentMesh::Draw()
 {
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
-	if (mesh && App->renderer3D->c_camera->Intersects(gameobject->global_aabb)) {
+	if (mesh && to_draw) {
 		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform);
 		if (App->scene->selected_gameobject == gameobject)
 			App->renderer3D->DrawOutline(mesh, { 0.9f, 1.f, 0.1f }, transform);
@@ -50,6 +52,8 @@ void ComponentMesh::Draw()
 		gameobject->global_obb.GetCornerPoints(corners);
 		App->renderer3D->DebugDrawCube(corners, { 0, 0, 255, 255 });
 	}
+
+	to_draw = false;
 }
 
 void ComponentMesh::AddMesh(ResourceMesh * mesh)
