@@ -125,6 +125,8 @@ bool MeshImporter::Load(ResourceMesh* resource)
 	}
 	resource->PrepareBuffers();
 
+	LOG("Loaded Mesh %s", resource->GetExportedFile());
+
 	RELEASE_ARRAY(buffer);
 
 	return resource;

@@ -29,6 +29,7 @@ ModuleResources::~ModuleResources()
 bool ModuleResources::Start()
 {
 	LoadAssets();
+	CleanLibrary();
 
 	return true;
 }
@@ -382,4 +383,39 @@ void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource
 	resource->SetFile(meta->original_file);
 	resource->SetExportedFile(meta->exported_file);
 	resource->meta = meta;
+}
+
+void ModuleResources::CleanLibrary()
+{
+	std::vector<std::string> files, directories;
+	App->fsystem->DiscoverFiles(LIBRARY_FOLDER, files, directories);
+	for each (std::string folder in directories)
+	{
+		std::string folder_path = LIBRARY_FOLDER+folder;
+		folder_path += "/";
+		CleanLibraryFolder(folder_path.c_str());
+	}
+}
+void ModuleResources::CleanLibraryFolder(const char* folder)
+{
+	std::vector<std::string> files, directories;
+	App->fsystem->DiscoverFiles(folder, files, directories);
+
+	for (std::vector<std::string>::iterator it = files.begin(); it != files.end(); ++it)
+	{
+		std::string file_path = folder + (*it);
+		bool found = false;
+		for (std::map<uint, Resource*>::iterator resource_it = resources.begin(); resource_it != resources.end(); ++resource_it)
+		{
+			if (resource_it->second->GetExportedFile() == file_path)
+				found = true;
+		}
+
+		if (!found)
+		{
+			LOG("%s doesn't have a resource associated. Removing it.", file_path.c_str());
+			App->fsystem->Remove(file_path.c_str());
+		}
+
+	}
 }

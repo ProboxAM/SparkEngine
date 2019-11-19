@@ -33,6 +33,10 @@ private:
 
 	void CreateResourcesFromMeta(Resource::MetaFile * meta, Resource::RESOURCE_TYPE type);
 
+	void CleanLibrary();
+
+	void CleanLibraryFolder(const char * folder);
+
 private:
 	uint last_id = 1;
 	std::map<uint, Resource*> resources;

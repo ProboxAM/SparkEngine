@@ -53,6 +53,7 @@ void ResourceMesh::PrepareBuffers()
 
 void ResourceMesh::UnLoad()
 {
+	LOG("Unloading Mesh %s", exported_file.c_str());
 	delete[] vertices;
 	vertices = nullptr;
 

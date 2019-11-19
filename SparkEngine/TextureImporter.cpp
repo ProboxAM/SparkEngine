@@ -98,7 +98,7 @@ bool TextureImporter::Load(ResourceTexture* tex)
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		LOG("Loaded Texture %s. width = %i height = %i \nformat = %s size = %i", tex->GetFile(), tex->width, tex->height, tex->format.c_str(), tex->size);
+		LOG("Loaded Texture %s", tex->GetExportedFile());
 	}
 	else
 	{
