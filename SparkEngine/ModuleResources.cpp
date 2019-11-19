@@ -132,9 +132,14 @@ uint ModuleResources::GetID(std::string file)
 Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 {
 	Resource* r = nullptr;
-
-	switch (type)
+	
+	std::map<uint,Resource*>::iterator it = resources.find(id);
+	if (it != resources.end())
+		r = it->second;
+	else
 	{
+		switch (type)
+		{
 		case Resource::R_TEXTURE:
 			r = new ResourceTexture(id);
 			break;
@@ -150,10 +155,10 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 			break;
 		default:
 			break;
+		}
+		if (r != nullptr)
+			resources.emplace(id, r);
 	}
-	if (r != nullptr)
-		resources.emplace(id, r);
-
 
 	return r;
 }

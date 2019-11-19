@@ -2,6 +2,7 @@
 #define _MODULE_EDITOR_H_
 
 #include "Module.h"
+#include "ImGuizmo.h"
 #include <string>
 #include <vector>
 
@@ -42,9 +43,17 @@ public:
 	}
 	Panel* GetPanel(Panel_Type type);
 
+	void SetGlobalMode(const bool on);
+
+	ImGuizmo::OPERATION guizmo_operation;
+	ImGuizmo::MODE guizmo_mode;
+
 private:
 	std::vector<Panel*> panels;
 	void BeginDockSpace();
+	std::string mode;
+
+	void HandleTransformInputs();
 };
 
 #endif // !_MODULE_EDITOR_H_

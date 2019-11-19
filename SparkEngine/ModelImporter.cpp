@@ -101,6 +101,7 @@ bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resourc
 
 bool ModelImporter::Import(const char* file, std::string& output_file, ResourceModel::ModelMetaFile*& meta)
 {
+	LOG("Importing Model %s", file);
 	uint flags = aiProcessPreset_TargetRealtime_MaxQuality;
 	if(meta)
 		flags = meta->GetImportSettings();

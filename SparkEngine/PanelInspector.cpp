@@ -287,6 +287,8 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	ImGui::Separator();
 	if (ImGui::Button("Save")) {
 		App->importer->texture->SaveMeta(meta);
+		LOG("Reimporting texture with new settings...");
+		App->resources->ImportFile(meta->original_file.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE, meta);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Reset")) {
@@ -350,6 +352,8 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 	ImGui::Separator();
 	if (ImGui::Button("Save")) {
 		App->importer->model->SaveMeta(meta);
+		LOG("Reimporting model with new settings...");
+		App->resources->ImportFile(meta->original_file.c_str(), Resource::RESOURCE_TYPE::R_MODEL, meta);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Reset")) {

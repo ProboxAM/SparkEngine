@@ -4,6 +4,7 @@
 #include "ModuleResources.h"
 #include "ModuleScene.h"
 #include "ModuleInput.h"
+#include "ModuleEditor.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "GameObject.h"
@@ -43,7 +44,6 @@ void PanelScene::Draw()
 		ImVec2(1, 0));
 
 	if (App->scene->selected_gameobject) {
-		HandleTransformInputs();
 		DrawTransformGuizmo();
 	}
 
@@ -75,9 +75,6 @@ void PanelScene::Draw()
 		bool wireframe = App->renderer3D->IsWireframeEnabled();
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
-		if (ImGui::Button(mode.c_str())) {
-			SetGlobalMode(!App->scene->global_mode);
-		}
 		ImGui::EndMenuBar();
 	}
 
@@ -86,9 +83,7 @@ void PanelScene::Draw()
 
 void PanelScene::Start()
 {
-	guizmo_mode = ImGuizmo::MODE::LOCAL;
-	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
-	mode = "Local";
+
 }
 
 bool PanelScene::IsInside(const float2& pos) const
@@ -109,18 +104,6 @@ void PanelScene::GetSizeWithAspectRatio(int current_width, int current_height, i
 	new_height = current_height * scale;
 }
 
-void PanelScene::HandleTransformInputs()
-{
-	if (!ImGuizmo::IsUsing())
-	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-			guizmo_operation = ImGuizmo::OPERATION::SCALE;
-	}
-}
 
 void PanelScene::DrawTransformGuizmo()
 {
@@ -137,8 +120,8 @@ void PanelScene::DrawTransformGuizmo()
 	ImGuizmo::SetDrawlist();
 	ImGuizmo::Manipulate((const float*)&view,
 		(const float*)&projection,
-		guizmo_operation, 
-		guizmo_mode, 
+		App->editor->guizmo_operation,
+		App->editor->guizmo_mode, 
 		(float*)&transform,
 		(float*)&delta
 	);
@@ -146,19 +129,5 @@ void PanelScene::DrawTransformGuizmo()
 	if (ImGuizmo::IsUsing())
 	{
 		App->scene->selected_gameobject->transform->SetTransformMatrix(transform.Transposed());
-	}
-}
-
-void PanelScene::SetGlobalMode(bool on)
-{
-	if (on) {
-		mode = "World";
-		guizmo_mode = ImGuizmo::MODE::WORLD;
-		App->scene->global_mode = true;
-	}
-	else {
-		mode = "Local";
-		guizmo_mode = ImGuizmo::MODE::LOCAL;
-		App->scene->global_mode = false;
 	}
 }
