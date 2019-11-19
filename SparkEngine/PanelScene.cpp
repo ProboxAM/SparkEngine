@@ -55,9 +55,13 @@ void PanelScene::Draw()
 			Resource* res = App->resources->GetAndLoad((*id));
 			if (res)
 			{
-				if(res->GetType() == Resource::RESOURCE_TYPE::R_MODEL)
-					App->scene->CreateGameObject((ResourceModel*) res);
-			}		
+				if (res->GetType() == Resource::RESOURCE_TYPE::R_MODEL)
+				{
+					App->scene->CreateGameObject((ResourceModel*)res);
+					res->RemoveReference();
+				}					
+			}
+	
 		}
 		ImGui::EndDragDropTarget();
 	}

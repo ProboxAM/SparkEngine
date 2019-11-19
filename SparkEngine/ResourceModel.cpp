@@ -12,6 +12,11 @@ ResourceModel::~ResourceModel()
 
 }
 
+void ResourceModel::UnLoad()
+{
+	nodes.clear();
+}
+
 std::string ResourceModel::GetTypeString()
 {
 	return "Model";
