@@ -77,6 +77,7 @@ public:
 
 	void SetGameObjectStatic(GameObject * go, bool state);
 	void ResetScene();
+	void CreateDefaultScene();
 	bool show_grid = true;
 	std::vector<float3> lines;
 

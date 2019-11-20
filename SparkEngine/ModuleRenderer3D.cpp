@@ -159,12 +159,10 @@ update_status ModuleRenderer3D::PostUpdate()
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
-
 	SDL_GL_DeleteContext(context);
 
 	return true;
 }
-
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
