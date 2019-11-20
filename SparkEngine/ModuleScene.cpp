@@ -62,7 +62,7 @@ bool ModuleScene::Start()
 	quad_tree = new Quadtree();
 	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
 
-	main_game_camera = App->camera->c_camera;
+	App->renderer3D->game_camera = main_game_camera;
 
 	return true;
 }
@@ -93,11 +93,16 @@ bool ModuleScene::CleanUp()
 
 bool ModuleScene::Draw()
 {
-	if (show_grid)
-		DrawGrid();
-
 	root->Draw();
 
+	return true;
+}
+
+bool ModuleScene::DebugDraw()
+{
+	if (show_grid)
+		DrawGrid();
+	
 	quad_tree->Draw();
 
 	return true;

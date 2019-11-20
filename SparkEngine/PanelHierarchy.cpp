@@ -100,7 +100,7 @@ void PanelHierarchy::SetDragAndDropTarget(ComponentTransform * target)
 {
 	if (ImGui::BeginDragDropTarget())
 	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT"))
 		{
 			ComponentTransform* payload_n = *(ComponentTransform**)payload->Data;
 
@@ -121,16 +121,16 @@ void PanelHierarchy::SetDragAndDropSource(ComponentTransform * target)
 {
 	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 	{
-		ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &App->scene->selected_gameobject->transform, sizeof(ComponentTransform));
+		ImGui::SetDragDropPayload("GameObject", &App->scene->selected_gameobject->transform, sizeof(ComponentTransform));
 		ImGui::EndDragDropSource();
 	}
 }
 
 void PanelHierarchy::SetDragAndDropTargetCustom()
 {
-	if (ImGui::BeginDragDropTargetCustom(ImGui::GetCurrentWindow()->Rect(), (ImGuiID)"Hierarchy"))
+	if (ImGui::BeginDragDropTargetCustom(ImGui::GetCurrentWindow()->Rect(), (ImGuiID)"HIERARCHY"))
 	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT"))
 		{
 			App->scene->selected_gameobject->transform->GetParent()->RemoveChild(App->scene->selected_gameobject->transform);
 			App->scene->root->transform->AddChild(App->scene->selected_gameobject->transform);

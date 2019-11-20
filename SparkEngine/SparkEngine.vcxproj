@@ -14,7 +14,7 @@
     <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
     <ProjectName>SparkEngine</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -110,6 +110,7 @@
     <ClInclude Include="ModuleImporter.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ModuleTime.h" />
+    <ClInclude Include="PanelGame.h" />
     <ClInclude Include="PanelProject.h" />
     <ClInclude Include="PanelResources.h" />
     <ClInclude Include="pcg_uint128.hpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ModuleTime.cpp" />
+    <ClCompile Include="PanelGame.cpp" />
     <ClCompile Include="PanelProject.cpp" />
     <ClCompile Include="PanelResources.cpp" />
     <ClCompile Include="Quadtree.cpp" />

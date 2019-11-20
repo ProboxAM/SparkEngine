@@ -417,6 +417,9 @@
     <ClInclude Include="ModuleTime.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="PanelGame.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -652,6 +655,9 @@
     </ClCompile>
     <ClCompile Include="ModuleTime.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelGame.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

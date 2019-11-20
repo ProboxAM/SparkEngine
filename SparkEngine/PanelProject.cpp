@@ -44,7 +44,7 @@ void PanelProject::DrawFiles()
 		uint id = App->resources->GetID(ASSETS_FOLDER + files[i]);
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
-			ImGui::SetDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F, &id, sizeof(uint));
+			ImGui::SetDragDropPayload("ASSET", &id, sizeof(uint));
 			ImGui::EndDragDropSource();
 		}
 

@@ -33,7 +33,7 @@ bool ModuleCamera3D::Start()
 	c_camera->SetFrustumFarPlaneDistance(1000.0f);
 	LookAt({ 0.f, 0.f, 0.f });
 
-	App->renderer3D->c_camera = c_camera;
+	App->renderer3D->editor_camera = c_camera;
 
 	return ret;
 }
@@ -43,7 +43,7 @@ bool ModuleCamera3D::CleanUp()
 {
 	LOG("Cleaning camera");
 
-	App->renderer3D->c_camera = nullptr;
+	App->renderer3D->editor_camera = nullptr;
 
 	return true;
 }
