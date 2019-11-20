@@ -13,6 +13,7 @@ public:
 
 	void Draw();
 	void DrawFiles();
+	void Start();
 
 	std::string selected_file = "";
 	Resource* selected_resource = nullptr;
@@ -20,6 +21,7 @@ public:
 private:
 	void ManageClicksForItem(std::string file);
 	uint text_size, image_size;
+	std::vector<std::string> files;
 };
 
 

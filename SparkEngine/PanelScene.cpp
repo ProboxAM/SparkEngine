@@ -51,7 +51,7 @@ void PanelScene::Draw()
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET"))
 		{
 			uint* id = (uint*)payload->Data;
-			Resource* res = App->resources->GetAndLoad((*id));
+			Resource* res = App->resources->GetAndReference((*id));
 			if (res)
 			{
 				if (res->GetType() == Resource::RESOURCE_TYPE::R_MODEL)

@@ -95,7 +95,7 @@ uint ModuleResources::GenerateNewUID()
 	return uint();
 }
 
-Resource* ModuleResources::GetAndLoad(uint id)
+Resource* ModuleResources::GetAndReference(uint id)
 {
 	Resource* ret = nullptr;
 	std::map<uint, Resource*>::iterator it = resources.find(id);
@@ -103,9 +103,6 @@ Resource* ModuleResources::GetAndLoad(uint id)
 	if (it != resources.end())
 	{
 		ret = it->second;
-		if (!it->second->IsLoaded())
-			LoadResource(ret);
-
 		ret->AddReference();
 	}
 
@@ -184,31 +181,6 @@ Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extens
 		return Resource::RESOURCE_TYPE::R_SCENE;
 
 	return Resource::RESOURCE_TYPE::R_NONE;
-}
-
-bool ModuleResources::LoadResource(Resource* resource)
-{
-	switch (resource->GetType())
-	{
-		case Resource::RESOURCE_TYPE::R_TEXTURE:
-			App->importer->texture->Load((ResourceTexture*)resource);
-			break;
-		case Resource::RESOURCE_TYPE::R_MESH:
-			App->importer->mesh->Load((ResourceMesh*)resource);
-			break;
-		case Resource::RESOURCE_TYPE::R_MODEL:
-			App->importer->model->Load((ResourceModel*)resource);
-			break;
-		case Resource::RESOURCE_TYPE::R_SCENE:
-			
-			break;
-		case Resource::RESOURCE_TYPE::R_NONE:
-			break;
-		default:
-			break;
-	}
-
-	return true;
 }
 
 void ModuleResources::LoadAssets()

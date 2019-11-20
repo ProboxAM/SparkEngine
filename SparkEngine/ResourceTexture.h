@@ -47,6 +47,7 @@ public:
 
 	void UnLoad();
 	void ReLoad();
+	void Load();
 	std::string GetTypeString();
 };
 

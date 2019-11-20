@@ -58,6 +58,7 @@ public:
 
 	void UnLoad();
 	void ReLoad();
+	void Load();
 
 	std::vector<ModelNode> nodes;
 	std::string GetTypeString();
