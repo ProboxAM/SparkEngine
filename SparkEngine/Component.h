@@ -18,7 +18,7 @@ public:
 	virtual ~Component();
 
 	virtual void Enable() { active = true; }
-	virtual void Update(float dt);
+	virtual void Update();
 	virtual void Draw() {}
 	virtual void Disable() { active = false; }
 	virtual bool Save(const nlohmann::json::iterator& it) { return true; }

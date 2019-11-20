@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
+#include "ModuleTime.h"
 #include "ModuleRenderer3D.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
@@ -75,15 +76,15 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 }
 
 // -----------------------------------------------------------------
-update_status ModuleCamera3D::Update(float dt)
+update_status ModuleCamera3D::Update()
 {
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && !ImGuizmo::IsOver())
 		HandleMouseClicking();
 
 	new_position = { 0, 0, 0 };
-	speed = movement_speed * dt;
+	speed = movement_speed * App->time->RealTimeDeltaTime();
 	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = movement_speed * 2 * dt;
+		speed = movement_speed * 2 * App->time->RealTimeDeltaTime();
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{

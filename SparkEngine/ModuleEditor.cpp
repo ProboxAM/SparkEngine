@@ -90,7 +90,7 @@ void ModuleEditor::Draw()
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-update_status ModuleEditor::PreUpdate(float dt)
+update_status ModuleEditor::PreUpdate()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -98,7 +98,7 @@ update_status ModuleEditor::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::Update(float dt)
+update_status ModuleEditor::Update()
 {
 	ImGui::NewFrame();
 
@@ -229,18 +229,44 @@ update_status ModuleEditor::Update(float dt)
 		if (ImGui::Button("Translate")) {
 			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 		}
-
 		if(ImGui::Button("Rotate")) {
 			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
 		}
-
 		if (ImGui::Button("Scale")) {
 			guizmo_operation = ImGuizmo::OPERATION::SCALE;
 		}
-
 		if (ImGui::Button(mode.c_str())) {
 			SetGlobalMode(!App->scene->global_mode);
 		}
+
+		ImGui::SetCursorPosX(ImGui::GetWindowSize().x * 0.4f);
+		if (!App->IsPlay() && !App->IsPaused())
+		{
+			if (ImGui::Button("Play"))
+				App->Play();
+		}
+		else
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+			if (ImGui::Button("Play"))
+				App->Stop();
+			ImGui::PopStyleVar();
+		}
+
+		if (!App->IsPaused())
+		{
+			if (ImGui::Button("Pause"))
+				if(App->IsPlay())
+					App->Pause();
+		}
+		else
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+			if (ImGui::Button("Pause"))
+				App->Resume();
+			ImGui::PopStyleVar();
+		}
+
 		ImGui::EndMenuBar();
 	}
 

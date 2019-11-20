@@ -3,11 +3,11 @@
         "Organization": "ProBoxAM",
         "Title": "Spark Engine"
     },
-  "Camera3D": {
-    "focus_factor": 0.25,
-    "movement_speed": 20.0,
-    "inputs": true
-  },
+    "Camera3D": {
+        "focus_factor": 0.25,
+        "inputs": true,
+        "movement_speed": 20.0
+    },
     "Render": {
         "color_material": true,
         "cull_face": true,

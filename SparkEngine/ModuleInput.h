@@ -21,7 +21,7 @@ public:
 	~ModuleInput();
 
 	bool Init(const nlohmann::json::iterator& it);
-	update_status PreUpdate(float dt);
+	update_status PreUpdate();
 	bool CleanUp();
 
 	KEY_STATE GetKey(int id) const

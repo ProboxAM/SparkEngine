@@ -27,7 +27,7 @@ public:
 	GameObject(uint id);
 	~GameObject();
 
-	void Update(float dt);
+	void Update();
 	void Delete();
 	void Draw();
 	Component* AddComponent(COMPONENT_TYPE type);

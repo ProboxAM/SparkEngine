@@ -15,13 +15,29 @@ Timer::Timer()
 void Timer::Start()
 {
 	running = true;
-	started_at = SDL_GetTicks();
+
+	if(!paused)
+		started_at = SDL_GetTicks();
+	else
+	{
+		started_at += SDL_GetTicks() - stopped_at;
+	}
+
+	paused = false;
 }
+
 
 // ---------------------------------------------
 void Timer::Stop()
 {
 	running = false;
+	stopped_at = SDL_GetTicks();
+}
+
+void Timer::Pause()
+{
+	running = false;
+	paused = true;
 	stopped_at = SDL_GetTicks();
 }
 

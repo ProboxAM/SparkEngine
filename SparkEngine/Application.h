@@ -6,6 +6,15 @@
 #include "Timer.h"
 #include "pcg_random.hpp"
 
+enum ENGINE_STATE {
+	ENGINE_PLAY,
+	ENGINE_PAUSE,
+	ENGINE_EDITOR,
+	ENGINE_WANTS_PLAY,
+	ENGINE_WANTS_PAUSE,
+	ENGINE_WANTS_EDITOR,
+};
+
 class Module;
 class ModuleWindow;
 class ModuleInput;
@@ -18,6 +27,7 @@ class ModuleScene;
 class ModuleTextures;
 class ModuleMeshes;
 class ModuleResources;
+class ModuleTime;
 
 class Application
 {
@@ -33,6 +43,7 @@ public:
 	ModuleTextures* textures;
 	ModuleMeshes* meshes;
 	ModuleResources* resources;
+	ModuleTime* time;
 
 private:
 	std::string		app_name;
@@ -47,6 +58,8 @@ private:
 	int		capped_ms = 0;
 	int		last_frame_ms = 0;
 	std::list<Module*> list_modules;
+
+	ENGINE_STATE state;
 
 public:
 
@@ -73,6 +86,14 @@ public:
 
 	void OpenWebURL(std::string path);
 	uint GenerateID();
+
+	bool IsPaused();
+	bool IsPlay();
+	bool IsEditor();
+	void Play();
+	void Pause();
+	void Stop();
+	void Resume();
 
 private:
 

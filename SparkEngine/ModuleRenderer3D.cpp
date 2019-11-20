@@ -127,7 +127,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 	return ret;
 }
 // PreUpdate: clear buffer
-update_status ModuleRenderer3D::PreUpdate(float dt)
+update_status ModuleRenderer3D::PreUpdate()
 {
 	if (c_camera->update_camera_projection) {
 		UpdateProjectionMatrix();
@@ -148,7 +148,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 }
 
 // PostUpdate present buffer to screen
-update_status ModuleRenderer3D::PostUpdate(float dt)
+update_status ModuleRenderer3D::PostUpdate()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id); //set scene buffer to render to a texture
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene

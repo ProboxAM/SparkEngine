@@ -34,7 +34,7 @@ public:
 
 	bool Init(const nlohmann::json::iterator& it);
 	bool Start();
-	update_status Update(float dt);
+	update_status Update();
 	bool CleanUp();
 
 	bool Draw();
@@ -42,8 +42,11 @@ public:
 	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);
 
-	bool SaveScene();
+	bool SaveScene(bool temp = false);
 	bool LoadScene(std::string file);
+
+	void OnPlay();
+	void OnStop();
 
 	std::string GetName();
 	void SetName(std::string);

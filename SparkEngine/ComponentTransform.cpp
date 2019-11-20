@@ -247,7 +247,7 @@ ComponentTransform::~ComponentTransform()
 
 }
 
-void ComponentTransform::Update(float dt)
+void ComponentTransform::Update()
 {
 
 }
