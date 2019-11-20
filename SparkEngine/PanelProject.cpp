@@ -52,11 +52,20 @@ void PanelProject::DrawFiles()
 		}
 
 		ImGui::Image((void*)(intptr_t)it->second->buffer_id,
-			ImVec2(image_size * 0.9f, image_size), ImVec2(0, 1), ImVec2(1, 0));
+			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
 		ManageClicksForItem(it->first);
 
 		ImGui::Text(it->first.c_str());
 		ManageClicksForItem(it->first);
+
+		if (selected_file == it->first)
+		{
+			ImGui::SetCursorPos(ImVec2(0,0));
+			ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 75, 255, 55));
+			ImGui::BeginChild("Selected", ImVec2(image_size, image_size+text_size), true, ImGuiWindowFlags_NoInputs);
+			ImGui::EndChild();
+			ImGui::PopStyleColor();
+		}
 
 		ImGui::EndChild();
 		childs++;
