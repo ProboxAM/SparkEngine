@@ -123,7 +123,7 @@ Resource* ModuleResources::Get(uint id)
 uint ModuleResources::GetID(std::string file)
 {
 	for (std::map<uint, Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
-		if (it->second->GetFile() == file)
+		if (it->second->meta && it->second->meta->original_file == file)
 			return it->first;
 
 	return 0;
@@ -338,9 +338,9 @@ void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource
 			{
 				Resource* mesh_resource = CreateResource(Resource::RESOURCE_TYPE::R_MESH, mesh);
 				mesh_resource->SetExportedFile(LIBRARY_MESH_FOLDER + std::to_string(mesh) + MESH_EXTENSION);
+				mesh_resource->SetFile(meta->original_file);
 			}			
 		}
-
 	}
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:

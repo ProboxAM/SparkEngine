@@ -118,7 +118,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 
 		std::map<uint, uint> meshes;
 		std::vector<ResourceModel::ModelNode> nodes;
-		ImportNode(scene->mRootNode, scene, 0, nodes, meta, meshes);
+		ImportNode(scene->mRootNode, scene, 0, file, nodes, meta, meshes);
 
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
@@ -142,7 +142,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	return false;
 }
 
-void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta, std::map<uint, uint>& imported_meshes)
+void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, const char* file, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta, std::map<uint, uint>& imported_meshes)
 {
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
@@ -171,7 +171,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 			resource_node.mesh = it->second;
 		else
 		{
-			resource_node.mesh = App->importer->mesh->Import(scene, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : App->GenerateID());
+			resource_node.mesh = App->importer->mesh->Import(file, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : App->GenerateID());
 			imported_meshes.emplace(node->mMeshes[0], resource_node.mesh);
 		}
 
@@ -205,7 +205,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	{
 		for (int i = 0; i < node->mNumChildren; i++)
 		{
-			ImportNode(node->mChildren[i], scene, index, nodes, meta, imported_meshes);
+			ImportNode(node->mChildren[i], scene, index, file, nodes, meta, imported_meshes);
 		}
 	}
 }

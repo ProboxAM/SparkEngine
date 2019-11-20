@@ -132,7 +132,7 @@ bool MeshImporter::Load(ResourceMesh* resource)
 	return resource;
 }
 
-uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh, uint id)
+uint MeshImporter::Import(const char* file, const aiMesh* mesh, uint id)
 {
 	ResourceMesh* resource = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, id);
 
@@ -195,6 +195,7 @@ uint MeshImporter::Import(const aiScene* scene, const aiMesh* mesh, uint id)
 	LOG("New mesh with %d vertices", resource->total_vertices);
 	SaveMesh(resource);
 	resource->UnLoad();
+	resource->SetFile(file);
 
 	return resource->GetID();
 }

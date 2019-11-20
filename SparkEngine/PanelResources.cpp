@@ -22,7 +22,7 @@ void PanelResources::Draw()
 	for(std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
 	{
 		ImGui::Separator();
-		ImGui::Text("Resource: %s", it->second->GetFile());
+		ImGui::Text("Original file: %s", it->second->GetFile());
 		ImGui::Text("Library file: %s", it->second->GetExportedFile());
 		ImGui::Text("Type: %s", it->second->GetTypeString().c_str());
 		ImGui::Text("ID: %u", it->first);

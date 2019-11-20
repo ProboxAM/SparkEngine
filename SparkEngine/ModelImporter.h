@@ -27,7 +27,7 @@ public:
 
 private:
 	bool LoadNode(nlohmann::json::iterator it, ResourceModel* resource);
-	void ImportNode(const aiNode * node, const aiScene * scene, uint parent_id, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta, std::map<uint,uint>& imported_meshes);
+	void ImportNode(const aiNode * node, const aiScene * scene, uint parent_id, const char* file, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta, std::map<uint,uint>& imported_meshes);
 	void FixScaleUnits(float3 &scale);
 };
 
