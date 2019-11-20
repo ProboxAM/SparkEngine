@@ -20,6 +20,9 @@ ComponentCamera::ComponentCamera(GameObject* gameobject) : Component(gameobject)
 	frustum.farPlaneDistance = 500.0f;
 
 	SetFrustumFOV(60, true);
+
+	if (gameobject)
+		UpdateFrustumTransform();
 }
 
 
