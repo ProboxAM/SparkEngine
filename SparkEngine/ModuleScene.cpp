@@ -45,8 +45,8 @@ bool ModuleScene::Init(const nlohmann::json::iterator& it)
 {
 	LOG("Init Scene");
 
-	LOG("Creating root game object");
-	root = CreateRootGameObject();
+	LOG("Creating scene");
+	CreateDefaultScene();
 
 	show_grid = (*it)["grid"];
 
@@ -534,8 +534,17 @@ void ModuleScene::ResetScene()
 {
 	DeleteGameObjects();
 	quad_tree->Clear();
-	scene_name = DEFAULT_NAME;
+	CreateDefaultScene();
+}
 
+void ModuleScene::CreateDefaultScene()
+{
+	scene_name = DEFAULT_NAME;
 	root = CreateRootGameObject();
+
+	GameObject* obj_camera = CreateGameObject(root, "Main Camera");
+	ComponentCamera* cam = (ComponentCamera*) obj_camera->AddComponent(COMPONENT_TYPE::CAMERA);
+	cam->SetAsMainCamera();
+
 	has_file = false;
 }

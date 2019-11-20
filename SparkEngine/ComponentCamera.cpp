@@ -140,7 +140,8 @@ void ComponentCamera::UpdateFrustumTransform()
 
 void ComponentCamera::SetAsMainCamera()
 {
-	App->scene->main_game_camera->active_camera = false;
+	if(App->scene->main_game_camera)
+		App->scene->main_game_camera->active_camera = false;
 	App->scene->main_game_camera = this;
 }
 
