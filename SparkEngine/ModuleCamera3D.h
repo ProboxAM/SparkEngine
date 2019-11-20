@@ -13,7 +13,7 @@ public:
 	~ModuleCamera3D();
 
 	bool Start();
-	update_status Update(float dt);
+	update_status Update();
 	bool CleanUp();
 
 	bool Init(const nlohmann::json::iterator& it);

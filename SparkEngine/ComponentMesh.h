@@ -11,7 +11,7 @@ public:
 	ComponentMesh(GameObject* gameobject);
 	virtual ~ComponentMesh();
 
-	void Update(float dt);
+	void Update();
 	void Draw();
 	void AddMesh(ResourceMesh* tex);
 

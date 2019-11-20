@@ -42,8 +42,8 @@ public:
 	bool CleanUp();
 	void Draw();
 	bool Start();
-	update_status Update(float dt);
-	update_status PreUpdate(float dt);
+	update_status Update();
+	update_status PreUpdate();
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
 	void LogDebug(const char* text);

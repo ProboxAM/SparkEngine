@@ -72,7 +72,7 @@ public:
 	ComponentTransform(GameObject* gameobject);
 	virtual ~ComponentTransform();
 
-	void Update(float dt);
+	void Update();
 };
 
 #endif // !_COMPONENT_TRANSFORM_H_

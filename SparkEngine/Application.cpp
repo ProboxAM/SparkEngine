@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleTime.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
@@ -18,6 +19,7 @@
 Application::Application()
 {
 	window = new ModuleWindow(true);
+	time = new ModuleTime(true);
 	input = new ModuleInput(true);
 	renderer3D = new ModuleRenderer3D(true);
 	camera = new ModuleCamera3D(true);
@@ -32,6 +34,7 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
+	AddModule(time);
 	AddModule(resources);
 	AddModule(editor);
 	AddModule(camera);
@@ -93,6 +96,31 @@ void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
 	ms_timer.Start();
+
+	switch (state)
+	{
+		case ENGINE_WANTS_PLAY:
+			LOG("Engine state: PLAY");
+			time->StartGameClock();
+			App->scene->OnPlay();
+			state = ENGINE_PLAY;
+			break;
+		case ENGINE_WANTS_PAUSE:
+			LOG("Engine state: PAUSE");
+			time->PauseGameClock();
+			state = ENGINE_PAUSE;
+			break;
+		case ENGINE_WANTS_EDITOR:
+			LOG("Engine state: EDITOR");
+			time->StopGameClock();
+			App->scene->OnStop();
+			state = ENGINE_EDITOR;
+			break;
+		default:
+			break;
+	}
+
+	time->PrepareUpdate(dt);
 }
 
 // ---------------------------------------------
@@ -118,14 +146,14 @@ update_status Application::Update()
 	
 	for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
 	{
-		ret = (*it)->PreUpdate(dt);
+		ret = (*it)->PreUpdate();
 	}
 
 	if (ret)
 	{
 		for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
 		{
-			ret = (*it)->Update(dt);
+			ret = (*it)->Update();
 		}
 	}
 
@@ -133,7 +161,7 @@ update_status Application::Update()
 	{
 		for (std::list<Module*>::iterator it = list_modules.begin(); it != list_modules.end() && ret == true; it++)
 		{
-			ret = (*it)->PostUpdate(dt);
+			ret = (*it)->PostUpdate();
 		}
 	}
 
@@ -237,4 +265,40 @@ uint Application::GenerateID()
 {
 	uint n = random();
 	return n;
+}
+
+bool Application::IsPaused()
+{
+	return state == ENGINE_PAUSE;
+}
+
+bool Application::IsPlay()
+{
+	return state == ENGINE_PLAY;
+}
+
+bool Application::IsEditor()
+{
+	return state == ENGINE_EDITOR;
+}
+
+void Application::Play()
+{
+	state = ENGINE_WANTS_PLAY;
+}
+
+void Application::Pause()
+{
+	state = ENGINE_WANTS_PAUSE;
+}
+
+void Application::Stop()
+{
+	state = ENGINE_WANTS_EDITOR;
+}
+
+void Application::Resume()
+{
+	state = ENGINE_PLAY;
+	time->StartGameClock();
 }

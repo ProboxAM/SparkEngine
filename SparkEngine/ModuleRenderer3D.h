@@ -19,8 +19,8 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init(const nlohmann::json::iterator& it);
-	update_status PreUpdate(float dt);
-	update_status PostUpdate(float dt);
+	update_status PreUpdate();
+	update_status PostUpdate();
 	bool CleanUp();
 
 	void OnResize(int width, int height);

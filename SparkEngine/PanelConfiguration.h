@@ -15,6 +15,8 @@ public:
 	void Draw();
 	void Start();
 
+	void DrawTime();
+
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
 	void LogFrame(float fps, float ms);
 

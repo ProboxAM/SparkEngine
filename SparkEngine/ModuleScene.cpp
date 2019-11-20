@@ -67,9 +67,9 @@ bool ModuleScene::Start()
 	return true;
 }
 
-update_status ModuleScene::Update(float dt)
+update_status ModuleScene::Update()
 {
-	root->Update(dt);
+	root->Update();
 
 	AccelerateFrustumCulling();
 
@@ -118,7 +118,7 @@ bool ModuleScene::Save(nlohmann::json& it)
 	return true;
 }
 
-bool ModuleScene::SaveScene()
+bool ModuleScene::SaveScene(bool temp)
 {
 	LOG("Saving scene...");
 
@@ -128,7 +128,12 @@ bool ModuleScene::SaveScene()
 
 	root->Save(j.find("GameObjects"));
 
-	std::string scene_path = ASSETS_FOLDER + scene_name + SCENE_EXTENSION;
+	std::string scene_path;
+	if(temp)
+		scene_path = SETTINGS_FOLDER + std::string("tmp_scene") + SCENE_EXTENSION;
+	else
+		scene_path = ASSETS_FOLDER + scene_name + SCENE_EXTENSION;
+
 	std::ofstream o(scene_path);
 	o << std::setw(4) << j << std::endl;
 
@@ -141,7 +146,7 @@ bool ModuleScene::SaveScene()
 
 bool ModuleScene::LoadScene(std::string file)
 {
-	LOG("Loading scene...");
+	LOG("Loading scene %s", file.c_str());
 
 	DeleteGameObjects();
 
@@ -194,6 +199,16 @@ bool ModuleScene::LoadScene(std::string file)
 	has_file = true;
 
 	return true;
+}
+
+void ModuleScene::OnPlay()
+{
+	SaveScene(true);
+}
+
+void ModuleScene::OnStop()
+{
+	LoadScene(SETTINGS_FOLDER + std::string("tmp_scene") + SCENE_EXTENSION);
 }
 
 std::string ModuleScene::GetName()

@@ -26,7 +26,7 @@ ComponentMesh::~ComponentMesh()
 	mesh = nullptr;
 }
 
-void ComponentMesh::Update(float dt)
+void ComponentMesh::Update()
 {
 
 }

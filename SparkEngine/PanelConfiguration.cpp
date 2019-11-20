@@ -2,6 +2,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
+#include "ModuleTime.h"
 #include "ModuleInput.h"
 #include "glew/glew.h"
 #include "PanelConfiguration.h"
@@ -37,6 +38,7 @@ void PanelConfiguration::Draw()
 
 	DrawApplication();
 	DrawWindow();
+	DrawTime();
 	DrawInput();
 	DrawHardware();
 	DrawRenderer();
@@ -244,6 +246,35 @@ void PanelConfiguration::DrawCamera()
 	}
 }
 
+void PanelConfiguration::DrawTime()
+{
+	if (ImGui::CollapsingHeader("Time"))
+	{
+		ImGui::Text("Real Time DT:");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(App->time->RealTimeDeltaTime()).c_str());
+
+		ImGui::Text("Game Time DT:");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(App->time->DeltaTime()).c_str());
+
+		ImGui::Text("Real Time:");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f",App->time->RealTimeSinceStartup());
+
+		ImGui::Text("Game Time:");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f", App->time->Time());
+
+		ImGui::Text("Frames since Start:");
+		ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(App->time->GetFrameCount()).c_str());
+
+		float time_scale = App->time->TimeScale();
+		if (ImGui::InputFloat("Time Scale", &time_scale,  0.01f, 2.0f, "%.2f"))
+			App->time->SetTimeScale(time_scale);
+	}
+}
 void PanelConfiguration::LogInput(int key, KEY_STATE state, bool mouse)
 {
 	std::string temp_string;

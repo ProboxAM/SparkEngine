@@ -6,19 +6,19 @@
 #include "GameObject.h"
 
 
-void GameObject::Update(float dt)
+void GameObject::Update()
 {
 	if (active)
 	{
 		for (int i = 0; i < components.size(); i++)
 		{
 			if (components[i]->active)
-				components[i]->Update(dt);
+				components[i]->Update();
 		}
 
 		for (int i = 0; i < transform->GetChildCount(); i++)
 		{
-			transform->GetChildren()[i]->gameobject->Update(dt);
+			transform->GetChildren()[i]->gameobject->Update();
 		}
 	}
 }
