@@ -40,7 +40,9 @@ public:
 	void DrawOutline(const ResourceMesh* m, const Color color, const float4x4& mtransform) const;
 
 	void ResizeScene(float w, float h);
-	void UpdateProjectionMatrix();
+	void ResizeGame(float w, float h);
+	void UpdateSceneProjectionMatrix();
+	void UpdateGameProjectionMatrix();
 
 	bool IsWireframeEnabled() const;
 	bool GetVsync() const;
@@ -51,6 +53,7 @@ public:
 
 private:
 	void CreateSceneBuffer();
+	void CreateGameBuffer();
 
 public:
 	Light lights[MAX_LIGHTS];
@@ -64,6 +67,7 @@ public:
 
 	uint game_buffer_id = -1;
 	uint game_texture_id;
+
 	float3 bkg_color = float3(0.1f, 0.1f, 0.1f);
 
 	ComponentCamera* editor_camera = nullptr;
@@ -73,7 +77,7 @@ private:
 	bool wireframe;
 	bool vsync;
 	bool depth_test, cull_face, lighting, color_material, texture2d;
-	uint scene_depth_id;
+	uint scene_depth_id, game_depth_id;
 	std::vector<ComponentMesh*> meshes;
 
 };

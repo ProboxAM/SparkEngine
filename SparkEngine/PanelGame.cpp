@@ -31,7 +31,6 @@ PanelGame::~PanelGame()
 void PanelGame::Draw()
 {
 	ImGui::Begin("Game", &active, ImGuiWindowFlags_MenuBar);
-	ImGui::ShowDemoWindow();
 
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight() - CHECKBOX_SIZE;
