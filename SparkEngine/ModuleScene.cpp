@@ -461,6 +461,7 @@ void ModuleScene::DeleteGameObjects()
 	root->Delete();
 	gameobjects.clear();
 	root = nullptr;
+	selected_gameobject = nullptr;
 }
 
 void ModuleScene::DeleteGameObject(GameObject* go)
@@ -539,6 +540,7 @@ void ModuleScene::ResetScene()
 
 void ModuleScene::CreateDefaultScene()
 {
+	selected_gameobject = nullptr;
 	scene_name = DEFAULT_NAME;
 	root = CreateRootGameObject();
 
