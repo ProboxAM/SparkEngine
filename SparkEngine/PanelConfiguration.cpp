@@ -252,23 +252,23 @@ void PanelConfiguration::DrawTime()
 	{
 		ImGui::Text("Real Time DT:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(App->time->RealTimeDeltaTime()).c_str());
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.3f", App->time->RealTimeDeltaTime());
 
 		ImGui::Text("Game Time DT:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(App->time->DeltaTime()).c_str());
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.3f", App->time->DeltaTime());
 
 		ImGui::Text("Real Time:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f",App->time->RealTimeSinceStartup());
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f seconds",App->time->RealTimeSinceStartup());
 
 		ImGui::Text("Game Time:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f", App->time->Time());
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f seconds", App->time->Time());
 
 		ImGui::Text("Frames since Start:");
 		ImGui::SameLine();
-		ImGui::TextColored({ 0, 255, 255, 255 }, std::to_string(App->time->GetFrameCount()).c_str());
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%u frames", (uint)App->time->GetFrameCount());
 
 		float time_scale = App->time->TimeScale();
 		if (ImGui::InputFloat("Time Scale", &time_scale,  0.01f, 2.0f, "%.2f"))
