@@ -119,10 +119,11 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-		CreateSceneBuffer();
-		CreateGameBuffer();
 		// Projection matrix for
 		OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
+
+		CreateSceneBuffer();
+		CreateGameBuffer();
 	}
 
 	return ret;
@@ -176,6 +177,15 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glViewport(0, 0, width, height);
 	ResizeScene(width, height);
 	ResizeGame(width, height);
+
+	if (editor_camera) {
+		UpdateSceneProjectionMatrix();
+		editor_camera->SetFrustumAspectRatio(width/height);
+	}
+	if (game_camera) {
+		UpdateGameProjectionMatrix();
+		game_camera->SetFrustumAspectRatio(width / height);
+	}
 }
 
 bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
