@@ -33,8 +33,8 @@ void PanelScene::Draw()
 
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight() - CHECKBOX_SIZE;
-	screen_pos = ImGui::GetCursorScreenPos();
 	GetSizeWithAspectRatio(App->window->GetWindowWidth(), App->window->GetWindowHeight(), w, h, image_w, image_h);
+	screen_pos = ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetCursorScreenPos().y + (h* 0.5f - image_h*0.5f));
 	ImGui::GetWindowDrawList()->AddImage(
 		(void *)App->renderer3D->scene_texture_id,
 		screen_pos,
@@ -115,7 +115,7 @@ void PanelScene::DrawTransformGuizmo()
 	view = App->renderer3D->editor_camera->GetOpenGLViewMatrix();
 
 	ImGuiIO& io = ImGui::GetIO();
-	ImGuizmo::SetRect(float(ImGui::GetCursorScreenPos().x), float(ImGui::GetCursorScreenPos().y), float(w), float(h));
+	ImGuizmo::SetRect(float(screen_pos.x), float(screen_pos.y), float(image_w), float(image_h));
 	ImGuizmo::SetDrawlist();
 	ImGuizmo::Manipulate((const float*)&view,
 		(const float*)&projection,
