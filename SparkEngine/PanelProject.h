@@ -4,6 +4,7 @@
 #include "Panel.h"
 
 class Resource;
+class ResourceTexture;
 
 class PanelProject : public Panel
 {
@@ -21,7 +22,10 @@ public:
 private:
 	void ManageClicksForItem(std::string file);
 	uint text_size, image_size;
-	std::vector<std::string> files;
+	std::map<std::string, ResourceTexture*> assets_in_folder;
+
+	ResourceTexture* model_file_image;
+	ResourceTexture* scene_file_image;
 };
 
 

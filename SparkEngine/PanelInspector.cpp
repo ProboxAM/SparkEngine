@@ -307,7 +307,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 
 	ImGui::SameLine();
 	ImGui::BeginChild("image", { ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 2 }, false, ImGuiWindowFlags_NoScrollWithMouse);
-	ImGui::Image((void*)(intptr_t)((ResourceTexture*)App->resources->Get(App->importer->texture->checkers))->buffer_id, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::Image((void*)(intptr_t)((ResourceTexture*)res)->buffer_id, ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::EndChild();
 }
 
