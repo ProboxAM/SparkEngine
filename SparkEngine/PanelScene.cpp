@@ -49,7 +49,7 @@ void PanelScene::Draw()
 
 	if (ImGui::BeginDragDropTargetCustom(ImGui::GetCurrentWindow()->Rect(), (ImGuiID)"Scene"))
 	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET"))
 		{
 			uint* id = (uint*)payload->Data;
 			Resource* res = App->resources->GetAndLoad((*id));
