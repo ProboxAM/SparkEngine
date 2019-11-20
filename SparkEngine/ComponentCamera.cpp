@@ -33,11 +33,13 @@ ComponentCamera::~ComponentCamera()
 void ComponentCamera::SetFrustumNearPlaneDistance(float distance)
 {
 	frustum.nearPlaneDistance = distance;
+	update_camera_projection = true;
 }
 
 void ComponentCamera::SetFrustumFarPlaneDistance(float distance)
 {
 	frustum.farPlaneDistance = distance;
+	update_camera_projection = true;
 }
 
 void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
@@ -146,6 +148,7 @@ void ComponentCamera::SetAsMainCamera()
 	if(App->scene->main_game_camera)
 		App->scene->main_game_camera->active_camera = false;
 	App->scene->main_game_camera = this;
+	App->renderer3D->game_camera = this;
 }
 
 bool ComponentCamera::Save(const nlohmann::json::iterator & it)

@@ -62,16 +62,12 @@ bool ModuleScene::Start()
 	quad_tree = new Quadtree();
 	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
 
-	App->renderer3D->game_camera = main_game_camera;
-
 	return true;
 }
 
 update_status ModuleScene::Update()
 {
 	root->Update();
-
-	AccelerateFrustumCulling();
 
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		SaveScene();
@@ -492,18 +488,18 @@ void ModuleScene::RecursiveErase(GameObject* go)
 	gameobjects.erase(go->GetId());
 }
 
-void ModuleScene::AccelerateFrustumCulling()
+void ModuleScene::AccelerateFrustumCulling(const ComponentCamera * camera)
 {
 	//if the main camera has fustrum culling enabled
-	if (main_game_camera->enable_frustum_culling) {
+	if (camera->enable_frustum_culling) {
 		std::vector<GameObject*> objects_hit;
-		quad_tree->CollectIntersections(objects_hit, main_game_camera->frustum); //first collect static objects that intersect with the frustum
+		quad_tree->CollectIntersections(objects_hit, camera->frustum); //first collect static objects that intersect with the frustum
 
 		for (std::map<uint, GameObject*>::iterator it = gameobjects.begin(); it != gameobjects.end(); ++it)
 		{
 			if (!it->second->isStatic()) {//then we test it with the dynamic objects
 				if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
-					if (main_game_camera->frustum.Intersects(it->second->global_aabb)) {
+					if (camera->frustum.Intersects(it->second->global_aabb)) {
 						objects_hit.push_back(it->second);
 					}
 				}

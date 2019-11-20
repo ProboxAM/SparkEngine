@@ -75,6 +75,8 @@ public:
 	void DeleteGameObjects();
 	void DeleteGameObject(GameObject * go);
 
+	void AccelerateFrustumCulling(const ComponentCamera* camera);
+
 	void SetGameObjectStatic(GameObject * go, bool state);
 	void ResetScene();
 	void CreateDefaultScene();
@@ -91,7 +93,6 @@ private:
 	std::string scene_name = "Scene";
 	bool has_file = false;
 	void RecursiveErase(GameObject * go);
-	void AccelerateFrustumCulling();
 };
 
 #endif // !_MODULE_SCENE_H_

@@ -30,7 +30,6 @@ PanelScene::~PanelScene()
 void PanelScene::Draw()
 {
 	ImGui::Begin("Scene", &active, ImGuiWindowFlags_MenuBar);
-	ImGui::ShowDemoWindow();
 
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight() - CHECKBOX_SIZE;

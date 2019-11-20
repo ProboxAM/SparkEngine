@@ -120,6 +120,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		CreateSceneBuffer();
+		CreateGameBuffer();
 		// Projection matrix for
 		OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
 	}
@@ -130,7 +131,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 update_status ModuleRenderer3D::PreUpdate()
 {
 	// light 0 on cam pos
-	lights[0].SetPos(editor_camera->frustum.pos.x, editor_camera->frustum.pos.y, editor_camera->frustum.pos.z);
+	lights[0].SetPos(game_camera->frustum.pos.x, game_camera->frustum.pos.y, game_camera->frustum.pos.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -142,8 +143,13 @@ update_status ModuleRenderer3D::PreUpdate()
 update_status ModuleRenderer3D::PostUpdate()
 {
 	if (editor_camera->update_camera_projection) {
-		UpdateProjectionMatrix();
+		UpdateSceneProjectionMatrix();
 		editor_camera->update_camera_projection = false;
+	}
+
+	if (game_camera->update_camera_projection) {
+		UpdateGameProjectionMatrix();
+		game_camera->update_camera_projection = false;
 	}
 
 	DrawSceneViewPort();
@@ -168,9 +174,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 	ResizeScene(width, height);
-
-	if (editor_camera) 
-		UpdateProjectionMatrix();
+	ResizeGame(width, height);
 }
 
 bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
@@ -469,12 +473,32 @@ void ModuleRenderer3D::ResizeScene(float w, float h)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, w, h);
 }
 
-void ModuleRenderer3D::UpdateProjectionMatrix()
+void ModuleRenderer3D::ResizeGame(float w, float h)
+{
+	glBindTexture(GL_TEXTURE_2D, game_texture_id);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, game_depth_id);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, w, h);
+}
+
+void ModuleRenderer3D::UpdateSceneProjectionMatrix()
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
 	glLoadMatrixf((float*)&editor_camera->GetOpenGLProjectionMatrix());
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void ModuleRenderer3D::UpdateGameProjectionMatrix()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	glLoadMatrixf((float*)&game_camera->GetOpenGLProjectionMatrix());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -505,6 +529,30 @@ void ModuleRenderer3D::CreateSceneBuffer()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void ModuleRenderer3D::CreateGameBuffer()
+{
+	glGenFramebuffers(1, &game_buffer_id);
+	glBindFramebuffer(GL_FRAMEBUFFER, game_buffer_id);
+
+	glGenTextures(1, &game_texture_id);
+	glBindTexture(GL_TEXTURE_2D, game_texture_id);
+
+	float2 size = float2(App->window->GetWindowWidth(), App->window->GetWindowHeight());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.x, size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, game_texture_id, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glGenRenderbuffers(1, &game_depth_id);
+	glBindRenderbuffer(GL_RENDERBUFFER, game_depth_id);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, size.x, size.y);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, game_depth_id);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 bool ModuleRenderer3D::GetVsync() const
 {
 	return vsync;
@@ -525,6 +573,9 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	if(game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
+	else App->scene->AccelerateFrustumCulling(editor_camera);
+
 	App->scene->Draw(); //Draw scene
 	App->scene->DebugDraw();//Draw Quadtree and Grid
 
@@ -543,6 +594,7 @@ void ModuleRenderer3D::DrawGameViewPort()
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	App->scene->AccelerateFrustumCulling(game_camera);
 	App->scene->Draw(); //Draw scene
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
