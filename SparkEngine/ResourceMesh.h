@@ -36,6 +36,7 @@ public:
 	uint buffers[BUFF_TOTAL];
 	void PrepareBuffers();
 	void UnLoad();
+	void Load();
 };
 
 #endif // !_MESH_H_

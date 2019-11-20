@@ -42,12 +42,14 @@ public:
 	void RemoveReference();
 	void SetFile(std::string f);
 	void SetExportedFile(std::string f);
+	virtual void Load() {}
 	virtual void UnLoad() {}
 	uint GetReferences();
 	virtual std::string GetTypeString() { return ""; }
 	virtual void ReLoad() {}
 
 	MetaFile* meta = nullptr;
+	uint references = 0;
 protected:
 	//virtual void Save(Config& config) const;
 	//virtual void Load(const Config& config);
@@ -58,7 +60,6 @@ protected:
 	std::string file;
 	std::string exported_file;
 	RESOURCE_TYPE type = RESOURCE_TYPE::R_NONE;
-	uint references = 0;
 };
 
 #endif // !_RESOURCE_H_

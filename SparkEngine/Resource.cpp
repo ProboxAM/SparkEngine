@@ -37,6 +37,8 @@ bool Resource::IsLoaded() const
 
 void Resource::AddReference()
 {
+	if (!IsLoaded())
+		Load();
 	references++;
 }
 

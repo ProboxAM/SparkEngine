@@ -1,3 +1,6 @@
+#include "Application.h"
+#include "ModuleImporter.h"
+#include "MeshImporter.h"
 #include "glew\glew.h"
 #include "ResourceMesh.h"
 
@@ -73,4 +76,9 @@ void ResourceMesh::UnLoad()
 	}
 
 	glDeleteBuffers(BUFF_TOTAL, buffers);
+}
+
+void ResourceMesh::Load()
+{
+	App->importer->mesh->Load(this);
 }

@@ -294,10 +294,10 @@ GameObject* ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObje
 	GameObject* obj = CreateGameObject(parent, name);
 
 	ComponentMesh* c_mesh = (ComponentMesh*)obj->AddComponent(COMPONENT_TYPE::MESH);
-	c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndLoad(shape_id));
+	c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndReference(shape_id));
 
 	ComponentTexture* c_text = (ComponentTexture*)obj->AddComponent(COMPONENT_TYPE::TEXTURE);
-	c_text->AddTexture((ResourceTexture*)App->resources->GetAndLoad(App->importer->texture->checkers));
+	c_text->AddTexture((ResourceTexture*)App->resources->GetAndReference(App->importer->texture->checkers));
 
 	return obj;
 }
@@ -349,13 +349,13 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		if (node.mesh > 0)
 		{
 			ComponentMesh* c_mesh = (ComponentMesh*)go->AddComponent(COMPONENT_TYPE::MESH);
-			c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndLoad(node.mesh));
+			c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndReference(node.mesh));
 
 			ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
 			if (node.texture > 0)
-				c_text->AddTexture((ResourceTexture*)App->resources->GetAndLoad(node.texture));
+				c_text->AddTexture((ResourceTexture*)App->resources->GetAndReference(node.texture));
 			else
-				c_text->AddTexture((ResourceTexture*)App->resources->GetAndLoad(App->importer->texture->checkers));
+				c_text->AddTexture((ResourceTexture*)App->resources->GetAndReference(App->importer->texture->checkers));
 		}
 
 

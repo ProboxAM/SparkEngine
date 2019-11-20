@@ -97,7 +97,7 @@ bool ComponentTexture::Load(const nlohmann::json comp)
 {
 	active = comp["active"];
 	type = comp["type"];
-	tex = (ResourceTexture*)App->resources->GetAndLoad(comp["resource"]);
+	tex = (ResourceTexture*)App->resources->GetAndReference(comp["resource"]);
 	debug_texture = comp["debug_tex"];
 
 	return true;

@@ -130,3 +130,8 @@ void ResourceTexture::ReLoad()
 	UnLoad();
 	App->importer->texture->Load(this);
 }
+
+void ResourceTexture::Load()
+{
+	App->importer->texture->Load(this);
+}

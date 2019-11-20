@@ -43,31 +43,31 @@ bool MeshImporter::Start()
 {
 	ResourceMesh* mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CUBE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CUBE, mesh);
-	mesh->AddReference();
+	mesh->references++;
 	mesh->SetFile("Cube");
 	cube = mesh->GetID();
 
 	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, SPHERE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_SPHERE, mesh);
-	mesh->AddReference();
+	mesh->references++;
 	mesh->SetFile("Sphere");
 	sphere = mesh->GetID();
 
 	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CYLINDER_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CYLINDER, mesh);
-	mesh->AddReference();
+	mesh->references++;
 	mesh->SetFile("Cylinder");
 	cylinder = mesh->GetID();
 
 	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CONE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CONE, mesh);
-	mesh->AddReference();
+	mesh->references++;
 	mesh->SetFile("Cone");
 	cone = mesh->GetID();
 
 	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, PLANE_ID);
 	LoadPrimitive(PRIMITIVE_TYPE::P_PLANE, mesh);
-	mesh->AddReference();
+	mesh->references++;
 	mesh->SetFile("Plane");
 	plane = mesh->GetID();
 

@@ -145,3 +145,8 @@ void ResourceModel::ReLoad()
 	UnLoad();
 	App->importer->model->Load(this);
 }
+
+void ResourceModel::Load()
+{
+	App->importer->model->Load(this);
+}

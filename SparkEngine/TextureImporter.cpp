@@ -48,8 +48,6 @@ bool TextureImporter::Start()
 {
 	ResourceTexture* texture = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, CHECKERS_ID);
 	LoadDefault(texture);
-	texture->AddReference();
-	texture->SetFile("Checkers");
 
 	return true;
 }
@@ -102,7 +100,7 @@ bool TextureImporter::Load(ResourceTexture* tex)
 	}
 	else
 	{
-		tex = (ResourceTexture*) App->resources->GetAndLoad(checkers);
+		tex = (ResourceTexture*) App->resources->GetAndReference(checkers);
 		LOG("Error loading texture. Applied default texture instead.");
 	}
 	ilDeleteImages(1, &image_id);
@@ -192,6 +190,8 @@ void TextureImporter::LoadDefault(ResourceTexture* resource)
 	resource->format = "rgba";
 	resource->bpp = 0;
 	resource->size = sizeof(GLubyte) * 4 * 128 * 128;
+	resource->references++;
+	resource->SetFile("Checkers");
 }
 
 bool TextureImporter::LoadMeta(const char * file, ResourceTexture::TextureMetaFile* meta)
