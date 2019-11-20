@@ -34,7 +34,7 @@ void PanelScene::Draw()
 	w = ImGui::GetWindowWidth();
 	h = ImGui::GetWindowHeight() - CHECKBOX_SIZE;
 	GetSizeWithAspectRatio(App->window->GetWindowWidth(), App->window->GetWindowHeight(), w, h, image_w, image_h);
-	screen_pos = ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetCursorScreenPos().y + (h* 0.5f - image_h*0.5f));
+	screen_pos = ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetCursorScreenPos().y + (h * 0.5f - image_h * 0.5f));
 	ImGui::GetWindowDrawList()->AddImage(
 		(void *)App->renderer3D->scene_texture_id,
 		screen_pos,
