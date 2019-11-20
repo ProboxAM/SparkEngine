@@ -38,8 +38,6 @@ public:
 
 	Frustum frustum;
 
-	bool update_camera_projection = false;
-
 	bool Save(const nlohmann::json::iterator& it);
 	bool Load(const nlohmann::json comp);
 
