@@ -48,7 +48,9 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 
 	if (ct->GetChildCount() > 0)
 	{
+		ImGui::PushID(node_iterator);
 		bool node_open = ImGui::TreeNodeEx(ct->gameobject->GetName().c_str(), node_flags);
+		ImGui::PopID();
 
 		SetDragAndDropSource(ct);
 		SetDragAndDropTarget(ct);
@@ -77,7 +79,9 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 	}
 	else {
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+		ImGui::PushID(node_iterator);
 		ImGui::TreeNodeEx(ct->gameobject->GetName().c_str(), node_flags);
+		ImGui::PopID();
 
 		SetDragAndDropSource(ct);
 		SetDragAndDropTarget(ct);
