@@ -167,15 +167,6 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glViewport(0, 0, width, height);
 	ResizeScene(width, height);
 	ResizeGame(width, height);
-
-	if (editor_camera) {
-		UpdateSceneProjectionMatrix();
-		editor_camera->SetFrustumAspectRatio(width/height);
-	}
-	if (game_camera) {
-		UpdateGameProjectionMatrix();
-		game_camera->SetFrustumAspectRatio(width / height);
-	}
 }
 
 bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
