@@ -38,6 +38,7 @@ public:
 	bool CleanUp();
 
 	bool Draw();
+	bool DebugDraw();
 
 	bool Load(const nlohmann::json::iterator& it);
 	bool Save(nlohmann::json &it);

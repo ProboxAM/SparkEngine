@@ -46,6 +46,9 @@ public:
 	bool GetVsync() const;
 	void SetVsync(bool active);
 
+	void DrawSceneViewPort();
+	void DrawGameViewPort();
+
 private:
 	void CreateSceneBuffer();
 
@@ -58,9 +61,13 @@ public:
 	///Buffer and texture for rendering into Scene window
 	uint scene_buffer_id = -1;
 	uint scene_texture_id;
+
+	uint game_buffer_id = -1;
+	uint game_texture_id;
 	float3 bkg_color = float3(0.1f, 0.1f, 0.1f);
 
-	ComponentCamera* c_camera = nullptr;
+	ComponentCamera* editor_camera = nullptr;
+	ComponentCamera* game_camera = nullptr;
 
 private:
 	bool wireframe;

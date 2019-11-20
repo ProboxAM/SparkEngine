@@ -112,8 +112,8 @@ void PanelScene::DrawTransformGuizmo()
 	float4x4 delta, transform, view, projection;
 
 	transform = App->scene->selected_gameobject->transform->GetTransformMatrix().Transposed();
-	projection = App->renderer3D->c_camera->GetOpenGLProjectionMatrix();
-	view = App->renderer3D->c_camera->GetOpenGLViewMatrix();
+	projection = App->renderer3D->editor_camera->GetOpenGLProjectionMatrix();
+	view = App->renderer3D->editor_camera->GetOpenGLViewMatrix();
 
 	ImGuiIO& io = ImGui::GetIO();
 	ImGuizmo::SetRect(float(ImGui::GetCursorScreenPos().x), float(ImGui::GetCursorScreenPos().y), float(w), float(h));
