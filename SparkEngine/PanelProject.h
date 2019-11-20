@@ -21,7 +21,7 @@ public:
 
 private:
 	void ManageClicksForItem(std::string file);
-	uint text_size, image_size;
+	int text_size, image_size;
 	std::map<std::string, ResourceTexture*> assets_in_folder;
 
 	ResourceTexture* model_file_image;
