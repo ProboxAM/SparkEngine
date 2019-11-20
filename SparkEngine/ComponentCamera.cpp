@@ -143,12 +143,15 @@ void ComponentCamera::UpdateFrustumTransform()
 	frustum.front = transform_matrix.WorldZ();
 }
 
-void ComponentCamera::SetAsMainCamera()
+void ComponentCamera::SetAsMainCamera(bool mode)
 {
 	if(App->scene->main_game_camera)
 		App->scene->main_game_camera->active_camera = false;
-	App->scene->main_game_camera = this;
-	App->renderer3D->game_camera = this;
+
+	App->scene->main_game_camera = mode ? this : nullptr;
+	App->renderer3D->game_camera = mode ? this : nullptr;
+
+	active_camera = mode;
 }
 
 bool ComponentCamera::Save(const nlohmann::json::iterator & it)
@@ -159,7 +162,7 @@ bool ComponentCamera::Save(const nlohmann::json::iterator & it)
 	{ "active_camera", active_camera },
 	{ "fov", frustum.verticalFov },
 	{ "near_distance", frustum.nearPlaneDistance },
-	{ "far_distance", frustum.farPlaneDistance }
+	{ "far_distance", frustum.farPlaneDistance },
 	};
 
 	it.value().push_back(object);
@@ -178,6 +181,7 @@ bool ComponentCamera::Load(const nlohmann::json comp)
 	SetFrustumFOV(comp["fov"]);
 
 	UpdateFrustumTransform();
+	SetAsMainCamera(active_camera);
 
 	return true;
 }

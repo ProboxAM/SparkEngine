@@ -149,8 +149,9 @@ void PanelInspector::Draw()
 					ImGui::PopID();
 
 					ImGui::SameLine();
-					if (ImGui::Checkbox("Main Camera", &c_camera->active_camera)) {
-						c_camera->SetAsMainCamera();
+					bool main_camera = c_camera->active_camera;
+					if (ImGui::Checkbox("Main Camera", &main_camera)) {
+						c_camera->SetAsMainCamera(main_camera);
 					}
 
 					ImGui::SameLine();

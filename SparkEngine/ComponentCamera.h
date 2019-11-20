@@ -34,7 +34,7 @@ public:
 
 	void UpdateFrustumTransform();
 
-	void SetAsMainCamera();
+	void SetAsMainCamera(bool mode);
 
 	Frustum frustum;
 

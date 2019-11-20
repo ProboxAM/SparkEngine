@@ -131,7 +131,8 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 update_status ModuleRenderer3D::PreUpdate()
 {
 	// light 0 on cam pos
-	lights[0].SetPos(game_camera->frustum.pos.x, game_camera->frustum.pos.y, game_camera->frustum.pos.z);
+	if(game_camera)
+		lights[0].SetPos(game_camera->frustum.pos.x, game_camera->frustum.pos.y, game_camera->frustum.pos.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
@@ -147,7 +148,7 @@ update_status ModuleRenderer3D::PostUpdate()
 		editor_camera->update_camera_projection = false;
 	}
 
-	if (game_camera->update_camera_projection) {
+	if (game_camera && game_camera->update_camera_projection) {
 		UpdateGameProjectionMatrix();
 		game_camera->update_camera_projection = false;
 	}
@@ -573,7 +574,7 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if(game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
+	if (game_camera && game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
 	else App->scene->AccelerateFrustumCulling(editor_camera);
 
 	App->scene->Draw(); //Draw scene
@@ -588,14 +589,18 @@ void ModuleRenderer3D::DrawGameViewPort()
 {
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf((float*)&game_camera->GetOpenGLViewMatrix());
+	if (game_camera)
+		glLoadMatrixf((float*)&game_camera->GetOpenGLViewMatrix());
 
 	glBindFramebuffer(GL_FRAMEBUFFER, game_buffer_id); //set scene buffer to render to a texture
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	App->scene->AccelerateFrustumCulling(game_camera);
-	App->scene->Draw(); //Draw scene
+	if (game_camera)
+	{
+		App->scene->AccelerateFrustumCulling(game_camera);
+		App->scene->Draw(); //Draw scene
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

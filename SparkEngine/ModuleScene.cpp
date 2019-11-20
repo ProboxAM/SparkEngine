@@ -196,7 +196,6 @@ bool ModuleScene::LoadScene(std::string file)
 		}
 	}
 	LOG("Finished loading scene.");
-
 	has_file = true;
 
 	return true;
@@ -241,7 +240,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 	return go;
 }
 
-GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id)
+GameObject* ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id)
 {
 	if (!parent)
 		parent = root;
@@ -545,7 +544,7 @@ void ModuleScene::CreateDefaultScene()
 
 	GameObject* obj_camera = CreateGameObject(root, "Main Camera");
 	ComponentCamera* cam = (ComponentCamera*) obj_camera->AddComponent(COMPONENT_TYPE::CAMERA);
-	cam->SetAsMainCamera();
+	cam->SetAsMainCamera(true);
 
 	has_file = false;
 }
