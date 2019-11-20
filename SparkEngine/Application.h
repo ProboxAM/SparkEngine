@@ -83,6 +83,8 @@ public:
 	std::string GetName();
 	std::string GetOrganization();
 	int GetFPSCap();
+	int GetFPS();
+	float GetFrameMS();
 
 	void OpenWebURL(std::string path);
 	uint GenerateID();

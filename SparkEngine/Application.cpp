@@ -222,6 +222,16 @@ int Application::GetFPSCap()
 	return fps_cap;
 }
 
+int Application::GetFPS()
+{
+	return fps;
+}
+
+float Application::GetFrameMS()
+{
+	return last_frame_ms;
+}
+
 void Application::OpenWebURL(std::string path)
 {
 	ShellExecute(0, 0, path.c_str(), 0, 0, SW_SHOW);

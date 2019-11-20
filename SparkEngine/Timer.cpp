@@ -32,6 +32,7 @@ void Timer::Stop()
 {
 	running = false;
 	stopped_at = SDL_GetTicks();
+	started_at = stopped_at;
 }
 
 void Timer::Pause()

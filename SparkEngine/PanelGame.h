@@ -32,6 +32,7 @@ private:
 	void GetSizeWithAspectRatio(int current_width, int current_height, int wanted_width, int wanted_height, int& new_width, int& new_height);
 
 private:
+	bool stats = false;
 	ImVec2 screen_pos;
 	float w, h;
 };

@@ -35,7 +35,7 @@ void PanelProject::DrawFiles()
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetWindowSize().x - ImGui::GetWindowWidth() * 0.1f);
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.1f);
-	ImGui::SliderInt(" ", &image_size, 25, 100," ");
+	ImGui::SliderInt(" ", &image_size, 25, 100, " ");
 	ImGui::Separator();
 
 	uint childs = 1;

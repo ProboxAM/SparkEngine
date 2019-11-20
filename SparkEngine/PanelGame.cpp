@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ModuleTime.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
@@ -48,7 +49,29 @@ void PanelGame::Draw()
 		bool lighting = App->renderer3D->IsEnabled(GL_LIGHTING);
 		if (ImGui::Checkbox("Lighting", &lighting))
 			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
+
+		ImGui::Checkbox("Stats", &stats);
+
 		ImGui::EndMenuBar();
+	}
+
+	if (stats)
+	{
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + (ImGui::GetWindowWidth() - 215));
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 75, 255, 75));
+		ImGui::BeginChild("StatPanel", ImVec2(200, 100), true, ImGuiWindowFlags_None);
+
+		ImGui::Text("FPS:"); ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%i", App->GetFPS());
+		ImGui::Text("Frame ms:"); ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f", App->GetFrameMS());
+		ImGui::Text("Game Time:"); ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f seconds", App->time->Time());
+		ImGui::Text("Time Scale:"); ImGui::SameLine();
+		ImGui::TextColored({ 0, 255, 255, 255 }, "%.2f", App->time->TimeScale());
+
+		ImGui::EndChild();
+		ImGui::PopStyleColor();
 	}
 
 	ImGui::End();
