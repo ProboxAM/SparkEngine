@@ -33,13 +33,11 @@ ComponentCamera::~ComponentCamera()
 void ComponentCamera::SetFrustumNearPlaneDistance(float distance)
 {
 	frustum.nearPlaneDistance = distance;
-	update_camera_projection = true;
 }
 
 void ComponentCamera::SetFrustumFarPlaneDistance(float distance)
 {
 	frustum.farPlaneDistance = distance;
-	update_camera_projection = true;
 }
 
 void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
@@ -49,14 +47,11 @@ void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
 	else frustum.verticalFov = fov;
 
 	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
-
-	update_camera_projection = true;
 }
 
 void ComponentCamera::SetFrustumAspectRatio(float aspect_ratio)
 {
 	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
-	update_camera_projection = true;
 }
 
 bool ComponentCamera::Intersects(AABB box)

@@ -119,10 +119,11 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-		CreateSceneBuffer();
-		CreateGameBuffer();
 		// Projection matrix for
 		OnResize(App->window->GetWindowWidth(), App->window->GetWindowHeight());
+
+		CreateSceneBuffer();
+		CreateGameBuffer();
 	}
 
 	return ret;
@@ -143,16 +144,6 @@ update_status ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate()
 {
-	if (editor_camera->update_camera_projection) {
-		UpdateSceneProjectionMatrix();
-		editor_camera->update_camera_projection = false;
-	}
-
-	if (game_camera && game_camera->update_camera_projection) {
-		UpdateGameProjectionMatrix();
-		game_camera->update_camera_projection = false;
-	}
-
 	DrawSceneViewPort();
 	DrawGameViewPort();
 
@@ -176,6 +167,15 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glViewport(0, 0, width, height);
 	ResizeScene(width, height);
 	ResizeGame(width, height);
+
+	if (editor_camera) {
+		UpdateSceneProjectionMatrix();
+		editor_camera->SetFrustumAspectRatio(width/height);
+	}
+	if (game_camera) {
+		UpdateGameProjectionMatrix();
+		game_camera->SetFrustumAspectRatio(width / height);
+	}
 }
 
 bool ModuleRenderer3D::Load(const nlohmann::json::iterator& it)
@@ -489,9 +489,6 @@ void ModuleRenderer3D::UpdateSceneProjectionMatrix()
 	glLoadIdentity();
 
 	glLoadMatrixf((float*)&editor_camera->GetOpenGLProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 }
 
 void ModuleRenderer3D::UpdateGameProjectionMatrix()
@@ -500,9 +497,6 @@ void ModuleRenderer3D::UpdateGameProjectionMatrix()
 	glLoadIdentity();
 
 	glLoadMatrixf((float*)&game_camera->GetOpenGLProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 }
 
 //Creates a Frame Buffer for rendering into Scene window
@@ -566,8 +560,12 @@ void ModuleRenderer3D::SetVsync(bool active)
 
 void ModuleRenderer3D::DrawSceneViewPort()
 {
-	glLoadIdentity();
+
+	UpdateSceneProjectionMatrix();
+
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glLoadMatrixf((float*)&editor_camera->GetOpenGLViewMatrix());
 
 	glBindFramebuffer(GL_FRAMEBUFFER, scene_buffer_id); //set scene buffer to render to a texture
@@ -587,8 +585,11 @@ void ModuleRenderer3D::DrawSceneViewPort()
 
 void ModuleRenderer3D::DrawGameViewPort()
 {
-	glLoadIdentity();
+	UpdateGameProjectionMatrix();
+
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	if (game_camera)
 		glLoadMatrixf((float*)&game_camera->GetOpenGLViewMatrix());
 
