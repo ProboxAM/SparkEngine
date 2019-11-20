@@ -120,6 +120,10 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 		std::vector<ResourceModel::ModelNode> nodes;
 		ImportNode(scene->mRootNode, scene, 0, file, nodes, meta, meshes);
 
+		std::string root_name;
+		App->fsystem->SplitFilePath(file,nullptr, &root_name, nullptr);
+		nodes[0].name = root_name;
+
 		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 		Save(output_file, nodes);
 

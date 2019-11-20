@@ -51,7 +51,6 @@ void PanelGame::Draw()
 			App->renderer3D->GLEnable(GL_LIGHTING, lighting);
 
 		ImGui::Checkbox("Stats", &stats);
-
 		ImGui::EndMenuBar();
 	}
 
