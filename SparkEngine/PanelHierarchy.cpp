@@ -125,7 +125,7 @@ void PanelHierarchy::SetDragAndDropSource(ComponentTransform * target)
 {
 	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 	{
-		ImGui::SetDragDropPayload("GameObject", &App->scene->selected_gameobject->transform, sizeof(ComponentTransform));
+		ImGui::SetDragDropPayload("GAMEOBJECT", &App->scene->selected_gameobject->transform, sizeof(ComponentTransform));
 		ImGui::EndDragDropSource();
 	}
 }
