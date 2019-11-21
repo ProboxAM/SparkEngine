@@ -23,7 +23,7 @@
                     "type": 0
                 }
             ],
-            "id": 927156504,
+            "id": 242517258,
             "layer": "Default",
             "name": "root",
             "parent": 0,
@@ -61,10 +61,10 @@
                     "type": 4
                 }
             ],
-            "id": 2926307063,
+            "id": 1764579241,
             "layer": "Default",
             "name": "Main Camera",
-            "parent": 927156504,
+            "parent": 242517258,
             "static": false,
             "tag": "Untagged"
         },
@@ -91,10 +91,10 @@
                     "type": 0
                 }
             ],
-            "id": 3880964979,
+            "id": 3237662694,
             "layer": "Default",
-            "name": "RootNode",
-            "parent": 927156504,
+            "name": "Street environment_V01",
+            "parent": 242517258,
             "static": false,
             "tag": "Untagged"
         },
@@ -121,10 +121,10 @@
                     "type": 0
                 }
             ],
-            "id": 3607855906,
+            "id": 2859216224,
             "layer": "Default",
             "name": "Sky001_$AssimpFbx$_Translation",
-            "parent": 3880964979,
+            "parent": 3237662694,
             "static": false,
             "tag": "Untagged"
         },
@@ -151,10 +151,10 @@
                     "type": 0
                 }
             ],
-            "id": 300874688,
+            "id": 3206966965,
             "layer": "Default",
             "name": "Sky001_$AssimpFbx$_PreRotation",
-            "parent": 3607855906,
+            "parent": 2859216224,
             "static": false,
             "tag": "Untagged"
         },
@@ -181,10 +181,10 @@
                     "type": 0
                 }
             ],
-            "id": 1512912438,
+            "id": 2796808765,
             "layer": "Default",
             "name": "Sky001_$AssimpFbx$_PostRotation",
-            "parent": 300874688,
+            "parent": 3206966965,
             "static": false,
             "tag": "Untagged"
         },
@@ -211,10 +211,10 @@
                     "type": 0
                 }
             ],
-            "id": 2627375551,
+            "id": 1810967208,
             "layer": "Default",
             "name": "Sky001",
-            "parent": 1512912438,
+            "parent": 2796808765,
             "static": false,
             "tag": "Untagged"
         },
@@ -241,10 +241,10 @@
                     "type": 0
                 }
             ],
-            "id": 581797964,
+            "id": 2091444089,
             "layer": "Default",
             "name": "Dummy001_$AssimpFbx$_PreRotation",
-            "parent": 3880964979,
+            "parent": 3237662694,
             "static": false,
             "tag": "Untagged"
         },
@@ -271,10 +271,10 @@
                     "type": 0
                 }
             ],
-            "id": 1696513971,
+            "id": 423602343,
             "layer": "Default",
             "name": "Dummy001_$AssimpFbx$_Rotation",
-            "parent": 581797964,
+            "parent": 2091444089,
             "static": false,
             "tag": "Untagged"
         },
@@ -301,10 +301,10 @@
                     "type": 0
                 }
             ],
-            "id": 2863103320,
+            "id": 2704584199,
             "layer": "Default",
             "name": "Dummy001",
-            "parent": 1696513971,
+            "parent": 423602343,
             "static": false,
             "tag": "Untagged"
         },
@@ -335,20 +335,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 3437006001,
+                    "resource": 1153586824,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2320598583,
+                    "resource": 4265145982,
                     "type": 2
                 }
             ],
-            "id": 4119395622,
+            "id": 4227463708,
             "layer": "Default",
             "name": "City_building_004",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -379,20 +379,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 535451010,
+                    "resource": 2908422834,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 4103028216,
+                    "resource": 3325308328,
                     "type": 2
                 }
             ],
-            "id": 3780572414,
+            "id": 2905665560,
             "layer": "Default",
             "name": "City_building_001",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -423,20 +423,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 44160896,
+                    "resource": 3798126789,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2714069212,
+                    "resource": 2765889294,
                     "type": 2
                 }
             ],
-            "id": 3603232825,
+            "id": 36398775,
             "layer": "Default",
             "name": "City_building_007",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -467,20 +467,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 2209538974,
+                    "resource": 1221128265,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 668967267,
+                    "resource": 3790637680,
                     "type": 2
                 }
             ],
-            "id": 2561833313,
+            "id": 3350823668,
             "layer": "Default",
             "name": "City_building_008",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -511,7 +511,7 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 1936412028,
+                    "resource": 1055670843,
                     "type": 1
                 },
                 {
@@ -521,10 +521,10 @@
                     "type": 2
                 }
             ],
-            "id": 1724971590,
+            "id": 1747912847,
             "layer": "Default",
             "name": "Line002",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -555,7 +555,7 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 2995175449,
+                    "resource": 2073007578,
                     "type": 1
                 },
                 {
@@ -565,10 +565,10 @@
                     "type": 2
                 }
             ],
-            "id": 1395899079,
+            "id": 3098269248,
             "layer": "Default",
             "name": "Plane001",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -599,20 +599,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 456852692,
+                    "resource": 409561984,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2024250903,
+                    "resource": 4210297425,
                     "type": 2
                 }
             ],
-            "id": 3156459386,
+            "id": 725497879,
             "layer": "Default",
             "name": "City_building_010",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -643,20 +643,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 44160896,
+                    "resource": 3798126789,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2714069212,
+                    "resource": 2765889294,
                     "type": 2
                 }
             ],
-            "id": 2387093550,
+            "id": 285591677,
             "layer": "Default",
             "name": "City_building_011",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -687,20 +687,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 3721026313,
+                    "resource": 3265718977,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2496329432,
+                    "resource": 1873901539,
                     "type": 2
                 }
             ],
-            "id": 3854103378,
+            "id": 3197409689,
             "layer": "Default",
             "name": "City_building_013",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -731,20 +731,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 3751550860,
+                    "resource": 357129204,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2320598583,
+                    "resource": 4265145982,
                     "type": 2
                 }
             ],
-            "id": 174526112,
+            "id": 1596392218,
             "layer": "Default",
             "name": "City_building_014",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -775,20 +775,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 456852692,
+                    "resource": 409561984,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2024250903,
+                    "resource": 4210297425,
                     "type": 2
                 }
             ],
-            "id": 506728087,
+            "id": 2103085635,
             "layer": "Default",
             "name": "City_building_016",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -819,20 +819,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 456852692,
+                    "resource": 409561984,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2024250903,
+                    "resource": 4210297425,
                     "type": 2
                 }
             ],
-            "id": 357573984,
+            "id": 955084452,
             "layer": "Default",
             "name": "City_building_017",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -863,20 +863,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 2179342824,
+                    "resource": 1452973057,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1761500949,
+                    "resource": 1610741608,
                     "type": 2
                 }
             ],
-            "id": 3150129656,
+            "id": 2820714874,
             "layer": "Default",
             "name": "City_building_022",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -907,20 +907,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 44160896,
+                    "resource": 3798126789,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2714069212,
+                    "resource": 2765889294,
                     "type": 2
                 }
             ],
-            "id": 4252686204,
+            "id": 2461532723,
             "layer": "Default",
             "name": "City_building_023",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -951,20 +951,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 2209538974,
+                    "resource": 1221128265,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 668967267,
+                    "resource": 3790637680,
                     "type": 2
                 }
             ],
-            "id": 2974679283,
+            "id": 2175698942,
             "layer": "Default",
             "name": "City_building_024",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -995,20 +995,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 2169797372,
+                    "resource": 3157996457,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1761500949,
+                    "resource": 1610741608,
                     "type": 2
                 }
             ],
-            "id": 3095499034,
+            "id": 3277923304,
             "layer": "Default",
             "name": "City_building_026",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1039,20 +1039,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 187634055,
+                    "resource": 217583543,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1027630724,
+                    "resource": 55366117,
                     "type": 2
                 }
             ],
-            "id": 3692721775,
+            "id": 3498738957,
             "layer": "Default",
             "name": "City_building_028",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1083,7 +1083,7 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 382870552,
+                    "resource": 1448201477,
                     "type": 1
                 },
                 {
@@ -1093,10 +1093,10 @@
                     "type": 2
                 }
             ],
-            "id": 964815152,
+            "id": 3453073804,
             "layer": "Default",
             "name": "Object010",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1127,20 +1127,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 187634055,
+                    "resource": 217583543,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1027630724,
+                    "resource": 55366117,
                     "type": 2
                 }
             ],
-            "id": 593527993,
+            "id": 365501830,
             "layer": "Default",
             "name": "City_building_030",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1171,20 +1171,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 187634055,
+                    "resource": 217583543,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1027630724,
+                    "resource": 55366117,
                     "type": 2
                 }
             ],
-            "id": 1321449647,
+            "id": 106116711,
             "layer": "Default",
             "name": "City_building_031",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1215,20 +1215,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 3437006001,
+                    "resource": 1153586824,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2320598583,
+                    "resource": 4265145982,
                     "type": 2
                 }
             ],
-            "id": 4292633436,
+            "id": 255308927,
             "layer": "Default",
             "name": "City_building_032",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1259,20 +1259,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 1813172547,
+                    "resource": 1638545334,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2496329432,
+                    "resource": 1873901539,
                     "type": 2
                 }
             ],
-            "id": 3843992570,
+            "id": 115209507,
             "layer": "Default",
             "name": "City_building_033",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1303,20 +1303,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 488988266,
+                    "resource": 3075053798,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1761500949,
+                    "resource": 1610741608,
                     "type": 2
                 }
             ],
-            "id": 4073278690,
+            "id": 1561816135,
             "layer": "Default",
             "name": "City_building_034",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1347,20 +1347,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 187634055,
+                    "resource": 217583543,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1027630724,
+                    "resource": 55366117,
                     "type": 2
                 }
             ],
-            "id": 1788563447,
+            "id": 2538744108,
             "layer": "Default",
             "name": "City_building_035",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1391,20 +1391,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 3721026313,
+                    "resource": 3265718977,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 2496329432,
+                    "resource": 1873901539,
                     "type": 2
                 }
             ],
-            "id": 2511272616,
+            "id": 3365386518,
             "layer": "Default",
             "name": "City_building_036",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1435,20 +1435,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 3501468327,
+                    "resource": 679583847,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1761500949,
+                    "resource": 1610741608,
                     "type": 2
                 }
             ],
-            "id": 1284226549,
+            "id": 3734907331,
             "layer": "Default",
             "name": "City_building_037",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1479,20 +1479,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 1829497053,
+                    "resource": 2137629795,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1761500949,
+                    "resource": 1610741608,
                     "type": 2
                 }
             ],
-            "id": 2295112370,
+            "id": 2358728317,
             "layer": "Default",
             "name": "City_building_038",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1523,20 +1523,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 187634055,
+                    "resource": 217583543,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1027630724,
+                    "resource": 55366117,
                     "type": 2
                 }
             ],
-            "id": 2886749824,
+            "id": 3980198677,
             "layer": "Default",
             "name": "City_building_039",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1567,20 +1567,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 187634055,
+                    "resource": 217583543,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 1027630724,
+                    "resource": 55366117,
                     "type": 2
                 }
             ],
-            "id": 1491170532,
+            "id": 3464447579,
             "layer": "Default",
             "name": "City_building_040",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1611,20 +1611,20 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 535451010,
+                    "resource": 2908422834,
                     "type": 1
                 },
                 {
                     "active": true,
                     "debug_tex": false,
-                    "resource": 4103028216,
+                    "resource": 3325308328,
                     "type": 2
                 }
             ],
-            "id": 3771494458,
+            "id": 4251757024,
             "layer": "Default",
             "name": "City_building_041",
-            "parent": 2863103320,
+            "parent": 2704584199,
             "static": false,
             "tag": "Untagged"
         },
@@ -1651,10 +1651,10 @@
                     "type": 0
                 }
             ],
-            "id": 2424291402,
+            "id": 3839009724,
             "layer": "Default",
             "name": "Camera001_$AssimpFbx$_Translation",
-            "parent": 3880964979,
+            "parent": 3237662694,
             "static": false,
             "tag": "Untagged"
         },
@@ -1681,10 +1681,10 @@
                     "type": 0
                 }
             ],
-            "id": 3079497468,
+            "id": 490757466,
             "layer": "Default",
             "name": "Camera001_$AssimpFbx$_PreRotation",
-            "parent": 2424291402,
+            "parent": 3839009724,
             "static": false,
             "tag": "Untagged"
         },
@@ -1711,10 +1711,10 @@
                     "type": 0
                 }
             ],
-            "id": 2192761351,
+            "id": 4163594271,
             "layer": "Default",
             "name": "Camera001_$AssimpFbx$_Rotation",
-            "parent": 3079497468,
+            "parent": 490757466,
             "static": false,
             "tag": "Untagged"
         },
@@ -1741,10 +1741,10 @@
                     "type": 0
                 }
             ],
-            "id": 1991778333,
+            "id": 1591982579,
             "layer": "Default",
             "name": "Camera001",
-            "parent": 2192761351,
+            "parent": 4163594271,
             "static": false,
             "tag": "Untagged"
         },
@@ -1771,10 +1771,10 @@
                     "type": 0
                 }
             ],
-            "id": 2618747231,
+            "id": 2068077746,
             "layer": "Default",
             "name": "Camera001.Target_$AssimpFbx$_Translation",
-            "parent": 3880964979,
+            "parent": 3237662694,
             "static": false,
             "tag": "Untagged"
         },
@@ -1801,10 +1801,10 @@
                     "type": 0
                 }
             ],
-            "id": 213796153,
+            "id": 2087132217,
             "layer": "Default",
             "name": "Camera001.Target_$AssimpFbx$_PreRotation",
-            "parent": 2618747231,
+            "parent": 2068077746,
             "static": false,
             "tag": "Untagged"
         },
@@ -1831,10 +1831,10 @@
                     "type": 0
                 }
             ],
-            "id": 2823994254,
+            "id": 4005178171,
             "layer": "Default",
             "name": "Camera001.Target_$AssimpFbx$_Rotation",
-            "parent": 213796153,
+            "parent": 2087132217,
             "static": false,
             "tag": "Untagged"
         },
@@ -1861,10 +1861,10 @@
                     "type": 0
                 }
             ],
-            "id": 3904790626,
+            "id": 1137875530,
             "layer": "Default",
             "name": "Camera001.Target",
-            "parent": 2823994254,
+            "parent": 4005178171,
             "static": false,
             "tag": "Untagged"
         },
@@ -1891,10 +1891,10 @@
                     "type": 0
                 }
             ],
-            "id": 3210456520,
+            "id": 3406295765,
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_Translation",
-            "parent": 3880964979,
+            "parent": 3237662694,
             "static": false,
             "tag": "Untagged"
         },
@@ -1921,10 +1921,10 @@
                     "type": 0
                 }
             ],
-            "id": 221557141,
+            "id": 2868749664,
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_PreRotation",
-            "parent": 3210456520,
+            "parent": 3406295765,
             "static": false,
             "tag": "Untagged"
         },
@@ -1951,10 +1951,10 @@
                     "type": 0
                 }
             ],
-            "id": 1438341518,
+            "id": 1194133747,
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_Rotation",
-            "parent": 221557141,
+            "parent": 2868749664,
             "static": false,
             "tag": "Untagged"
         },
@@ -1981,10 +1981,10 @@
                     "type": 0
                 }
             ],
-            "id": 1304450814,
+            "id": 1708121038,
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_PostRotation",
-            "parent": 1438341518,
+            "parent": 1194133747,
             "static": false,
             "tag": "Untagged"
         },
@@ -2011,10 +2011,10 @@
                     "type": 0
                 }
             ],
-            "id": 1157266930,
+            "id": 4100597079,
             "layer": "Default",
             "name": "Spot001",
-            "parent": 1304450814,
+            "parent": 1708121038,
             "static": false,
             "tag": "Untagged"
         },
@@ -2041,10 +2041,10 @@
                     "type": 0
                 }
             ],
-            "id": 1305259854,
+            "id": 2401333339,
             "layer": "Default",
             "name": "Spot001.Target_$AssimpFbx$_Translation",
-            "parent": 3880964979,
+            "parent": 3237662694,
             "static": false,
             "tag": "Untagged"
         },
@@ -2071,10 +2071,10 @@
                     "type": 0
                 }
             ],
-            "id": 3428196094,
+            "id": 358055450,
             "layer": "Default",
             "name": "Spot001.Target_$AssimpFbx$_PreRotation",
-            "parent": 1305259854,
+            "parent": 2401333339,
             "static": false,
             "tag": "Untagged"
         },
@@ -2101,10 +2101,10 @@
                     "type": 0
                 }
             ],
-            "id": 1664481645,
+            "id": 654901871,
             "layer": "Default",
             "name": "Spot001.Target_$AssimpFbx$_Rotation",
-            "parent": 3428196094,
+            "parent": 358055450,
             "static": false,
             "tag": "Untagged"
         },
@@ -2131,10 +2131,10 @@
                     "type": 0
                 }
             ],
-            "id": 1109156922,
+            "id": 2717396010,
             "layer": "Default",
             "name": "Spot001.Target",
-            "parent": 1664481645,
+            "parent": 654901871,
             "static": false,
             "tag": "Untagged"
         }

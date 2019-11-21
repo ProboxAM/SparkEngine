@@ -13,8 +13,9 @@ public:
 	~PanelProject();
 
 	void Draw();
-	void DrawFiles();
 	void Start();
+	void Reload();
+	std::string GetCurrentPath() const;
 
 	std::string selected_item = "";
 	Resource* selected_resource = nullptr;
@@ -28,6 +29,7 @@ private:
 		std::vector<std::string> files, directories;
 	};
 
+	void DrawFiles();
 	void DrawPathRecursive(Project_Node* node);
 	void ManageClicksForItem(std::string file);
 	void ChangeFolder();
@@ -36,6 +38,8 @@ private:
 	void CleanOldFiles();
 	void GetNewFiles();
 	void CreateTree(std::string path, Project_Node* parent = nullptr);
+
+	void CleanTree();
 
 	int text_size, image_size;
 	bool change_folder = false;

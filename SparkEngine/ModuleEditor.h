@@ -45,10 +45,13 @@ public:
 	bool Start();
 	update_status Update();
 	update_status PreUpdate();
+	std::string GetProjectPanelPath();
 
 	void LogInput(int key, KEY_STATE state, bool mouse = false);
 	void LogDebug(const char* text);
 	void LogFrame(float fps, float ms);
+	void SaveScene();
+	void ReloadProjectWindow();
 	bool IsInsideSceneWindow(float2 pos);
 	std::vector<Panel*> GetPanels() {
 		return panels;
@@ -67,6 +70,7 @@ private:
 	void BeginDockSpace();
 	std::string mode;
 
+	bool open_save_popup = false;
 	void HandleTransformInputs();
 };
 

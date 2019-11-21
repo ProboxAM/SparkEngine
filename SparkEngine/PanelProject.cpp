@@ -29,6 +29,30 @@ void PanelProject::Start()
 	GetAllFiles();
 }
 
+void PanelProject::Reload()
+{
+	std::string current_folder = current_node->folder;
+	CleanOldFiles();
+	CleanTree();
+
+	CreateTree(ASSETS_FOLDER);
+	current_node = project_tree[0];
+	for (std::vector<Project_Node*>::iterator it = project_tree.begin(); it != project_tree.end(); ++it)
+	{
+		if ((*it)->folder == current_folder)
+		{
+			current_node = (*it);
+			break;
+		}
+	}
+	GetAllFiles();
+}
+
+std::string PanelProject::GetCurrentPath() const
+{
+	return current_node->full_path;
+}
+
 void PanelProject::CreateTree(std::string path, Project_Node* parent)
 {
 	Project_Node* node = new Project_Node();
@@ -40,6 +64,16 @@ void PanelProject::CreateTree(std::string path, Project_Node* parent)
 	project_tree.push_back(node);
 	for each (std::string folder in node->directories)
 		CreateTree(path + folder + "/", node);
+}
+
+void PanelProject::CleanTree()
+{
+	for (std::vector<Project_Node*>::iterator it = project_tree.begin(); it != project_tree.end();)
+	{
+		delete (*it);
+		it = project_tree.erase(it);
+	}
+	project_tree.clear();
 }
 
 void PanelProject::GetAllFiles()
@@ -61,6 +95,7 @@ void PanelProject::CleanOldFiles()
 
 	selected_item = "";
 	selected_resource = nullptr;
+	folder_to_change = "";
 }
 
 void PanelProject::GetNewFiles()
@@ -79,7 +114,7 @@ void PanelProject::GetNewFiles()
 		{
 		case Resource::RESOURCE_TYPE::R_TEXTURE:
 		{
-			uint id = App->resources->GetID(ASSETS_FOLDER + (*it));
+			uint id = App->resources->GetID(current_node->full_path + (*it));
 			tex = (ResourceTexture*)App->resources->GetAndReference(id);
 		}
 		break;
@@ -207,7 +242,7 @@ void PanelProject::ManageClicksForItem(std::string item)
 				dot_extension += extension;
 
 				if (dot_extension == SCENE_EXTENSION)
-					App->scene->LoadScene(ASSETS_FOLDER + item);
+					App->scene->LoadScene(current_node->full_path + item);
 			}
 			else
 			{
@@ -219,7 +254,7 @@ void PanelProject::ManageClicksForItem(std::string item)
 		{
 			selected_item = item;
 
-			uint id = App->resources->GetID(ASSETS_FOLDER + item);
+			uint id = App->resources->GetID(current_node->full_path + item);
 			selected_resource = App->resources->Get(id);
 
 			App->scene->selected_gameobject = nullptr;

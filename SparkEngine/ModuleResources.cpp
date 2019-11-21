@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ModuleEditor.h"
 #include "ModuleImporter.h"
 
 #include "ModelImporter.h"
@@ -41,14 +42,16 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 	std::string extension, file;
 	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
 	file += "." + extension;
+	std::string full_path;
 
-	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str()))
+	if (!App->fsystem->ExistsRecursive(file.c_str(), ASSETS_FOLDER, full_path))
 	{
 		LOG("Importing new file to Assets...");
-		if (App->fsystem->CopyFromOutsideFS(path, ASSETS_FOLDER))
+		if (App->fsystem->CopyFromOutsideFS(path, App->editor->GetProjectPanelPath().c_str()))
 		{
 			Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
-			ImportFile(std::string(ASSETS_FOLDER + file).c_str(), type);
+			ImportFile(std::string(App->editor->GetProjectPanelPath() + file).c_str(), type);
+			App->editor->ReloadProjectWindow();
 		}
 	}
 	else
