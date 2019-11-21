@@ -196,14 +196,22 @@ void ModuleResources::RecursiveLoadAssets(std::string directory)
 	{
 		LOG("Loading resource %s", file.c_str());
 		std::string asset_file = (directory + file).c_str();
-		std::string meta_file = asset_file + ".meta";
+		std::string meta_file = file + ".meta";
 		std::string extension;
 		App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
 		Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
 
-		if (App->fsystem->Exists(meta_file.c_str())) //File has meta.
+		if (App->fsystem->ExistsRecursive(meta_file.c_str(), ASSETS_FOLDER, meta_file)) //File has meta.
 		{
 			LOG("Resource has meta, loading meta file...");
+			//Check if meta is in same folder as asset
+			std::string expected_meta_file = asset_file + ".meta";
+			if (meta_file != expected_meta_file)
+			{
+				LOG("Asset and meta not in same path. Moving meta file...");
+				App->fsystem->Cut(meta_file.c_str(), expected_meta_file.c_str());
+				meta_file = expected_meta_file;
+			}
 			//Load meta
 			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
 			LoadMeta(meta_file.c_str(), meta, type);

@@ -28,6 +28,7 @@ private:
 		std::vector<std::string> files, directories;
 	};
 
+	void DrawPathRecursive(Project_Node* node);
 	void ManageClicksForItem(std::string file);
 	void ChangeFolder();
 	void LoadFileTextures();
@@ -38,6 +39,7 @@ private:
 
 	int text_size, image_size;
 	bool change_folder = false;
+	std::string folder_to_change = "";
 
 	std::map<std::string, ResourceTexture*> assets_in_folder;
 
@@ -46,6 +48,7 @@ private:
 
 	ResourceTexture* model_file_image;
 	ResourceTexture* scene_file_image;
+	ResourceTexture* folder_file_image;
 };
 
 

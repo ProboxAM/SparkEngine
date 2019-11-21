@@ -195,6 +195,8 @@ bool ModuleFileSystem::ExistsRecursive(const char * file, const char* starting_p
 	{
 		std::string new_path = starting_path + folder + "/";
 		ret = ExistsRecursive(file, new_path.c_str(), full_path);
+		if (ret)
+			return true;
 	}
 
 	return ret;
@@ -268,6 +270,34 @@ bool ModuleFileSystem::Copy(const char * source, const char * destination)
 		ret = true;
 
 		LOG("File System copied file [%s] to [%s]", source, destination);
+	}
+	else
+		LOG("File System error while copy from [%s] to [%s]", source, destination);
+
+	return ret;
+}
+
+bool ModuleFileSystem::Cut(const char * source, const char * destination)
+{
+	bool ret = false;
+
+	char buf[8192];
+
+	PHYSFS_file* src = PHYSFS_openRead(source);
+	PHYSFS_file* dst = PHYSFS_openWrite(destination);
+
+	PHYSFS_sint32 size;
+	if (src && dst)
+	{
+		while (size = (PHYSFS_sint32)PHYSFS_read(src, buf, 1, 8192))
+			PHYSFS_write(dst, buf, 1, size);
+
+		PHYSFS_close(src);
+		PHYSFS_close(dst);
+		PHYSFS_delete(source);
+		ret = true;
+
+		LOG("File System cut file [%s] to [%s]", source, destination);
 	}
 	else
 		LOG("File System error while copy from [%s] to [%s]", source, destination);

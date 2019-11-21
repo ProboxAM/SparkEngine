@@ -50,6 +50,9 @@ void PanelProject::GetAllFiles()
 
 void PanelProject::CleanOldFiles()
 {
+	if (current_node->directories.size() > 0)
+		folder_file_image->RemoveReference();
+
 	for (std::map<std::string, ResourceTexture*>::iterator it = assets_in_folder.begin(); it != assets_in_folder.end(); ++it)
 	{
 		it->second->RemoveReference();
@@ -62,6 +65,8 @@ void PanelProject::CleanOldFiles()
 
 void PanelProject::GetNewFiles()
 {
+	if (current_node->directories.size() > 0)
+		folder_file_image->AddReference();
 	//Add reference to textures inside selected folder as they are being used here. If folder changes unreference texture
 	for (std::vector<std::string>::iterator it = current_node->files.begin(); it != current_node->files.end(); ++it)
 	{
@@ -112,7 +117,7 @@ void PanelProject::DrawFiles()
 	if(change_folder)
 		ChangeFolder();
 
-	ImGui::Text(current_node->full_path.c_str());
+	DrawPathRecursive(current_node);
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetWindowSize().x - ImGui::GetWindowWidth() * 0.1f);
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.1f);
@@ -124,9 +129,11 @@ void PanelProject::DrawFiles()
 	{
 		ImGui::SameLine();
 		ImGui::BeginChild(childs, { (float)image_size, (float)image_size + text_size }, false, ImGuiWindowFlags_NoScrollbar);
-
+		ImGui::Image((void*)(intptr_t)folder_file_image->buffer_id,
+			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+		ManageClicksForItem((*it));
 		ImGui::Text((*it).c_str());
-		ManageClicksForItem(*it);
+		ManageClicksForItem((*it));
 		if (selected_item == *it)
 		{
 			ImGui::SetCursorPos(ImVec2(0, 0));
@@ -173,6 +180,19 @@ void PanelProject::DrawFiles()
 	}
 }
 
+void PanelProject::DrawPathRecursive(Project_Node* node)
+{
+	if (node->parent)
+		DrawPathRecursive(node->parent);
+	ImGui::SameLine();
+	ImGui::Text(node->folder.c_str());
+	if (ImGui::IsItemClicked() && current_node->folder != node->folder)
+	{
+		folder_to_change = node->folder;
+		change_folder = true;
+	}
+}
+
 void PanelProject::ManageClicksForItem(std::string item)
 {
 	if (ImGui::IsItemClicked())
@@ -191,6 +211,7 @@ void PanelProject::ManageClicksForItem(std::string item)
 			}
 			else
 			{
+				folder_to_change = item;
 				change_folder = true;
 			}
 		}
@@ -210,10 +231,11 @@ void PanelProject::ChangeFolder()
 {
 	for (std::vector<Project_Node*>::iterator it = project_tree.begin(); it != project_tree.end(); ++it)
 	{
-		if ((*it)->folder == selected_item)
+		if ((*it)->folder == folder_to_change)
 		{
+			CleanOldFiles();
 			current_node = (*it);
-			GetAllFiles();
+			GetNewFiles();
 		}
 	}
 	change_folder = false;
@@ -228,4 +250,8 @@ void PanelProject::LoadFileTextures()
 	scene_file_image = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
 	scene_file_image->SetExportedFile(SETTINGS_FOLDER + std::string("scene_file_image.png"));
 	scene_file_image->meta = new ResourceTexture::TextureMetaFile();
+
+	folder_file_image = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
+	folder_file_image->SetExportedFile(SETTINGS_FOLDER + std::string("folder_file_image.png"));
+	folder_file_image->meta = new ResourceTexture::TextureMetaFile();
 }

@@ -44,7 +44,7 @@ void Resource::AddReference()
 
 void Resource::RemoveReference()
 {
-	references--;
+	if (references > 0) references--;
 	if (references == 0)
 	{
 		UnLoad();
