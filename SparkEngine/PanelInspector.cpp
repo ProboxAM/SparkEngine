@@ -64,24 +64,30 @@ void PanelInspector::Draw()
 					if(!App->scene->global_mode) p = (float*)&go->transform->GetLocalPosition();
 					else p = (float*)&go->transform->GetPosition();
 					if (ImGui::InputFloat3("Position", p, 2)) {
-						if (!App->scene->global_mode)go->transform->SetLocalPosition((float3)p);
-						else go->transform->SetPosition((float3)p);
+						if (!go->isStatic()) {
+							if (!App->scene->global_mode)go->transform->SetLocalPosition((float3)p);
+							else go->transform->SetPosition((float3)p);
+						}
 					}
 
 					float* r;
 					if (!App->scene->global_mode)r = (float*)&go->transform->GetLocalRotationToEuler();
 					else r = (float*)&go->transform->GetRotationToEuler();
 					if(ImGui::InputFloat3("Rotation", r, 2)) {
-						if (!App->scene->global_mode)go->transform->SetLocalRotationFromEuler((float3)r);
-						else go->transform->SetRotationFromEuler((float3)r);
+						if (!go->isStatic()) {
+							if (!App->scene->global_mode)go->transform->SetLocalRotationFromEuler((float3)r);
+							else go->transform->SetRotationFromEuler((float3)r);
+						}
 					}
 
 					float* s;
 					if (!App->scene->global_mode)s = (float*)&go->transform->GetLocalScale();
 					else s = (float*)&go->transform->GetScale();
 					if (ImGui::InputFloat3("Scale", s, 2)) {
-						if (!App->scene->global_mode)go->transform->SetLocalScale((float3)s);
-						else go->transform->SetScale((float3)s);
+						if (!go->isStatic()) {
+							if (!App->scene->global_mode)go->transform->SetLocalScale((float3)s);
+							else go->transform->SetScale((float3)s);
+						}
 					}
 				}
 			}
