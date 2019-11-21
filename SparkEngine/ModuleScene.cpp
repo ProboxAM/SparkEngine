@@ -76,8 +76,8 @@ update_status ModuleScene::Update()
 	{
 		DeleteGameObject(selected_gameobject);
 		selected_gameobject = nullptr;
+		ImGuizmo::Enable(false);
 	}
-
 
 	return UPDATE_CONTINUE;
 }
@@ -466,6 +466,8 @@ void ModuleScene::DeleteGameObjects()
 
 void ModuleScene::DeleteGameObject(GameObject* go)
 {
+	if (go->isStatic())
+		quad_tree->RemoveGameObject(go);
 	go->transform->GetParent()->RemoveChild(go->transform);
 	RecursiveErase(go);
 	go->Delete();
@@ -547,6 +549,7 @@ void ModuleScene::CreateDefaultScene()
 	GameObject* obj_camera = CreateGameObject(root, "Main Camera");
 	ComponentCamera* cam = (ComponentCamera*) obj_camera->AddComponent(COMPONENT_TYPE::CAMERA);
 	cam->SetAsMainCamera(true);
+	cam->gameobject->transform->SetPosition({ 0.f, 1.0f, -80.0f });
 
 	has_file = false;
 }

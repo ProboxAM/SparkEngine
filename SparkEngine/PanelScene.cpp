@@ -127,6 +127,7 @@ void PanelScene::DrawTransformGuizmo()
 
 	if (ImGuizmo::IsUsing())
 	{
-		App->scene->selected_gameobject->transform->SetTransformMatrix(transform.Transposed());
+		if(!App->scene->selected_gameobject->isStatic())
+			App->scene->selected_gameobject->transform->SetTransformMatrix(transform.Transposed());
 	}
 }

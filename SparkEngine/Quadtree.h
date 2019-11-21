@@ -15,6 +15,7 @@ public:
 
 	void Create(const AABB limits);
 	void Clear();
+	void Rebuild(std::vector<GameObject*> &to_rebuild);
 	void InsertGameObject(GameObject* gameobject);
 	void RemoveGameObject(GameObject* gameobject);
 
@@ -44,6 +45,7 @@ public:
 
 	void Create(const AABB limits);
 	void Clear();
+	void Rebuild();
 	void InsertGameObject(GameObject* gameobject);
 	void RemoveGameObject(GameObject* gameobject);
 

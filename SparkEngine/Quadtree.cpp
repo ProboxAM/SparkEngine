@@ -27,6 +27,21 @@ void Quadtree::Clear()
 	root->Clear();
 }
 
+void Quadtree::Rebuild()
+{
+	std::vector<GameObject*>to_rebuild;
+
+	root->Rebuild(to_rebuild);
+	AABB box = root->box;
+	root->Clear();
+
+	Create(box);
+
+	for (int i = 0; i < to_rebuild.size(); i++) {
+		InsertGameObject(to_rebuild[i]);
+	}
+}
+
 void Quadtree::InsertGameObject(GameObject * gameobject)
 {
 	if (root->box.Intersects(gameobject->global_aabb))
@@ -36,6 +51,7 @@ void Quadtree::InsertGameObject(GameObject * gameobject)
 void Quadtree::RemoveGameObject(GameObject * gameobject)
 {
 	root->RemoveGameObject(gameobject);
+	Rebuild();
 }
 
 void Quadtree::Draw()
@@ -50,9 +66,7 @@ QuadtreeNode::QuadtreeNode()
 
 QuadtreeNode::~QuadtreeNode()
 {
-	for (int i = 0; i < CHILDREN_SIZE; i++) {
-		delete children[i];
-	}
+
 }
 
 void QuadtreeNode::Create(const AABB limits)
@@ -62,10 +76,41 @@ void QuadtreeNode::Create(const AABB limits)
 
 void QuadtreeNode::Clear()
 {
-	for (int i = 0; i < CHILDREN_SIZE; i++) {
-		delete children[i];
+	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end();) {
+		it = bucket.erase(it);
+	};
+
+	bucket.clear();
+
+	if (children[0]) {
+		for (int i = 0; i < CHILDREN_SIZE; i++) {
+			children[i]->Clear();
+		}
+	}
+
+	delete this;
+}
+
+void QuadtreeNode::Rebuild(std::vector<GameObject*> &to_rebuild)
+{
+	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end(); ++it) {
+		bool find = false;
+		for (int i = 0; i < to_rebuild.size(); i++) {
+			if (to_rebuild[i] == (*it)) {
+				find = true;
+				break;
+			}
+		}
+		if(!find)to_rebuild.push_back((*it));
+	}
+
+	if (children[0]) {
+		for (int i = 0; i < CHILDREN_SIZE; i++) {
+			children[i]->Rebuild(to_rebuild);
+		}
 	}
 }
+
 
 void QuadtreeNode::InsertGameObject(GameObject * gameobject)
 {
@@ -80,7 +125,7 @@ void QuadtreeNode::InsertGameObject(GameObject * gameobject)
 
 void QuadtreeNode::RemoveGameObject(GameObject * gameobject)
 {
-	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end();) {
+	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end(); ++it) {
 		if ((*it) == gameobject)
 		{
 			it = bucket.erase(it);
@@ -88,8 +133,10 @@ void QuadtreeNode::RemoveGameObject(GameObject * gameobject)
 		}
 	}
 
-	for (int i = 0; i < CHILDREN_SIZE; i++) {
-		children[i]->RemoveGameObject(gameobject);
+	if (children[0]) {
+		for (int i = 0; i < CHILDREN_SIZE; i++) {
+			children[i]->RemoveGameObject(gameobject);
+		}
 	}
 }
 
