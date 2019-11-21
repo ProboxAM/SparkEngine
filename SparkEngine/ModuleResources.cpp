@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
+#include "ModuleEditor.h"
 #include "ModuleImporter.h"
 
 #include "ModelImporter.h"
@@ -28,7 +29,9 @@ ModuleResources::~ModuleResources()
 
 bool ModuleResources::Start()
 {
-	LoadAssets();
+	RecursiveLoadAssets(ASSETS_FOLDER);
+	LOG("Loaded all resources");
+
 	CleanLibrary();
 
 	return true;
@@ -39,14 +42,16 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 	std::string extension, file;
 	App->fsystem->SplitFilePath(path, nullptr, &file, &extension);
 	file += "." + extension;
+	std::string full_path;
 
-	if (!App->fsystem->Exists(std::string(ASSETS_FOLDER + file).c_str()))
+	if (!App->fsystem->ExistsRecursive(file.c_str(), ASSETS_FOLDER, full_path))
 	{
 		LOG("Importing new file to Assets...");
-		if (App->fsystem->CopyFromOutsideFS(path, ASSETS_FOLDER))
+		if (App->fsystem->CopyFromOutsideFS(path, App->editor->GetProjectPanelPath().c_str()))
 		{
 			Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
-			ImportFile(std::string(ASSETS_FOLDER + file).c_str(), type);
+			ImportFile(std::string(App->editor->GetProjectPanelPath() + file).c_str(), type);
+			App->editor->ReloadProjectWindow();
 		}
 	}
 	else
@@ -183,25 +188,33 @@ Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extens
 	return Resource::RESOURCE_TYPE::R_NONE;
 }
 
-void ModuleResources::LoadAssets()
+void ModuleResources::RecursiveLoadAssets(std::string directory)
 {
-	LOG("Loading resources...");
+	LOG("Loading resources in %s", directory.c_str());
 	// Get all files in assets that are not meta
-	std::vector<std::string> files;
-	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
+	std::vector<std::string> files, directories;
+	App->fsystem->DiscoverFiles(directory.c_str(), files, directories, "meta");
 
 	for each(std::string file in files)
 	{
 		LOG("Loading resource %s", file.c_str());
-		std::string asset_file = (ASSETS_FOLDER + file).c_str();
-		std::string meta_file = asset_file + ".meta";
+		std::string asset_file = (directory + file).c_str();
+		std::string meta_file = file + ".meta";
 		std::string extension;
 		App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
 		Resource::RESOURCE_TYPE type = GetTypeFromExtension(extension);
 
-		if (App->fsystem->Exists(meta_file.c_str())) //File has meta.
+		if (App->fsystem->ExistsRecursive(meta_file.c_str(), ASSETS_FOLDER, meta_file)) //File has meta.
 		{
 			LOG("Resource has meta, loading meta file...");
+			//Check if meta is in same folder as asset
+			std::string expected_meta_file = asset_file + ".meta";
+			if (meta_file != expected_meta_file)
+			{
+				LOG("Asset and meta not in same path. Moving meta file...");
+				App->fsystem->Cut(meta_file.c_str(), expected_meta_file.c_str());
+				meta_file = expected_meta_file;
+			}
 			//Load meta
 			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
 			LoadMeta(meta_file.c_str(), meta, type);
@@ -223,7 +236,8 @@ void ModuleResources::LoadAssets()
 			ImportFile(asset_file.c_str(), GetTypeFromExtension(extension)); //New asset, needs import
 	}
 
-	LOG("Loaded all assets");
+	for each (std::string folder in directories)
+		RecursiveLoadAssets(directory + folder + "/");
 }
 
 bool ModuleResources::ImportedLibraryFilesExist(Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)

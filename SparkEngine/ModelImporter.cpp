@@ -184,20 +184,21 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
 		if (texture_path.length > 0)
 		{
-			std::string assets_path = ASSETS_FOLDER;
-			std::string file, extension;
-			App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &file, &extension);
-			assets_path += file + "." + extension;
+			std::string tex_file, extension, path, texture_full_path;
+			App->fsystem->SplitFilePath(texture_path.C_Str(), nullptr, &tex_file, &extension);
+			App->fsystem->SplitFilePath(file, &path);
+			texture_full_path = path + tex_file + "." + extension;
+			tex_file += "." + extension;
 
-			if (App->fsystem->Exists(assets_path.c_str())) //Check if asset of texture exists
+			if (App->fsystem->ExistsRecursive(tex_file.c_str(), ASSETS_FOLDER, texture_full_path)) //Check if asset of texture exists in project
 			{
-				std::string meta_file = assets_path + ".meta";
+				std::string meta_file = texture_full_path + ".meta";
 				if (App->fsystem->Exists(meta_file.c_str())) //Check if meta exista associated to the asset
 				{
 					resource_node.texture = App->resources->GetIDFromMeta(meta_file);
 				}
 				else
-					resource_node.texture = App->resources->ImportFile(assets_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
+					resource_node.texture = App->resources->ImportFile(texture_full_path.c_str(), Resource::RESOURCE_TYPE::R_TEXTURE);
 			}
 		}
 		else

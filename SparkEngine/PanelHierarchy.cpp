@@ -62,7 +62,7 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 			node_flags |= ImGuiTreeNodeFlags_Selected;
 
 			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
-			panel_project->selected_file = "";
+			panel_project->selected_item = "";
 			panel_project->selected_resource = nullptr;
 		}
 
@@ -91,7 +91,7 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 			node_flags |= ImGuiTreeNodeFlags_Selected;
 
 			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
-			panel_project->selected_file = "";
+			panel_project->selected_item = "";
 			panel_project->selected_resource = nullptr;
 		}
 

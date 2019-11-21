@@ -44,7 +44,7 @@ public:
 	bool Save(nlohmann::json &it);
 
 	bool SaveScene(bool temp = false);
-	bool LoadScene(std::string file);
+	bool LoadScene(std::string file, bool temp = false);
 
 	void OnPlay();
 	void OnStop();
@@ -91,7 +91,7 @@ public:
 
 private:
 	std::string scene_name = "Scene";
-	bool has_file = false;
+	std::string file = "";
 	void RecursiveErase(GameObject * go);
 };
 

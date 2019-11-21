@@ -22,8 +22,6 @@
 #include "ImGui/imgui_stdlib.h"
 #include "ImGui/imgui_internal.h"
 
-
-
 ModuleEditor::ModuleEditor(bool start_enabled) : Module(start_enabled)
 {
 	name = "Editor";
@@ -101,11 +99,14 @@ update_status ModuleEditor::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
+std::string ModuleEditor::GetProjectPanelPath()
+{
+	return ((PanelProject*)panels[PROJECT])->GetCurrentPath();
+}
+
 update_status ModuleEditor::Update()
 {
 	ImGui::NewFrame();
-
-	bool open_save_popup = false;
 
 	if(App->scene->selected_gameobject)
 		HandleTransformInputs();
@@ -206,6 +207,7 @@ update_status ModuleEditor::Update()
 				ImGui::CloseCurrentPopup();
 			}			
 		}
+		bool accepted = false;
 		if (ImGui::BeginPopupModal("Overwrite"))
 		{
 			ImGui::Text("A file with that name already exists. Do you want to overwrite it?");
@@ -213,6 +215,7 @@ update_status ModuleEditor::Update()
 			{
 				App->scene->SetName(scene_name);
 				App->scene->SaveScene();
+				accepted = true;
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::SameLine();
@@ -221,12 +224,13 @@ update_status ModuleEditor::Update()
 			ImGui::EndPopup();
 		}
 		ImGui::SameLine();
-		if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+		if (ImGui::Button("Cancel", ImVec2(120, 0)) || accepted) {
+
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
 	}
-
+	open_save_popup = false;
 	BeginDockSpace();
 
 	if (ImGui::BeginMenuBar())
@@ -303,6 +307,19 @@ void ModuleEditor::LogFrame(float fps, float ms)
 {
 	if (panels[CONFIG] != nullptr)
 		((PanelConfiguration*)panels[CONFIG])->LogFrame(fps, ms);
+}
+
+void ModuleEditor::SaveScene()
+{
+	if (App->scene->HasFile())
+		App->scene->SaveScene();
+	else
+		open_save_popup = true;
+}
+
+void ModuleEditor::ReloadProjectWindow()
+{
+	((PanelProject*)panels[PROJECT])->Reload();
 }
 
 bool ModuleEditor::IsInsideSceneWindow(float2 pos)

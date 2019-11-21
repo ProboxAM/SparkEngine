@@ -1,0 +1,2142 @@
+{
+    "GameObjects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 242517258,
+            "layer": "Default",
+            "name": "root",
+            "parent": 0,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "active_camera": true,
+                    "far_distance": 500.0,
+                    "fov": 1.0471975803375244,
+                    "near_distance": 0.10000000149011612,
+                    "type": 4
+                }
+            ],
+            "id": 1764579241,
+            "layer": "Default",
+            "name": "Main Camera",
+            "parent": 242517258,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3237662694,
+            "layer": "Default",
+            "name": "Street environment_V01",
+            "parent": 242517258,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        18.153732299804688,
+                        0.0,
+                        58.96091079711914
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2859216224,
+            "layer": "Default",
+            "name": "Sky001_$AssimpFbx$_Translation",
+            "parent": 3237662694,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3206966965,
+            "layer": "Default",
+            "name": "Sky001_$AssimpFbx$_PreRotation",
+            "parent": 2859216224,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2796808765,
+            "layer": "Default",
+            "name": "Sky001_$AssimpFbx$_PostRotation",
+            "parent": 3206966965,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1810967208,
+            "layer": "Default",
+            "name": "Sky001",
+            "parent": 2796808765,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2091444089,
+            "layer": "Default",
+            "name": "Dummy001_$AssimpFbx$_PreRotation",
+            "parent": 3237662694,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 423602343,
+            "layer": "Default",
+            "name": "Dummy001_$AssimpFbx$_Rotation",
+            "parent": 2091444089,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2704584199,
+            "layer": "Default",
+            "name": "Dummy001",
+            "parent": 423602343,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -41.47589111328125,
+                        21.01409912109375,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1153586824,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4265145982,
+                    "type": 2
+                }
+            ],
+            "id": 4227463708,
+            "layer": "Default",
+            "name": "City_building_004",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        17.707164764404297,
+                        20.05327606201172,
+                        2.121072952832037e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 2908422834,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 3325308328,
+                    "type": 2
+                }
+            ],
+            "id": 2905665560,
+            "layer": "Default",
+            "name": "City_building_001",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        16.0104923248291,
+                        37.4932861328125,
+                        -1.5106878663573298e-06
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3798126789,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 2765889294,
+                    "type": 2
+                }
+            ],
+            "id": 36398775,
+            "layer": "Default",
+            "name": "City_building_007",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        40.97999572753906,
+                        18.270824432373047,
+                        -2.0522466002148576e-06
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1221128265,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 3790637680,
+                    "type": 2
+                }
+            ],
+            "id": 3350823668,
+            "layer": "Default",
+            "name": "City_building_008",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -2.1597719192504883,
+                        1.8538382053375244,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1055670843,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4294967295,
+                    "type": 2
+                }
+            ],
+            "id": 1747912847,
+            "layer": "Default",
+            "name": "Line002",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -0.02860260009765625,
+                        0.026032090187072754,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        0.9966352581977844,
+                        0.9706164598464966,
+                        0.9966352581977844
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 2073007578,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4294967295,
+                    "type": 2
+                }
+            ],
+            "id": 3098269248,
+            "layer": "Default",
+            "name": "Plane001",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        25.154010772705078,
+                        -39.15372085571289,
+                        8.553864176974457e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 409561984,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4210297425,
+                    "type": 2
+                }
+            ],
+            "id": 725497879,
+            "layer": "Default",
+            "name": "City_building_010",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        30.134540557861328,
+                        37.4932861328125,
+                        -1.5106878663573298e-06
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3798126789,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 2765889294,
+                    "type": 2
+                }
+            ],
+            "id": 285591677,
+            "layer": "Default",
+            "name": "City_building_011",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -42.288055419921875,
+                        33.201576232910156,
+                        5.014607040720875e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3265718977,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1873901539,
+                    "type": 2
+                }
+            ],
+            "id": 3197409689,
+            "layer": "Default",
+            "name": "City_building_013",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -19.439706802368164,
+                        32.061729431152344,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        -4.371138828673793e-08
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 357129204,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4265145982,
+                    "type": 2
+                }
+            ],
+            "id": 1596392218,
+            "layer": "Default",
+            "name": "City_building_014",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        34.270423889160156,
+                        -41.972747802734375,
+                        8.553864176974457e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        -4.371138828673793e-08
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 409561984,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4210297425,
+                    "type": 2
+                }
+            ],
+            "id": 2103085635,
+            "layer": "Default",
+            "name": "City_building_016",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        44.26008224487305,
+                        -39.15372085571289,
+                        8.553864176974457e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 409561984,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4210297425,
+                    "type": 2
+                }
+            ],
+            "id": 955084452,
+            "layer": "Default",
+            "name": "City_building_017",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -20.831323623657227,
+                        -27.426488876342773,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        1.9470718370939721e-07
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1452973057,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1610741608,
+                    "type": 2
+                }
+            ],
+            "id": 2820714874,
+            "layer": "Default",
+            "name": "City_building_022",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        42.13064193725586,
+                        37.4932861328125,
+                        -1.5106878663573298e-06
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3798126789,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 2765889294,
+                    "type": 2
+                }
+            ],
+            "id": 2461532723,
+            "layer": "Default",
+            "name": "City_building_023",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -20.572771072387695,
+                        43.060829162597656,
+                        -0.06919445842504501
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        4.371138828673793e-08
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1221128265,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 3790637680,
+                    "type": 2
+                }
+            ],
+            "id": 2175698942,
+            "layer": "Default",
+            "name": "City_building_024",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        31.51188850402832,
+                        -16.446016311645508,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        4.371138828673793e-08
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3157996457,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1610741608,
+                    "type": 2
+                }
+            ],
+            "id": 3277923304,
+            "layer": "Default",
+            "name": "City_building_026",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        13.38798999786377,
+                        -33.75503921508789,
+                        -9.383451811117993e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 217583543,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 55366117,
+                    "type": 2
+                }
+            ],
+            "id": 3498738957,
+            "layer": "Default",
+            "name": "City_building_028",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -2.5033531188964844,
+                        15.800846099853516,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1448201477,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4294967295,
+                    "type": 2
+                }
+            ],
+            "id": 3453073804,
+            "layer": "Default",
+            "name": "Object010",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -42.8072395324707,
+                        -41.83556365966797,
+                        -9.383451811117993e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 217583543,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 55366117,
+                    "type": 2
+                }
+            ],
+            "id": 365501830,
+            "layer": "Default",
+            "name": "City_building_030",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -34.679481506347656,
+                        -41.83556365966797,
+                        -9.383451811117993e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 217583543,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 55366117,
+                    "type": 2
+                }
+            ],
+            "id": 106116711,
+            "layer": "Default",
+            "name": "City_building_031",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -29.478403091430664,
+                        21.01409912109375,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1153586824,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4265145982,
+                    "type": 2
+                }
+            ],
+            "id": 255308927,
+            "layer": "Default",
+            "name": "City_building_032",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -32.36149597167969,
+                        42.37042236328125,
+                        5.014607040720875e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 1638545334,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1873901539,
+                    "type": 2
+                }
+            ],
+            "id": 115209507,
+            "layer": "Default",
+            "name": "City_building_033",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        16.049516677856445,
+                        -16.696884155273438,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071067094802856
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3075053798,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1610741608,
+                    "type": 2
+                }
+            ],
+            "id": 1561816135,
+            "layer": "Default",
+            "name": "City_building_034",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        13.38798999786377,
+                        -40.80251693725586,
+                        -9.383451811117993e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 217583543,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 55366117,
+                    "type": 2
+                }
+            ],
+            "id": 2538744108,
+            "layer": "Default",
+            "name": "City_building_035",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -31.216331481933594,
+                        33.201576232910156,
+                        5.014607040720875e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 3265718977,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1873901539,
+                    "type": 2
+                }
+            ],
+            "id": 3365386518,
+            "layer": "Default",
+            "name": "City_building_036",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -20.31769371032715,
+                        -16.16360855102539,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        1.0,
+                        1.9470718370939721e-07
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 679583847,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1610741608,
+                    "type": 2
+                }
+            ],
+            "id": 3734907331,
+            "layer": "Default",
+            "name": "City_building_037",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -41.64900207519531,
+                        -16.495393753051758,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071068286895752,
+                        0.7071067094802856
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 2137629795,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 1610741608,
+                    "type": 2
+                }
+            ],
+            "id": 2358728317,
+            "layer": "Default",
+            "name": "City_building_038",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -42.8072395324707,
+                        -30.643888473510742,
+                        -9.383451811117993e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 217583543,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 55366117,
+                    "type": 2
+                }
+            ],
+            "id": 3980198677,
+            "layer": "Default",
+            "name": "City_building_039",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -34.679481506347656,
+                        -30.643888473510742,
+                        -9.383451811117993e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 217583543,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 55366117,
+                    "type": 2
+                }
+            ],
+            "id": 3464447579,
+            "layer": "Default",
+            "name": "City_building_040",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        30.69527816772461,
+                        21.612646102905273,
+                        2.121072952832037e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.7071067690849304,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "debug_face_n": false,
+                    "debug_vertex_n": false,
+                    "resource": 2908422834,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 3325308328,
+                    "type": 2
+                }
+            ],
+            "id": 4251757024,
+            "layer": "Default",
+            "name": "City_building_041",
+            "parent": 2704584199,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -78.31243133544922,
+                        45.251216888427734,
+                        -97.03111267089844
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3839009724,
+            "layer": "Default",
+            "name": "Camera001_$AssimpFbx$_Translation",
+            "parent": 3237662694,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 490757466,
+            "layer": "Default",
+            "name": "Camera001_$AssimpFbx$_PreRotation",
+            "parent": 3839009724,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.19855600595474243,
+                        0.5607047080993652,
+                        0.7577487230300903,
+                        -0.26833298802375793
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 4163594271,
+            "layer": "Default",
+            "name": "Camera001_$AssimpFbx$_Rotation",
+            "parent": 490757466,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1591982579,
+            "layer": "Default",
+            "name": "Camera001",
+            "parent": 4163594271,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -28.13262176513672,
+                        20.873329162597656,
+                        -35.064212799072266
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2068077746,
+            "layer": "Default",
+            "name": "Camera001.Target_$AssimpFbx$_Translation",
+            "parent": 3237662694,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2087132217,
+            "layer": "Default",
+            "name": "Camera001.Target_$AssimpFbx$_PreRotation",
+            "parent": 2068077746,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.1985560655593872,
+                        0.5607047080993652,
+                        0.7577487230300903,
+                        -0.2683330476284027
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 4005178171,
+            "layer": "Default",
+            "name": "Camera001.Target_$AssimpFbx$_Rotation",
+            "parent": 2087132217,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1137875530,
+            "layer": "Default",
+            "name": "Camera001.Target",
+            "parent": 4005178171,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -66.72126770019531,
+                        141.9341278076172,
+                        6.204137662280118e-06
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3406295765,
+            "layer": "Default",
+            "name": "Spot001_$AssimpFbx$_Translation",
+            "parent": 3237662694,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2868749664,
+            "layer": "Default",
+            "name": "Spot001_$AssimpFbx$_PreRotation",
+            "parent": 3406295765,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.15443940460681915,
+                        -0.15443937480449677,
+                        -0.6900351047515869,
+                        0.6900351643562317
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1194133747,
+            "layer": "Default",
+            "name": "Spot001_$AssimpFbx$_Rotation",
+            "parent": 2868749664,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1708121038,
+            "layer": "Default",
+            "name": "Spot001_$AssimpFbx$_PostRotation",
+            "parent": 1194133747,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 4100597079,
+            "layer": "Default",
+            "name": "Spot001",
+            "parent": 1708121038,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        28.890945434570313,
+                        -60.96388244628906,
+                        -2.6648158382158726e-06
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2401333339,
+            "layer": "Default",
+            "name": "Spot001.Target_$AssimpFbx$_Translation",
+            "parent": 3237662694,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 358055450,
+            "layer": "Default",
+            "name": "Spot001.Target_$AssimpFbx$_PreRotation",
+            "parent": 2401333339,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.7071068286895752,
+                        0.0,
+                        0.0,
+                        0.7071067094802856
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 654901871,
+            "layer": "Default",
+            "name": "Spot001.Target_$AssimpFbx$_Rotation",
+            "parent": 358055450,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2717396010,
+            "layer": "Default",
+            "name": "Spot001.Target",
+            "parent": 654901871,
+            "static": false,
+            "tag": "Untagged"
+        }
+    ]
+}

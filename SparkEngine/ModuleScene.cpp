@@ -70,7 +70,9 @@ update_status ModuleScene::Update()
 	root->Update();
 
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		SaveScene();
+	{
+		App->editor->SaveScene();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DELETE) && selected_gameobject)
 	{
@@ -129,26 +131,35 @@ bool ModuleScene::SaveScene(bool temp)
 
 	root->Save(j.find("GameObjects"));
 
+	bool new_file = false;
 	std::string scene_path;
 	if(temp)
 		scene_path = SETTINGS_FOLDER + std::string("tmp_scene") + SCENE_EXTENSION;
 	else
-		scene_path = ASSETS_FOLDER + scene_name + SCENE_EXTENSION;
+	{
+		if (file.empty())
+		{
+			file = App->editor->GetProjectPanelPath() + scene_name + SCENE_EXTENSION;
+			new_file = true;
+		}		
+		scene_path = file;
+	}
 
 	std::ofstream o(scene_path);
 	o << std::setw(4) << j << std::endl;
-
+	if (new_file)
+		App->editor->ReloadProjectWindow();
 	LOG("Scene saved to %s", scene_path.c_str());
-
-	has_file = true;
 
 	return true;
 }
 
-bool ModuleScene::LoadScene(std::string file)
+bool ModuleScene::LoadScene(std::string file, bool temp)
 {
 	LOG("Loading scene %s", file.c_str());
 
+	if(!temp)
+		this->file = file;
 	DeleteGameObjects();
 
 	std::ifstream i(file);
@@ -196,7 +207,6 @@ bool ModuleScene::LoadScene(std::string file)
 		}
 	}
 	LOG("Finished loading scene.");
-	has_file = true;
 
 	return true;
 }
@@ -208,7 +218,7 @@ void ModuleScene::OnPlay()
 
 void ModuleScene::OnStop()
 {
-	LoadScene(SETTINGS_FOLDER + std::string("tmp_scene") + SCENE_EXTENSION);
+	LoadScene(SETTINGS_FOLDER + std::string("tmp_scene") + SCENE_EXTENSION, true);
 }
 
 std::string ModuleScene::GetName()
@@ -415,7 +425,7 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 					user_selected_GO = true;
 
 					PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
-					panel_project->selected_file = "";
+					panel_project->selected_item = "";
 					panel_project->selected_resource = nullptr;
 
 					return;
@@ -477,7 +487,7 @@ void ModuleScene::DeleteGameObject(GameObject* go)
 
 bool ModuleScene::HasFile()
 {
-	return has_file;
+	return !file.empty();
 }
 
 void ModuleScene::RecursiveErase(GameObject* go)
@@ -551,5 +561,5 @@ void ModuleScene::CreateDefaultScene()
 	cam->SetAsMainCamera(true);
 	cam->gameobject->transform->SetPosition({ 0.f, 1.0f, -80.0f });
 
-	has_file = false;
+	file = "";
 }

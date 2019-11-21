@@ -24,7 +24,7 @@ public:
 	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);
 
 private:
-	void LoadAssets();
+	void RecursiveLoadAssets(std::string directory);
 	bool ImportedLibraryFilesExist(Resource::MetaFile * meta, Resource::RESOURCE_TYPE type);
 
 	bool LoadMeta(const char * file, Resource::MetaFile* meta, Resource::RESOURCE_TYPE type);
