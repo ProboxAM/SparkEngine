@@ -105,7 +105,7 @@ void ModuleFileSystem::CreateDirectory(const char* directory)
 	PHYSFS_mkdir(directory);
 }
 
-void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::string> & file_list, std::vector<std::string> & dir_list) const
+void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::string> & file_list, std::vector<std::string> & dir_list, std::string filter) const
 {
 	char **rc = PHYSFS_enumerateFiles(directory);
 	char **i;
@@ -115,9 +115,12 @@ void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::str
 	for (i = rc; *i != nullptr; i++)
 	{
 		if (PHYSFS_isDirectory((dir + *i).c_str()))
+		{
 			dir_list.push_back(*i);
-		else
+		}
+		else if (!HasExtension((*i), filter))
 			file_list.push_back(*i);
+
 	}
 
 	PHYSFS_freeList(rc);
@@ -154,7 +157,50 @@ void ModuleFileSystem::GetFilesOfExtension(const char* directory, std::vector<st
 	PHYSFS_freeList(rc);
 }
 
-bool ModuleFileSystem::HasExtension(const char* path, std::string extension)
+void ModuleFileSystem::GetFolder(const char * path, std::string* folder)
+{
+	if (path != nullptr)
+	{
+		std::string full(path);
+		full.pop_back();
+		size_t pos_separator = full.find_last_of("\\/");
+		size_t pos_dot = full.find_last_of(".");
+
+		if (folder != nullptr)
+		{
+			if (pos_separator > 0)
+				*folder = full.substr(pos_separator + 1, full.size());
+			else
+				*folder = full;
+		}
+	}
+}
+
+bool ModuleFileSystem::ExistsRecursive(const char * file, const char* starting_path, std::string& full_path)
+{
+	bool ret = false;
+	std::vector<std::string> files, directories;
+	DiscoverFiles(starting_path, files, directories);
+
+	for each (std::string file_in_folder in files)
+	{
+		if (file_in_folder == file)
+		{
+			full_path = std::string(starting_path + file_in_folder);
+			return true;
+		}
+	}
+
+	for each (std::string folder in directories)
+	{
+		std::string new_path = starting_path + folder + "/";
+		ret = ExistsRecursive(file, new_path.c_str(), full_path);
+	}
+
+	return ret;
+}
+
+bool ModuleFileSystem::HasExtension(const char* path, std::string extension) const
 {
 	std::string path_extension;
 	SplitFilePath(path, nullptr, nullptr, &path_extension);

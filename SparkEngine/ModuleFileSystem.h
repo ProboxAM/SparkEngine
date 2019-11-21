@@ -26,16 +26,18 @@ public:
 	bool Exists(const char* file) const;
 	bool IsDirectory(const char* file) const;
 	void CreateDirectory(const char* directory);
-	void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const;
+	void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list, std::string filter = "") const;
 	bool CopyFromOutsideFS(const char* full_path, const char* destination);
 	bool Copy(const char* source, const char* destination);
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) const;
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
-	bool HasExtension(const char* path, std::string extension);
+	bool HasExtension(const char* path, std::string extension) const;
 	bool GetFileModificationDate(const char * path, std::string & date);
 	void GetFilesFiltered(const char* directory, std::vector<std::string> & file_list, std::string filter);
 	void GetFilesOfExtension(const char* directory, std::vector<std::string> & file_list, std::string extension);
+	void GetFolder(const char* path, std::string* folder);
+	bool ExistsRecursive(const char* file, const char* start_path, std::string& full_path);
 
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) const;

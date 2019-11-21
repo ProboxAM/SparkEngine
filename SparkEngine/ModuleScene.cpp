@@ -415,7 +415,7 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 					user_selected_GO = true;
 
 					PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
-					panel_project->selected_file = "";
+					panel_project->selected_item = "";
 					panel_project->selected_resource = nullptr;
 
 					return;

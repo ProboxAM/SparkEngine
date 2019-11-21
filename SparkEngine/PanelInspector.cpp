@@ -188,10 +188,10 @@ void PanelInspector::Draw()
 			ImGui::EndPopup();
 		}
 	}
-	else if (((PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT))->selected_file != "")
+	else if (((PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT))->selected_item != "")
 	{
 		PanelProject* project_panel = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
-		std::string file = project_panel->selected_file;
+		std::string file = project_panel->selected_item;
 		ImGui::Text(file.c_str());
 		if (project_panel->selected_resource)
 		{
@@ -209,6 +209,8 @@ void PanelInspector::Draw()
 					break;
 			}
 		}
+		else
+			ImGui::Separator();
 	}
 	ImGui::End();
 }

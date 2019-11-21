@@ -28,7 +28,9 @@ ModuleResources::~ModuleResources()
 
 bool ModuleResources::Start()
 {
-	LoadAssets();
+	RecursiveLoadAssets(ASSETS_FOLDER);
+	LOG("Loaded all resources");
+
 	CleanLibrary();
 
 	return true;
@@ -183,17 +185,17 @@ Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extens
 	return Resource::RESOURCE_TYPE::R_NONE;
 }
 
-void ModuleResources::LoadAssets()
+void ModuleResources::RecursiveLoadAssets(std::string directory)
 {
-	LOG("Loading resources...");
+	LOG("Loading resources in %s", directory.c_str());
 	// Get all files in assets that are not meta
-	std::vector<std::string> files;
-	App->fsystem->GetFilesFiltered(ASSETS_FOLDER, files, "meta");
+	std::vector<std::string> files, directories;
+	App->fsystem->DiscoverFiles(directory.c_str(), files, directories, "meta");
 
 	for each(std::string file in files)
 	{
 		LOG("Loading resource %s", file.c_str());
-		std::string asset_file = (ASSETS_FOLDER + file).c_str();
+		std::string asset_file = (directory + file).c_str();
 		std::string meta_file = asset_file + ".meta";
 		std::string extension;
 		App->fsystem->SplitFilePath(file.c_str(), nullptr, nullptr, &extension);
@@ -223,7 +225,8 @@ void ModuleResources::LoadAssets()
 			ImportFile(asset_file.c_str(), GetTypeFromExtension(extension)); //New asset, needs import
 	}
 
-	LOG("Loaded all assets");
+	for each (std::string folder in directories)
+		RecursiveLoadAssets(directory + folder + "/");
 }
 
 bool ModuleResources::ImportedLibraryFilesExist(Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
