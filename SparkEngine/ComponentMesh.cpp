@@ -38,19 +38,23 @@ void ComponentMesh::Draw()
 	if (mesh && to_draw) {
 		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform);
 		if (App->scene->selected_gameobject == gameobject)
-			App->renderer3D->DrawOutline(mesh, { 0.9f, 1.f, 0.1f }, transform);
+			if (App->renderer3D->debug_draw)
+				App->renderer3D->DrawOutline(mesh, { 0.9f, 1.f, 0.1f }, transform);
 	}
 
-	if (debug_vertex_normal)
-		App->renderer3D->DebugVertexNormals(mesh, transform);
-	if (debug_face_normal)
-		App->renderer3D->DebugFaceNormals(mesh, transform);
-	if (debug_bounding_box) {
-		static float3 corners[8];
-		gameobject->aabb.GetCornerPoints(corners);
-		App->renderer3D->DebugDrawCube(corners, { 255, 0, 0, 255 });
-		gameobject->obb.GetCornerPoints(corners);
-		App->renderer3D->DebugDrawCube(corners, { 0, 0, 255, 255 });
+	if (App->renderer3D->debug_draw)
+	{
+		if (debug_vertex_normal)
+			App->renderer3D->DebugVertexNormals(mesh, transform);
+		if (debug_face_normal)
+			App->renderer3D->DebugFaceNormals(mesh, transform);
+		if (debug_bounding_box) {
+			static float3 corners[8];
+			gameobject->aabb.GetCornerPoints(corners);
+			App->renderer3D->DebugDrawCube(corners, { 255, 0, 0, 255 });
+			gameobject->obb.GetCornerPoints(corners);
+			App->renderer3D->DebugDrawCube(corners, { 0, 0, 255, 255 });
+		}
 	}
 
 	to_draw = false;

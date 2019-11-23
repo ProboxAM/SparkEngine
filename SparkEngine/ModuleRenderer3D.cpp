@@ -516,6 +516,7 @@ void ModuleRenderer3D::SetVsync(bool active)
 
 void ModuleRenderer3D::DrawSceneViewPort()
 {
+	debug_draw = true;
 
 	UpdateSceneProjectionMatrix();
 
@@ -537,6 +538,8 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	debug_draw = false;
 }
 
 void ModuleRenderer3D::DrawGameViewPort()

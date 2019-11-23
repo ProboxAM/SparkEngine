@@ -72,6 +72,8 @@ public:
 	ComponentCamera* editor_camera = nullptr;
 	ComponentCamera* game_camera = nullptr;
 
+	bool debug_draw = false;
+
 private:
 	bool wireframe;
 	bool vsync;

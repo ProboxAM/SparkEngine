@@ -477,7 +477,8 @@ void ModuleScene::DeleteGameObjects()
 void ModuleScene::DeleteGameObject(GameObject* go)
 {
 	if (go->isStatic())
-		quad_tree->RemoveGameObject(go);
+		SetGameObjectStatic(go, false);
+
 	go->transform->GetParent()->RemoveChild(go->transform);
 	RecursiveErase(go);
 	go->Delete();
