@@ -59,8 +59,7 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[PROJECT] = new PanelProject(true);
 	panels[RESOURCES] = new PanelResources(true);
 
-	mode = (*it)["mode"].get<std::string>();
-	atlas_path = (*it)["atlas"].get<std::string>();
+	Load(it);
 
 	return true;
 }
@@ -79,6 +78,32 @@ bool ModuleEditor::Start()
 	atlas->SetExportedFile(atlas_path);
 	atlas->meta = new ResourceTexture::TextureMetaFile();
 	atlas->AddReference();
+
+	return true;
+}
+
+bool ModuleEditor::Load(const nlohmann::json::iterator & it)
+{
+	mode = (*it)["mode"].get<std::string>();
+	atlas_path = (*it)["atlas"].get<std::string>();
+	icon_size = (*it)["icon_size"];
+	((PanelProject*)panels[PROJECT])->SetItemSize((*it)["image_size"], (*it)["text_size"]);
+
+	return true;
+}
+
+bool ModuleEditor::Save(nlohmann::json & it)
+{
+	uint img_size, txt_size;
+	((PanelProject*)panels[PROJECT])->GetItemSize(img_size, txt_size);
+
+	it[name] = {
+		{ "mode",mode },
+		{ "atlas", atlas_path },
+		{ "icon_size", icon_size },
+		{ "image_size", img_size },
+		{ "text_size", txt_size }
+	};
 
 	return true;
 }
@@ -243,17 +268,20 @@ update_status ModuleEditor::Update()
 	if (ImGui::BeginMenuBar())
 	{
 		ImGui::PushID("Translate_Button");
-		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25,18), ImVec2((float)256/atlas->width, 1), ImVec2(1, (float)256 / atlas->height), 1))
+		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25,18), ImVec2((float)icon_size*2/atlas->width, 1),
+			ImVec2(1, (float)icon_size * 2 / atlas->height), 1))
 			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 		ImGui::PopID();
 
 		ImGui::PushID("Rotate_Button");
-		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)128/atlas->width, (float)256 / atlas->height), ImVec2((float)256 / atlas->width, (float)128 / atlas->height), 1))
+		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)icon_size /atlas->width, (float)icon_size * 2 / atlas->height),
+			ImVec2((float)icon_size * 2 / atlas->width, (float)icon_size / atlas->height), 1))
 			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
 		ImGui::PopID();
 
 		ImGui::PushID("Scale_Button");
-		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, (float)256 / atlas->height), ImVec2((float)128 / atlas->width, (float)128 / atlas->height), 1))
+		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, (float)icon_size * 2 / atlas->height),
+			ImVec2((float)icon_size / atlas->width, (float)icon_size / atlas->height), 1))
 			guizmo_operation = ImGuizmo::OPERATION::SCALE;
 		ImGui::PopID();
 
@@ -265,13 +293,15 @@ update_status ModuleEditor::Update()
 		ImGui::PushID("Play_Button");
 		if (!App->IsPlay() && !App->IsPaused())
 		{
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1), ImVec2((float)128 / atlas->width, (float)256 / atlas->height),1))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1),
+				ImVec2((float)icon_size / atlas->width, (float)icon_size * 2 / atlas->height),1))
 				App->Play();
 		}
 		else
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1), ImVec2((float)128 / atlas->width, (float)256 / atlas->height),1))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1),
+				ImVec2((float)icon_size / atlas->width, (float)icon_size * 2 / atlas->height),1))
 				App->Stop();
 			ImGui::PopStyleVar();
 		}
@@ -280,14 +310,16 @@ update_status ModuleEditor::Update()
 		ImGui::PushID("Pause_Button");
 		if (!App->IsPaused())
 		{
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(20, 14), ImVec2((float)128 / atlas->width, 1), ImVec2((float)256 / atlas->width, (float)256 / atlas->height)))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(20, 14), ImVec2((float)icon_size / atlas->width, 1),
+				ImVec2((float)icon_size * 2 / atlas->width, (float)icon_size * 2 / atlas->height)))
 				if(App->IsPlay())
 					App->Pause();
 		}
 		else
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)128 / atlas->width, 1), ImVec2((float)256 / atlas->width, (float)256/atlas->height)))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)icon_size / atlas->width, 1),
+				ImVec2((float)icon_size*2 / atlas->width, (float)icon_size * 2 /atlas->height)))
 				App->Resume();
 			ImGui::PopStyleVar();
 		}

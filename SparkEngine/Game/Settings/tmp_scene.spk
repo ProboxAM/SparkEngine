@@ -23,7 +23,7 @@
                     "type": 0
                 }
             ],
-            "id": 4208851185,
+            "id": 403978552,
             "layer": "Default",
             "name": "root",
             "parent": 0,
@@ -61,10 +61,10 @@
                     "type": 4
                 }
             ],
-            "id": 1068893148,
+            "id": 761172204,
             "layer": "Default",
             "name": "Main Camera",
-            "parent": 4208851185,
+            "parent": 403978552,
             "static": false,
             "tag": "Untagged"
         }

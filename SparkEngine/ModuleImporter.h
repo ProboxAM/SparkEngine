@@ -17,6 +17,8 @@ public:
 	bool Init(const nlohmann::json::iterator& it);
 	bool Start();
 	bool CleanUp();
+	bool Load(const nlohmann::json::iterator& it);
+	bool Save(nlohmann::json &it);
 	void ImportFile(const char* path);
 
 public:

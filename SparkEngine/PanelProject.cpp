@@ -11,8 +11,6 @@
 
 PanelProject::PanelProject(bool active): Panel(active)
 {
-	image_size = 60;
-	text_size = 20;
 }
 
 
@@ -50,6 +48,18 @@ void PanelProject::Reload()
 std::string PanelProject::GetCurrentPath() const
 {
 	return current_node->full_path;
+}
+
+void PanelProject::SetItemSize(int img_size, int txt_size)
+{
+	image_size = img_size;
+	text_size = txt_size;
+}
+
+void PanelProject::GetItemSize(uint & img_size, uint & txt_size)
+{
+	img_size = image_size;
+	txt_size = text_size;
 }
 
 void PanelProject::CreateTree(std::string path, Project_Node* parent)
@@ -142,7 +152,8 @@ void PanelProject::DrawFiles()
 		ImGui::SameLine();
 		ImGui::BeginChild(childs, { (float)image_size, (float)image_size + text_size }, false, ImGuiWindowFlags_NoScrollbar);
 		ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
-			ImVec2((float)128/App->editor->atlas->width, (float)128/App->editor->atlas->height), ImVec2((float)256/App->editor->atlas->width, 0));
+			ImVec2((float)App->editor->icon_size/App->editor->atlas->width, (float)App->editor->icon_size /App->editor->atlas->height),
+			ImVec2((float)App->editor->icon_size*2/App->editor->atlas->width, 0));
 		ManageClicksForItem((*it));
 		ImGui::Text((*it).c_str());
 		ManageClicksForItem((*it));
@@ -176,11 +187,13 @@ void PanelProject::DrawFiles()
 		{
 		case Resource::RESOURCE_TYPE::R_SCENE:
 			ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
-				ImVec2(0 / App->editor->atlas->width, (float)128 / App->editor->atlas->height), ImVec2((float)128 / App->editor->atlas->width, 0));
+				ImVec2(0 / App->editor->atlas->width, (float)App->editor->icon_size / App->editor->atlas->height),
+				ImVec2((float)App->editor->icon_size / App->editor->atlas->width, 0));
 			break;
 		case Resource::RESOURCE_TYPE::R_MODEL:
 			ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
-				ImVec2((float)256 / App->editor->atlas->width, (float)256 / App->editor->atlas->height), ImVec2(1.0f, (float)128 / App->editor->atlas->height));
+				ImVec2((float)256 / App->editor->atlas->width, (float)App->editor->icon_size*2 / App->editor->atlas->height),
+				ImVec2(1.0f, (float)App->editor->icon_size / App->editor->atlas->height));
 			break;
 		default:
 			ImGui::Image((ImTextureID)it->second->buffer_id, ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
