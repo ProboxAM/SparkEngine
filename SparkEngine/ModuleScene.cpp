@@ -540,14 +540,12 @@ void ModuleScene::SetGameObjectStatic(GameObject* go, bool state)
 {
 	go->SetStatic(state);
 	if (state) {
-		if(!quad_tree->Exists(go))
 			quad_tree->InsertGameObject(go);
 
 		for (int i = 0; i < go->transform->GetChildren().size(); i++)
 			App->scene->SetGameObjectStatic(go->transform->GetChildren()[i]->gameobject, true);
 	}
 	else {
-		if (quad_tree->Exists(go))
 			quad_tree->RemoveGameObject(go);
 
 		for (int i = 0; i < go->transform->GetChildren().size(); i++)
