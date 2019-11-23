@@ -25,7 +25,6 @@ void PanelProject::Start()
 	CreateTree(ASSETS_FOLDER);
 	current_node = project_tree[0];
 
-	LoadFileTextures();	
 	GetAllFiles();
 }
 
@@ -84,12 +83,10 @@ void PanelProject::GetAllFiles()
 
 void PanelProject::CleanOldFiles()
 {
-	if (current_node->directories.size() > 0)
-		folder_file_image->RemoveReference();
-
 	for (std::map<std::string, ResourceTexture*>::iterator it = assets_in_folder.begin(); it != assets_in_folder.end(); ++it)
 	{
-		it->second->RemoveReference();
+		if(it->second)
+			it->second->RemoveReference();
 	}
 	assets_in_folder.clear();
 
@@ -100,8 +97,6 @@ void PanelProject::CleanOldFiles()
 
 void PanelProject::GetNewFiles()
 {
-	if (current_node->directories.size() > 0)
-		folder_file_image->AddReference();
 	//Add reference to textures inside selected folder as they are being used here. If folder changes unreference texture
 	for (std::vector<std::string>::iterator it = current_node->files.begin(); it != current_node->files.end(); ++it)
 	{
@@ -110,30 +105,12 @@ void PanelProject::GetNewFiles()
 		App->fsystem->SplitFilePath((*it).c_str(), nullptr, nullptr, &extension);
 		Resource::RESOURCE_TYPE type = App->resources->GetTypeFromExtension(extension);
 
-		switch (type)
-		{
-		case Resource::RESOURCE_TYPE::R_TEXTURE:
+		if(type == Resource::RESOURCE_TYPE::R_TEXTURE)
 		{
 			uint id = App->resources->GetID(current_node->full_path + (*it));
 			tex = (ResourceTexture*)App->resources->GetAndReference(id);
 		}
-		break;
-		case Resource::RESOURCE_TYPE::R_MODEL:
-		{
-			model_file_image->AddReference();
-			tex = model_file_image;
-		}
-		break;
-		case Resource::RESOURCE_TYPE::R_SCENE:
-		{
-			scene_file_image->AddReference();
-			tex = scene_file_image;
-		}
-		break;
-		default:
-			tex = (ResourceTexture*)App->resources->GetAndReference(App->importer->texture->checkers);
-			break;
-		}
+
 		assets_in_folder.emplace((*it), tex);
 	}
 }
@@ -164,8 +141,8 @@ void PanelProject::DrawFiles()
 	{
 		ImGui::SameLine();
 		ImGui::BeginChild(childs, { (float)image_size, (float)image_size + text_size }, false, ImGuiWindowFlags_NoScrollbar);
-		ImGui::Image((void*)(intptr_t)folder_file_image->buffer_id,
-			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
+			ImVec2((float)128/App->editor->atlas->width, (float)128/App->editor->atlas->height), ImVec2((float)256/App->editor->atlas->width, 0));
 		ManageClicksForItem((*it));
 		ImGui::Text((*it).c_str());
 		ManageClicksForItem((*it));
@@ -193,9 +170,22 @@ void PanelProject::DrawFiles()
 			ImGui::SetDragDropPayload("ASSET", &id, sizeof(uint));
 			ImGui::EndDragDropSource();
 		}
-
-		ImGui::Image((void*)(intptr_t)it->second->buffer_id,
-			ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+		std::string extension;
+		App->fsystem->SplitFilePath(it->first.c_str(), nullptr, nullptr, &extension);
+		switch (App->resources->GetTypeFromExtension(extension))
+		{
+		case Resource::RESOURCE_TYPE::R_SCENE:
+			ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
+				ImVec2(0 / App->editor->atlas->width, (float)128 / App->editor->atlas->height), ImVec2((float)128 / App->editor->atlas->width, 0));
+			break;
+		case Resource::RESOURCE_TYPE::R_MODEL:
+			ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
+				ImVec2((float)256 / App->editor->atlas->width, (float)256 / App->editor->atlas->height), ImVec2(1.0f, (float)128 / App->editor->atlas->height));
+			break;
+		default:
+			ImGui::Image((ImTextureID)it->second->buffer_id, ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
+			break;
+		}
 		ManageClicksForItem(it->first);
 
 		ImGui::Text(it->first.c_str());
@@ -274,19 +264,4 @@ void PanelProject::ChangeFolder()
 		}
 	}
 	change_folder = false;
-}
-
-void PanelProject::LoadFileTextures()
-{
-	model_file_image = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
-	model_file_image->SetExportedFile(SETTINGS_FOLDER + std::string("fbx_file_image.png"));
-	model_file_image->meta = new ResourceTexture::TextureMetaFile();
-
-	scene_file_image = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
-	scene_file_image->SetExportedFile(SETTINGS_FOLDER + std::string("scene_file_image.png"));
-	scene_file_image->meta = new ResourceTexture::TextureMetaFile();
-
-	folder_file_image = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
-	folder_file_image->SetExportedFile(SETTINGS_FOLDER + std::string("folder_file_image.png"));
-	folder_file_image->meta = new ResourceTexture::TextureMetaFile();
 }

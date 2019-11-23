@@ -65,12 +65,12 @@ public:
 	ImGuizmo::MODE guizmo_mode;
 
 	float4 button_section[TOTAL];
+	ResourceTexture* atlas;
 
 private:
 	std::vector<Panel*> panels;
 	void BeginDockSpace();
 	std::string mode;
-	ResourceTexture* atlas;
 
 	bool open_save_popup = false;
 	void HandleTransformInputs();

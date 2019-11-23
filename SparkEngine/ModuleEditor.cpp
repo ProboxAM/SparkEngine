@@ -242,17 +242,17 @@ update_status ModuleEditor::Update()
 	if (ImGui::BeginMenuBar())
 	{
 		ImGui::PushID("Translate_Button");
-		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25,18), ImVec2((float)256/atlas->width, 1), ImVec2(1, (float)128/atlas->height), 1))
+		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25,18), ImVec2((float)256/atlas->width, 1), ImVec2(1, (float)256 / atlas->height), 1))
 			guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 		ImGui::PopID();
 
 		ImGui::PushID("Rotate_Button");
-		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)128/atlas->width, 0.5f), ImVec2((float)256 / atlas->width, 0), 1))
+		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)128/atlas->width, (float)256 / atlas->height), ImVec2((float)256 / atlas->width, (float)128 / atlas->height), 1))
 			guizmo_operation = ImGuizmo::OPERATION::ROTATE;
 		ImGui::PopID();
 
 		ImGui::PushID("Scale_Button");
-		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 0.5f), ImVec2((float)128 / atlas->width, 0), 1))
+		if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, (float)256 / atlas->height), ImVec2((float)128 / atlas->width, (float)128 / atlas->height), 1))
 			guizmo_operation = ImGuizmo::OPERATION::SCALE;
 		ImGui::PopID();
 
@@ -260,17 +260,17 @@ update_status ModuleEditor::Update()
 			SetGlobalMode(!App->scene->global_mode);
 		}
 
-		ImGui::SetCursorPosX(ImGui::GetWindowSize().x * 0.4f);
+		ImGui::SetCursorPosX(ImGui::GetWindowSize().x * 0.45f);
 		ImGui::PushID("Play_Button");
 		if (!App->IsPlay() && !App->IsPaused())
 		{
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1), ImVec2((float)128 / atlas->width, 0.5f),1))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1), ImVec2((float)128 / atlas->width, (float)256 / atlas->height),1))
 				App->Play();
 		}
 		else
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1), ImVec2((float)128 / atlas->width, 0.5f),1))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1), ImVec2((float)128 / atlas->width, (float)256 / atlas->height),1))
 				App->Stop();
 			ImGui::PopStyleVar();
 		}
@@ -279,14 +279,14 @@ update_status ModuleEditor::Update()
 		ImGui::PushID("Pause_Button");
 		if (!App->IsPaused())
 		{
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(20, 14), ImVec2((float)128 / atlas->width, 1), ImVec2((float)256 / atlas->width, 0.5f)))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(20, 14), ImVec2((float)128 / atlas->width, 1), ImVec2((float)256 / atlas->width, (float)256 / atlas->height)))
 				if(App->IsPlay())
 					App->Pause();
 		}
 		else
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
-			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)128 / atlas->width, 1), ImVec2((float)256 / atlas->width, 0.5f)))
+			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2((float)128 / atlas->width, 1), ImVec2((float)256 / atlas->width, (float)256/atlas->height)))
 				App->Resume();
 			ImGui::PopStyleVar();
 		}
