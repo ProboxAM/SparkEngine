@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleImporter.h"
 #include "ModuleResources.h"
+#include "ModuleFileSystem.h"
 
 #include "GameObject.h"
 #include "ResourceMesh.h"
@@ -75,7 +76,7 @@ update_status ModuleScene::Update()
 	{
 		DeleteGameObject(selected_gameobject);
 		selected_gameobject = nullptr;
-		ImGuizmo::Enable(false);
+		ImGuizmo::SetRect(0, 0, 0, 0);
 	}
 
 	return UPDATE_CONTINUE;
@@ -154,6 +155,12 @@ bool ModuleScene::SaveScene(bool temp)
 bool ModuleScene::LoadScene(std::string file, bool temp)
 {
 	LOG("Loading scene %s", file.c_str());
+
+	if (!App->fsystem->Exists(file.c_str()))
+	{
+		LOG("Cant find scene file.");
+		return false;
+	}
 
 	if(!temp)
 		this->file = file;
