@@ -66,7 +66,7 @@ public:
 	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent = nullptr);
 	GameObject* CreateGameObject(GameObject* parent, const std::string &name, const float3 &position, const Quat &rotation, const float3 &scale, uint id);
 
-	void OnMousePicking(const LineSegment &line);
+	GameObject* OnMousePicking(const LineSegment &line);
 
 	std::vector<float3> grid_points;
 	uint grid_id;

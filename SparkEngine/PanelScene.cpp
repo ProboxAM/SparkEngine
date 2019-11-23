@@ -8,6 +8,7 @@
 #include "ModuleCamera3D.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
+#include "ComponentTexture.h"
 #include "GameObject.h"
 #include "Quadtree.h"
 #include "MathGeoLib\Math\float3.h"
@@ -53,14 +54,28 @@ void PanelScene::Draw()
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET"))
 		{
 			uint* id = (uint*)payload->Data;
-			Resource* res = App->resources->GetAndReference((*id));
+			Resource* res = App->resources->Get((*id));
 			if (res)
 			{
 				if (res->GetType() == Resource::RESOURCE_TYPE::R_MODEL)
 				{
+					res->AddReference();
 					App->scene->CreateGameObject((ResourceModel*)res);
 					res->RemoveReference();
-				}					
+				}
+				else if (res->GetType() == Resource::RESOURCE_TYPE::R_TEXTURE)
+				{
+					GameObject* selected_object = App->scene->OnMousePicking(App->camera->GetRaycast());
+					if (selected_object)
+					{
+						ComponentTexture* c_texture = (ComponentTexture*)selected_object->GetComponent(COMPONENT_TYPE::TEXTURE);
+						if (c_texture)
+						{
+							res->AddReference();
+							c_texture->AddTexture((ResourceTexture*)res);
+						}
+					}
+				}
 			}
 	
 		}

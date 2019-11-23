@@ -5,10 +5,12 @@
 #include "ModuleEditor.h"
 #include "ModuleTime.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleEditor.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 #include "PanelScene.h"
+#include "PanelProject.h"
 #include "ModuleCamera3D.h"
 
 #include "glew/glew.h"
@@ -207,21 +209,34 @@ void ModuleCamera3D::RotateAroundReference()
 void ModuleCamera3D::HandleMouseClicking()
 {
 	if (App->editor->IsInsideSceneWindow({ (float)App->input->GetMouseX(), (float)App->input->GetMouseY() })) {
+		picking = GetRaycast();
 
-		float2 mouse_position, normalized_mouse_position, screen_position;
+		App->scene->selected_gameobject = App->scene->OnMousePicking(picking);
+		if (App->scene->selected_gameobject)
+		{
+			App->scene->user_selected_GO = true;
 
-		PanelScene* ps = (PanelScene*)App->editor->GetPanels()[SCENE];
-		ps->GetScreenPos(screen_position.x, screen_position.y);
-
-		mouse_position = { ((float)App->input->GetMouseX() - (screen_position.x + (ps->GetScreenWidth() / 2))),
-			((float)App->input->GetMouseY() - (screen_position.y + (ps->image_h / 2))) };
-
-		normalized_mouse_position = { mouse_position.x / ps->image_w * 2, mouse_position.y / ps->image_h * 2 };
-
-		picking = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, -normalized_mouse_position.y);
-
-		App->scene->OnMousePicking(picking);
+			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
+			panel_project->selected_item = "";
+			panel_project->selected_resource = nullptr;
+		}
 	}
+}
+
+LineSegment ModuleCamera3D::GetRaycast()
+{
+	float2 mouse_position, normalized_mouse_position, screen_position;
+
+	PanelScene* ps = (PanelScene*)App->editor->GetPanels()[SCENE];
+	ps->GetScreenPos(screen_position.x, screen_position.y);
+
+	mouse_position = { ((float)App->input->GetMouseX() - (screen_position.x + (ps->GetScreenWidth() / 2))),
+		((float)App->input->GetMouseY() - (screen_position.y + (ps->image_h / 2))) };
+
+	normalized_mouse_position = { mouse_position.x / ps->image_w * 2, mouse_position.y / ps->image_h * 2 };
+	LineSegment ray = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, -normalized_mouse_position.y);
+
+	return ray;
 }
 
 void ModuleCamera3D::SelectedGOAsReference()

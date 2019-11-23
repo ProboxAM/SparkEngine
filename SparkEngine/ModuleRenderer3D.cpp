@@ -91,7 +91,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 		lights[0].ref = GL_LIGHT0;
 		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
 		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		lights[0].SetPos(0.0f, 0.0f, 2.5f);
+		lights[0].SetPos(0.0f, 50.0f, -50.0f);
 		lights[0].Init();
 		
 		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -132,7 +132,7 @@ bool ModuleRenderer3D::Init(const nlohmann::json::iterator &it)
 update_status ModuleRenderer3D::PreUpdate()
 {
 	// light 0 on cam pos
-	lights[0].SetPos(editor_camera->frustum.pos.x, editor_camera->frustum.pos.y, editor_camera->frustum.pos.z);
+	//lights[0].SetPos(editor_camera->frustum.pos.x, editor_camera->frustum.pos.y, editor_camera->frustum.pos.z);
 
 	for (uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();

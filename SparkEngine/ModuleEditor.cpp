@@ -84,10 +84,12 @@ bool ModuleEditor::Start()
 
 bool ModuleEditor::Load(const nlohmann::json::iterator & it)
 {
-	mode = (*it)["mode"].get<std::string>();
+	bool mode_state = (*it)["mode"];
 	atlas_path = (*it)["atlas"].get<std::string>();
 	icon_size = (*it)["icon_size"];
 	((PanelProject*)panels[PROJECT])->SetItemSize((*it)["image_size"], (*it)["text_size"]);
+
+	SetGlobalMode(mode_state);
 
 	return true;
 }
@@ -98,7 +100,7 @@ bool ModuleEditor::Save(nlohmann::json & it)
 	((PanelProject*)panels[PROJECT])->GetItemSize(img_size, txt_size);
 
 	it[name] = {
-		{ "mode",mode },
+		{ "mode", App->scene->global_mode },
 		{ "atlas", atlas_path },
 		{ "icon_size", icon_size },
 		{ "image_size", img_size },

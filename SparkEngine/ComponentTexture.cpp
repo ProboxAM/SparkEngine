@@ -31,6 +31,8 @@ ResourceTexture* ComponentTexture::GetTexture()
 
 void ComponentTexture::AddTexture(ResourceTexture * tex)
 {
+	if (this->tex)
+		this->tex->RemoveReference();
 	this->tex = tex;
 }
 

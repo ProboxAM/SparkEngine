@@ -378,7 +378,7 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 	return temp_go[0];
 }
 
-void ModuleScene::OnMousePicking(const LineSegment &line)
+GameObject* ModuleScene::OnMousePicking(const LineSegment &line)
 {
 	std::map<float, GameObject*> objects_hit;
 	quad_tree->CollectIntersections(objects_hit, line);
@@ -399,7 +399,7 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 
 	if (objects_hit.size() == 0) {
 		selected_gameobject = nullptr;
-		return;
+		return nullptr;
 	}
 
 	for (std::map<float, GameObject*>::iterator it = objects_hit.begin(); it != objects_hit.end(); ++it) {
@@ -422,18 +422,13 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 				Triangle t(a, b, c);
 
 				if (local.Intersects(t, nullptr, nullptr)) {
-					selected_gameobject = it->second;
-					user_selected_GO = true;
-
-					PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
-					panel_project->selected_item = "";
-					panel_project->selected_resource = nullptr;
-
-					return;
+					return it->second;
 				}
 			}
 		}
 	}
+
+	return nullptr;
 }
 
 void ModuleScene::GenerateGrid()
