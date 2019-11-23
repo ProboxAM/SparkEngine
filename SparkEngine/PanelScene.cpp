@@ -134,7 +134,6 @@ void PanelScene::GetSizeWithAspectRatio(int current_width, int current_height, i
 
 void PanelScene::DrawTransformGuizmo()
 {
-	//ImGuizmo::BeginFrame();
 	ImGuizmo::Enable(true);
 	float4x4 delta, transform, view, projection;
 

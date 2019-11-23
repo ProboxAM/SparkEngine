@@ -5,8 +5,11 @@
 #define CHILDREN_SIZE 8
 #define MAX_DIVISIONS 6
 
-class GameObject;
 #include "MathGeoLib/Geometry/AABB.h"
+#include <algorithm>
+
+
+class GameObject;
 
 class QuadtreeNode
 {
@@ -28,7 +31,7 @@ private:
 	void Split();
 	void DistributeChildren();
 
-	QuadtreeNode* children[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
+	QuadtreeNode* children[CHILDREN_SIZE];
 	QuadtreeNode* parent = nullptr;
 
 	std::vector<GameObject*> bucket;
@@ -81,11 +84,16 @@ inline void QuadtreeNode::CollectIntersections(std::vector<GameObject*>& objects
 	{
 		for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end(); ++it)
 		{
-			if (primitive.Intersects((*it)->aabb))
-				objects.push_back(*it);
+			if (primitive.Intersects((*it)->aabb)) {
+				if (std::find(objects.begin(), objects.end(), *it) == objects.end()) {
+					objects.push_back(*it);
+				}
+			}
 		}
-		for (int i = 0; i < CHILDREN_SIZE; ++i)
-			if (children[i] != nullptr) children[i]->CollectIntersections(objects, primitive);
+		if (children[0]) {
+			for (int i = 0; i < CHILDREN_SIZE; ++i)
+				children[i]->CollectIntersections(objects, primitive);
+		}
 	}
 }
 
@@ -98,10 +106,13 @@ inline void QuadtreeNode::CollectIntersections(std::map<float, GameObject*>& obj
 		{
 			float distance_near, distance_far;
 			if (primitive.Intersects((*it)->obb, distance_near, distance_far))
-				objects.emplace(distance_near, *it);
+				if (std::find(objects.begin(), objects.end(), *it) == objects.end())
+					objects.emplace(distance_near, *it);
 		}
-		for (int i = 0; i < CHILDREN_SIZE; ++i)
-			if (children[i] != nullptr) children[i]->CollectIntersections(objects, primitive);
+		if (children[0]) {
+			for (int i = 0; i < CHILDREN_SIZE; ++i)
+				children[i]->CollectIntersections(objects, primitive);
+		}
 	}
 }
 

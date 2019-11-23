@@ -141,6 +141,8 @@ std::string ModuleEditor::GetProjectPanelPath()
 update_status ModuleEditor::Update()
 {
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
+
 
 	if(App->scene->selected_gameobject)
 		HandleTransformInputs();

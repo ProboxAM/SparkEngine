@@ -62,7 +62,9 @@ void Quadtree::Draw()
 
 QuadtreeNode::QuadtreeNode()
 {
-
+	for (int i = 0; i < CHILDREN_SIZE; i++) {
+		children[i] = nullptr;
+	}
 }
 
 QuadtreeNode::~QuadtreeNode()
@@ -115,7 +117,7 @@ void QuadtreeNode::Rebuild(std::vector<GameObject*> &to_rebuild)
 
 void QuadtreeNode::InsertGameObject(GameObject * gameobject)
 {
-	bucket.push_back(gameobject);
+	if(gameobject->HasComponent(COMPONENT_TYPE::MESH))bucket.push_back(gameobject);
 	if (bucket.size() > MAX_BUCKET_SIZE && layer < MAX_DIVISIONS) {
 		if (!children[0])
 			Split();
@@ -210,6 +212,8 @@ void QuadtreeNode::Split()
 
 void QuadtreeNode::DistributeChildren()
 {
+	AABB new_box(go->global_bbox.MinimalEnclosingAABB());
+
 	std::vector<uint> intersections;
 	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end();) {
 		for (int i = 0; i < CHILDREN_SIZE; i++) {
@@ -218,7 +222,7 @@ void QuadtreeNode::DistributeChildren()
 			}
 		}	
 		//object intersects in every child box, so we keep it in the father
-		if (intersections.size() == 8)
+		if (intersections.size() == CHILDREN_SIZE)
 			++it;
 		else
 		{
