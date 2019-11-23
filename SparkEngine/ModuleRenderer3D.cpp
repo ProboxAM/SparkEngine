@@ -134,9 +134,6 @@ update_status ModuleRenderer3D::PreUpdate()
 	// light 0 on cam pos
 	//lights[0].SetPos(editor_camera->frustum.pos.x, editor_camera->frustum.pos.y, editor_camera->frustum.pos.z);
 
-	for (uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-
 	return UPDATE_CONTINUE;
 }
 
@@ -532,6 +529,8 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	if (game_camera && game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
 	else App->scene->AccelerateFrustumCulling(editor_camera);
 
+	for (uint i = 0; i < MAX_LIGHTS; ++i)
+		lights[i].Render();
 	App->scene->Draw(); //Draw scene
 	App->scene->DebugDraw();//Draw Quadtree and Grid
 
@@ -557,8 +556,12 @@ void ModuleRenderer3D::DrawGameViewPort()
 
 		glLoadMatrixf((float*)&game_camera->GetOpenGLViewMatrix());
 
+		for (uint i = 0; i < MAX_LIGHTS; ++i)
+			lights[i].Render();
+
 		App->scene->AccelerateFrustumCulling(game_camera);
 		App->scene->Draw(); //Draw scene
+
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw

@@ -56,7 +56,7 @@
                     "active": true,
                     "active_camera": true,
                     "far_distance": 500.0,
-                    "fov": 2,
+                    "fov": 2.0,
                     "near_distance": 0.10000000149011612,
                     "type": 4
                 }
@@ -2136,36 +2136,6 @@
             "name": "Spot001.Target",
             "parent": 622616265,
             "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2966168305,
-            "layer": "Default",
-            "name": "GameObject",
-            "parent": 2160175586,
-            "static": false,
             "tag": "Untagged"
         }
     ]
