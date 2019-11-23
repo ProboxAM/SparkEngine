@@ -250,7 +250,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 	return go;
 }
 
-GameObject* ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id)
+GameObject* ModuleScene::CreateGameObject(GameObject* parent, const std::string &name, const float3 &position, const Quat &rotation, const float3 &scale, uint id)
 {
 	if (!parent)
 		parent = root;
@@ -500,7 +500,7 @@ void ModuleScene::RecursiveErase(GameObject* go)
 	gameobjects.erase(go->GetId());
 }
 
-void ModuleScene::AccelerateFrustumCulling(const ComponentCamera * camera)
+void ModuleScene::AccelerateFrustumCulling(ComponentCamera * camera)
 {
 	//if the main camera has fustrum culling enabled
 	if (camera->enable_frustum_culling) {

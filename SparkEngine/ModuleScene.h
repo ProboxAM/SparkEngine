@@ -64,7 +64,7 @@ public:
 	GameObject* CreateRootGameObject();
 	GameObject* CreateRootGameObject(uint id);
 	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent = nullptr);
-	GameObject* CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id);
+	GameObject* CreateGameObject(GameObject* parent, const std::string &name, const float3 &position, const Quat &rotation, const float3 &scale, uint id);
 
 	void OnMousePicking(const LineSegment &line);
 
@@ -75,13 +75,12 @@ public:
 	void DeleteGameObjects();
 	void DeleteGameObject(GameObject * go);
 
-	void AccelerateFrustumCulling(const ComponentCamera* camera);
+	void AccelerateFrustumCulling(ComponentCamera* camera);
 
 	void SetGameObjectStatic(GameObject * go, bool state);
 	void ResetScene();
 	void CreateDefaultScene();
 	bool show_grid = true;
-	std::vector<float3> lines;
 
 	bool user_selected_GO = false;
 

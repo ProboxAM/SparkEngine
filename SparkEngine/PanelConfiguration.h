@@ -39,7 +39,7 @@ private:
 
 	//Hardware window
 	SDL_version compiled_version;
-	std::string GetCpuInfo();
+	std::string GetCpuInfo() const;
 };
 
 #endif // !_PANEL_CONFIG_H_

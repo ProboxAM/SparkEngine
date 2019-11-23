@@ -289,7 +289,7 @@ void PanelConfiguration::LogInput(int key, KEY_STATE state, bool mouse)
 	move_input_scroll = true;
 }
 
-std::string PanelConfiguration::GetCpuInfo()
+std::string PanelConfiguration::GetCpuInfo() const
 {
 	std::string info;
 

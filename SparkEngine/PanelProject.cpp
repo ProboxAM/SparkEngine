@@ -52,7 +52,7 @@ std::string PanelProject::GetCurrentPath() const
 	return current_node->full_path;
 }
 
-void PanelProject::CreateTree(std::string path, Project_Node* parent)
+void PanelProject::CreateTree(const std::string &path, Project_Node* parent)
 {
 	Project_Node* node = new Project_Node();
 	node->parent = parent;
@@ -218,7 +218,7 @@ void PanelProject::DrawPathRecursive(Project_Node* node)
 	}
 }
 
-void PanelProject::ManageClicksForItem(std::string item)
+void PanelProject::ManageClicksForItem(const std::string &item)
 {
 	if (ImGui::IsItemClicked())
 	{
