@@ -147,18 +147,18 @@ update_status ModuleEditor::Update()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("New Scene"))
+			if (ImGui::MenuItem("New Scene", "Ctrl+N"))
 			{
 				App->scene->ResetScene();
 			}
-			if (ImGui::MenuItem("Save")) 
+			if (ImGui::MenuItem("Save", "Ctrl+S"))
 			{ 
 				if (App->scene->HasFile())
 					App->scene->SaveScene();
 				else
 					open_save_popup = true;
 			}
-			if (ImGui::MenuItem("Save as...")) {
+			if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S")) {
 				open_save_popup = true;
 			}
 			if (ImGui::MenuItem("Exit")) { App->exit = true; }

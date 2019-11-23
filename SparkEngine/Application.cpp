@@ -178,6 +178,8 @@ bool Application::CleanUp()
 	bool ret = true;
 	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
+	SaveSettings();
+
 	while (item != list_modules.rend() && ret == true)
 	{
 		ret = (*item)->CleanUp();

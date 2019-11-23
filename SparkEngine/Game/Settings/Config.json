@@ -12,7 +12,7 @@
     "Editor": {
         "atlas": "Settings/atlas.png",
         "icon_size": 128,
-        "image_size": 60,
+        "image_size": 61,
         "mode": "Local",
         "text_size": 20
     },
