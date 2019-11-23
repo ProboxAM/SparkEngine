@@ -41,38 +41,36 @@ public:
 	void UpdateChildrenTransformMatrix();
 	void UpdateOtherComponentsTransform();
 
-	float4x4 GetTransformMatrix();
-	void SetTransformMatrix(float4x4 transform_matrix);
-	float4x4 GetLocalTransformMatrix();
-	void SetLocalTransformMatrix(float4x4 local_transform_matrix);
+	float4x4 GetTransformMatrix() const;
+	void SetTransformMatrix(const float4x4 &transform_matrix);
+	float4x4 GetLocalTransformMatrix() const;
+	void SetLocalTransformMatrix(const float4x4 &local_transform_matrix);
 
 	//global
-	float3 GetPosition();
-	Quat GetRotation();
-	float3 GetRotationToEuler();
-	float3 GetScale();
-	void SetRotation(Quat rotation);
-	void SetRotationFromEuler(float3 euler_rotation);
-	void SetPosition(float3 position);
-	void SetScale(float3 scale);
+	float3 GetPosition() const;
+	Quat GetRotation() const;
+	float3 GetRotationToEuler() const;
+	float3 GetScale() const;
+	void SetRotation(const Quat &rotation);
+	void SetRotationFromEuler(const float3 &euler_rotation);
+	void SetPosition(const float3 &position);
+	void SetScale(const float3 &scale);
 
 	//local
-	float3 GetLocalPosition();
-	Quat GetLocalRotation();
-	float3 GetLocalRotationToEuler();
-	float3 GetLocalScale();
-	void SetLocalRotationFromEuler(float3 euler_rotation);
-	void SetLocalRotation(Quat rotation);
-	void SetLocalPosition(float3 position);
-	void SetLocalScale(float3 scale);
+	float3 GetLocalPosition() const;
+	Quat GetLocalRotation() const;
+	float3 GetLocalRotationToEuler() const;
+	float3 GetLocalScale() const;
+	void SetLocalRotationFromEuler(const float3 &euler_rotation);
+	void SetLocalRotation(const Quat &rotation);
+	void SetLocalPosition(const float3 &position);
+	void SetLocalScale(const float3 &scale);
 
 	bool Save(const nlohmann::json::iterator& it);
 
 public:
 	ComponentTransform(GameObject* gameobject);
 	virtual ~ComponentTransform();
-
-	void Update();
 };
 
 #endif // !_COMPONENT_TRANSFORM_H_

@@ -52,7 +52,7 @@ public:
 	void LogFrame(float fps, float ms);
 	void SaveScene();
 	void ReloadProjectWindow();
-	bool IsInsideSceneWindow(float2 pos);
+	bool IsInsideSceneWindow(const float2 &pos);
 	std::vector<Panel*> GetPanels() {
 		return panels;
 	}

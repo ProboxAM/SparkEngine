@@ -47,9 +47,9 @@ void ComponentMesh::Draw()
 		App->renderer3D->DebugFaceNormals(mesh, transform);
 	if (debug_bounding_box) {
 		static float3 corners[8];
-		gameobject->global_aabb.GetCornerPoints(corners);
+		gameobject->aabb.GetCornerPoints(corners);
 		App->renderer3D->DebugDrawCube(corners, { 255, 0, 0, 255 });
-		gameobject->global_obb.GetCornerPoints(corners);
+		gameobject->obb.GetCornerPoints(corners);
 		App->renderer3D->DebugDrawCube(corners, { 0, 0, 255, 255 });
 	}
 
@@ -59,8 +59,8 @@ void ComponentMesh::Draw()
 void ComponentMesh::AddMesh(ResourceMesh * mesh)
 {
 	this->mesh = mesh;
-	gameobject->global_aabb = GetAABB();
-	gameobject->global_obb = GetAABB();
+	gameobject->aabb = GetAABB();
+	gameobject->obb = GetAABB();
 	gameobject->UpdateBBox();
 }
 

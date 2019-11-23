@@ -102,7 +102,7 @@ Component * GameObject::GetComponent(COMPONENT_TYPE type) const
 	return aux;
 }
 
-std::vector<Component*> GameObject::GetComponents(COMPONENT_TYPE type)
+std::vector<Component*> GameObject::GetComponentsByType(COMPONENT_TYPE type) const
 {
 	std::vector<Component*> aux;
 
@@ -120,12 +120,12 @@ std::vector<Component*> GameObject::GetComponents(COMPONENT_TYPE type)
 	return aux;
 }
 
-std::vector<Component*> GameObject::GetComponents()
+std::vector<Component*> GameObject::GetComponents() const
 {
 	return components;
 }
 
-bool GameObject::HasComponent(COMPONENT_TYPE type)
+bool GameObject::HasComponent(COMPONENT_TYPE type) const
 {
 	bool ret = false;
 	for (int i = 0; i < components.size(); i++)
@@ -136,7 +136,7 @@ bool GameObject::HasComponent(COMPONENT_TYPE type)
 	return ret;
 }
 
-void GameObject::SetName(std::string name)
+void GameObject::SetName(const std::string &name)
 {
 	this->name = name;
 }
@@ -146,7 +146,7 @@ std::string GameObject::GetName() const
 	return name;
 }
 
-void GameObject::SetTag(std::string tag)
+void GameObject::SetTag(const std::string &tag)
 {
 	this->tag = tag;
 }
@@ -176,7 +176,7 @@ void GameObject::SetActive(bool active)
 	this->active = active;
 }
 
-bool GameObject::CompareTag(std::string tag)
+bool GameObject::CompareTag(const std::string &tag)
 {
 	if (this->tag == tag) return true;
 	else return false;
@@ -212,19 +212,19 @@ bool GameObject::Save(const nlohmann::json::iterator& it)
 	return true;
 }
 
-float GameObject::GetDistanceFromAABB()
+float GameObject::GetDistanceFromAABB() const
 {
 	float distance = 0;
 
 	if (HasComponent(COMPONENT_TYPE::MESH)) {
-		distance = global_aabb.Size().Length();
+		distance = aabb.Size().Length();
 	}
 	else LOG("Object has no mesh, cant return a valid AABB distance");
 
 	return distance;
 }
 
-uint GameObject::GetId()
+uint GameObject::GetId() const
 {
 	return id;
 }
@@ -232,11 +232,11 @@ uint GameObject::GetId()
 void GameObject::UpdateBBox()
 {
 	ComponentMesh* mesh = (ComponentMesh*)GetComponent(COMPONENT_TYPE::MESH);
-	global_obb = mesh->GetAABB();
-	global_obb.Transform(transform->GetTransformMatrix());
+	obb = mesh->GetAABB();
+	obb.Transform(transform->GetTransformMatrix());
 
-	global_aabb.SetNegativeInfinity();
-	global_aabb.Enclose(global_obb);
+	aabb.SetNegativeInfinity();
+	aabb.Enclose(obb);
 }
 
 GameObject::GameObject()
