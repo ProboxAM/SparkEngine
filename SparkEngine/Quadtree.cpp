@@ -56,7 +56,8 @@ void Quadtree::RemoveGameObject(GameObject * gameobject)
 
 void Quadtree::Draw()
 {
-	root->Draw();
+	if(App->renderer3D->debug_draw && debug_draw_tree)
+		root->Draw();
 }
 
 QuadtreeNode::QuadtreeNode()
@@ -115,7 +116,7 @@ void QuadtreeNode::Rebuild(std::vector<GameObject*> &to_rebuild)
 void QuadtreeNode::InsertGameObject(GameObject * gameobject)
 {
 	bucket.push_back(gameobject);
-	if (bucket.size() > MAX_BUCKET_SIZE) {
+	if (bucket.size() > MAX_BUCKET_SIZE && layer < MAX_DIVISIONS) {
 		if (!children[0])
 			Split();
 
@@ -158,25 +159,53 @@ void QuadtreeNode::Split()
 	AABB child_box;
 	float3 center = box.CenterPoint();
 
-	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y, center.z - (box.HalfSize().z / 2) },
-		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
+	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x / 2), center.y + (box.HalfSize().y / 2), center.z - (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
 	children[0] = new QuadtreeNode();
 	children[0]->Create(child_box);
+	children[0]->layer = layer + 1;
 
-	child_box.SetFromCenterAndSize({ center.x + (box.HalfSize().x / 2), center.y, center.z - (box.HalfSize().z / 2) },
-		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
+	child_box.SetFromCenterAndSize({ center.x + (box.HalfSize().x / 2), center.y + (box.HalfSize().y / 2), center.z - (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
 	children[1] = new QuadtreeNode();
 	children[1]->Create(child_box);
+	children[1]->layer = layer + 1;
 
-	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y, center.z + (box.HalfSize().z / 2) },
-		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
+	child_box.SetFromCenterAndSize({center.x - (box.HalfSize().x/2), center.y + (box.HalfSize().y / 2), center.z + (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
 	children[2] = new QuadtreeNode();
 	children[2]->Create(child_box);
+	children[2]->layer = layer + 1;
 
-	child_box.SetFromCenterAndSize({center.x + (box.HalfSize().x/2), center.y, center.z + (box.HalfSize().z / 2) },
-		{ box.HalfSize().x ,box.Size().y, box.HalfSize().z });
+	child_box.SetFromCenterAndSize({center.x + (box.HalfSize().x/2), center.y + (box.HalfSize().y / 2), center.z + (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
 	children[3] = new QuadtreeNode();
 	children[3]->Create(child_box);
+	children[3]->layer = layer + 1;
+
+	child_box.SetFromCenterAndSize({ center.x - (box.HalfSize().x / 2), center.y - (box.HalfSize().y / 2), center.z - (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
+	children[4] = new QuadtreeNode();
+	children[4]->Create(child_box);
+	children[4]->layer = layer + 1;
+
+	child_box.SetFromCenterAndSize({ center.x + (box.HalfSize().x / 2), center.y - (box.HalfSize().y / 2), center.z - (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
+	children[5] = new QuadtreeNode();
+	children[5]->Create(child_box);
+	children[5]->layer = layer + 1;
+
+	child_box.SetFromCenterAndSize({ center.x - (box.HalfSize().x / 2), center.y - (box.HalfSize().y / 2), center.z + (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
+	children[6] = new QuadtreeNode();
+	children[6]->Create(child_box);
+	children[6]->layer = layer + 1;
+
+	child_box.SetFromCenterAndSize({ center.x + (box.HalfSize().x / 2), center.y - (box.HalfSize().y / 2), center.z + (box.HalfSize().z / 2) },
+		{ box.HalfSize().x ,box.HalfSize().y, box.HalfSize().z });
+	children[7] = new QuadtreeNode();
+	children[7]->Create(child_box);
+	children[7]->layer = layer + 1;
 }
 
 void QuadtreeNode::DistributeChildren()
@@ -189,7 +218,7 @@ void QuadtreeNode::DistributeChildren()
 			}
 		}	
 		//object intersects in every child box, so we keep it in the father
-		if (intersections.size() == 4)
+		if (intersections.size() == 8)
 			++it;
 		else
 		{

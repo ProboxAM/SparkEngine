@@ -1,9 +1,9 @@
 #ifndef _QUADTREE_H_
 #define _QUADTREE_H_
 
-#define MAX_BUCKET_SIZE 2
-#define CHILDREN_SIZE 4
-#define MAX_DIVISIONS 8
+#define MAX_BUCKET_SIZE 4
+#define CHILDREN_SIZE 8
+#define MAX_DIVISIONS 6
 
 class GameObject;
 #include "MathGeoLib/Geometry/AABB.h"
@@ -28,10 +28,11 @@ private:
 	void Split();
 	void DistributeChildren();
 
-	QuadtreeNode* children[4] = { nullptr,nullptr,nullptr,nullptr };
+	QuadtreeNode* children[8] = { nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr };
 	QuadtreeNode* parent = nullptr;
 
 	std::vector<GameObject*> bucket;
+	uint layer = 0;
 
 public:
 	AABB box;
@@ -56,6 +57,7 @@ public:
 	void CollectIntersections(std::map<float, GameObject*>&, const PRIMITIVE & primitive);
 
 	void Draw();
+	bool debug_draw_tree = false;
 private:
 	QuadtreeNode * root = nullptr;
 };
@@ -82,7 +84,7 @@ inline void QuadtreeNode::CollectIntersections(std::vector<GameObject*>& objects
 			if (primitive.Intersects((*it)->aabb))
 				objects.push_back(*it);
 		}
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < CHILDREN_SIZE; ++i)
 			if (children[i] != nullptr) children[i]->CollectIntersections(objects, primitive);
 	}
 }
@@ -98,7 +100,7 @@ inline void QuadtreeNode::CollectIntersections(std::map<float, GameObject*>& obj
 			if (primitive.Intersects((*it)->obb, distance_near, distance_far))
 				objects.emplace(distance_near, *it);
 		}
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < CHILDREN_SIZE; ++i)
 			if (children[i] != nullptr) children[i]->CollectIntersections(objects, primitive);
 	}
 }

@@ -9,6 +9,7 @@
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "GameObject.h"
+#include "Quadtree.h"
 #include "MathGeoLib\Math\float3.h"
 #include "MathGeoLib\Geometry\AABB2D.h"
 #include "ImGui/imgui.h"
@@ -75,6 +76,9 @@ void PanelScene::Draw()
 		bool wireframe = App->renderer3D->IsWireframeEnabled();
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
+
+		ImGui::Checkbox("Draw Octree", &App->scene->quad_tree->debug_draw_tree);
+
 		if (ImGui::Button("Camera"))
 			ImGui::OpenPopup("Camera popup");
 		if (ImGui::BeginPopup("Camera popup"))
