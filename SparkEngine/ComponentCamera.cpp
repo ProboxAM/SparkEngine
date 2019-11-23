@@ -28,6 +28,7 @@ ComponentCamera::ComponentCamera(GameObject* gameobject) : Component(gameobject)
 
 ComponentCamera::~ComponentCamera()
 {
+	if (active_camera)SetAsMainCamera(false);
 }
 
 void ComponentCamera::SetFrustumNearPlaneDistance(float distance)

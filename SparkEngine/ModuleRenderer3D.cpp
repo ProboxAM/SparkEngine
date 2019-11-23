@@ -144,7 +144,7 @@ update_status ModuleRenderer3D::PreUpdate()
 update_status ModuleRenderer3D::PostUpdate()
 {
 	DrawSceneViewPort();
-	if(game_camera)DrawGameViewPort();
+	DrawGameViewPort();
 
 	App->editor->Draw();
 
@@ -530,8 +530,7 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (game_camera && game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
-	
-	App->scene->AccelerateFrustumCulling(editor_camera);
+	else App->scene->AccelerateFrustumCulling(editor_camera);
 
 	App->scene->Draw(); //Draw scene
 	App->scene->DebugDraw();//Draw Quadtree and Grid
@@ -545,22 +544,26 @@ void ModuleRenderer3D::DrawSceneViewPort()
 
 void ModuleRenderer3D::DrawGameViewPort()
 {
-	UpdateGameProjectionMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glLoadMatrixf((float*)&game_camera->GetOpenGLViewMatrix());
-
 	glBindFramebuffer(GL_FRAMEBUFFER, game_buffer_id); //set scene buffer to render to a texture
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	App->scene->AccelerateFrustumCulling(game_camera);
-	App->scene->Draw(); //Draw scene
+	if (game_camera)
+	{
+		UpdateGameProjectionMatrix();
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+
+		glLoadMatrixf((float*)&game_camera->GetOpenGLViewMatrix());
+
+		App->scene->AccelerateFrustumCulling(game_camera);
+		App->scene->Draw(); //Draw scene
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default draw
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 }
 
