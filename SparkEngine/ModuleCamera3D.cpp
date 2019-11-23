@@ -218,8 +218,6 @@ void ModuleCamera3D::HandleMouseClicking()
 
 		normalized_mouse_position = { mouse_position.x / ps->image_w * 2, mouse_position.y / ps->image_h * 2 };
 
-		LOG("x: %f, y: %f", normalized_mouse_position.x, normalized_mouse_position.y);
-
 		picking = c_camera->frustum.UnProjectLineSegment(normalized_mouse_position.x, -normalized_mouse_position.y);
 
 		App->scene->OnMousePicking(picking);

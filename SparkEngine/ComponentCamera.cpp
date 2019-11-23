@@ -46,12 +46,12 @@ void ComponentCamera::SetFrustumFOV(float fov, bool degrees)
 		frustum.verticalFov = DegToRad(fov);
 	else frustum.verticalFov = fov;
 
-	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov / 2.0f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
+	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov * 0.5f) * App->window->GetWindowWidth() / App->window->GetWindowHeight());
 }
 
 void ComponentCamera::SetFrustumAspectRatio(float aspect_ratio)
 {
-	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
+	frustum.horizontalFov = 2.0f * atanf(tanf(frustum.verticalFov * 0.5f) * aspect_ratio);
 }
 
 bool ComponentCamera::Intersects(AABB box)

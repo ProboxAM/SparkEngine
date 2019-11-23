@@ -33,12 +33,12 @@ private:
 
 	void DrawFiles();
 	void DrawPathRecursive(Project_Node* node);
-	void ManageClicksForItem(std::string file);
+	void ManageClicksForItem(const std::string &file);
 	void ChangeFolder();
 	void GetAllFiles();
 	void CleanOldFiles();
 	void GetNewFiles();
-	void CreateTree(std::string path, Project_Node* parent = nullptr);
+	void CreateTree(const std::string &path, Project_Node* parent = nullptr);
 
 	void CleanTree();
 

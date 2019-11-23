@@ -396,39 +396,6 @@ void ModuleRenderer3D::DebugDrawLines(std::vector<float3> lines)
 
 void ModuleRenderer3D::DrawOutline(const ResourceMesh * m, const Color color, const float4x4 & mtransform) const
 {
-	/*glColor3f((GLfloat)color.r, (GLfloat)color.g, (GLfloat)color.b);
-	glLineWidth(5);
-
-	glDisable(GL_DEPTH_TEST);
-	
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-
-	glPolygonMode(GL_FRONT, GL_FILL);
-
-	glPushMatrix();
-	glMultMatrixf((float*)&mtransform.Transposed());
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
-	glVertexPointer(3, GL_FLOAT, 0, nullptr);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
-
-	glDrawElements(GL_TRIANGLES, m->total_indices, GL_UNSIGNED_INT, nullptr);
-
-	glDisable(GL_STENCIL_TEST);
-	glDisable(GL_POLYGON_OFFSET_FILL);
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-	glEnable(GL_DEPTH_TEST);
-
-	glColor3f(1.f, 1.f, 1.f);
-	glLineWidth(1);
-
-	glPopMatrix();*/
-
-
 	glColor3f((GLfloat)color.r, (GLfloat)color.g, (GLfloat)color.b);
 	glLineWidth(2.f);
 
@@ -451,7 +418,6 @@ void ModuleRenderer3D::DrawOutline(const ResourceMesh * m, const Color color, co
 	glLineWidth(1.f);
 
 	glPopMatrix();
-
 }
 
 //Resize texture buffer of Scene rendering

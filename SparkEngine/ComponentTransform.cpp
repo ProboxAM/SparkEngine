@@ -110,11 +110,12 @@ void ComponentTransform::UpdateOtherComponentsTransform()
 	}
 }
 
-float4x4 ComponentTransform::GetTransformMatrix() {
+float4x4 ComponentTransform::GetTransformMatrix() const
+{
 	return transform_matrix;
 }
 
-void ComponentTransform::SetTransformMatrix(float4x4 transform_matrix)
+void ComponentTransform::SetTransformMatrix(const float4x4 & transform_matrix)
 {
 	this->transform_matrix = transform_matrix;
 	UpdateLocalTransformMatrix();
@@ -125,101 +126,100 @@ void ComponentTransform::SetTransformMatrix(float4x4 transform_matrix)
 	transform_matrix.Decompose(position, rotation, scale);
 }
 
-float4x4 ComponentTransform::GetLocalTransformMatrix()
+float4x4 ComponentTransform::GetLocalTransformMatrix() const
 {
 	return local_transform_matrix;
 }
 
-void ComponentTransform::SetLocalTransformMatrix(float4x4 local_transform_matrix)
+void ComponentTransform::SetLocalTransformMatrix(const float4x4 & local_transform_matrix)
 {
 	this->local_transform_matrix = local_transform_matrix;
 	UpdateTransformMatrix();
 }
 
-float3 ComponentTransform::GetPosition()
+float3 ComponentTransform::GetPosition() const
 {
 	return position;
 }
 
-Quat ComponentTransform::GetRotation()
+Quat ComponentTransform::GetRotation() const
 {
 	return rotation;
 }
 
-float3 ComponentTransform::GetRotationToEuler()
+float3 ComponentTransform::GetRotationToEuler() const
 {
 	return rotation.ToEulerXYZ() * RADTODEG;
 }
 
-float3 ComponentTransform::GetScale()
+float3 ComponentTransform::GetScale() const
 {
 	return scale;
 }
 
-void ComponentTransform::SetRotation(Quat rotation)
+void ComponentTransform::SetRotation(const Quat & rotation)
 {
 	this->rotation = rotation;
 	SetTransformMatrix(float4x4::FromTRS(position, this->rotation, scale));
 }
 
-void ComponentTransform::SetRotationFromEuler(float3 euler_rotation)
+void ComponentTransform::SetRotationFromEuler(const float3 & euler_rotation)
 {
 	rotation = Quat::FromEulerXYZ(euler_rotation.x * DEGTORAD, euler_rotation.y* DEGTORAD, euler_rotation.z* DEGTORAD);
 	SetTransformMatrix(float4x4::FromTRS(position, this->rotation, scale));
 }
 
-void ComponentTransform::SetPosition(float3 position)
+void ComponentTransform::SetPosition(const float3 & position)
 {
 	this->position = position;
 	SetTransformMatrix(float4x4::FromTRS(this->position, rotation, scale));
-
 }
 
-void ComponentTransform::SetScale(float3 scale)
+void ComponentTransform::SetScale(const float3 & scale)
 {
 	this->scale = scale;
 	SetTransformMatrix(float4x4::FromTRS(position, rotation, this->scale));
 }
 
-float3 ComponentTransform::GetLocalPosition()
+float3 ComponentTransform::GetLocalPosition() const
 {
 	return local_position;
 }
 
-Quat ComponentTransform::GetLocalRotation()
+Quat ComponentTransform::GetLocalRotation() const
 {
 	return local_rotation;
 }
 
-float3 ComponentTransform::GetLocalRotationToEuler()
+float3 ComponentTransform::GetLocalRotationToEuler() const
 {
 	return local_rotation.ToEulerXYZ() * RADTODEG;
 }
 
-float3 ComponentTransform::GetLocalScale()
+float3 ComponentTransform::GetLocalScale() const
 {
 	return local_scale;
 }
 
-void ComponentTransform::SetLocalRotationFromEuler(float3 euler_rotation)
+void ComponentTransform::SetLocalRotationFromEuler(const float3 & euler_rotation)
 {
 	local_rotation = Quat::FromEulerXYZ(euler_rotation.x * DEGTORAD, euler_rotation.y* DEGTORAD, euler_rotation.z* DEGTORAD);
 	SetLocalTransformMatrix(float4x4::FromTRS(local_position, local_rotation, local_scale));
 }
 
-void ComponentTransform::SetLocalRotation(Quat rotation)
+void ComponentTransform::SetLocalRotation(const Quat & rotation)
 {
 	local_rotation = rotation;
 	SetLocalTransformMatrix(float4x4::FromTRS(local_position, local_rotation, local_scale));
 }
 
-void ComponentTransform::SetLocalPosition(float3 position)
+void ComponentTransform::SetLocalPosition(const float3 & position)
 {
 	local_position = position;
 	SetLocalTransformMatrix(float4x4::FromTRS(local_position, local_rotation, local_scale));
 }
 
-void ComponentTransform::SetLocalScale(float3 scale)
+void ComponentTransform::SetLocalScale(const float3 & scale)
 {
 	local_scale = scale;
 	SetLocalTransformMatrix(float4x4::FromTRS(local_position, local_rotation, local_scale));
@@ -243,11 +243,6 @@ ComponentTransform::ComponentTransform(GameObject* gameobject):Component(gameobj
 
 
 ComponentTransform::~ComponentTransform()
-{
-
-}
-
-void ComponentTransform::Update()
 {
 
 }

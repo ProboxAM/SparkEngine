@@ -371,7 +371,7 @@ void ModuleEditor::ReloadProjectWindow()
 	((PanelProject*)panels[PROJECT])->Reload();
 }
 
-bool ModuleEditor::IsInsideSceneWindow(float2 pos)
+bool ModuleEditor::IsInsideSceneWindow(const float2 &pos)
 {
 	return ((PanelScene*)panels[SCENE])->IsInside(pos);
 }

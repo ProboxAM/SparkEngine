@@ -39,27 +39,26 @@ public:
 
 	void DrawOutline(const ResourceMesh* m, const Color color, const float4x4& mtransform) const;
 
-	void ResizeScene(float w, float h);
-	void ResizeGame(float w, float h);
-	void UpdateSceneProjectionMatrix();
-	void UpdateGameProjectionMatrix();
-
 	bool IsWireframeEnabled() const;
 	bool GetVsync() const;
 	void SetVsync(bool active);
 
+private:
 	void DrawSceneViewPort();
 	void DrawGameViewPort();
 
-private:
 	void CreateSceneBuffer();
 	void CreateGameBuffer();
+
+	void ResizeScene(float w, float h);
+	void ResizeGame(float w, float h);
+
+	void UpdateSceneProjectionMatrix();
+	void UpdateGameProjectionMatrix();
 
 public:
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	///Buffer and texture for rendering into Scene window
 	uint scene_buffer_id = -1;

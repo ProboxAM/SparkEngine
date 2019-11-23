@@ -25,7 +25,7 @@ void ResourceTexture::UnLoad()
 	}
 }
 
-std::string ResourceTexture::GetTypeString()
+std::string ResourceTexture::GetTypeString() const
 {
 	return "Texture";
 }

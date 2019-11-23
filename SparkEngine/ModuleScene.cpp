@@ -250,7 +250,7 @@ GameObject * ModuleScene::CreateGameObject(GameObject* parent, std::string name,
 	return go;
 }
 
-GameObject* ModuleScene::CreateGameObject(GameObject* parent, std::string name, float3 position, Quat rotation, float3 scale, uint id)
+GameObject* ModuleScene::CreateGameObject(GameObject* parent, const std::string &name, const float3 &position, const Quat &rotation, const float3 &scale, uint id)
 {
 	if (!parent)
 		parent = root;
@@ -386,9 +386,9 @@ void ModuleScene::OnMousePicking(const LineSegment &line)
 	{
 		if (!it->second->isStatic()) {
 			if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
-				if (line.Intersects(it->second->global_aabb)) {
+				if (line.Intersects(it->second->aabb)) {
 					float distance_near, distance_far;
-					if (line.Intersects(it->second->global_obb, distance_near, distance_far)) {
+					if (line.Intersects(it->second->obb, distance_near, distance_far)) {
 						objects_hit.emplace(distance_near, it->second);
 					}
 				}
@@ -500,7 +500,7 @@ void ModuleScene::RecursiveErase(GameObject* go)
 	gameobjects.erase(go->GetId());
 }
 
-void ModuleScene::AccelerateFrustumCulling(const ComponentCamera * camera)
+void ModuleScene::AccelerateFrustumCulling(ComponentCamera * camera)
 {
 	//if the main camera has fustrum culling enabled
 	if (camera->enable_frustum_culling) {
@@ -511,7 +511,7 @@ void ModuleScene::AccelerateFrustumCulling(const ComponentCamera * camera)
 		{
 			if (!it->second->isStatic()) {//then we test it with the dynamic objects
 				if (it->second->HasComponent(COMPONENT_TYPE::MESH)) {
-					if (camera->frustum.Intersects(it->second->global_aabb)) {
+					if (camera->frustum.Intersects(it->second->aabb)) {
 						objects_hit.push_back(it->second);
 					}
 				}

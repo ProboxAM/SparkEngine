@@ -62,7 +62,7 @@ void PanelProject::GetItemSize(uint & img_size, uint & txt_size)
 	txt_size = text_size;
 }
 
-void PanelProject::CreateTree(std::string path, Project_Node* parent)
+void PanelProject::CreateTree(const std::string &path, Project_Node* parent)
 {
 	Project_Node* node = new Project_Node();
 	node->parent = parent;
@@ -231,7 +231,7 @@ void PanelProject::DrawPathRecursive(Project_Node* node)
 	}
 }
 
-void PanelProject::ManageClicksForItem(std::string item)
+void PanelProject::ManageClicksForItem(const std::string &item)
 {
 	if (ImGui::IsItemClicked())
 	{

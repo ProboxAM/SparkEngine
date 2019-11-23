@@ -44,7 +44,7 @@ void Quadtree::Rebuild()
 
 void Quadtree::InsertGameObject(GameObject * gameobject)
 {
-	if (root->box.Intersects(gameobject->global_aabb))
+	if (root->box.Intersects(gameobject->aabb))
 		root->InsertGameObject(gameobject);
 }
 
@@ -184,7 +184,7 @@ void QuadtreeNode::DistributeChildren()
 	std::vector<uint> intersections;
 	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end();) {
 		for (int i = 0; i < CHILDREN_SIZE; i++) {
-			if ((*it)->global_aabb.Intersects(children[i]->box)) {
+			if ((*it)->aabb.Intersects(children[i]->box)) {
 				intersections.push_back(i);
 			}
 		}	
