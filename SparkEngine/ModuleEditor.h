@@ -8,6 +8,7 @@
 
 class Panel;
 enum KEY_STATE;
+class ResourceTexture;
 class ImRect;
 
 enum Panel_Type {
@@ -64,6 +65,7 @@ public:
 	ImGuizmo::MODE guizmo_mode;
 
 	float4 button_section[TOTAL];
+	ResourceTexture* atlas;
 
 private:
 	std::vector<Panel*> panels;

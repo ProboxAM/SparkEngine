@@ -219,7 +219,7 @@ void ModuleResources::RecursiveLoadAssets(std::string directory)
 			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
 			LoadMeta(meta_file.c_str(), meta, type);
 
-			std::string mod_date;
+			int mod_date;
 			App->fsystem->GetFileModificationDate(asset_file.c_str(), mod_date);
 			bool is_modified = meta->modification_date != mod_date; // Check if asset file has been modified
 			bool missing_files = !ImportedLibraryFilesExist(meta, type); // Check if any file in library is missing

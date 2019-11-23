@@ -33,7 +33,6 @@ private:
 	void DrawPathRecursive(Project_Node* node);
 	void ManageClicksForItem(std::string file);
 	void ChangeFolder();
-	void LoadFileTextures();
 	void GetAllFiles();
 	void CleanOldFiles();
 	void GetNewFiles();
@@ -49,10 +48,6 @@ private:
 
 	std::vector<Project_Node*> project_tree;
 	Project_Node* current_node = nullptr;
-
-	ResourceTexture* model_file_image;
-	ResourceTexture* scene_file_image;
-	ResourceTexture* folder_file_image;
 };
 
 
