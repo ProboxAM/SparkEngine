@@ -34,7 +34,7 @@ public:
 	void NormalizePath(char* full_path) const;
 	void NormalizePath(std::string& full_path) const;
 	bool HasExtension(const char* path, std::string extension) const;
-	bool GetFileModificationDate(const char * path, std::string & date);
+	bool GetFileModificationDate(const char * path, int & date);
 	void GetFilesFiltered(const char* directory, std::vector<std::string> & file_list, std::string filter);
 	void GetFilesOfExtension(const char* directory, std::vector<std::string> & file_list, std::string extension);
 	void GetFolder(const char* path, std::string* folder);

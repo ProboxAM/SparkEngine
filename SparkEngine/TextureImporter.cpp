@@ -203,7 +203,7 @@ bool TextureImporter::LoadMeta(const char * file, ResourceTexture::TextureMetaFi
 	meta->exported_file = json["exported_file"].get<std::string>();
 	meta->original_file = json["original_file"].get<std::string>();
 	meta->id = json["id"];
-	meta->modification_date = json["modification_date"].get<std::string>();
+	meta->modification_date = json["modification_date"];
 
 	meta->min_filter = json["min_filter"];
 	meta->mag_filter = json["mag_filter"];

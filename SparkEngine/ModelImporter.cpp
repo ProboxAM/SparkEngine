@@ -116,7 +116,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 			meta->id = App->GenerateID();
 		}
 
-		std::map<uint, uint> meshes;
+		std::map<uint, uint> meshes; //map for imported meshes
 		std::vector<ResourceModel::ModelNode> nodes;
 		ImportNode(scene->mRootNode, scene, 0, file, nodes, meta, meshes);
 
@@ -169,8 +169,9 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 
 	if (node->mNumMeshes > 0)
 	{
-		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now, sry
-		std::map<uint, uint>::iterator it = imported_meshes.find(node->mMeshes[0]);
+		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now
+
+		std::map<uint, uint>::iterator it = imported_meshes.find(node->mMeshes[0]);//check if mesh was already imported. this way we only import a mesh once even if multiple nodes use it
 		if (it != imported_meshes.end())
 			resource_node.mesh = it->second;
 		else
@@ -297,7 +298,7 @@ bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* met
 	meta->exported_file = json["exported_file"].get<std::string>();
 	meta->original_file = json["original_file"].get<std::string>();
 	meta->id = json["id"];
-	meta->modification_date = json["modification_date"].get<std::string>();
+	meta->modification_date = json["modification_date"];
 
 	meta->setting = json["setting"];
 	meta->find_instances = json["find_instances"];

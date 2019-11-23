@@ -20,7 +20,7 @@ public:
 	struct MetaFile {
 		bool loaded = false;
 
-		std::string modification_date;
+		int modification_date;
 		std::string file;
 		std::string original_file;
 		std::string exported_file;

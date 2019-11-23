@@ -8,6 +8,7 @@
 
 class Panel;
 enum KEY_STATE;
+class ResourceTexture;
 class ImRect;
 
 enum Panel_Type {
@@ -69,6 +70,7 @@ private:
 	std::vector<Panel*> panels;
 	void BeginDockSpace();
 	std::string mode;
+	ResourceTexture* atlas;
 
 	bool open_save_popup = false;
 	void HandleTransformInputs();

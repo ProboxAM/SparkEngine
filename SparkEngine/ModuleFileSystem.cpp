@@ -210,9 +210,9 @@ bool ModuleFileSystem::HasExtension(const char* path, std::string extension) con
 	return path_extension == extension;
 }
 
-bool ModuleFileSystem::GetFileModificationDate(const char* path, std::string& date)
+bool ModuleFileSystem::GetFileModificationDate(const char* path, int& date)
 {
-	date = std::to_string(PHYSFS_getLastModTime(path));
+	date = PHYSFS_getLastModTime(path);
 	return true;
 }
 
