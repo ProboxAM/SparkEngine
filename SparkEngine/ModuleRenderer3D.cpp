@@ -134,9 +134,6 @@ update_status ModuleRenderer3D::PreUpdate()
 	// light 0 on cam pos
 	//lights[0].SetPos(editor_camera->frustum.pos.x, editor_camera->frustum.pos.y, editor_camera->frustum.pos.z);
 
-	for (uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-
 	return UPDATE_CONTINUE;
 }
 
@@ -530,8 +527,10 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (game_camera && game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
-	else App->scene->AccelerateFrustumCulling(editor_camera);
+	App->scene->AccelerateFrustumCulling(editor_camera);
 
+	for (uint i = 0; i < MAX_LIGHTS; ++i)
+		lights[i].Render();
 	App->scene->Draw(); //Draw scene
 	App->scene->DebugDraw();//Draw Quadtree and Grid
 
@@ -555,6 +554,8 @@ void ModuleRenderer3D::DrawGameViewPort()
 	glClearColor(bkg_color.x, bkg_color.y, bkg_color.z, 1.0); // background color for scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	for (uint i = 0; i < MAX_LIGHTS; ++i)
+		lights[i].Render();
 	App->scene->AccelerateFrustumCulling(game_camera);
 	App->scene->Draw(); //Draw scene
 

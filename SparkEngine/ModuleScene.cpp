@@ -55,7 +55,7 @@ bool ModuleScene::Init(const nlohmann::json::iterator& it)
 
 bool ModuleScene::Start()
 {
-	App->importer->ImportFile("Assets/Bakerhouse.fbx");
+	LoadScene(ASSETS_FOLDER + std::string("Scenes/DefaultScene") + SCENE_EXTENSION);
 
 	GenerateGrid();
 
@@ -157,6 +157,7 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 
 	if(!temp)
 		this->file = file;
+
 	DeleteGameObjects();
 
 	std::ifstream i(file);
@@ -464,7 +465,8 @@ void ModuleScene::DrawGrid()
 
 void ModuleScene::DeleteGameObjects()
 {
-	root->Delete();
+	if(root)
+		root->Delete();
 	gameobjects.clear();
 	root = nullptr;
 	selected_gameobject = nullptr;

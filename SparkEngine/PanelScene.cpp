@@ -76,7 +76,6 @@ void PanelScene::Draw()
 					}
 				}
 			}
-	
 		}
 		ImGui::EndDragDropTarget();
 	}
