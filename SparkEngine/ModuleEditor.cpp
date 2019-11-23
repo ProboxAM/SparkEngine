@@ -59,7 +59,8 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[PROJECT] = new PanelProject(true);
 	panels[RESOURCES] = new PanelResources(true);
 
-	mode = "Local";
+	mode = (*it)["mode"].get<std::string>();
+	atlas_path = (*it)["atlas"].get<std::string>();
 
 	return true;
 }
@@ -75,7 +76,7 @@ bool ModuleEditor::Start()
 	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 
 	atlas = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
-	atlas->SetExportedFile(SETTINGS_FOLDER + std::string("atlas.png"));
+	atlas->SetExportedFile(atlas_path);
 	atlas->meta = new ResourceTexture::TextureMetaFile();
 	atlas->AddReference();
 

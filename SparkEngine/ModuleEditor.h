@@ -24,17 +24,6 @@ enum Panel_Type {
 	TOTAL
 };
 
-//enum IMAGE_TYPE {
-//	PLAY,
-//	PAUSE,
-//	TRANSLATE,
-//	ROTATE,
-//	SCALE,
-//	SCENE,
-//	MODEL,
-//	TOTAL
-//};
-
 class ModuleEditor : public Module
 {
 public:
@@ -71,6 +60,7 @@ private:
 	std::vector<Panel*> panels;
 	void BeginDockSpace();
 	std::string mode;
+	std::string atlas_path;
 
 	bool open_save_popup = false;
 	void HandleTransformInputs();
