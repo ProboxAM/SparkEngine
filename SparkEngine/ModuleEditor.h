@@ -24,17 +24,6 @@ enum Panel_Type {
 	TOTAL
 };
 
-//enum IMAGE_TYPE {
-//	PLAY,
-//	PAUSE,
-//	TRANSLATE,
-//	ROTATE,
-//	SCALE,
-//	SCENE,
-//	MODEL,
-//	TOTAL
-//};
-
 class ModuleEditor : public Module
 {
 public:
@@ -44,6 +33,8 @@ public:
 	bool CleanUp();
 	void Draw();
 	bool Start();
+	bool Load(const nlohmann::json::iterator& it);
+	bool Save(nlohmann::json &it);
 	update_status Update();
 	update_status PreUpdate();
 	std::string GetProjectPanelPath();
@@ -66,11 +57,13 @@ public:
 
 	float4 button_section[TOTAL];
 	ResourceTexture* atlas;
+	uint icon_size = 0;
 
 private:
 	std::vector<Panel*> panels;
 	void BeginDockSpace();
 	std::string mode;
+	std::string atlas_path;
 
 	bool open_save_popup = false;
 	void HandleTransformInputs();

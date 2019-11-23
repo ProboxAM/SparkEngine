@@ -16,6 +16,8 @@ public:
 	void Start();
 	void Reload();
 	std::string GetCurrentPath() const;
+	void SetItemSize(int img_size, int txt_size);
+	void GetItemSize(uint &img_size, uint &txt_size);
 
 	std::string selected_item = "";
 	Resource* selected_resource = nullptr;

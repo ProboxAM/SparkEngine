@@ -5,6 +5,7 @@
 #include "ModuleScene.h"
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
+#include "ModuleCamera3D.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "GameObject.h"
@@ -74,6 +75,15 @@ void PanelScene::Draw()
 		bool wireframe = App->renderer3D->IsWireframeEnabled();
 		if (ImGui::Checkbox("Wireframe", &wireframe))
 			App->renderer3D->SetWireframeMode(wireframe);
+		if (ImGui::Button("Camera"))
+			ImGui::OpenPopup("Camera popup");
+		if (ImGui::BeginPopup("Camera popup"))
+		{
+			float fov = App->camera->c_camera->GetFrustumVerticalFOV(true);
+			if (ImGui::SliderFloat("Field of View", &fov, 10, 120, "%.0f"))
+				App->camera->c_camera->SetFrustumFOV(fov, true);
+			ImGui::EndPopup();
+		}
 		ImGui::EndMenuBar();
 	}
 

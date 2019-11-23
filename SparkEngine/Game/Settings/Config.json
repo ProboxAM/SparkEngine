@@ -5,8 +5,24 @@
     },
     "Camera3D": {
         "focus_factor": 0.25,
+        "fov": 1.0471975803375244,
         "inputs": true,
         "movement_speed": 20.0
+    },
+    "Editor": {
+        "atlas": "Settings/atlas.png",
+        "icon_size": 128,
+        "image_size": 61,
+        "mode": "Local",
+        "text_size": 20
+    },
+    "Importer": {
+        "checkers": 4294967295,
+        "cone": 4294967291,
+        "cube": 4294967294,
+        "cylinder": 4294967292,
+        "plane": 4294967290,
+        "sphere": 4294967293
     },
     "Render": {
         "color_material": true,

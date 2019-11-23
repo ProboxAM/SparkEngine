@@ -16,8 +16,6 @@
 #pragma comment (lib,"DeviL/lib/ILUT.lib")
 #pragma comment (lib,"DeviL/lib/ILU.lib")
 
-#define CHECKERS_ID 4294967295
-
 TextureImporter::TextureImporter()
 {
 }
@@ -39,14 +37,12 @@ bool TextureImporter::Init()
 	version = ilGetInteger(IL_VERSION_NUM);
 	LOG("Initialized DevIL version: %i", version);
 
-	checkers = CHECKERS_ID;
-
 	return true;
 }
 
 bool TextureImporter::Start()
 {
-	ResourceTexture* texture = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, CHECKERS_ID);
+	ResourceTexture* texture = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, checkers);
 	LoadDefault(texture);
 
 	return true;

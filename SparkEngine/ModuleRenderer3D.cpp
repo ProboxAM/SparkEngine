@@ -330,7 +330,7 @@ void ModuleRenderer3D::DebugDrawCube(const float3 * vertices, Color color) const
 	glEnableClientState(GL_CULL_FACE);
 	glEnableClientState(GL_LIGHTING);
 	glEnableClientState(GL_TEXTURE_2D);
-	App->renderer3D->SetWireframeMode(true);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glColor3f(color.r, color.g, color.b);
 	glLineWidth(5.0f);
@@ -375,7 +375,7 @@ void ModuleRenderer3D::DebugDrawCube(const float3 * vertices, Color color) const
 	glDisableClientState(GL_CULL_FACE);
 	glDisableClientState(GL_LIGHTING);
 	glDisableClientState(GL_TEXTURE_2D);
-	App->renderer3D->SetWireframeMode(false);
+	App->renderer3D->SetWireframeMode(wireframe);
 }
 
 void ModuleRenderer3D::DebugDrawLines(std::vector<float3> lines)

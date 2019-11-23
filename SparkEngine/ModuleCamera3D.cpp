@@ -24,18 +24,7 @@ ModuleCamera3D::~ModuleCamera3D()
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
-	LOG("Setting up the camera");
-	bool ret = true;
-
-	c_camera = new ComponentCamera(nullptr);
-
-	c_camera->frustum.pos = { 20.f, 50.f, 0.f };
-	c_camera->SetFrustumFarPlaneDistance(1000.0f);
-	LookAt({ 0.f, 0.f, 0.f });
-
-	App->renderer3D->editor_camera = c_camera;
-
-	return ret;
+	return true;
 }
 
 // -----------------------------------------------------------------
@@ -50,6 +39,17 @@ bool ModuleCamera3D::CleanUp()
 
 bool ModuleCamera3D::Init(const nlohmann::json::iterator& it)
 {
+	LOG("Setting up the camera");
+	bool ret = true;
+
+	c_camera = new ComponentCamera(nullptr);
+
+	c_camera->frustum.pos = { 20.f, 50.f, 0.f };
+	c_camera->SetFrustumFarPlaneDistance(1000.0f);
+	LookAt({ 0.f, 0.f, 0.f });
+
+	App->renderer3D->editor_camera = c_camera;
+
 	Load(it);
 
 	return true;
@@ -60,6 +60,7 @@ bool ModuleCamera3D::Load(const nlohmann::json::iterator& it)
 	movement_speed = (*it)["movement_speed"];
 	focus_factor = (*it)["focus_factor"];
 	camera_inputs_active = (*it)["inputs"];
+	c_camera->SetFrustumFOV((*it)["fov"]);
 
 	return true;
 }
@@ -69,8 +70,11 @@ bool ModuleCamera3D::Save(nlohmann::json & it)
 	it[name] = {
 		{ "movement_speed",movement_speed },
 		{ "focus_factor",focus_factor },
-		{ "inputs", camera_inputs_active}
+		{ "inputs", camera_inputs_active},
+		{ "fov", c_camera->frustum.verticalFov}
 	};
+
+
 
 	return true;
 }

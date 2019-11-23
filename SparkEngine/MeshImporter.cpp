@@ -19,12 +19,6 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
-#define CUBE_ID 4294967294
-#define SPHERE_ID 4294967293
-#define CYLINDER_ID 4294967292
-#define CONE_ID 4294967291
-#define PLANE_ID 4294967290
-
 MeshImporter::MeshImporter()
 {
 }
@@ -41,35 +35,30 @@ bool MeshImporter::Init()
 
 bool MeshImporter::Start()
 {
-	ResourceMesh* mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CUBE_ID);
+	ResourceMesh* mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, cube);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CUBE, mesh);
 	mesh->references++;
 	mesh->SetFile("Cube");
-	cube = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, SPHERE_ID);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, sphere);
 	LoadPrimitive(PRIMITIVE_TYPE::P_SPHERE, mesh);
 	mesh->references++;
 	mesh->SetFile("Sphere");
-	sphere = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CYLINDER_ID);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, cylinder);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CYLINDER, mesh);
 	mesh->references++;
 	mesh->SetFile("Cylinder");
-	cylinder = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, CONE_ID);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, cone);
 	LoadPrimitive(PRIMITIVE_TYPE::P_CONE, mesh);
 	mesh->references++;
 	mesh->SetFile("Cone");
-	cone = mesh->GetID();
 
-	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, PLANE_ID);
+	mesh = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, plane);
 	LoadPrimitive(PRIMITIVE_TYPE::P_PLANE, mesh);
 	mesh->references++;
 	mesh->SetFile("Plane");
-	plane = mesh->GetID();
 
 	return true;
 }
