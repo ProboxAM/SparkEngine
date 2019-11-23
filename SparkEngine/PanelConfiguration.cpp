@@ -30,12 +30,6 @@ void PanelConfiguration::Draw()
 {
 	ImGui::Begin("Configuration", &active);
 
-	if (ImGui::Button("Save"))
-		App->SaveSettings();
-	ImGui::SameLine();
-	if (ImGui::Button("Load"))
-		App->LoadSettings();
-
 	DrawApplication();
 	DrawWindow();
 	DrawTime();

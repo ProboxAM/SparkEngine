@@ -21,6 +21,7 @@ public:
 	bool Save(nlohmann::json &it);
 
 	void LookAt(const float3 &spot);
+	LineSegment GetRaycast();
 
 	bool focusing = false;
 	float focus_distance = 5.f;
@@ -39,6 +40,8 @@ private:
 	void Focus();
 	void RotateAroundReference();
 	void HandleMouseClicking();
+
+
 
 public:
 
