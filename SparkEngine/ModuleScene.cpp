@@ -59,9 +59,6 @@ bool ModuleScene::Start()
 
 	GenerateGrid();
 
-	quad_tree = new Quadtree();
-	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
-
 	return true;
 }
 
@@ -172,6 +169,7 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 		std::string name = object["name"];
 		uint parent_id = object["parent"];
 		uint id = object["id"];
+		bool is_static = object["static"];
 
 		if (parent_id != 0)
 		{
@@ -200,12 +198,15 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 				Component* comp = go->AddComponent(component["type"]);
 				comp->Load(component);
 			}
+
+			if (is_static)SetGameObjectStatic(go, true);
 		}
 		else
 		{
 			root = CreateRootGameObject(id);
 		}
 	}
+
 	LOG("Finished loading scene.");
 
 	return true;
@@ -539,13 +540,15 @@ void ModuleScene::SetGameObjectStatic(GameObject* go, bool state)
 {
 	go->SetStatic(state);
 	if (state) {
-		quad_tree->InsertGameObject(go);
+		if(!quad_tree->Exists(go))
+			quad_tree->InsertGameObject(go);
 
 		for (int i = 0; i < go->transform->GetChildren().size(); i++)
 			App->scene->SetGameObjectStatic(go->transform->GetChildren()[i]->gameobject, true);
 	}
 	else {
-		quad_tree->RemoveGameObject(go);
+		if (quad_tree->Exists(go))
+			quad_tree->RemoveGameObject(go);
 
 		for (int i = 0; i < go->transform->GetChildren().size(); i++)
 			App->scene->SetGameObjectStatic(go->transform->GetChildren()[i]->gameobject, false);
@@ -567,6 +570,8 @@ void ModuleScene::CreateDefaultScene()
 
 	GameObject* obj_camera = CreateGameObject(root, "Main Camera");
 	ComponentCamera* cam = (ComponentCamera*) obj_camera->AddComponent(COMPONENT_TYPE::CAMERA);
+	quad_tree = new Quadtree();
+	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
 	cam->SetAsMainCamera(true);
 	cam->gameobject->transform->SetPosition({ 0.f, 1.0f, -80.0f });
 
