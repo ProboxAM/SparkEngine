@@ -1,0 +1,72 @@
+{
+    "GameObjects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2160175586,
+            "layer": "Default",
+            "name": "root",
+            "parent": 0,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        1.0,
+                        -80.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "active_camera": true,
+                    "far_distance": 500.0,
+                    "fov": 1.0471975803375244,
+                    "near_distance": 0.10000000149011612,
+                    "type": 4
+                }
+            ],
+            "id": 3177577142,
+            "layer": "Default",
+            "name": "Main Camera",
+            "parent": 2160175586,
+            "static": false,
+            "tag": "Untagged"
+        }
+    ]
+}
