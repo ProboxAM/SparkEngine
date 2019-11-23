@@ -106,8 +106,7 @@ inline void QuadtreeNode::CollectIntersections(std::map<float, GameObject*>& obj
 		{
 			float distance_near, distance_far;
 			if (primitive.Intersects((*it)->obb, distance_near, distance_far))
-				if (std::find(objects.begin(), objects.end(), *it) == objects.end())
-					objects.emplace(distance_near, *it);
+				objects.emplace(distance_near, *it);
 		}
 		if (children[0]) {
 			for (int i = 0; i < CHILDREN_SIZE; ++i)

@@ -212,8 +212,6 @@ void QuadtreeNode::Split()
 
 void QuadtreeNode::DistributeChildren()
 {
-	AABB new_box(go->global_bbox.MinimalEnclosingAABB());
-
 	std::vector<uint> intersections;
 	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end();) {
 		for (int i = 0; i < CHILDREN_SIZE; i++) {
