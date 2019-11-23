@@ -95,7 +95,7 @@
             "layer": "Default",
             "name": "Street environment_V01",
             "parent": 2160175586,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -125,7 +125,7 @@
             "layer": "Default",
             "name": "Sky001_$AssimpFbx$_Translation",
             "parent": 996416185,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -155,7 +155,7 @@
             "layer": "Default",
             "name": "Sky001_$AssimpFbx$_PreRotation",
             "parent": 3369208715,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -185,7 +185,7 @@
             "layer": "Default",
             "name": "Sky001_$AssimpFbx$_PostRotation",
             "parent": 3725831182,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -215,7 +215,7 @@
             "layer": "Default",
             "name": "Sky001",
             "parent": 999154745,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -245,7 +245,7 @@
             "layer": "Default",
             "name": "Dummy001_$AssimpFbx$_PreRotation",
             "parent": 996416185,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -275,7 +275,7 @@
             "layer": "Default",
             "name": "Dummy001_$AssimpFbx$_Rotation",
             "parent": 2117392569,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -305,7 +305,7 @@
             "layer": "Default",
             "name": "Dummy001",
             "parent": 4235483936,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -349,7 +349,7 @@
             "layer": "Default",
             "name": "City_building_004",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -393,7 +393,7 @@
             "layer": "Default",
             "name": "City_building_001",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -437,7 +437,7 @@
             "layer": "Default",
             "name": "City_building_007",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -481,7 +481,7 @@
             "layer": "Default",
             "name": "City_building_008",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -525,7 +525,7 @@
             "layer": "Default",
             "name": "Line002",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -569,7 +569,7 @@
             "layer": "Default",
             "name": "Plane001",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -613,7 +613,7 @@
             "layer": "Default",
             "name": "City_building_010",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -657,7 +657,7 @@
             "layer": "Default",
             "name": "City_building_011",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -701,7 +701,7 @@
             "layer": "Default",
             "name": "City_building_013",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -745,7 +745,7 @@
             "layer": "Default",
             "name": "City_building_014",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -789,7 +789,7 @@
             "layer": "Default",
             "name": "City_building_016",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -833,7 +833,7 @@
             "layer": "Default",
             "name": "City_building_017",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -877,7 +877,7 @@
             "layer": "Default",
             "name": "City_building_022",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -921,7 +921,7 @@
             "layer": "Default",
             "name": "City_building_023",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -965,7 +965,7 @@
             "layer": "Default",
             "name": "City_building_024",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1009,7 +1009,7 @@
             "layer": "Default",
             "name": "City_building_026",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1053,7 +1053,7 @@
             "layer": "Default",
             "name": "City_building_028",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1097,7 +1097,7 @@
             "layer": "Default",
             "name": "Object010",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1141,7 +1141,7 @@
             "layer": "Default",
             "name": "City_building_030",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1185,7 +1185,7 @@
             "layer": "Default",
             "name": "City_building_031",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1229,7 +1229,7 @@
             "layer": "Default",
             "name": "City_building_032",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1273,7 +1273,7 @@
             "layer": "Default",
             "name": "City_building_033",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1317,7 +1317,7 @@
             "layer": "Default",
             "name": "City_building_034",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1361,7 +1361,7 @@
             "layer": "Default",
             "name": "City_building_035",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1405,7 +1405,7 @@
             "layer": "Default",
             "name": "City_building_036",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1415,7 +1415,7 @@
                     "position": [
                         -20.31769371032715,
                         -16.16360855102539,
-                        0.0
+                        9.75182956608478e-09
                     ],
                     "rotation": [
                         0.0,
@@ -1449,7 +1449,7 @@
             "layer": "Default",
             "name": "City_building_037",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1493,7 +1493,7 @@
             "layer": "Default",
             "name": "City_building_038",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1537,7 +1537,7 @@
             "layer": "Default",
             "name": "City_building_039",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1581,7 +1581,7 @@
             "layer": "Default",
             "name": "City_building_040",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1625,7 +1625,7 @@
             "layer": "Default",
             "name": "City_building_041",
             "parent": 515465919,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1655,7 +1655,7 @@
             "layer": "Default",
             "name": "Camera001_$AssimpFbx$_Translation",
             "parent": 996416185,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1685,7 +1685,7 @@
             "layer": "Default",
             "name": "Camera001_$AssimpFbx$_PreRotation",
             "parent": 677134311,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1715,7 +1715,7 @@
             "layer": "Default",
             "name": "Camera001_$AssimpFbx$_Rotation",
             "parent": 3338743239,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1745,7 +1745,7 @@
             "layer": "Default",
             "name": "Camera001",
             "parent": 642533048,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1775,7 +1775,7 @@
             "layer": "Default",
             "name": "Camera001.Target_$AssimpFbx$_Translation",
             "parent": 996416185,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1805,7 +1805,7 @@
             "layer": "Default",
             "name": "Camera001.Target_$AssimpFbx$_PreRotation",
             "parent": 3452899622,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1835,7 +1835,7 @@
             "layer": "Default",
             "name": "Camera001.Target_$AssimpFbx$_Rotation",
             "parent": 4043357442,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1865,7 +1865,7 @@
             "layer": "Default",
             "name": "Camera001.Target",
             "parent": 434329541,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1895,7 +1895,7 @@
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_Translation",
             "parent": 996416185,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1925,7 +1925,7 @@
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_PreRotation",
             "parent": 2493022614,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1955,7 +1955,7 @@
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_Rotation",
             "parent": 3924972659,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -1985,7 +1985,7 @@
             "layer": "Default",
             "name": "Spot001_$AssimpFbx$_PostRotation",
             "parent": 1424020629,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -2015,7 +2015,7 @@
             "layer": "Default",
             "name": "Spot001",
             "parent": 3642263005,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -2045,7 +2045,7 @@
             "layer": "Default",
             "name": "Spot001.Target_$AssimpFbx$_Translation",
             "parent": 996416185,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -2075,7 +2075,7 @@
             "layer": "Default",
             "name": "Spot001.Target_$AssimpFbx$_PreRotation",
             "parent": 626620565,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -2105,7 +2105,7 @@
             "layer": "Default",
             "name": "Spot001.Target_$AssimpFbx$_Rotation",
             "parent": 1322413783,
-            "static": false,
+            "static": true,
             "tag": "Untagged"
         },
         {
@@ -2135,6 +2135,36 @@
             "layer": "Default",
             "name": "Spot001.Target",
             "parent": 622616265,
+            "static": true,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2966168305,
+            "layer": "Default",
+            "name": "GameObject",
+            "parent": 2160175586,
             "static": false,
             "tag": "Untagged"
         }

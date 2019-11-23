@@ -3,6 +3,7 @@
 
 #define MAX_BUCKET_SIZE 2
 #define CHILDREN_SIZE 4
+#define MAX_DIVISIONS 8
 
 class GameObject;
 #include "MathGeoLib/Geometry/AABB.h"
