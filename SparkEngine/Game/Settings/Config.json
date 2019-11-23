@@ -5,7 +5,7 @@
     },
     "Camera3D": {
         "focus_factor": 0.25,
-        "fov": 1.0,
+        "fov": 1.0471975803375244,
         "inputs": true,
         "movement_speed": 20.0
     },
