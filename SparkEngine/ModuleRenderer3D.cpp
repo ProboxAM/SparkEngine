@@ -530,7 +530,8 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (game_camera && game_camera->enable_frustum_culling) App->scene->AccelerateFrustumCulling(game_camera);
-	else App->scene->AccelerateFrustumCulling(editor_camera);
+	
+	App->scene->AccelerateFrustumCulling(editor_camera);
 
 	App->scene->Draw(); //Draw scene
 	App->scene->DebugDraw();//Draw Quadtree and Grid
