@@ -566,7 +566,7 @@ void ModuleScene::CreateDefaultScene()
 	GameObject* obj_camera = CreateGameObject(root, "Main Camera");
 	ComponentCamera* cam = (ComponentCamera*) obj_camera->AddComponent(COMPONENT_TYPE::CAMERA);
 	quad_tree = new Quadtree();
-	quad_tree->Create(AABB(float3(-80, -30, -80), float3(80, 30, 80)));
+	quad_tree->Create(AABB(float3(-160, -60, -160), float3(160, 60, 160)));
 	cam->SetAsMainCamera(true);
 	cam->gameobject->transform->SetPosition({ 0.f, 1.0f, -80.0f });
 
