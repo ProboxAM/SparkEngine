@@ -56,7 +56,7 @@
                     "active": true,
                     "active_camera": true,
                     "far_distance": 500.0,
-                    "fov": 2.0,
+                    "fov": 1.0471975803375244,
                     "near_distance": 0.10000000149011612,
                     "type": 4
                 }
