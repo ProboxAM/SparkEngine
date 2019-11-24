@@ -31,7 +31,7 @@ PanelInspector::~PanelInspector()
 void PanelInspector::Draw()
 {
 	ImGui::Begin("Inspector", &active);
-	if (App->scene->selected_gameobject)
+	if (App->scene->selected_gameobject && App->scene->selected_gameobject != App->scene->root)
 	{
 		bool active = App->scene->selected_gameobject->isActive();
 		if (ImGui::Checkbox(" ", &active))

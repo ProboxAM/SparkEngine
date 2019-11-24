@@ -138,6 +138,7 @@ bool ModuleScene::SaveScene(bool temp)
 		if (file.empty())
 		{
 			file = App->editor->GetProjectPanelPath() + scene_name + SCENE_EXTENSION;
+			root->SetName(scene_name);
 			new_file = true;
 		}		
 		scene_path = file;
