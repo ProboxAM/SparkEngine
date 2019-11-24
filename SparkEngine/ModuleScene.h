@@ -89,7 +89,7 @@ public:
 	ComponentCamera* main_game_camera = nullptr;
 
 private:
-	std::string scene_name = "Scene";
+	std::string scene_name = "Untitled";
 	std::string file = "";
 	void RecursiveErase(GameObject * go);
 };
