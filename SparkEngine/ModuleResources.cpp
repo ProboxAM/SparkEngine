@@ -219,6 +219,8 @@ void ModuleResources::RecursiveLoadAssets(std::string directory)
 			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
 			LoadMeta(meta_file.c_str(), meta, type);
 
+			if (meta->original_file != asset_file)
+				meta->original_file = asset_file;
 			int mod_date;
 			App->fsystem->GetFileModificationDate(asset_file.c_str(), mod_date);
 			bool is_modified = meta->modification_date != mod_date; // Check if asset file has been modified
