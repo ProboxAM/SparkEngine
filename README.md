@@ -76,6 +76,20 @@ Changing import settings of a Model being used in Scene will make it "invisible"
 #### Marc Guillen
 - Component info on Inspector.
 - Quadtree.
+- Camera Component.
+- Frustum culling accelerated by Quadtree.
+- Mouse picking accelerated by Quadtree.
+- Hierarchy Panel.
+- Transform Component.
+- ImGuizmo implementation.
+- Game Panel that displays the view and projection of the main active camera.
+- Module Camera3D.
+
+### Possible innovations
+
+- Octree.
+- Game Panel.
+- Project window.
 
 ### Tools used to develop the engine
 
