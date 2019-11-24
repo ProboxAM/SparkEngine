@@ -304,11 +304,13 @@ update_status ModuleEditor::Update()
 		}
 		else
 		{
-			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+			ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32( 255, 0, 0, 185 ));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(255, 0, 0, 255));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(255, 0, 0, 100));
 			if (ImGui::ImageButton((ImTextureID)atlas->buffer_id, ImVec2(25, 18), ImVec2(0, 1),
 				ImVec2((float)icon_size / atlas->width, (float)icon_size * 2 / atlas->height),1))
 				App->Stop();
-			ImGui::PopStyleVar();
+			ImGui::PopStyleColor(3);
 		}
 		ImGui::PopID();
 
