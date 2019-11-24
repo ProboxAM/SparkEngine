@@ -159,6 +159,7 @@ bool ComponentCamera::Save(const nlohmann::json::iterator & it)
 	{ "fov", frustum.verticalFov },
 	{ "near_distance", frustum.nearPlaneDistance },
 	{ "far_distance", frustum.farPlaneDistance },
+	{ "frustum_culling", enable_frustum_culling}
 	};
 
 	it.value().push_back(object);
@@ -175,6 +176,7 @@ bool ComponentCamera::Load(const nlohmann::json comp)
 	SetFrustumNearPlaneDistance(comp["near_distance"]);
 	SetFrustumFarPlaneDistance(comp["far_distance"]);
 	SetFrustumFOV(comp["fov"]);
+	enable_frustum_culling = comp["frustum_culling"];
 
 	UpdateFrustumTransform();
 	SetAsMainCamera(active_camera);
