@@ -20,6 +20,8 @@ void PanelHierarchy::Draw()
 
 	node_iterator = 0;
 
+	DrawNode(App->scene->root->transform);
+
 	for (int i = 0; i < App->scene->root->transform->GetChildCount(); i++)
 	{
 		DrawNode(App->scene->root->transform->GetChildren()[i]);
