@@ -25,7 +25,7 @@
             ],
             "id": 3697470151,
             "layer": "Default",
-            "name": "root",
+            "name": "DefaultScene",
             "parent": 0,
             "static": false,
             "tag": "Untagged"
@@ -36,7 +36,7 @@
                 {
                     "position": [
                         0.0,
-                        1.0,
+                        10.0,
                         -80.0
                     ],
                     "rotation": [
@@ -57,6 +57,7 @@
                     "active_camera": true,
                     "far_distance": 500.0,
                     "fov": 1.0471975803375244,
+                    "frustum_culling": false,
                     "near_distance": 0.10000000149011612,
                     "type": 4
                 }
