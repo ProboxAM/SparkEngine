@@ -30,7 +30,7 @@
         "depth_test": true,
         "lighting": true,
         "texture2d": true,
-        "vsync": false,
+        "vsync": true,
         "wireframe": false
     },
     "Scene": {

@@ -10,6 +10,15 @@ public:
 	~PanelResources();
 
 	void Draw();
+private:
+	enum Mode {
+		ALL,
+		LOADED,
+		NOT_LOADED,
+		TOTAL
+	};
+
+	Mode mode = ALL;
 };
 
 

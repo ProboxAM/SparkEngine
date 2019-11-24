@@ -20,7 +20,7 @@ void ResourceModel::UnLoad()
 	nodes.clear();
 }
 
-std::string ResourceModel::GetTypeString()
+std::string ResourceModel::GetTypeString() const
 {
 	return "Model";
 }

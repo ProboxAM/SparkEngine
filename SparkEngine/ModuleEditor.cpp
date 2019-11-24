@@ -76,6 +76,7 @@ bool ModuleEditor::Start()
 
 	atlas = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
 	atlas->SetExportedFile(atlas_path);
+	atlas->SetFile(atlas_path);
 	atlas->meta = new ResourceTexture::TextureMetaFile();
 	atlas->AddReference();
 

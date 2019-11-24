@@ -179,8 +179,6 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 		uint id = object["id"];
 		bool is_static = object["static"];
 
-		LOG("LOADING OBJECT %s", name.c_str());
-
 		if (parent_id != 0)
 		{
 			float3 position, scale;
@@ -343,6 +341,7 @@ GameObject * ModuleScene::CreateRootGameObject(uint id)
 
 GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject* parent)
 {
+	LOG("Creating GameObject from resource %s", resource->GetFile());
 	if (parent == nullptr)
 		parent = root;
 	std::vector<GameObject*> temp_go;

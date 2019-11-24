@@ -14,6 +14,7 @@
 #include "ComponentCamera.h"
 #include "ResourceModel.h"
 #include "ResourceTexture.h"
+#include "ResourceMesh.h"
 
 #include "ImGui/imgui_stdlib.h"
 
@@ -95,12 +96,14 @@ void PanelInspector::Draw()
 			{
 				ComponentMesh* c_mesh = (ComponentMesh*)go->GetComponent(COMPONENT_TYPE::MESH);
 
-				if (ImGui::CollapsingHeader("Mesh")) 
+				if (ImGui::CollapsingHeader("Mesh") && c_mesh->GetMesh()) 
 				{
 					ImGui::PushID("active_mesh");
 					ImGui::Checkbox("Active", &c_mesh->active);
 					ImGui::PopID();
 
+					ImGui::Text("File: %s", c_mesh->GetMesh()->GetFile());
+					ImGui::Text("ID: %u", c_mesh->GetMesh()->GetID());
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Index amount: " + std::to_string(c_mesh->GetIndicesAmount()) + " |").c_str());
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Vertex amount: " + std::to_string(c_mesh->GetVerticesAmount())).c_str());
@@ -108,20 +111,22 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("UV amount: " + std::to_string(c_mesh->GetUVAmount())).c_str());
 
-					ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
-					ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
-					ImGui::Checkbox("Bounding box: ", &c_mesh->debug_bounding_box);
+					//ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
+					//ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
+					ImGui::Checkbox("Bounding box", &c_mesh->debug_bounding_box);
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::TEXTURE)
 			{
 				ComponentTexture* c_texture = (ComponentTexture*)go->GetComponent(COMPONENT_TYPE::TEXTURE);
-				if (ImGui::CollapsingHeader("Texture"))
+				if (ImGui::CollapsingHeader("Texture") && c_texture->GetTexture())
 				{
 					ImGui::PushID("active_texture");
 					ImGui::Checkbox("Active", &c_texture->active);
 					ImGui::PopID();
 
+					ImGui::Text("File: %s", c_texture->GetTexture()->GetFile());
+					ImGui::Text("ID: %u", c_texture->GetTexture()->GetID());
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("With: " + std::to_string(c_texture->GetTextureWidth()) + " |").c_str());
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("Height: " + std::to_string(c_texture->GetTextureHeight())).c_str());

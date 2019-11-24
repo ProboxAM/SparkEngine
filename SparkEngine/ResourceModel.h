@@ -61,7 +61,7 @@ public:
 	void Load();
 
 	std::vector<ModelNode> nodes;
-	std::string GetTypeString();
+	std::string GetTypeString() const;
 };
 
 

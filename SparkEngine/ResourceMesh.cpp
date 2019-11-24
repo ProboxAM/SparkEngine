@@ -12,7 +12,7 @@ ResourceMesh::ResourceMesh(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_ME
 {
 }
 
-std::string ResourceMesh::GetTypeString()
+std::string ResourceMesh::GetTypeString() const
 {
 	return "Mesh";
 }

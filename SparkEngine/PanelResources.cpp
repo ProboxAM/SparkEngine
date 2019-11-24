@@ -18,9 +18,28 @@ void PanelResources::Draw()
 {
 	ImGui::Begin("Resources", &active);
 
+	const char* modes[] = { "All", "Loaded", "Not Loaded"};
+
+	ImGui::Text("Show:");
+	ImGui::SameLine();
+	if (ImGui::Button(modes[mode]))
+		ImGui::OpenPopup("Filter_Selection");
+	if (ImGui::BeginPopup("Filter_Selection"))
+	{
+		for (int i = 0; i < Mode::TOTAL; i++)
+			if (ImGui::Selectable(modes[i]))
+				mode = (Mode)i;
+		ImGui::EndPopup();
+	}
+
 	std::map<uint, Resource*> resources = App->resources->GetResources();
 	for(std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
 	{
+		if (mode == Mode::LOADED && !it->second->IsLoaded())
+			continue;
+		else if (mode == Mode::NOT_LOADED && it->second->IsLoaded())
+			continue;
+
 		ImGui::Separator();
 		ImGui::Text("Original file: %s", it->second->GetFile());
 		ImGui::Text("Library file: %s", it->second->GetExportedFile());
