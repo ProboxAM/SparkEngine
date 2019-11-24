@@ -59,7 +59,7 @@ private:
 	int		last_frame_ms = 0;
 	std::list<Module*> list_modules;
 
-	ENGINE_STATE state;
+	ENGINE_STATE state = ENGINE_STATE::ENGINE_EDITOR;
 
 public:
 

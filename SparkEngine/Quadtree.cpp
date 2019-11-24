@@ -25,6 +25,7 @@ void Quadtree::Create(const AABB limits)
 void Quadtree::Clear()
 {
 	root->Clear();
+	root = nullptr;
 }
 
 void Quadtree::Rebuild()
@@ -79,10 +80,6 @@ void QuadtreeNode::Create(const AABB limits)
 
 void QuadtreeNode::Clear()
 {
-	for (std::vector<GameObject*>::const_iterator it = bucket.begin(); it != bucket.end();) {
-		it = bucket.erase(it);
-	};
-
 	bucket.clear();
 
 	if (children[0]) {
@@ -117,7 +114,8 @@ void QuadtreeNode::Rebuild(std::vector<GameObject*> &to_rebuild)
 
 void QuadtreeNode::InsertGameObject(GameObject * gameobject)
 {
-	if(gameobject->HasComponent(COMPONENT_TYPE::MESH))bucket.push_back(gameobject);
+	bucket.push_back(gameobject);
+
 	if (bucket.size() > MAX_BUCKET_SIZE && layer < MAX_DIVISIONS) {
 		if (!children[0])
 			Split();

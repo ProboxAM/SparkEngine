@@ -162,7 +162,7 @@ update_status ModuleEditor::Update()
 				else
 					open_save_popup = true;
 			}
-			if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S")) {
+			if (ImGui::MenuItem("Save as...")) {
 				open_save_popup = true;
 			}
 			if (ImGui::MenuItem("Exit")) { App->exit = true; }

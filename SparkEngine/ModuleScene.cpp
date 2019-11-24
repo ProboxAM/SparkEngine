@@ -68,9 +68,9 @@ update_status ModuleScene::Update()
 	root->Update();
 
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-	{
 		App->editor->SaveScene();
-	}
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		ResetScene();
 
 	if (App->input->GetKey(SDL_SCANCODE_DELETE) && selected_gameobject)
 	{
@@ -179,6 +179,8 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 		uint id = object["id"];
 		bool is_static = object["static"];
 
+		LOG("LOADING OBJECT %s", name.c_str());
+
 		if (parent_id != 0)
 		{
 			float3 position, scale;
@@ -207,7 +209,8 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 				comp->Load(component);
 			}
 
-			if (is_static)SetGameObjectStatic(go, true);
+			if (is_static)
+				SetGameObjectStatic(go, true);
 		}
 		else
 		{
@@ -477,6 +480,9 @@ void ModuleScene::DeleteGameObjects()
 	gameobjects.clear();
 	root = nullptr;
 	selected_gameobject = nullptr;
+
+	quad_tree->Clear();
+	quad_tree->Create(AABB(float3(-160, -60, -160), float3(160, 60, 160)));
 }
 
 void ModuleScene::DeleteGameObject(GameObject* go)

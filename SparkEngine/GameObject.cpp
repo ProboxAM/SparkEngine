@@ -243,12 +243,14 @@ GameObject::GameObject()
 {
 	this->transform = (ComponentTransform*)AddComponent(COMPONENT_TYPE::TRANSFORM);
 	id = App->GenerateID();
+	aabb.SetNegativeInfinity();
 }
 
 GameObject::GameObject(uint id)
 {
 	this->transform = (ComponentTransform*)AddComponent(COMPONENT_TYPE::TRANSFORM);
 	this->id = id;
+	aabb.SetNegativeInfinity();
 }
 
 
