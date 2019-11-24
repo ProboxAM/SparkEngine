@@ -40,6 +40,7 @@ Changing import settings of a Model being used in Scene will make it "invisible"
 - Component Texture on Inspector can activate Checkers texture for the GameObject.
 - Checkbox in Scene Window to draw Octree.
 - Stats button in Game Window shows basic stats like fps, ms and game time.
+- Component Camera in inspector has a checker to enable frustum culling.
 
 ### Controls
 #### Scene
