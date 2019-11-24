@@ -7,19 +7,46 @@ Spark Engine is a 3D engine developed by Marc Guillen and Axel Alavedra during t
 - GitHub repository: [SparkEngine](https://github.com/ProboxAM/SparkEngine)
 
 ### Features
+Engine configuration automatically saves on Engine close.
 
-#### Game Objects
-- Drag fbx creates a new Game Object with mesh and texture.
-- Drag texture with Game Object selected applies the texture to it.
-- GameObject menu to create primitive shapes (Cube doesn't have uv/normals).
-- Activate/Deactivate Game Object components on Inspector.
+#### Resource Management
+- Upon start, all resources not in library get imported, if they have meta file, it gets imported with meta file info.
+- Upon start, all resources already in library get created from meta.
+- Resources in library not linked to any meta get deleted on startup.
+- On startup if meta file and resource file are not in same folder, it will move meta to resource folder.
+- Reference counting.
+
+Not supported yet:
+- Delete resources during execution.
+- Move resources from folder to folder during execution.
+- Create new folders during execution.
+
+#### Project Window
+- Drag file outside engine will import it to currently selected folder if file is not in Assets.
+- Drag fbx file to Scene Window creates a new Game Object with mesh and texture.
+- Drag texture file to a GameObject that has texture in Scene Window will apply the texture.
+- Double click a scene file will load it.
+- Import settings of selected Resource. (Saving changes reimports resource)
+- Double click folder to move to it.
+- Click folder name on path "top part of window" will move back to that folder.
+- Textures in selected folder get referenced and unreferenced on folder change.
+- Slider will change size of file icons.
+
+Alert:
+Changing import settings of a Model being used in Scene will make it "invisible" untill Scene is reloaded. This can be done loading Scene again from Project or pressing Play and Stop.
 
 #### Debug
-- Component Mesh on Inspector can activate debug vertex normals and face normals.
+- Component Mesh has a check to show bounding boxes (AABB and OBB).
 - Component Texture on Inspector can activate Checkers texture for the GameObject.
-- Console window logs geometry loading process and texture loading.
+- Checkbox in Scene Window to draw Octree.
+- Stats button in Game Window shows basic stats like fps, ms and game time.
 
 ### Controls
+#### Scene
+- Mouse Left Click: Select GameObject from Scene.
+- Supr: Delete selected GameObject.
+- CTRL+S: Save scene.
+- CTRL+N: Create new scene.
 
 #### Camera
 - Mouse Hold Right:
@@ -27,9 +54,28 @@ Spark Engine is a 3D engine developed by Marc Guillen and Axel Alavedra during t
 	- Look around
 - F: focus camera to selected Game Object
 - Hold Alt:
-	- Mouse Hold Left: look around target
+	- Mouse Hold Right Click: look around target
 - Mouse Wheel: zoom in/out
 - Mouse Hold Shift: move faster
+
+
+### Work of each Student
+#### Axel Alavedra
+- Component info on Inspector.
+- Quadtree.
+- Render scene to texture and show on Scene Window.
+- Scene window resizing with aspect ratio.
+- Scene serialization. Load/Save scene with UI.
+- Save mesh, texture and models to own file format.
+- Module resources (meta files, reference counting, etc).
+- Engine Start/Pause and state recovery.
+- Time module.
+- Resource Management.
+- Resource Import settings.
+
+#### Marc Guillen
+- Component info on Inspector.
+- Quadtree.
 
 ### Tools used to develop the engine
 
