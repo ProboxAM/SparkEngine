@@ -14,7 +14,7 @@ class Quadtree;
 enum PRIMITIVE_TYPE;
 
 #define GRID_SIZE 40
-#define DEFAULT_NAME "Scene"
+#define DEFAULT_NAME "Untitled"
 
 class ModuleScene :
 	public Module
@@ -89,7 +89,7 @@ public:
 	ComponentCamera* main_game_camera = nullptr;
 
 private:
-	std::string scene_name = "Untitled";
+	std::string scene_name = DEFAULT_NAME;
 	std::string file = "";
 	void RecursiveErase(GameObject * go);
 };

@@ -578,7 +578,6 @@ void ModuleScene::ResetScene()
 
 void ModuleScene::CreateDefaultScene()
 {
-	scene_name = "Untitled";
 	selected_gameobject = nullptr;
 	scene_name = DEFAULT_NAME;
 	root = CreateRootGameObject();
