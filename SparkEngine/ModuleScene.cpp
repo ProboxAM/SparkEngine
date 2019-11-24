@@ -213,6 +213,9 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 		else
 		{
 			root = CreateRootGameObject(id);
+			std::string file_name;
+			App->fsystem->SplitFilePath(file.c_str(), nullptr, &file_name);
+			root->SetName(file_name);
 		}
 	}
 
@@ -486,6 +489,9 @@ void ModuleScene::DeleteGameObjects()
 
 void ModuleScene::DeleteGameObject(GameObject* go)
 {
+	if (go == root)
+		return;
+
 	if (go->isStatic())
 		SetGameObjectStatic(go, false);
 
@@ -574,6 +580,7 @@ void ModuleScene::CreateDefaultScene()
 	selected_gameobject = nullptr;
 	scene_name = DEFAULT_NAME;
 	root = CreateRootGameObject();
+	root->SetName("Untitled");
 
 	GameObject* obj_camera = CreateGameObject(root, "Main Camera");
 	ComponentCamera* cam = (ComponentCamera*) obj_camera->AddComponent(COMPONENT_TYPE::CAMERA);
