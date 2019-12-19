@@ -7,7 +7,7 @@
 
 class ResourceAnimation : public Resource
 {
-private:
+public:
 	struct Channel {
 		std::string name = "";
 		uint num_position_keys = 0;
@@ -19,12 +19,19 @@ private:
 		quatKey* rotation_keys;
 	};
 
+	struct AnimationMetaFile : public MetaFile
+	{
+		bool loops = false;
+	};
+
 public:
 
-	ResourceAnimation();
+	ResourceAnimation(uint id);
 	~ResourceAnimation();
 
-private:
+	std::string GetTypeString() const;
+
+public:
 	std::string name = "";
 	uint tick_duration = 0;
 	uint ticks_per_second = 0;

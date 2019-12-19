@@ -4,6 +4,7 @@
 #include "ModuleImporter.h"
 #include "MeshImporter.h"
 #include "TextureImporter.h"
+#include "AnimationImporter.h"
 
 #include "ResourceModel.h"
 
