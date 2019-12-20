@@ -295,6 +295,18 @@ std::map<uint, Resource*> ModuleResources::GetResources()
 	return resources;
 }
 
+//std::map<uint, Resource*> ModuleResources::GetResources(Resource::RESOURCE_TYPE type)
+//{
+//	std::map<uint, Resource*> ret;
+//
+//	for (int i = 0; i < resources.size(); i++) {
+//		if (resources[i]->GetType() == type)
+//			ret.emplace(resources[i]);
+//	}
+//
+//	return ret;
+//}
+
 bool ModuleResources::LoadMeta(const char* file, Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
 {
 	switch (type)

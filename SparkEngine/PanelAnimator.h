@@ -7,6 +7,7 @@ class ImVec2;
 #include "MathGeoLib\Math\MathAll.h"
 #include "NodeEditor/Include/imgui_node_editor.h"
 #include "ComponentAnimator.h"
+#include "ResourceAnimatorController.h"
 
 class PanelAnimator :
 	public Panel
@@ -20,7 +21,9 @@ public:
 	bool IsInside(const float2& pos) const;
 
 public:
-	ComponentAnimator* current_animator = nullptr;
+	ResourceAnimatorController* current_animator = nullptr;
+
+	void SetCurrentResourceAnimatorController(ResourceAnimatorController* animator);
 
 private:
 	bool stats = false;

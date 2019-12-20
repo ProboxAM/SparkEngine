@@ -78,7 +78,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AnimationImporter.h" />
-    <ClInclude Include="AnimatorController.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -128,6 +127,7 @@
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceAnimation.h" />
+    <ClInclude Include="ResourceAnimatorController.h" />
     <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="ModelImporter.h" />
@@ -214,7 +214,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationImporter.cpp" />
-    <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -250,6 +249,7 @@
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceAnimation.cpp" />
+    <ClCompile Include="ResourceAnimatorController.cpp" />
     <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />

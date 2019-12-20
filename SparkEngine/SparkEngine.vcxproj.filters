@@ -432,9 +432,6 @@
     <ClInclude Include="AnimationImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatorController.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentAnimator.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
@@ -458,6 +455,9 @@
     </ClInclude>
     <ClInclude Include="NodeEditor\Source\imgui_node_editor_internal.h">
       <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceAnimatorController.h">
+      <Filter>Sources\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -707,9 +707,6 @@
     <ClCompile Include="Key.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatorController.cpp">
-      <Filter>Sources\Containers</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentAnimator.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
@@ -727,6 +724,9 @@
     </ClCompile>
     <ClCompile Include="NodeEditor\Source\imgui_node_editor_api.cpp">
       <Filter>Sources\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceAnimatorController.cpp">
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

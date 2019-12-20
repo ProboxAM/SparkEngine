@@ -3,6 +3,8 @@
 
 #include "Component.h"
 
+class ResourceAnimatorController;
+
 
 class ComponentAnimator :
 	public Component
@@ -13,8 +15,10 @@ public:
 
 	void Update();
 
+	ResourceAnimatorController* GetResourceAnimatorController();
+
 private:
-	//AnimatorController* animator_controller;
+	ResourceAnimatorController* animator_controller;
 
 };
 

@@ -3,6 +3,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
 #include "ComponentCamera.h"
+#include "ComponentAnimator.h"
 #include "GameObject.h"
 
 
@@ -78,6 +79,8 @@ Component* GameObject::AddComponent(COMPONENT_TYPE type)
 	case COMPONENT_TYPE::CAMERA:
 		c = new ComponentCamera(this);
 		break;
+	case COMPONENT_TYPE::ANIMATOR:
+		c = new ComponentAnimator(this);
 	default:
 		break;
 	}

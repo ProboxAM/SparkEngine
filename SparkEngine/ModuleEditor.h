@@ -21,7 +21,7 @@ enum Panel_Type {
 	GAME,
 	PROJECT,
 	RESOURCES,
-	ANIMATOR,
+	P_ANIMATOR,
 	TOTAL
 };
 

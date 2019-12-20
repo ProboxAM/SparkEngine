@@ -29,7 +29,7 @@ void ResourceAnimation::UnLoad()
 		delete[] channels[i].rotation_keys;
 	}
 
-	delete[] channels;
+	//delete[] channels;
 	channels = nullptr;
 }
 
