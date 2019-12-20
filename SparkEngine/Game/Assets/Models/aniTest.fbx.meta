@@ -1,5 +1,6 @@
 {
     "animations": [
+        1647421737,
         1647421737
     ],
     "calc_tangent_space": true,
@@ -52,7 +53,7 @@
         0,
         0
     ],
-    "modification_date": 1573584367,
+    "modification_date": 1576841145,
     "optimize_meshes": true,
     "original_file": "Assets/Models/aniTest.fbx",
     "remove_redundant_mats": true,

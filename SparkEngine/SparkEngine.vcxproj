@@ -77,8 +77,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AnimatorController.h" />
     <ClInclude Include="AnimationImporter.h" />
+    <ClInclude Include="AnimatorController.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -213,8 +213,8 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="AnimationImporter.cpp" />
+    <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -310,9 +310,6 @@
     <None Include="NodeEditor\Source\imgui_bezier_math.inl" />
     <None Include="NodeEditor\Source\imgui_extra_math.inl" />
     <None Include="NodeEditor\Source\imgui_node_editor_internal.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SparkEngine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

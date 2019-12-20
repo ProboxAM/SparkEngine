@@ -53,7 +53,7 @@
       <UniqueIdentifier>{c9651052-382f-499c-8ee3-2dc30c7bb4c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sources\NodeEditor">
-      <UniqueIdentifier>{5de7e296-9b37-4ad4-89bd-a5709610f886}</UniqueIdentifier>
+      <UniqueIdentifier>{0d8d5ca3-cff5-4ec7-91ca-5569b8cd2e8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -423,16 +423,24 @@
     <ClInclude Include="PanelGame.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentAnimator.h">
-      <Filter>Sources\Components</Filter>
+    <ClInclude Include="ResourceAnimation.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationImporter.h">
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
     <ClInclude Include="AnimatorController.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentAnimator.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
     <ClInclude Include="PanelAnimator.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="NodeEditor\Include\imgui_node_editor.h">
       <Filter>Sources\NodeEditor</Filter>
     </ClInclude>
@@ -450,14 +458,6 @@
     </ClInclude>
     <ClInclude Include="NodeEditor\Source\imgui_node_editor_internal.h">
       <Filter>Sources\NodeEditor</Filter>
-    <ClInclude Include="ResourceAnimation.h">
-      <Filter>Sources\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Key.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationImporter.h">
-      <Filter>Sources\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -698,11 +698,20 @@
     <ClCompile Include="PanelGame.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentAnimator.cpp">
-      <Filter>Sources\Components</Filter>
+    <ClCompile Include="ResourceAnimation.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationImporter.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
     <ClCompile Include="AnimatorController.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentAnimator.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
     <ClCompile Include="PanelAnimator.cpp">
       <Filter>Sources\Panels</Filter>
@@ -718,14 +727,6 @@
     </ClCompile>
     <ClCompile Include="NodeEditor\Source\imgui_node_editor_api.cpp">
       <Filter>Sources\NodeEditor</Filter>
-    <ClCompile Include="ResourceAnimation.cpp">
-      <Filter>Sources\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationImporter.cpp">
-      <Filter>Sources\Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="Key.cpp">
-      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -747,8 +748,5 @@
     <None Include="NodeEditor\Source\imgui_node_editor_internal.inl">
       <Filter>Sources\NodeEditor</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SparkEngine.rc" />
   </ItemGroup>
 </Project>
