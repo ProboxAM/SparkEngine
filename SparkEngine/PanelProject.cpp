@@ -8,6 +8,7 @@
 #include "ResourceTexture.h"
 #include "ResourceModel.h"
 #include "ResourceMesh.h"
+#include "ResourceAnimation.h"
 
 #include "PanelProject.h"
 
@@ -218,35 +219,61 @@ void PanelProject::DrawFiles()
 			for (std::vector<std::string>::iterator open_it = opened_files.begin(); open_it != opened_files.end(); ++open_it)
 			{
 				if ((*it) == (*open_it))
-				{
-					uint id = App->resources->GetID(current_node->full_path + (*it));
-					ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*)App->resources->Get(id)->meta;
-					for each (uint mesh_id in meta->meshes)
-					{
-						if (mesh_id == 0)
-							continue;
-
-						ImGui::SameLine();
-						ImGui::BeginChild(childs, { (float)image_size, (float)image_size + text_size }, false, ImGuiWindowFlags_NoScrollbar);
-
-						if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
-						{
-							ImGui::SetDragDropPayload("ASSET", &mesh_id, sizeof(uint));
-							ImGui::EndDragDropSource();
-						}
-
-						ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
-							ImVec2((float)256 / App->editor->atlas->width, (float)App->editor->icon_size * 2 / App->editor->atlas->height),
-							ImVec2(1.0f, (float)App->editor->icon_size / App->editor->atlas->height));
-	
-						ImGui::Text(std::to_string(mesh_id).c_str());
-
-						ImGui::EndChild();
-						childs++;
-					}
-				}
+					DrawResourceNodes((*it), childs);
 			}
 		}
+	}
+}
+
+void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
+{
+	uint id = App->resources->GetID(current_node->full_path + file);
+	ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*)App->resources->Get(id)->meta;
+	for each (uint mesh_id in meta->meshes)
+	{
+		if (mesh_id == 0)
+			continue;
+
+		ImGui::SameLine();
+		ImGui::BeginChild(childs, { (float)image_size, (float)image_size + text_size }, false, ImGuiWindowFlags_NoScrollbar);
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+		{
+			ImGui::SetDragDropPayload("ASSET", &mesh_id, sizeof(uint));
+			ImGui::EndDragDropSource();
+		}
+
+		ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
+			ImVec2((float)256 / App->editor->atlas->width, (float)App->editor->icon_size * 2 / App->editor->atlas->height),
+			ImVec2(1.0f, (float)App->editor->icon_size / App->editor->atlas->height));
+
+		ImGui::Text(std::to_string(mesh_id).c_str());
+
+		ImGui::EndChild();
+		childs++;
+	}
+	for each (uint animation_id in meta->animations)
+	{
+		if (animation_id == 0)
+			continue;
+
+		ImGui::SameLine();
+		ImGui::BeginChild(childs, { (float)image_size, (float)image_size + text_size }, false, ImGuiWindowFlags_NoScrollbar);
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+		{
+			ImGui::SetDragDropPayload("ASSET", &animation_id, sizeof(uint));
+			ImGui::EndDragDropSource();
+		}
+
+		ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
+			ImVec2(0 / App->editor->atlas->width, (float)App->editor->icon_size / App->editor->atlas->height),
+			ImVec2((float)App->editor->icon_size / App->editor->atlas->width, 0));
+
+		ImGui::Text(((ResourceAnimation*)App->resources->Get(animation_id))->name.c_str());
+
+		ImGui::EndChild();
+		childs++;
 	}
 }
 

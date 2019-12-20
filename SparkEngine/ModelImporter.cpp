@@ -106,17 +106,24 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	uint flags = aiProcessPreset_TargetRealtime_MaxQuality;
 	if(meta)
 		flags = meta->GetImportSettings();
+	else //If there was no meta, we create a new one for this resource and generate id.
+	{
+		meta = new ResourceModel::ModelMetaFile();
+		meta->id = App->GenerateID();
+	}
 
 	const aiScene* scene = aiImportFile(file, flags);
 
+	if (scene && scene->HasAnimations())
+	{
+		for (int i = 0; i < scene->mNumAnimations; i++)
+		{
+			meta->animations.push_back(App->importer->animation->Import(file, scene->mAnimations[i], meta->loaded ? meta->animations[i]:App->GenerateID()));
+		}
+	}
+
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		if (!meta) //If there was no meta, we create a new one for this resource and generate id.
-		{
-			meta = new ResourceModel::ModelMetaFile();
-			meta->id = App->GenerateID();
-		}
-
 		std::map<uint, uint> meshes; //map for imported meshes
 		std::vector<ResourceModel::ModelNode> nodes;
 		ImportNode(scene->mRootNode, scene, 0, file, nodes, meta, meshes);
@@ -284,6 +291,12 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 		meshes.value().push_back(mesh);
 	}
 
+	nlohmann::json::iterator animations = meta_file.find("animations");
+	for each (uint animation in meta->animations)
+	{
+		meshes.value().push_back(animation);
+	}
+
 	std::ofstream o(meta->file);
 	o << std::setw(4) << meta_file << std::endl;
 
@@ -322,6 +335,11 @@ bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* met
 	for (nlohmann::json::iterator it = meshes.begin(); it != meshes.end(); ++it)
 	{
 		meta->meshes.push_back(it.value());
+	}
+	nlohmann::json animations = json.find("animations").value();
+	for (nlohmann::json::iterator it = animations.begin(); it != meshes.end(); ++it)
+	{
+		meta->animations.push_back(it.value());
 	}
 
 	meta->loaded = true;

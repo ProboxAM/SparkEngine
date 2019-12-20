@@ -40,6 +40,7 @@ private:
 	void CleanOldFiles();
 	void GetNewFiles();
 	void CreateTree(const std::string &path, Project_Node* parent = nullptr);
+	void DrawResourceNodes(const std::string &file, uint &childs);
 
 	void CleanTree();
 

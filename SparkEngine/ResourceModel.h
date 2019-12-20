@@ -22,6 +22,7 @@ public:
 	struct ModelMetaFile : public MetaFile
 	{
 		std::vector<uint> meshes;
+		std::vector<uint> animations;
 
 		enum MODEL_IMPORT_SETTING { MAX_QUALITY, QUALITY, FAST, CUSTOM };
 		MODEL_IMPORT_SETTING setting = MAX_QUALITY;
