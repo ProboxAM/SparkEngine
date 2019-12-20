@@ -24,6 +24,7 @@ public:
 
 private:
 	struct Project_Node {
+		bool model = false;
 		std::string folder = "";
 		std::string full_path = "";
 		Project_Node* parent = nullptr;
@@ -45,8 +46,7 @@ private:
 	int text_size, image_size;
 	bool change_folder = false;
 	std::string folder_to_change = "";
-
-	std::map<std::string, ResourceTexture*> assets_in_folder;
+	std::vector<std::string> opened_files;
 
 	std::vector<Project_Node*> project_tree;
 	Project_Node* current_node = nullptr;

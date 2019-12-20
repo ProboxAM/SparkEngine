@@ -19,6 +19,7 @@ class ResourceMesh : public Resource
 public:
 	~ResourceMesh();
 	ResourceMesh(uint id);
+	std::string name;
 
 	float3* vertices = nullptr;
 	float2* uv = nullptr;

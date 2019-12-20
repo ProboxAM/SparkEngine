@@ -177,7 +177,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 			resource_node.mesh = it->second;
 		else
 		{
-			resource_node.mesh = App->importer->mesh->Import(file, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : App->GenerateID());
+			resource_node.mesh = App->importer->mesh->Import(file, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : App->GenerateID(), node->mName.C_Str());
 			imported_meshes.emplace(node->mMeshes[0], resource_node.mesh);
 		}
 

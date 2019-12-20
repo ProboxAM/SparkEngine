@@ -284,6 +284,24 @@ GameObject* ModuleScene::CreateGameObject(GameObject* parent, const std::string 
 	return go;
 }
 
+GameObject * ModuleScene::CreateGameObject(ResourceMesh * resource)
+{
+	GameObject* go = new GameObject();
+	go->transform->SetParent(root->transform);
+	root->transform->AddChild(go->transform);
+	go->SetName(std::to_string(resource->GetID()).c_str());
+
+	ComponentMesh* c_mesh = (ComponentMesh*)go->AddComponent(COMPONENT_TYPE::MESH);
+	c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndReference(resource->GetID()));
+
+	ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
+	c_text->AddTexture((ResourceTexture*)App->resources->GetAndReference(App->importer->texture->checkers));
+
+	gameobjects.emplace(go->GetId(), go);
+	go->transform->UpdateTransformMatrix();
+	return nullptr;
+}
+
 GameObject* ModuleScene::CreatePrimitiveGameObject(PRIMITIVE_TYPE type, GameObject * parent)
 {
 	std::string name;
