@@ -16,6 +16,7 @@
 #include "PanelProject.h"
 #include "PanelResources.h"
 #include "PanelGame.h"
+#include "PanelAnimator.h"
 #include "MeshImporter.h"
 
 #include "ImGui/imgui_impl_sdl.h"
@@ -58,6 +59,7 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[GAME] = new PanelGame(true);
 	panels[PROJECT] = new PanelProject(true);
 	panels[RESOURCES] = new PanelResources(true);
+	panels[ANIMATOR] = new PanelAnimator(true);
 
 	Load(it);
 
@@ -187,6 +189,8 @@ update_status ModuleEditor::Update()
 				panels[PROJECT]->Activate();
 			if (ImGui::MenuItem("Resources", nullptr, panels[RESOURCES]->IsActive()))
 				panels[RESOURCES]->Activate();
+			if (ImGui::MenuItem("Animator", nullptr, panels[ANIMATOR]->IsActive()))
+				panels[ANIMATOR]->Activate();
 			ImGui::EndMenu();
 		}
 

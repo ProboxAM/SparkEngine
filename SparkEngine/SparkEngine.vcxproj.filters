@@ -52,6 +52,9 @@
     <Filter Include="Sources\ImGuizmo">
       <UniqueIdentifier>{c9651052-382f-499c-8ee3-2dc30c7bb4c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\NodeEditor">
+      <UniqueIdentifier>{5de7e296-9b37-4ad4-89bd-a5709610f886}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -420,6 +423,34 @@
     <ClInclude Include="PanelGame.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentAnimator.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatorController.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelAnimator.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="NodeEditor\Include\imgui_node_editor.h">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeEditor\Source\crude_json.h">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeEditor\Source\imgui_bezier_math.h">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeEditor\Source\imgui_canvas.h">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeEditor\Source\imgui_extra_math.h">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeEditor\Source\imgui_node_editor_internal.h">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -659,6 +690,27 @@
     <ClCompile Include="PanelGame.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentAnimator.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatorController.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelAnimator.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeEditor\Source\crude_json.cpp">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeEditor\Source\imgui_canvas.cpp">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeEditor\Source\imgui_node_editor.cpp">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeEditor\Source\imgui_node_editor_api.cpp">
+      <Filter>Sources\NodeEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">
@@ -670,5 +722,17 @@
     <None Include="MathGeoLib\Math\Matrix.inl">
       <Filter>Sources\MathGeoLib\Math</Filter>
     </None>
+    <None Include="NodeEditor\Source\imgui_bezier_math.inl">
+      <Filter>Sources\NodeEditor</Filter>
+    </None>
+    <None Include="NodeEditor\Source\imgui_extra_math.inl">
+      <Filter>Sources\NodeEditor</Filter>
+    </None>
+    <None Include="NodeEditor\Source\imgui_node_editor_internal.inl">
+      <Filter>Sources\NodeEditor</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SparkEngine.rc" />
   </ItemGroup>
 </Project>
