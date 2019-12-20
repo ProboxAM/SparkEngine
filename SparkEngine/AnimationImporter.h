@@ -18,8 +18,6 @@ public:
 	bool SaveAnimation(ResourceAnimation* anim);
 
 	bool Load(ResourceAnimation* resource);
-private:
-	bool CreateAnimationAsset(ResourceAnimation* resource);
 };
 
 #endif // !_ANIMATION_IMPORTER_H_
