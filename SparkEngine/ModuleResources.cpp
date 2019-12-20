@@ -361,6 +361,17 @@ void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource
 				mesh_resource->SetFile(meta->original_file);
 			}			
 		}
+		for each (uint animation in model_meta->animations)
+		{
+			if (animation != 0)
+			{
+				Resource* animation_resource = CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, animation);
+				animation_resource->SetExportedFile(LIBRARY_ANIMATION_FOLDER + std::to_string(animation) + ANIM_EXTENSION);
+				animation_resource->SetFile(meta->original_file);
+				animation_resource->AddReference();
+				animation_resource->RemoveReference();
+			}
+		}
 	}
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:

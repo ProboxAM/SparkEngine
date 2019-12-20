@@ -282,7 +282,8 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 		{ "sort_by_type", meta->sort_by_type },
 		{ "find_degenerates", meta->find_degenerates },
 		{ "find_invalid_data", meta->find_invalid_data },
-		{ "meshes",{}}
+		{ "meshes",{}},
+		{ "animations",{}}
 	};
 
 	nlohmann::json::iterator meshes = meta_file.find("meshes");
@@ -294,7 +295,7 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 	nlohmann::json::iterator animations = meta_file.find("animations");
 	for each (uint animation in meta->animations)
 	{
-		meshes.value().push_back(animation);
+		animations.value().push_back(animation);
 	}
 
 	std::ofstream o(meta->file);
@@ -337,7 +338,7 @@ bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* met
 		meta->meshes.push_back(it.value());
 	}
 	nlohmann::json animations = json.find("animations").value();
-	for (nlohmann::json::iterator it = animations.begin(); it != meshes.end(); ++it)
+	for (nlohmann::json::iterator it = animations.begin(); it != animations.end(); ++it)
 	{
 		meta->animations.push_back(it.value());
 	}

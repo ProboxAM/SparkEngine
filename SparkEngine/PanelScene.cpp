@@ -57,15 +57,16 @@ void PanelScene::Draw()
 			Resource* res = App->resources->Get((*id));
 			if (res)
 			{
-				if (res->GetType() == Resource::RESOURCE_TYPE::R_MODEL)
+				switch (res->GetType())
 				{
+				case Resource::RESOURCE_TYPE::R_MODEL:
 					res->AddReference();
 					App->scene->CreateGameObject((ResourceModel*)res);
 					res->RemoveReference();
-				}
-				else if (res->GetType() == Resource::RESOURCE_TYPE::R_TEXTURE)
+					break;
+				case Resource::RESOURCE_TYPE::R_TEXTURE:
 				{
-					GameObject* selected_object = App->scene->OnMousePicking(App->camera->GetRaycast());
+					GameObject * selected_object = App->scene->OnMousePicking(App->camera->GetRaycast());
 					if (selected_object)
 					{
 						ComponentTexture* c_texture = (ComponentTexture*)selected_object->GetComponent(COMPONENT_TYPE::TEXTURE);
@@ -76,9 +77,13 @@ void PanelScene::Draw()
 						}
 					}
 				}
-				else if (res->GetType() == Resource::RESOURCE_TYPE::R_MESH)
-				{
+					break;
+				case Resource::RESOURCE_TYPE::R_MESH:
 					App->scene->CreateGameObject((ResourceMesh*)res);
+					break;
+				case Resource::RESOURCE_TYPE::R_ANIMATION:
+					res->AddReference();//testing
+					break;
 				}
 			}
 		}
