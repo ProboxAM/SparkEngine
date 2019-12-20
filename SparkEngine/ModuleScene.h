@@ -10,6 +10,7 @@
 class GameObject;
 class ResourceModel;
 class ComponentCamera;
+class ResourceMesh;
 class Quadtree;
 enum PRIMITIVE_TYPE;
 
@@ -65,6 +66,7 @@ public:
 	GameObject* CreateRootGameObject(uint id);
 	GameObject* CreateGameObject(ResourceModel* resource, GameObject* parent = nullptr);
 	GameObject* CreateGameObject(GameObject* parent, const std::string &name, const float3 &position, const Quat &rotation, const float3 &scale, uint id);
+	GameObject* CreateGameObject(ResourceMesh* resource);
 
 	GameObject* OnMousePicking(const LineSegment &line);
 

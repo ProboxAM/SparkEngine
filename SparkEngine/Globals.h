@@ -69,3 +69,4 @@ enum update_status
 #define TEXTURE_EXTENSION ".dds"
 #define MATERIAL_EXTENSION ".smat"
 #define SCENE_EXTENSION ".spk"
+#define ANIM_EXTENSION ".sanim"

@@ -121,9 +121,10 @@ bool MeshImporter::Load(ResourceMesh* resource)
 	return resource;
 }
 
-uint MeshImporter::Import(const char* file, const aiMesh* mesh, uint id)
+uint MeshImporter::Import(const char* file, const aiMesh* mesh, uint id, std::string name)
 {
 	ResourceMesh* resource = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, id);
+	resource->name = name;
 
 	//Load vertices
 	resource->total_vertices = mesh->mNumVertices;

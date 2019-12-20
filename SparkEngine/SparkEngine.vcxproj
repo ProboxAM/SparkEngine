@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h" />
+    <ClInclude Include="AnimationImporter.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -108,6 +109,7 @@
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Importer.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="ModuleImporter.h" />
     <ClInclude Include="ModuleResources.h" />
@@ -125,7 +127,7 @@
     <ClInclude Include="pcg_uint128.hpp" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="resource1.h" />
+    <ClInclude Include="ResourceAnimation.h" />
     <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="ModelImporter.h" />
@@ -212,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp" />
+    <ClCompile Include="AnimationImporter.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -245,6 +248,7 @@
     <ClCompile Include="PanelResources.cpp" />
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceAnimation.cpp" />
     <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />

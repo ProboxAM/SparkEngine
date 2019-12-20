@@ -450,6 +450,14 @@
     </ClInclude>
     <ClInclude Include="NodeEditor\Source\imgui_node_editor_internal.h">
       <Filter>Sources\NodeEditor</Filter>
+    <ClInclude Include="ResourceAnimation.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationImporter.h">
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -710,6 +718,11 @@
     </ClCompile>
     <ClCompile Include="NodeEditor\Source\imgui_node_editor_api.cpp">
       <Filter>Sources\NodeEditor</Filter>
+    <ClCompile Include="ResourceAnimation.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationImporter.cpp">
+      <Filter>Sources\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

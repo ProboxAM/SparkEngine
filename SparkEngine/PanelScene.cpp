@@ -76,6 +76,10 @@ void PanelScene::Draw()
 						}
 					}
 				}
+				else if (res->GetType() == Resource::RESOURCE_TYPE::R_MESH)
+				{
+					App->scene->CreateGameObject((ResourceMesh*)res);
+				}
 			}
 		}
 		ImGui::EndDragDropTarget();
