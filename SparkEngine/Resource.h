@@ -16,6 +16,7 @@ public:
 		R_MATERIAL,
 		R_ANIMATION,
 		R_ANIMATOR,
+		R_BONE,
 		R_NONE
 	};
 

@@ -432,6 +432,15 @@
     <ClInclude Include="AnimationImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="BoneImporter.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceBone.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatorController.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
     <ClInclude Include="ComponentAnimator.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
@@ -705,6 +714,15 @@
       <Filter>Sources\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Key.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneImporter.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceBone.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatorController.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
     <ClCompile Include="ComponentAnimator.cpp">

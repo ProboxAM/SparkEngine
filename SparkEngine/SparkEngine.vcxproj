@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClInclude Include="AnimationImporter.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BoneImporter.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentAnimator.h" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceAnimation.h" />
     <ClInclude Include="ResourceAnimatorController.h" />
+    <ClInclude Include="ResourceBone.h" />
     <ClInclude Include="ResourceMaterial.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="ModelImporter.h" />
@@ -215,6 +217,7 @@
   <ItemGroup>
     <ClCompile Include="AnimationImporter.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BoneImporter.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentAnimator.cpp" />
@@ -250,6 +253,7 @@
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceAnimation.cpp" />
     <ClCompile Include="ResourceAnimatorController.cpp" />
+    <ClCompile Include="ResourceBone.cpp" />
     <ClCompile Include="ResourceMaterial.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />

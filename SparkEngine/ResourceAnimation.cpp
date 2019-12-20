@@ -29,7 +29,6 @@ void ResourceAnimation::UnLoad()
 		delete[] channels[i].rotation_keys;
 	}
 
-	//delete[] channels;
 	channels = nullptr;
 }
 
