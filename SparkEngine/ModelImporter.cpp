@@ -2,24 +2,22 @@
 #include "ModuleResources.h"
 #include "ModuleFileSystem.h"
 #include "ModuleImporter.h"
+
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 #include "AnimationImporter.h"
+#include "BoneImporter.h"
 
-#include "ResourceModel.h"
+#include "ModelImporter.h"
+
+#include <fstream>
+#include <iomanip>
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
 
-#include "MathGeoLib/Math/float4x4.h"
-#include "MathGeoLib/Math/Quat.h"
-
-#include "ModelImporter.h"
-
-#include <fstream>
-#include <iomanip>
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -93,6 +91,7 @@ bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resourc
 	node.parent = (*it)["parent"];
 	node.texture = (*it)["texture"];
 	node.mesh = (*it)["mesh"];
+	node.bone = (*it)["bone"];
 
 	resource->nodes.push_back(node);
 
@@ -113,48 +112,77 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	}
 
 	const aiScene* scene = aiImportFile(file, flags);
+	if (!scene)
+	{
+		LOG("Error importing file %s", file);
+		return false;
+	}
 
-	if (scene && scene->HasAnimations())
+	if (scene->HasMeshes())
+	{
+		//import meshes
+		uint num_meshes = scene->mNumMeshes;
+		for (int i = 0; i < num_meshes; i++)
+		{
+			meshes.push_back(App->importer->mesh->Import(file, scene->mMeshes[i], meta->loaded ? meta->meshes[i] : App->GenerateID(), "monkahmm"));
+			//import bones of mesh
+			if (scene->mMeshes[i]->HasBones())
+			{
+				uint num_bones = scene->mMeshes[i]->mNumBones;
+				for (int j = 0; j < num_bones; j++)
+				{
+					bones.emplace(scene->mMeshes[i]->mBones[j]->mName.C_Str(),
+						App->importer->bone->Import(file, scene->mMeshes[i]->mBones[j],
+							meta->loaded ? meta->bones[std::string(scene->mMeshes[i]->mBones[j]->mName.C_Str())] : App->GenerateID()));
+				}
+			}
+		}
+	}
+
+	//import animations
+	if (scene->HasAnimations())
 	{
 		for (int i = 0; i < scene->mNumAnimations; i++)
 		{
-			meta->animations.push_back(App->importer->animation->Import(file, scene->mAnimations[i], meta->loaded ? meta->animations[i]:App->GenerateID()));
+			animations.push_back(App->importer->animation->Import(file, scene->mAnimations[i], meta->loaded ? meta->animations[i] : App->GenerateID()));
 		}
 	}
 
-	if (scene != nullptr && scene->HasMeshes())
+	//create nodes
+	std::vector<ResourceModel::ModelNode> nodes;
+	ImportNode(scene->mRootNode, scene, 0, file, nodes);
+
+	std::string root_name;
+	App->fsystem->SplitFilePath(file, nullptr, &root_name, nullptr);
+	nodes[0].name = root_name;
+
+	output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
+	Save(output_file, nodes);
+
+	meta->meshes.clear();
+	meta->bones.clear();
+	meta->animations.clear();
+	meta->bones = bones;
+	for each (ResourceModel::ModelNode node in nodes)
 	{
-		std::map<uint, uint> meshes; //map for imported meshes
-		std::vector<ResourceModel::ModelNode> nodes;
-		ImportNode(scene->mRootNode, scene, 0, file, nodes, meta, meshes);
-
-		std::string root_name;
-		App->fsystem->SplitFilePath(file,nullptr, &root_name, nullptr);
-		nodes[0].name = root_name;
-
-		output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
-		Save(output_file, nodes);
-
-		meta->meshes.clear();
-		for each (ResourceModel::ModelNode node in nodes)
-		{
-			meta->meshes.push_back(node.mesh);
-		}
-		App->fsystem->GetFileModificationDate(file, meta->modification_date);
-		meta->exported_file = output_file;
-		meta->original_file = file;
-		meta->file = std::string(file) + ".meta";
-		SaveMeta(meta);
-
-		aiReleaseImport(scene);
-		return true;
+		meta->meshes.push_back(node.mesh);
+	}
+	for (int i = 0; i < animations.size(); i++)
+	{
+		meta->animations.push_back(animations[i]);
 	}
 
-	LOG("Error importing file %s", file);
-	return false;
+	App->fsystem->GetFileModificationDate(file, meta->modification_date);
+	meta->exported_file = output_file;
+	meta->original_file = file;
+	meta->file = std::string(file) + ".meta";
+	SaveMeta(meta);
+
+	aiReleaseImport(scene);
+	return true;
 }
 
-void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, const char* file, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta, std::map<uint, uint>& imported_meshes)
+void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint parent_id, const char* file, std::vector<ResourceModel::ModelNode>& nodes)
 {
 	uint index = nodes.size();
 	ResourceModel::ModelNode resource_node;
@@ -177,20 +205,11 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 
 	if (node->mNumMeshes > 0)
 	{
-		aiMesh* current_mesh = scene->mMeshes[node->mMeshes[0]]; //only one mesh for object for now
-
-		std::map<uint, uint>::iterator it = imported_meshes.find(node->mMeshes[0]);//check if mesh was already imported. this way we only import a mesh once even if multiple nodes use it
-		if (it != imported_meshes.end())
-			resource_node.mesh = it->second;
-		else
-		{
-			resource_node.mesh = App->importer->mesh->Import(file, current_mesh, meta->meshes.size() > 0 ? meta->meshes[index] : App->GenerateID(), node->mName.C_Str());
-			imported_meshes.emplace(node->mMeshes[0], resource_node.mesh);
-		}
+		resource_node.mesh = meshes[node->mMeshes[0]]; //only one mesh for object for now
 
 		//Check for material, and then load texture if it has, otherwise apply default texture	
 		aiString texture_path;
-		scene->mMaterials[current_mesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
+		scene->mMaterials[scene->mMeshes[node->mMeshes[0]]->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &texture_path);
 		if (texture_path.length > 0)
 		{
 			std::string tex_file, extension, path, texture_full_path;
@@ -212,6 +231,11 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		}
 		else
 			resource_node.texture = App->importer->texture->checkers;
+
+		if (bones.find(std::string(node->mName.C_Str())) != bones.end())
+		{
+			resource_node.bone = bones[std::string(node->mName.C_Str())];
+		}
 	}
 	nodes.push_back(resource_node);
 
@@ -219,7 +243,7 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	{
 		for (int i = 0; i < node->mNumChildren; i++)
 		{
-			ImportNode(node->mChildren[i], scene, index, file, nodes, meta, imported_meshes);
+			ImportNode(node->mChildren[i], scene, index, file, nodes);
 		}
 	}
 }
@@ -247,6 +271,7 @@ bool ModelImporter::Save(std::string file, const std::vector<ResourceModel::Mode
 			{ "rotation",{ node.rotation.x, node.rotation.y, node.rotation.z, node.rotation.w } },
 			{ "parent", node.parent },
 			{ "mesh", node.mesh },
+			{ "bone", node.bone },
 			{ "texture", node.texture }
 		};
 		json.push_back(object);
@@ -282,21 +307,10 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 		{ "sort_by_type", meta->sort_by_type },
 		{ "find_degenerates", meta->find_degenerates },
 		{ "find_invalid_data", meta->find_invalid_data },
-		{ "meshes",{}},
-		{ "animations",{}}
+		{ "meshes", meta->meshes},
+		{ "animations",meta->animations},
+		{ "bones", meta->bones }
 	};
-
-	nlohmann::json::iterator meshes = meta_file.find("meshes");
-	for each (uint mesh in meta->meshes)
-	{
-		meshes.value().push_back(mesh);
-	}
-
-	nlohmann::json::iterator animations = meta_file.find("animations");
-	for each (uint animation in meta->animations)
-	{
-		animations.value().push_back(animation);
-	}
 
 	std::ofstream o(meta->file);
 	o << std::setw(4) << meta_file << std::endl;
@@ -332,16 +346,9 @@ bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* met
 	meta->find_degenerates = json["find_degenerates"];
 	meta->find_invalid_data = json["find_invalid_data"];
 
-	nlohmann::json meshes = json.find("meshes").value();
-	for (nlohmann::json::iterator it = meshes.begin(); it != meshes.end(); ++it)
-	{
-		meta->meshes.push_back(it.value());
-	}
-	nlohmann::json animations = json.find("animations").value();
-	for (nlohmann::json::iterator it = animations.begin(); it != animations.end(); ++it)
-	{
-		meta->animations.push_back(it.value());
-	}
+	meta->meshes = json["meshes"].get<std::vector<uint>>();
+	meta->animations = json["animations"].get<std::vector<uint>>();
+	meta->bones = json["bones"].get<std::map<std::string, uint>>();
 
 	meta->loaded = true;
 

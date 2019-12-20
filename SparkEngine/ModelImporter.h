@@ -2,8 +2,10 @@
 #define _MODEL_IMPORTER_H_
 
 #include "Importer.h"
+
 #include "ResourceModel.h"
 #include "nlohmann\json.hpp"
+#include <map>
 
 class aiNode;
 class aiScene;
@@ -27,11 +29,13 @@ public:
 
 private:
 	bool LoadNode(nlohmann::json::iterator it, ResourceModel* resource);
-	void ImportNode(const aiNode * node, const aiScene * scene, uint parent_id, const char* file, std::vector<ResourceModel::ModelNode>& nodes, ResourceModel::ModelMetaFile*& meta, std::map<uint,uint>& imported_meshes);
+	void ImportNode(const aiNode * node, const aiScene * scene, uint parent_id, const char* file, std::vector<ResourceModel::ModelNode>& nodes);
 	void FixScaleUnits(float3 &scale);
+
+private:
+	std::vector<uint> meshes;
+	std::map<std::string, uint> bones;
+	std::vector<uint> animations;
 };
 
 #endif // !_MODEL_IMPORTER_H_
-
-
-

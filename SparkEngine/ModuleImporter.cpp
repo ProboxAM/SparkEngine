@@ -1,6 +1,8 @@
 #include "ModelImporter.h"
 #include "TextureImporter.h"
 #include "MeshImporter.h"
+#include "AnimationImporter.h"
+#include "BoneImporter.h"
 
 #include "ModuleImporter.h"
 
@@ -20,10 +22,14 @@ bool ModuleImporter::Init(const nlohmann::json::iterator& it)
 	model = new ModelImporter();
 	texture = new TextureImporter();
 	mesh = new MeshImporter();
+	animation = new AnimationImporter();
+	bone = new BoneImporter();
 
 	model->Init();
 	texture->Init();
 	mesh->Init();
+	animation->Init();
+	bone->Init();
 
 	Load(it);
 
@@ -35,6 +41,8 @@ bool ModuleImporter::Start()
 	model->Start();
 	texture->Start();
 	mesh->Start();
+	animation->Start();
+	bone->Start();
 
 	return true;
 }

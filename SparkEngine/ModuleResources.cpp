@@ -9,6 +9,7 @@
 
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
+#include "ResourceBone.h"
 #include "ResourceAnimation.h"
 
 #include <fstream>
@@ -166,6 +167,9 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 			break;
 		case Resource::R_ANIMATION:
 			r = new ResourceAnimation(id);
+			break;
+		case Resource::R_BONE:
+			r = new ResourceBone(id);
 			break;
 		case Resource::R_NONE:
 			break;
