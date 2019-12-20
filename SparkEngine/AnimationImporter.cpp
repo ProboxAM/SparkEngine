@@ -75,18 +75,19 @@ uint AnimationImporter::Import(const char * file, const aiAnimation * anim, uint
 		channel.num_rotation_keys = anim->mChannels[i]->mNumRotationKeys;
 		channel.rotation_keys = new quatKey[channel.num_rotation_keys];
 
-		for (uint j = 0; j < channel.num_position_keys; j++)
+		for (uint j = 0; j < channel.num_rotation_keys; j++)
 		{
-			Quat rotation = { anim->mChannels[i]->mRotationKeys[j].mValue.x, anim->mChannels[i]->mRotationKeys[j].mValue.y,
-				anim->mChannels[i]->mRotationKeys[j].mValue.z, anim->mChannels[i]->mRotationKeys[j].mValue.w };
+			Quat rotation = { anim->mChannels[i]->mRotationKeys[j].mValue.w, anim->mChannels[i]->mRotationKeys[j].mValue.x,
+				anim->mChannels[i]->mRotationKeys[j].mValue.y, anim->mChannels[i]->mRotationKeys[j].mValue.z };
 			double value = anim->mChannels[i]->mRotationKeys[j].mTime;
 			quatKey key = quatKey(rotation, value);
 
-			memcpy(&channel.position_keys[j], &key, sizeof(quatKey));
+			memcpy(&channel.rotation_keys[j], &key, sizeof(quatKey));
 		}
+
+		resource->channels[i] = channel;
 	}
 
-	LOG("Imported animation %s with %i channels", resource->name, resource->num_channels);
 	SaveAnimation(resource);
 	resource->UnLoad();
 	resource->SetFile(file);
@@ -99,10 +100,9 @@ bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 	uint size = sizeof(uint) + anim->name.size() + sizeof(uint) * 3;
 	for (uint i = 0; i < anim->num_channels; i++)
 	{
-		size += sizeof(uint) + sizeof(anim->channels[i].name) + sizeof(uint) * 3 +
+		size += sizeof(uint) + anim->channels[i].name.size() + sizeof(uint) * 3 +
 			sizeof(float3Key) * anim->channels[i].num_position_keys + sizeof(float3Key) * anim->channels[i].num_scale_keys + sizeof(quatKey) * anim->channels[i].num_rotation_keys;
 	}
-		
 	// Allocate
 	char* data = new char[size];
 	char* cursor = data;
@@ -113,7 +113,7 @@ bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 	memcpy(cursor, &name_size, bytes);
 	cursor += bytes;
 	bytes = anim->name.size();
-	memcpy(cursor, &anim->name, bytes);
+	memcpy(cursor, anim->name.c_str(), bytes);
 	cursor += bytes;
 
 	// Store duration, ticks and num channels
@@ -134,7 +134,7 @@ bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 		memcpy(cursor, &name_size, bytes);
 		cursor += bytes;
 		bytes = anim->channels[i].name.size();
-		memcpy(cursor, &anim->channels[i].name, bytes);
+		memcpy(cursor, anim->channels[i].name.c_str(), bytes);
 		cursor += bytes;
 
 		//Store num position, scale, rotation keys
@@ -148,17 +148,17 @@ bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 
 		//Store position keys
 		bytes = sizeof(float3Key) * anim->channels[i].num_position_keys;
-		memcpy(cursor, &anim->channels[i].position_keys, bytes);
+		memcpy(cursor, anim->channels[i].position_keys, bytes);
 		cursor += bytes;
 
 		//Store scale keys
 		bytes = sizeof(float3Key) * anim->channels[i].num_scale_keys;
-		memcpy(cursor, &anim->channels[i].scale_keys, bytes);
+		memcpy(cursor, anim->channels[i].scale_keys, bytes);
 		cursor += bytes;
 
 		//Store rotation keys
 		bytes = sizeof(quatKey) * anim->channels[i].num_rotation_keys;
-		memcpy(cursor, &anim->channels[i].rotation_keys, bytes);
+		memcpy(cursor, anim->channels[i].rotation_keys, bytes);
 		cursor += bytes;
 	}
 
@@ -185,9 +185,9 @@ bool AnimationImporter::Load(ResourceAnimation* resource)
 	cursor += bytes;
 
 	//Load name
-	bytes = name_size * sizeof(char);
-	resource->name = new char[name_size + 1];
-	memcpy(&resource->name, cursor, bytes);
+	bytes = name_size;
+	resource->name.resize(bytes);
+	memcpy(&resource->name[0], cursor, bytes);
 	cursor += bytes;
 
 	//Load channel nums, duration and ticks per second
@@ -210,8 +210,8 @@ bool AnimationImporter::Load(ResourceAnimation* resource)
 		cursor += bytes;
 
 		//Load name
-		bytes = name_size * sizeof(char);
-		resource->channels[i].name = new char[name_size + 1];
+		bytes = name_size;
+		resource->channels[i].name.resize(bytes);
 		memcpy(&resource->channels[i].name, cursor, bytes);
 		cursor += bytes;
 

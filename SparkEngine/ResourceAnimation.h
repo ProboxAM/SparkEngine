@@ -31,6 +31,10 @@ public:
 
 	std::string GetTypeString() const;
 
+	void UnLoad();
+
+	void Load();
+
 public:
 	std::string name = "";
 	uint tick_duration = 0;

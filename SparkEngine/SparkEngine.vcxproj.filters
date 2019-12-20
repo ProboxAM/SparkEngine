@@ -674,6 +674,7 @@
     <ClCompile Include="AnimationImporter.cpp">
       <Filter>Sources\Importers</Filter>
     </ClCompile>
+    <ClCompile Include="Key.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

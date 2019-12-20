@@ -1,24 +1,25 @@
 #ifndef _KEY_H_
 #define _KEY_H_
 
-template <class T>
-class Key {
+#include "MathGeoLib\Math\Quat.h"
+#include "MathGeoLib\Math\float3.h"
+
+class float3Key {
 public:
-	T value;
+	float3 value;
 	double time;
 
-	Key() {}
-	Key(T v, double t);
+	float3Key() {}
+	float3Key(float3 v, double t);
 };
 
-typedef Key<float3> float3Key;
-typedef Key<Quat> quatKey;
+class quatKey {
+public:
+	Quat value;
+	double time;
+
+	quatKey() {}
+	quatKey(Quat v, double t);
+};
 
 #endif
-
-template<class T>
-inline Key<T>::Key(T v, double t)
-{
-	value = v;
-	time = t;
-}
