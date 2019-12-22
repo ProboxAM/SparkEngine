@@ -8,6 +8,7 @@ class MeshImporter;
 class TextureImporter;
 class ModelImporter;
 class AnimationImporter;
+class BoneImporter;
 
 class ModuleImporter : public Module
 {
@@ -27,6 +28,7 @@ public:
 	TextureImporter* texture;
 	ModelImporter* model;
 	AnimationImporter* animation;
+	BoneImporter* bone;
 };
 
 #endif

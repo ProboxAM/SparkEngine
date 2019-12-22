@@ -71,4 +71,4 @@ enum update_status
 #define MATERIAL_EXTENSION ".smat"
 #define SCENE_EXTENSION ".spk"
 #define ANIM_EXTENSION ".sanim"
-#define BONE_EXTENSION "sbone"
+#define BONE_EXTENSION ".sbone"

@@ -467,6 +467,9 @@
     </ClInclude>
     <ClInclude Include="ResourceAnimatorController.h">
       <Filter>Sources\Resources</Filter>
+	</ClInclude>
+    <ClInclude Include="ComponentBone.h">
+      <Filter>Sources\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -745,6 +748,9 @@
     </ClCompile>
     <ClCompile Include="ResourceAnimatorController.cpp">
       <Filter>Sources\Resources</Filter>
+	</ClCompile>
+    <ClCompile Include="ComponentBone.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

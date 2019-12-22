@@ -7,12 +7,14 @@
 #include "ResourceMesh.h"
 #include "ResourceTexture.h"
 #include "ResourceModel.h"
+#include "ResourceBone.h"
 
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentBone.h"
 
 #include "Importer.h"
 #include "MeshImporter.h"
@@ -401,7 +403,11 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 			else
 				c_text->AddTexture((ResourceTexture*)App->resources->GetAndReference(App->importer->texture->checkers));
 		}
-
+		if (node.bone > 0)
+		{
+			ComponentBone* c_bone = (ComponentBone*)go->AddComponent(COMPONENT_TYPE::BONE);
+			c_bone->AddBone((ResourceBone*)App->resources->GetAndReference(node.bone));
+		}
 
 		gameobjects.emplace(go->GetId(), go);
 		temp_go.push_back(go);

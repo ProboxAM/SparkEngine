@@ -3,6 +3,7 @@
 
 #include "Resource.h"
 #include "MathGeoLib\Math\Quat.h"
+#include <map>
 
 class ResourceModel : public Resource
 {
@@ -17,12 +18,14 @@ public:
 		uint parent;
 		uint mesh = 0;
 		uint texture = 0;
+		uint bone = 0;
 	};
 
 	struct ModelMetaFile : public MetaFile
 	{
 		std::vector<uint> meshes;
 		std::vector<uint> animations;
+		std::map<std::string, uint> bones;
 
 		enum MODEL_IMPORT_SETTING { MAX_QUALITY, QUALITY, FAST, CUSTOM };
 		MODEL_IMPORT_SETTING setting = MAX_QUALITY;

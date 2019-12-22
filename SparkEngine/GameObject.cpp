@@ -4,6 +4,7 @@
 #include "ComponentTexture.h"
 #include "ComponentCamera.h"
 #include "ComponentAnimator.h"
+#include "ComponentBone.h"
 #include "GameObject.h"
 
 
@@ -76,6 +77,9 @@ Component* GameObject::AddComponent(COMPONENT_TYPE type)
 		break;
 	case COMPONENT_TYPE::LIGHT:
 		break;	
+	case COMPONENT_TYPE::BONE:
+		c = new ComponentBone(this);
+		break;
 	case COMPONENT_TYPE::CAMERA:
 		c = new ComponentCamera(this);
 		break;

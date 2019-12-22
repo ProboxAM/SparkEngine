@@ -1,12 +1,14 @@
 #include "Application.h"
-#include "ModuleResources.h"
 #include "ModuleFileSystem.h"
-#include "ResourceBone.h"
+#include "ModuleResources.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
 #include "Assimp/include/cfileio.h"
+
+#include "MathGeoLib\Math\float4x4.h"
+#include "ResourceBone.h"
 
 #include "BoneImporter.h"
 
@@ -21,9 +23,10 @@ BoneImporter::~BoneImporter()
 {
 }
 
-uint BoneImporter::Import(const char * file, const aiBone * bone, uint id)
+uint BoneImporter::Import(const char* file, const aiBone* bone, uint id)
 {
-	ResourceBone* resource = (ResourceBone*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, id);
+	ResourceBone* resource = (ResourceBone*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_BONE, id);
+
 	resource->name = bone->mName.C_Str();
 	resource->matrix = float4x4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.a2, bone->mOffsetMatrix.a3, bone->mOffsetMatrix.a4,
 		bone->mOffsetMatrix.b1, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.b4,
@@ -31,6 +34,8 @@ uint BoneImporter::Import(const char * file, const aiBone * bone, uint id)
 		bone->mOffsetMatrix.d1, bone->mOffsetMatrix.d2, bone->mOffsetMatrix.d3, bone->mOffsetMatrix.d4);
 
 	resource->num_weights = bone->mNumWeights;
+	resource->weights = new float[resource->num_weights];
+	resource->vertex_ids = new uint[resource->num_weights];
 	for (uint i = 0; i < resource->num_weights; i++)
 	{
 		memcpy(&resource->weights[i], &bone->mWeights[i].mWeight, sizeof(float));
