@@ -565,6 +565,28 @@ void ModuleRenderer3D::DrawSphere(float3 position, float radius)
 	glColor3f(1.f, 1.f, 1.f);
 }
 
+void ModuleRenderer3D::DrawSphere(float4x4 matrix, float radius)
+{
+	glColor3f(0.8, 0.2, 0.1); // Red ball displaced to left.
+	glPushMatrix();
+	glMultMatrixf((float*)&matrix.Transposed());
+	//glScalef(radius, radius, radius);
+
+	ResourceMesh* m = (ResourceMesh*)App->resources->Get(App->importer->mesh->sphere);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
+	glVertexPointer(3, GL_FLOAT, 0, nullptr);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
+
+	glDrawElements(GL_TRIANGLES, m->total_indices, GL_UNSIGNED_INT, nullptr);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glPopMatrix();
+	glColor3f(1.f, 1.f, 1.f);
+}
+
 void ModuleRenderer3D::DrawGameViewPort()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, game_buffer_id); //set scene buffer to render to a texture
