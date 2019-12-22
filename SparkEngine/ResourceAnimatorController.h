@@ -94,17 +94,21 @@ public:
 	void RemoveClip(std::string name);
 
 	uint GetNumClips() const { return clips.size(); }
+	std::vector<Clip> GetClips() const { return clips; }
 
 	//States
 	void AddState(std::string name, Clip* clip);
 	void RemoveState(std::string name);
 
 	uint GetNumStates() const {return states.size(); }
+	std::vector<State> GetStates() const { return states; }
 
 	//Transitions
 	void AddTransition(State* source, State* target, bool trigger, uint blend);
 	void RemoveTransition(std::string source_name, std::string target_name);
+	std::vector<Transition> GetTransitions() const { return transitions; }
 
+	uint GetDefaultNode() const { return entry_node; };
 
 	ax::NodeEditor::EditorContext* GetEditorContext();
 

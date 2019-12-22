@@ -17,6 +17,7 @@ public:
 	~PanelAnimator();
 
 	void Draw();
+	void DrawStates();
 	void Start();
 	bool IsInside(const float2& pos) const;
 

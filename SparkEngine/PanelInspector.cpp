@@ -154,24 +154,24 @@ void PanelInspector::Draw()
 
 			if (comp[i]->type == COMPONENT_TYPE::ANIMATOR)
 			{
-				if (ImGui::CollapsingHeader("Animator")) {
-					if (ImGui::Selectable("Animator Controller")) {
-						
-						ImGui::OpenPopup("Select Animator Controller");
+				//if (ImGui::CollapsingHeader("Animator")) {
+				//	//if (ImGui::Selectable("Animator Controller")) {
+				//	//	
+				//	//	ImGui::OpenPopup("Select Animator Controller");
 
-						if (ImGui::BeginPopup("Select Animator Controller"))
-						{
-						/*	std::map<uint, Resource*> animator_controllers = App->resources->GetResources(Resource::RESOURCE_TYPE::R_ANIMATOR);
+				//	//	if (ImGui::BeginPopup("Select Animator Controller"))
+				//	//	{
+				//	//	/*	std::map<uint, Resource*> animator_controllers = App->resources->GetResources(Resource::RESOURCE_TYPE::R_ANIMATOR);
 
-							for (int i = 0; i < animator_controllers.size(); i++) {
-								if (ImGui::Selectable(animator_controllers[i]->get)) {
-									App->scene->selected_gameobject->AddComponent(COMPONENT_TYPE::CAMERA);
-								}
-							}
-							ImGui::EndPopup();*/
-						}
-					}
-				}
+				//	//		for (int i = 0; i < animator_controllers.size(); i++) {
+				//	//			if (ImGui::Selectable(animator_controllers[i]->get)) {
+				//	//				App->scene->selected_gameobject->AddComponent(COMPONENT_TYPE::CAMERA);
+				//	//			}
+				//	//		}
+				//	//		ImGui::EndPopup();*/
+				//	//	}
+				//	//}
+				//}
 			}
 
 			if (comp[i]->type == COMPONENT_TYPE::CAMERA)
