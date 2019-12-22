@@ -92,6 +92,8 @@ bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resourc
 	node.texture = (*it)["texture"];
 	node.mesh = (*it)["mesh"];
 	node.bone = (*it)["bone"];
+	node.root_bone = (*it)["root_bone"];
+	node.mesh_binded = (*it)["mesh_binded"];
 
 	resource->nodes.push_back(node);
 
@@ -124,16 +126,16 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 		uint num_meshes = scene->mNumMeshes;
 		for (int i = 0; i < num_meshes; i++)
 		{
-			meshes.push_back(App->importer->mesh->Import(file, scene->mMeshes[i], meta->loaded ? meta->meshes[i] : App->GenerateID(), "monkahmm"));
+			uint mesh_uid = meta->loaded ? meta->meshes[i] : App->GenerateID();
+			meshes.push_back(App->importer->mesh->Import(file, scene->mMeshes[i], mesh_uid, "monkahmm"));
 			//import bones of mesh
 			if (scene->mMeshes[i]->HasBones())
 			{
 				uint num_bones = scene->mMeshes[i]->mNumBones;
 				for (int j = 0; j < num_bones; j++)
 				{
-					bones.emplace(scene->mMeshes[i]->mBones[j]->mName.C_Str(),
-						App->importer->bone->Import(file, scene->mMeshes[i]->mBones[j],
-							meta->loaded ? meta->bones[std::string(scene->mMeshes[i]->mBones[j]->mName.C_Str())] : App->GenerateID()));
+					uint bone_uid = meta->loaded ? meta->bones[std::string(scene->mMeshes[i]->mBones[j]->mName.C_Str())] : App->GenerateID();
+					bones.emplace(scene->mMeshes[i]->mBones[j]->mName.C_Str(), App->importer->bone->Import(file, scene->mMeshes[i]->mBones[j], bone_uid));
 				}
 			}
 		}
@@ -168,6 +170,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	meta->original_file = file;
 	meta->file = std::string(file) + ".meta";
 	SaveMeta(meta);
+
 
 	aiReleaseImport(scene);
 	meshes.clear();
@@ -230,6 +233,35 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 	if (bones.find(std::string(node->mName.C_Str())) != bones.end())
 	{
 		resource_node.bone = bones[std::string(node->mName.C_Str())];
+
+		//find if its a root bone
+		uint num_meshes = scene->mNumMeshes;
+		for (int i = 0; i < num_meshes; i++) //check each mesh in scene for this bone.
+		{
+			bool not_root = false;
+			if (scene->mMeshes[i]->HasBones())
+			{
+				bool found = false;
+				uint num_bones = scene->mMeshes[i]->mNumBones;
+				for (int j = 0; j < num_bones; j++)
+				{
+					if (scene->mMeshes[i]->mBones[j]->mName == node->mParent->mName) //if parent is a bone, we cant be root
+					{
+						not_root = true;
+						break;
+					}
+					if (scene->mMeshes[i]->mBones[j]->mName == node->mName) //if bone in this mesh
+						found = true;
+				}
+				if (found && !not_root) //if bone was in mesh and is root
+				{
+					resource_node.root_bone = true;
+					resource_node.mesh_binded = meshes[i];
+				}
+			}
+			if (not_root)
+				break;
+		}
 	}
 
 	nodes.push_back(resource_node);
@@ -267,7 +299,9 @@ bool ModelImporter::Save(std::string file, const std::vector<ResourceModel::Mode
 			{ "parent", node.parent },
 			{ "mesh", node.mesh },
 			{ "bone", node.bone },
-			{ "texture", node.texture }
+			{ "texture", node.texture },
+			{ "root_bone", node.root_bone},
+			{ "mesh_binded", node.mesh_binded}
 		};
 		json.push_back(object);
 	}

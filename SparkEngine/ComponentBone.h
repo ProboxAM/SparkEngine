@@ -15,6 +15,7 @@ public:
 	bool debug_draw = false;
 	void Draw();
 	void AddBone(ResourceBone* b);
+	uint GetBoneID();
 private:
 	ResourceBone* bone = nullptr;
 };

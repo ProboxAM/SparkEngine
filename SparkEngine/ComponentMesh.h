@@ -4,6 +4,7 @@
 #include "Component.h"
 
 class ResourceMesh;
+class ComponentTransform;
 
 class ComponentMesh : public Component
 {
@@ -34,10 +35,14 @@ public:
 
 private:
 	ResourceMesh* mesh = nullptr;
+	ResourceMesh* deformable_mesh = nullptr;
+	
 
 public:
 	bool debug_vertex_normal = false, debug_face_normal = false, debug_bounding_box = false;
 	bool to_draw = false;
+
+	ComponentTransform* root_bone = nullptr;
 };
 
 #endif // !_COMPONENT_MESH_H_

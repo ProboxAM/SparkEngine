@@ -19,6 +19,9 @@ public:
 		uint mesh = 0;
 		uint texture = 0;
 		uint bone = 0;
+
+		bool root_bone = false;
+		uint mesh_binded = 0;
 	};
 
 	struct ModelMetaFile : public MetaFile
