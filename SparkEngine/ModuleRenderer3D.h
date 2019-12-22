@@ -36,6 +36,7 @@ public:
 	void DebugFaceNormals(const ResourceMesh* m, const float4x4& mtransform) const;
 	void DebugDrawCube(const float3 * vertices, Color color) const;
 	void DebugDrawLines(std::vector<float3> lines);
+	void DrawSphere(float3 position, float radius);
 
 	void DrawOutline(const ResourceMesh* m, const Color color, const float4x4& mtransform) const;
 

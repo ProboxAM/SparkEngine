@@ -8,6 +8,8 @@
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
+#include "ModuleResources.h"
+#include "MeshImporter.h"
 #include "ResourceMesh.h"
 #include "ComponentCamera.h"
 #include "ComponentMesh.h"
@@ -539,6 +541,28 @@ void ModuleRenderer3D::DrawSceneViewPort()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	debug_draw = false;
+}
+
+void ModuleRenderer3D::DrawSphere(float3 position, float radius)
+{
+	glColor3f(0.8, 0.2, 0.1); // Red ball displaced to left.
+	glPushMatrix();
+	glTranslatef((GLfloat)position.x, (GLfloat)position.y, (GLfloat)position.z);
+	glScalef(radius, radius, radius);
+
+	ResourceMesh* m = (ResourceMesh*)App->resources->Get(App->importer->mesh->sphere);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
+	glVertexPointer(3, GL_FLOAT, 0, nullptr);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
+
+	glDrawElements(GL_TRIANGLES, m->total_indices, GL_UNSIGNED_INT, nullptr);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glPopMatrix();
+	glColor3f(1.f, 1.f, 1.f);
 }
 
 void ModuleRenderer3D::DrawGameViewPort()

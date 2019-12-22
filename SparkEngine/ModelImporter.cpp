@@ -159,18 +159,9 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	output_file = LIBRARY_MODEL_FOLDER + std::to_string(meta->id) + MODEL_EXTENSION;
 	Save(output_file, nodes);
 
-	meta->meshes.clear();
-	meta->bones.clear();
-	meta->animations.clear();
+	meta->meshes = meshes;
 	meta->bones = bones;
-	for each (ResourceModel::ModelNode node in nodes)
-	{
-		meta->meshes.push_back(node.mesh);
-	}
-	for (int i = 0; i < animations.size(); i++)
-	{
-		meta->animations.push_back(animations[i]);
-	}
+	meta->animations = animations;
 
 	App->fsystem->GetFileModificationDate(file, meta->modification_date);
 	meta->exported_file = output_file;
@@ -179,6 +170,10 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	SaveMeta(meta);
 
 	aiReleaseImport(scene);
+	meshes.clear();
+	bones.clear();
+	animations.clear();
+
 	return true;
 }
 
@@ -231,12 +226,12 @@ void ModelImporter::ImportNode(const aiNode* node, const aiScene* scene, uint pa
 		}
 		else
 			resource_node.texture = App->importer->texture->checkers;
-
-		if (bones.find(std::string(node->mName.C_Str())) != bones.end())
-		{
-			resource_node.bone = bones[std::string(node->mName.C_Str())];
-		}
 	}
+	if (bones.find(std::string(node->mName.C_Str())) != bones.end())
+	{
+		resource_node.bone = bones[std::string(node->mName.C_Str())];
+	}
+
 	nodes.push_back(resource_node);
 
 	if (node->mNumChildren > 0)

@@ -372,9 +372,13 @@ void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource
 				Resource* animation_resource = CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, animation);
 				animation_resource->SetExportedFile(LIBRARY_ANIMATION_FOLDER + std::to_string(animation) + ANIM_EXTENSION);
 				animation_resource->SetFile(meta->original_file);
-				animation_resource->AddReference();
-				animation_resource->RemoveReference();
 			}
+		}
+		for (std::map<std::string, uint>::iterator it = model_meta->bones.begin(); it != model_meta->bones.end(); ++it)
+		{
+			Resource* bone_resource = CreateResource(Resource::RESOURCE_TYPE::R_BONE, it->second);
+			bone_resource->SetExportedFile(LIBRARY_BONE_FOLDER + std::to_string(it->second) + BONE_EXTENSION);
+			bone_resource->SetFile(meta->original_file);
 		}
 	}
 		break;

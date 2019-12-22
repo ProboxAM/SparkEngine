@@ -465,6 +465,9 @@
     <ClInclude Include="NodeEditor\Source\imgui_node_editor_internal.h">
       <Filter>Sources\NodeEditor</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentBone.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -739,6 +742,9 @@
     </ClCompile>
     <ClCompile Include="NodeEditor\Source\imgui_node_editor_api.cpp">
       <Filter>Sources\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentBone.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

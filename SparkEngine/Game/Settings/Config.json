@@ -13,7 +13,7 @@
         "atlas": "Settings/atlas.png",
         "icon_size": 128,
         "image_size": 63,
-        "mode": false,
+        "mode": true,
         "text_size": 20
     },
     "Importer": {
