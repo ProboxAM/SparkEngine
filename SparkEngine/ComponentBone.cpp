@@ -36,3 +36,8 @@ uint ComponentBone::GetBoneID()
 {
 	return bone->GetID();
 }
+
+ResourceBone * ComponentBone::GetBone()
+{
+	return bone;
+}

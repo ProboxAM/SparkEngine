@@ -43,8 +43,6 @@ ResourceMesh::ResourceMesh(uint id, ResourceMesh * m): Resource(id, Resource::RE
 		uv = new float2[total_uv];
 		memcpy(uv, m->uv, bytes);
 	}
-
-	PrepareBuffers();
 }
 
 std::string ResourceMesh::GetTypeString() const
@@ -116,4 +114,21 @@ void ResourceMesh::UnLoad()
 void ResourceMesh::Load()
 {
 	App->importer->mesh->Load(this);
+}
+
+void ResourceMesh::Copy(ResourceMesh * copy)
+{
+	uint bytes = sizeof(float3) * total_vertices;
+	memcpy(vertices, copy->vertices, bytes);
+
+	if (total_normal)
+	{
+		bytes = sizeof(float3) * total_normal;
+		memcpy(normal,copy->normal, bytes);
+	}
+	if (total_uv)
+	{
+		bytes = sizeof(float2) * total_uv;
+		memcpy(uv, copy->uv, bytes);
+	}
 }

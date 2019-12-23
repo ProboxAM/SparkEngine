@@ -247,20 +247,32 @@ bool ModuleRenderer3D::IsEnabled(unsigned int flag) const
 }
 
 //Draws a mesh and binds texture to it
-void ModuleRenderer3D::DrawMesh(const ResourceMesh* m, const ResourceTexture* tex, const float4x4& mtransform) const
+void ModuleRenderer3D::DrawMesh(const ResourceMesh* m, const ResourceTexture* tex, const float4x4& mtransform, const ResourceMesh* deform_m) const
 {
+	if (deform_m)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, deform_m->buffers[BUFF_VERT]);
+		glBufferData(GL_ARRAY_BUFFER, deform_m->total_vertices * sizeof(float3), deform_m->vertices, GL_DYNAMIC_DRAW);
+
+		if (deform_m->total_normal > 0)
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, deform_m->buffers[BUFF_NORM]);
+			glBufferData(GL_ARRAY_BUFFER, deform_m->total_normal * sizeof(float3), deform_m->normal, GL_DYNAMIC_DRAW);
+		}
+	}
+
 	glPushMatrix();
 	glMultMatrixf((float*)&mtransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_VERT]);
+	glBindBuffer(GL_ARRAY_BUFFER, deform_m ? deform_m->buffers[BUFF_VERT] : m->buffers[BUFF_VERT]);
 	glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->buffers[BUFF_IND]);
 
 	if (m->total_normal > 0)
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, m->buffers[BUFF_NORM]);
+		glBindBuffer(GL_ARRAY_BUFFER, deform_m? deform_m->buffers[BUFF_NORM] : m->buffers[BUFF_NORM]);
 		glNormalPointer(GL_FLOAT, 0, nullptr);
 	}
 	if (m->total_uv > 0)
