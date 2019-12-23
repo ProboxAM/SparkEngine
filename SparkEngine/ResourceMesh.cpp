@@ -12,6 +12,41 @@ ResourceMesh::ResourceMesh(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_ME
 {
 }
 
+ResourceMesh::ResourceMesh(uint id, ResourceMesh * m): Resource(id, Resource::RESOURCE_TYPE::R_MESH)
+{
+	total_indices = m->total_indices;
+	total_vertices = m->total_vertices;
+	total_normal = m->total_normal;
+	total_uv = m->total_uv;
+
+	// Load indices
+	uint bytes = sizeof(uint) * total_indices;
+	indices = new uint[total_indices];
+	memcpy(indices, m->indices, bytes);
+
+	// Load vertices
+	bytes = sizeof(float3) * total_vertices;
+	vertices = new float3[total_vertices];
+	memcpy(vertices, m->vertices, bytes);
+
+	if (total_normal)
+	{
+		// Load normal
+		bytes = sizeof(float3) * total_normal;
+		normal = new float3[total_normal];
+		memcpy(normal, m->normal, bytes);
+	}
+	if (total_uv)
+	{
+		// Load uv
+		bytes = sizeof(float2) * total_uv;
+		uv = new float2[total_uv];
+		memcpy(uv, m->uv, bytes);
+	}
+
+	PrepareBuffers();
+}
+
 std::string ResourceMesh::GetTypeString() const
 {
 	return "Mesh";

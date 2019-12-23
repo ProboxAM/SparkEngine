@@ -142,3 +142,11 @@ ResourceMesh * ComponentMesh::GetMesh()
 {
 	return mesh;
 }
+
+void ComponentMesh::AttachSkeleton(ComponentTransform * root)
+{
+	root_bone = root;
+
+	//Duplicate mesh
+	deformable_mesh = new ResourceMesh(App->GenerateID(), mesh);
+}

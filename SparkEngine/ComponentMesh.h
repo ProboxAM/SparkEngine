@@ -32,6 +32,7 @@ public:
 	bool Load(const nlohmann::json comp);
 
 	ResourceMesh* GetMesh();
+	void AttachSkeleton(ComponentTransform* root);
 
 private:
 	ResourceMesh* mesh = nullptr;

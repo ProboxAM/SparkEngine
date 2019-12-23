@@ -428,7 +428,7 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		for each (ComponentMesh* c_mesh in temp_meshes)
 		{
 			if (it->second == c_mesh->GetMesh()->GetID())
-				c_mesh->root_bone = it->first->gameobject->transform;
+				c_mesh->AttachSkeleton(it->first->gameobject->transform);
 		}
 	}
 
