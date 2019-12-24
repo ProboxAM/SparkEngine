@@ -2,16 +2,19 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleResources.h"
 #include "ModuleScene.h"
-#include "ComponentTexture.h"
+
 #include "GameObject.h"
 #include "Quadtree.h"
-#include "ResourceMesh.h"
+
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentBone.h"
+#include "ComponentTexture.h"
+
+#include "ResourceBone.h"
+#include "ResourceMesh.h"
 
 #include "ComponentMesh.h"
-
-#include "glew\glew.h"
 
 
 
@@ -33,13 +36,16 @@ void ComponentMesh::Update()
 
 void ComponentMesh::Draw()
 {
+	if (deformable_mesh)
+		UpdateDeformableMesh();
+
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
 	if (mesh && to_draw) {
-		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform);
+		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform, deformable_mesh);
 		if (App->scene->selected_gameobject == gameobject)
 			if (App->renderer3D->debug_draw)
-				App->renderer3D->DrawOutline(mesh, { 0.9f, 1.f, 0.1f }, transform);
+				App->renderer3D->DrawOutline(deformable_mesh?deformable_mesh:mesh, { 0.9f, 1.f, 0.1f }, transform);
 	}
 
 	if (App->renderer3D->debug_draw)
@@ -141,4 +147,62 @@ bool ComponentMesh::Load(const nlohmann::json comp)
 ResourceMesh * ComponentMesh::GetMesh()
 {
 	return mesh;
+}
+
+void ComponentMesh::AttachSkeleton(ComponentTransform * root)
+{
+	root_bone = root;
+
+	//Duplicate mesh
+	deformable_mesh = new ResourceMesh(App->GenerateID(), mesh);
+	AttachBone(root_bone);
+}
+
+void ComponentMesh::AttachBone(ComponentTransform* bone_transform)
+{
+	ComponentBone* c_bone = (ComponentBone*) bone_transform->gameobject->GetComponent(COMPONENT_TYPE::BONE);
+
+	if (c_bone)
+		bones.push_back(c_bone);
+
+	for each (ComponentTransform* transform in bone_transform->GetChildren())
+		AttachBone(transform);
+}
+
+void ComponentMesh::UpdateDeformableMesh()
+{
+	ResetDeformableMesh();
+
+	for (std::vector<ComponentBone*>::iterator it = bones.begin(); it != bones.end(); ++it)
+	{
+		ResourceBone* r_bone = (ResourceBone*)(*it)->GetBone();
+
+		float4x4 matrix = (*it)->gameobject->transform->GetTransformMatrix();
+		matrix = gameobject->transform->GetTransformMatrix().Inverted() * matrix;
+		matrix = matrix * r_bone->matrix;
+
+		for (uint i = 0; i < r_bone->num_weights; i++)
+		{
+			uint index = r_bone->vertex_ids[i];
+			float3 original = mesh->vertices[index];
+			float3 vertex = matrix.TransformPos(original);
+
+			deformable_mesh->vertices[index].x += vertex.x  * r_bone->weights[i];
+			deformable_mesh->vertices[index].y += vertex.y * r_bone->weights[i];
+			deformable_mesh->vertices[index].z += vertex.z * r_bone->weights[i];
+
+			if (mesh->total_normal > 0)
+			{
+				vertex = matrix.TransformPos(mesh->normal[index]);
+				deformable_mesh->normal[index].x += vertex.x * r_bone->weights[i];
+				deformable_mesh->normal[index].y += vertex.y * r_bone->weights[i];
+				deformable_mesh->normal[index].z += vertex.z * r_bone->weights[i];
+			}
+		}
+	}
+}
+
+void ComponentMesh::ResetDeformableMesh()
+{
+	deformable_mesh->Copy(mesh);
 }

@@ -31,7 +31,7 @@ public:
 
 	void SetWireframeMode(bool on);
 
-	void DrawMesh(const ResourceMesh* m, const ResourceTexture* tex, const float4x4& mtransform) const;
+	void DrawMesh(const ResourceMesh* m, const ResourceTexture* tex, const float4x4& mtransform, const ResourceMesh* deform_m = nullptr) const;
 	void DebugVertexNormals(const ResourceMesh* m, const float4x4& mtransform) const;
 	void DebugFaceNormals(const ResourceMesh* m, const float4x4& mtransform) const;
 	void DebugDrawCube(const float3 * vertices, Color color) const;

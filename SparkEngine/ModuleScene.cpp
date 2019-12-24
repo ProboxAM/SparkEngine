@@ -369,7 +369,11 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 	LOG("Creating GameObject from resource %s", resource->GetFile());
 	if (parent == nullptr)
 		parent = root;
+
 	std::vector<GameObject*> temp_go;
+	std::vector<ComponentMesh*> temp_meshes;
+	std::map<ComponentBone*, uint> temp_root_bones;
+
 	uint count = 0;
 
 	for each (ResourceModel::ModelNode node in resource->nodes)
@@ -396,6 +400,7 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		{
 			ComponentMesh* c_mesh = (ComponentMesh*)go->AddComponent(COMPONENT_TYPE::MESH);
 			c_mesh->AddMesh((ResourceMesh*)App->resources->GetAndReference(node.mesh));
+			temp_meshes.push_back(c_mesh);
 
 			ComponentTexture* c_text = (ComponentTexture*)go->AddComponent(COMPONENT_TYPE::TEXTURE);
 			if (node.texture > 0)
@@ -407,6 +412,8 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		{
 			ComponentBone* c_bone = (ComponentBone*)go->AddComponent(COMPONENT_TYPE::BONE);
 			c_bone->AddBone((ResourceBone*)App->resources->GetAndReference(node.bone));
+			if (node.root_bone)
+				temp_root_bones.emplace(c_bone, node.mesh_binded);
 		}
 
 		gameobjects.emplace(go->GetId(), go);
@@ -414,6 +421,17 @@ GameObject * ModuleScene::CreateGameObject(ResourceModel * resource, GameObject*
 		go->transform->UpdateTransformMatrix();
 		count++;
 	}
+
+	//Link root bones to each mesh component
+	for(std::map<ComponentBone*,uint>::iterator it = temp_root_bones.begin(); it!=temp_root_bones.end(); ++it)
+	{
+		for each (ComponentMesh* c_mesh in temp_meshes)
+		{
+			if (it->second == c_mesh->GetMesh()->GetID())
+				c_mesh->AttachSkeleton(it->first->gameobject->transform);
+		}
+	}
+
 	return temp_go[0];
 }
 

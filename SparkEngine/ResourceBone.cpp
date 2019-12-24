@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ModuleImporter.h"
 #include "BoneImporter.h"
 
 #include "ResourceBone.h"
@@ -21,10 +22,11 @@ std::string ResourceBone::GetTypeString() const
 
 void ResourceBone::Load()
 {
-
+	App->importer->bone->Load(this);
 }
 
 void ResourceBone::UnLoad()
 {
-
+	delete[] vertex_ids;
+	delete[] weights;
 }

@@ -26,8 +26,18 @@ void ComponentBone::Draw()
 
 void ComponentBone::AddBone(ResourceBone * b)
 {
-	if(bone)
+	if(b)
 		bone = b;
 
 	debug_draw = true;
+}
+
+uint ComponentBone::GetBoneID()
+{
+	return bone->GetID();
+}
+
+ResourceBone * ComponentBone::GetBone()
+{
+	return bone;
 }

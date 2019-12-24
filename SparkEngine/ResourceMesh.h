@@ -19,6 +19,7 @@ class ResourceMesh : public Resource
 public:
 	~ResourceMesh();
 	ResourceMesh(uint id);
+	ResourceMesh(uint id, ResourceMesh* m);
 	std::string name;
 
 	float3* vertices = nullptr;
@@ -38,6 +39,7 @@ public:
 	void PrepareBuffers();
 	void UnLoad();
 	void Load();
+	void Copy(ResourceMesh* copy);
 };
 
 #endif // !_MESH_H_

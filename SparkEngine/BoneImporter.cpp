@@ -28,18 +28,20 @@ uint BoneImporter::Import(const char* file, const aiBone* bone, uint id)
 	ResourceBone* resource = (ResourceBone*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_BONE, id);
 
 	resource->name = bone->mName.C_Str();
-	resource->matrix = float4x4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.a2, bone->mOffsetMatrix.a3, bone->mOffsetMatrix.a4,
-		bone->mOffsetMatrix.b1, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.b4,
-		bone->mOffsetMatrix.c1, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.c4,
-		bone->mOffsetMatrix.d1, bone->mOffsetMatrix.d2, bone->mOffsetMatrix.d3, bone->mOffsetMatrix.d4);
+	resource->matrix = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
+		float4(bone->mOffsetMatrix.a2, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.d2),
+		float4(bone->mOffsetMatrix.a3, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.d3),
+		float4(bone->mOffsetMatrix.a4, bone->mOffsetMatrix.b4, bone->mOffsetMatrix.c4, bone->mOffsetMatrix.d4));
 
 	resource->num_weights = bone->mNumWeights;
 	resource->weights = new float[resource->num_weights];
 	resource->vertex_ids = new uint[resource->num_weights];
+
 	for (uint i = 0; i < resource->num_weights; i++)
 	{
 		memcpy(&resource->weights[i], &bone->mWeights[i].mWeight, sizeof(float));
 		memcpy(&resource->vertex_ids[i], &bone->mWeights[i].mVertexId, sizeof(uint));
+		LOG("%u %u", resource->vertex_ids[i], bone->mWeights[i].mVertexId);
 	}
 
 	SaveBone(resource);
@@ -77,12 +79,12 @@ bool BoneImporter::SaveBone(ResourceBone * bone)
 
 	//Store weights
 	bytes = sizeof(float)*bone->num_weights;
-	memcpy(cursor, &bone->weights, bytes);
+	memcpy(cursor, bone->weights, bytes);
 	cursor += bytes;
 
 	//Store vertex ids
 	bytes = sizeof(uint)*bone->num_weights;
-	memcpy(cursor, &bone->vertex_ids, bytes);
+	memcpy(cursor, bone->vertex_ids, bytes);
 	cursor += bytes;
 
 
