@@ -11,6 +11,8 @@
 #include "ComponentBone.h"
 #include "ComponentTexture.h"
 
+#include "ModuleInput.h"
+
 #include "ResourceBone.h"
 #include "ResourceMesh.h"
 
@@ -41,8 +43,13 @@ void ComponentMesh::Draw()
 
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
+
+	static bool test = true;
+	if (App->input->GetKey(SDLK_F1) == KEY_REPEAT)
+		test = !test;
+
 	if (mesh && to_draw) {
-		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform, deformable_mesh);
+		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform, test?deformable_mesh:nullptr);
 		if (App->scene->selected_gameobject == gameobject)
 			if (App->renderer3D->debug_draw)
 				App->renderer3D->DrawOutline(deformable_mesh?deformable_mesh:mesh, { 0.9f, 1.f, 0.1f }, transform);
@@ -149,7 +156,7 @@ ResourceMesh * ComponentMesh::GetMesh()
 	return mesh;
 }
 
-void ComponentMesh::AttachSkeleton(ComponentTransform * root)
+void ComponentMesh::AttachSkeleton(ComponentTransform* root)
 {
 	root_bone = root;
 
