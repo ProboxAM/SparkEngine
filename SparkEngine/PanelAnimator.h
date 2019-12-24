@@ -18,6 +18,7 @@ public:
 
 	void Draw();
 	void DrawStates();
+	void DrawTransitions();
 	void Start();
 	bool IsInside(const float2& pos) const;
 

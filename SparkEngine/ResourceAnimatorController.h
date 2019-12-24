@@ -74,6 +74,22 @@ public:
 class ResourceAnimatorController:
 	public Resource
 {
+
+	struct Instance
+	{
+		Clip clip;
+		float time = 0;
+		bool     loop = true;
+		float    speed = 1.0;
+
+		Instance* next = nullptr;
+		uint fade_duration = 0;
+		uint fade_time = 0;
+	};
+
+	Instance* current_playing = nullptr;
+
+
 	std::vector<Clip> clips;
 	std::vector<State> states;
 	std::vector<Transition> transitions;
@@ -89,9 +105,18 @@ public:
 
 public:
 
+	//AnimationHandle
+	void PlayClip(std::string name, uint resource_id, bool loop);
+	void Update();
+	void Stop();
+
+	//Transform
+	bool GetTransform(std::string channel_name, float3 &position, Quat &rotation, float3 &scale);
+
 	//Clips
 	void AddClip(std::string name, uint id, bool loop);
 	void RemoveClip(std::string name);
+	Clip FindClip(std::string name);
 
 	uint GetNumClips() const { return clips.size(); }
 	std::vector<Clip> GetClips() const { return clips; }
@@ -99,6 +124,7 @@ public:
 	//States
 	void AddState(std::string name, Clip* clip);
 	void RemoveState(std::string name);
+	State FindState(std::string name);
 
 	uint GetNumStates() const {return states.size(); }
 	std::vector<State> GetStates() const { return states; }

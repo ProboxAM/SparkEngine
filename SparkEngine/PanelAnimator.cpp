@@ -112,6 +112,10 @@ void PanelAnimator::DrawStates()
 	}
 }
 
+void PanelAnimator::DrawTransitions()
+{
+}
+
 void PanelAnimator::Start()
 {
 

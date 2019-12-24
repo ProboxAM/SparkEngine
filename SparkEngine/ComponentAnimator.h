@@ -12,8 +12,10 @@ class ComponentAnimator :
 public:
 	ComponentAnimator(GameObject* gameobject);
 	virtual ~ComponentAnimator();
-
 	void Update();
+
+	void PlayState(std::string name);
+	void UpdateAnimation(GameObject* go_to_update);
 
 	ResourceAnimatorController* GetResourceAnimatorController();
 

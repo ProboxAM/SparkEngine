@@ -30,7 +30,10 @@ public:
 	~ResourceAnimation();
 
 	std::string GetTypeString() const;
+	float GetDuration() const;
 
+	uint GetChannelIndex(std::string name);
+	
 	void UnLoad();
 
 	void Load();

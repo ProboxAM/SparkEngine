@@ -18,6 +18,23 @@ std::string ResourceAnimation::GetTypeString() const
 	return "Animation";
 }
 
+float ResourceAnimation::GetDuration() const
+{
+	return ((float)tick_duration / (float)ticks_per_second);
+}
+
+uint ResourceAnimation::GetChannelIndex(std::string name)
+{
+	uint i;
+	for (i = 0; i < num_channels; i++) {
+		if (channels[i].name == name) {
+			return i;
+		}
+	}
+
+	return num_channels;
+}
+
 void ResourceAnimation::UnLoad()
 {
 	LOG("Unloading Animation %s", name.c_str());

@@ -23,9 +23,9 @@
                     "type": 0
                 }
             ],
-            "id": 3697470151,
+            "id": 4065661907,
             "layer": "Default",
-            "name": "DefaultScene",
+            "name": "Untitled",
             "parent": 0,
             "static": false,
             "tag": "Untagged"
@@ -36,7 +36,7 @@
                 {
                     "position": [
                         0.0,
-                        10.0,
+                        1.0,
                         -80.0
                     ],
                     "rotation": [
@@ -62,10 +62,10 @@
                     "type": 4
                 }
             ],
-            "id": 870035427,
+            "id": 2324745217,
             "layer": "Default",
             "name": "Main Camera",
-            "parent": 3697470151,
+            "parent": 4065661907,
             "static": false,
             "tag": "Untagged"
         },
@@ -92,41 +92,11 @@
                     "type": 0
                 }
             ],
-            "id": 2045726058,
+            "id": 1662803277,
             "layer": "Default",
-            "name": "Street environment_V01",
-            "parent": 3697470151,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        18.153732299804688,
-                        0.0,
-                        58.96091079711914
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 3542760516,
-            "layer": "Default",
-            "name": "Sky001_$AssimpFbx$_Translation",
-            "parent": 2045726058,
-            "static": true,
+            "name": "aniTest",
+            "parent": 4065661907,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -145,189 +115,9 @@
                         0.7071067690849304
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 3818680846,
-            "layer": "Default",
-            "name": "Sky001_$AssimpFbx$_PreRotation",
-            "parent": 3542760516,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2945640962,
-            "layer": "Default",
-            "name": "Sky001_$AssimpFbx$_PostRotation",
-            "parent": 3818680846,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 617411565,
-            "layer": "Default",
-            "name": "Sky001",
-            "parent": 2945640962,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2883971606,
-            "layer": "Default",
-            "name": "Dummy001_$AssimpFbx$_PreRotation",
-            "parent": 2045726058,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 4080667205,
-            "layer": "Default",
-            "name": "Dummy001_$AssimpFbx$_Rotation",
-            "parent": 2883971606,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2961066820,
-            "layer": "Default",
-            "name": "Dummy001",
-            "parent": 4080667205,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -41.47589111328125,
-                        21.01409912109375,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        2.5399999618530273,
+                        2.5399999618530273,
+                        2.5399999618530273
                     ],
                     "type": 0
                 },
@@ -336,183 +126,7 @@
                     "debug_bb": false,
                     "debug_face_n": false,
                     "debug_vertex_n": false,
-                    "resource": 1891969215,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2883857039,
-                    "type": 2
-                }
-            ],
-            "id": 2490595090,
-            "layer": "Default",
-            "name": "City_building_004",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        17.707164764404297,
-                        20.05327606201172,
-                        2.121072952832037e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 1985189098,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 1443409173,
-                    "type": 2
-                }
-            ],
-            "id": 1257634753,
-            "layer": "Default",
-            "name": "City_building_001",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        16.0104923248291,
-                        37.4932861328125,
-                        -1.5106878663573298e-06
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 238426164,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 3082605591,
-                    "type": 2
-                }
-            ],
-            "id": 715516167,
-            "layer": "Default",
-            "name": "City_building_007",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        40.97999572753906,
-                        18.270824432373047,
-                        -2.0522466002148576e-06
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 470817642,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 76543839,
-                    "type": 2
-                }
-            ],
-            "id": 1479101659,
-            "layer": "Default",
-            "name": "City_building_008",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -2.1597719192504883,
-                        1.8538382053375244,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 3200550303,
+                    "resource": 829043494,
                     "type": 1
                 },
                 {
@@ -522,11 +136,11 @@
                     "type": 2
                 }
             ],
-            "id": 3957194033,
+            "id": 1923921675,
             "layer": "Default",
-            "name": "Line002",
-            "parent": 2961066820,
-            "static": true,
+            "name": "Object02",
+            "parent": 1662803277,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -534,1129 +148,29 @@
             "components": [
                 {
                     "position": [
-                        -0.02860260009765625,
-                        0.026032090187072754,
-                        0.0
+                        -1.1161036491394043,
+                        15.688704490661621,
+                        -0.13840684294700623
                     ],
                     "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
+                        -0.44879189133644104,
+                        -0.330550879240036,
+                        -0.44800519943237305,
+                        0.6990088224411011
                     ],
                     "scale": [
-                        0.9966352581977844,
-                        0.9706164598464966,
-                        0.9966352581977844
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 4183564078,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 4294967295,
-                    "type": 2
-                }
-            ],
-            "id": 4097384744,
-            "layer": "Default",
-            "name": "Plane001",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        25.154010772705078,
-                        -39.15372085571289,
-                        8.553864176974457e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 2915690837,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 3218261876,
-                    "type": 2
-                }
-            ],
-            "id": 453530325,
-            "layer": "Default",
-            "name": "City_building_010",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        30.134540557861328,
-                        37.4932861328125,
-                        -1.5106878663573298e-06
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 238426164,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 3082605591,
-                    "type": 2
-                }
-            ],
-            "id": 1612978605,
-            "layer": "Default",
-            "name": "City_building_011",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -42.288055419921875,
-                        33.201576232910156,
-                        5.014607040720875e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 3678720827,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2278102505,
-                    "type": 2
-                }
-            ],
-            "id": 1581899308,
-            "layer": "Default",
-            "name": "City_building_013",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -19.439706802368164,
-                        32.061729431152344,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        1.0,
-                        -4.371138828673793e-08
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 1005924101,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2883857039,
-                    "type": 2
-                }
-            ],
-            "id": 3841757076,
-            "layer": "Default",
-            "name": "City_building_014",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        34.270423889160156,
-                        -41.972747802734375,
-                        8.553864176974457e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        1.0,
-                        -4.371138828673793e-08
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 2915690837,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 3218261876,
-                    "type": 2
-                }
-            ],
-            "id": 1202361087,
-            "layer": "Default",
-            "name": "City_building_016",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        44.26008224487305,
-                        -39.15372085571289,
-                        8.553864176974457e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 2915690837,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 3218261876,
-                    "type": 2
-                }
-            ],
-            "id": 1021679079,
-            "layer": "Default",
-            "name": "City_building_017",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -20.831323623657227,
-                        -27.426488876342773,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        1.0,
-                        1.9470718370939721e-07
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 2071205691,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2369176681,
-                    "type": 2
-                }
-            ],
-            "id": 4165386310,
-            "layer": "Default",
-            "name": "City_building_022",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        42.13064193725586,
-                        37.4932861328125,
-                        -1.5106878663573298e-06
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 238426164,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 3082605591,
-                    "type": 2
-                }
-            ],
-            "id": 1306239682,
-            "layer": "Default",
-            "name": "City_building_023",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -20.572771072387695,
-                        43.060829162597656,
-                        -0.06919445842504501
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        1.0,
-                        4.371138828673793e-08
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 470817642,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 76543839,
-                    "type": 2
-                }
-            ],
-            "id": 618135797,
-            "layer": "Default",
-            "name": "City_building_024",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        31.51188850402832,
-                        -16.446016311645508,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        1.0,
-                        4.371138828673793e-08
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 608136520,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2369176681,
-                    "type": 2
-                }
-            ],
-            "id": 3251774916,
-            "layer": "Default",
-            "name": "City_building_026",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        13.38798999786377,
-                        -33.75503921508789,
-                        -9.383451811117993e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 21735319,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 751489627,
-                    "type": 2
-                }
-            ],
-            "id": 2435949100,
-            "layer": "Default",
-            "name": "City_building_028",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -2.5033531188964844,
-                        15.800846099853516,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 4047111144,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 4294967295,
-                    "type": 2
-                }
-            ],
-            "id": 2826190217,
-            "layer": "Default",
-            "name": "Object010",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -42.8072395324707,
-                        -41.83556365966797,
-                        -9.383451811117993e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 21735319,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 751489627,
-                    "type": 2
-                }
-            ],
-            "id": 2339776911,
-            "layer": "Default",
-            "name": "City_building_030",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -34.679481506347656,
-                        -41.83556365966797,
-                        -9.383451811117993e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 21735319,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 751489627,
-                    "type": 2
-                }
-            ],
-            "id": 4046881720,
-            "layer": "Default",
-            "name": "City_building_031",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -29.478403091430664,
-                        21.01409912109375,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 1891969215,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2883857039,
-                    "type": 2
-                }
-            ],
-            "id": 1429685182,
-            "layer": "Default",
-            "name": "City_building_032",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -32.36149597167969,
-                        42.37042236328125,
-                        5.014607040720875e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 1728860449,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2278102505,
-                    "type": 2
-                }
-            ],
-            "id": 3173226289,
-            "layer": "Default",
-            "name": "City_building_033",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        16.049516677856445,
-                        -16.696884155273438,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071068286895752,
-                        0.7071067094802856
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 3269460514,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2369176681,
-                    "type": 2
-                }
-            ],
-            "id": 4050531496,
-            "layer": "Default",
-            "name": "City_building_034",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        13.38798999786377,
-                        -40.80251693725586,
-                        -9.383451811117993e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 21735319,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 751489627,
-                    "type": 2
-                }
-            ],
-            "id": 735618639,
-            "layer": "Default",
-            "name": "City_building_035",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -31.216331481933594,
-                        33.201576232910156,
-                        5.014607040720875e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 3678720827,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2278102505,
-                    "type": 2
-                }
-            ],
-            "id": 682710094,
-            "layer": "Default",
-            "name": "City_building_036",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -20.31769371032715,
-                        -16.16360855102539,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        1.0,
-                        1.9470718370939721e-07
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 2124399325,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2369176681,
-                    "type": 2
-                }
-            ],
-            "id": 2014146098,
-            "layer": "Default",
-            "name": "City_building_037",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -41.64900207519531,
-                        -16.495393753051758,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071068286895752,
-                        0.7071067094802856
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 1626076554,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 2369176681,
-                    "type": 2
-                }
-            ],
-            "id": 895481055,
-            "layer": "Default",
-            "name": "City_building_038",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -42.8072395324707,
-                        -30.643888473510742,
-                        -9.383451811117993e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 21735319,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 751489627,
-                    "type": 2
-                }
-            ],
-            "id": 3609352507,
-            "layer": "Default",
-            "name": "City_building_039",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -34.679481506347656,
-                        -30.643888473510742,
-                        -9.383451811117993e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        -0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 21735319,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 751489627,
-                    "type": 2
-                }
-            ],
-            "id": 3123481356,
-            "layer": "Default",
-            "name": "City_building_040",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        30.69527816772461,
-                        21.612646102905273,
-                        2.121072952832037e-07
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.7071067690849304,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                },
-                {
-                    "active": true,
-                    "debug_bb": false,
-                    "debug_face_n": false,
-                    "debug_vertex_n": false,
-                    "resource": 1985189098,
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "debug_tex": false,
-                    "resource": 1443409173,
-                    "type": 2
-                }
-            ],
-            "id": 1523306107,
-            "layer": "Default",
-            "name": "City_building_041",
-            "parent": 2961066820,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        -78.31243133544922,
-                        45.251216888427734,
-                        -97.03111267089844
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        2.5399997234344482,
+                        2.5399997234344482,
+                        2.5399999618530273
                     ],
                     "type": 0
                 }
             ],
-            "id": 970705136,
+            "id": 3072782297,
             "layer": "Default",
-            "name": "Camera001_$AssimpFbx$_Translation",
-            "parent": 2045726058,
-            "static": true,
+            "name": "transform1",
+            "parent": 1662803277,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1669,24 +183,24 @@
                         0.0
                     ],
                     "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
+                        -0.49999967217445374,
+                        -0.5000003576278687,
+                        -0.49999967217445374,
+                        0.5000002980232239
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        0.9999998807907104,
+                        0.9999998807907104,
+                        0.9999998211860657
                     ],
                     "type": 0
                 }
             ],
-            "id": 173773043,
+            "id": 262599221,
             "layer": "Default",
-            "name": "Camera001_$AssimpFbx$_PreRotation",
-            "parent": 970705136,
-            "static": true,
+            "name": "Bip001 Pelvis",
+            "parent": 3072782297,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1694,29 +208,689 @@
             "components": [
                 {
                     "position": [
+                        0.6278524398803711,
+                        0.3180011510848999,
+                        -1.7881393432617188e-07
+                    ],
+                    "rotation": [
+                        -2.082162382066599e-06,
+                        -6.900077096361201e-07,
+                        0.00039814418414607644,
+                        0.9999999403953552
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1344060770,
+            "layer": "Default",
+            "name": "Bip001 Spine",
+            "parent": 262599221,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.7980308532714844,
+                        -0.0013594627380371094,
+                        -0.0004953742027282715
+                    ],
+                    "rotation": [
+                        0.19542096555233002,
+                        -0.1498813033103943,
+                        0.32489684224128723,
+                        0.9131200909614563
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999998807907104,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3918597986,
+            "layer": "Default",
+            "name": "Bip001 Spine1",
+            "parent": 1344060770,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.997201919555664,
+                        -0.2343611717224121,
+                        -4.172325134277344e-07
+                    ],
+                    "rotation": [
+                        -0.03127382695674896,
+                        0.1998259723186493,
+                        0.15219809114933014,
+                        0.9674333333969116
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 408474293,
+            "layer": "Default",
+            "name": "Bip001 Neck",
+            "parent": 3918597986,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -0.4552736282348633,
+                        -0.09678840637207031,
+                        0.7976434230804443
+                    ],
+                    "rotation": [
+                        0.3141159415245056,
+                        -0.10387644916772842,
+                        0.9365183115005493,
+                        0.11607915163040161
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2422397557,
+            "layer": "Default",
+            "name": "Bip001 L Clavicle",
+            "parent": 408474293,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.9862539768218994,
+                        4.76837158203125e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -0.2448454648256302,
+                        0.3208892345428467,
+                        -0.12854091823101044,
+                        0.9058465957641602
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 347744840,
+            "layer": "Default",
+            "name": "Bip001 L UpperArm",
+            "parent": 2422397557,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.375838279724121,
                         0.0,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.3277010917663574,
+                        0.9447814226150513
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1849322667,
+            "layer": "Default",
+            "name": "Bip001 L Forearm",
+            "parent": 347744840,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.846414566040039,
+                        2.384185791015625e-07,
+                        -4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -0.18265573680400848,
+                        0.041462939232587814,
+                        0.1005433201789856,
+                        0.9771431684494019
+                    ],
+                    "scale": [
+                        0.9999998211860657,
+                        0.9999998211860657,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3188938943,
+            "layer": "Default",
+            "name": "Bip001 L Hand",
+            "parent": 1849322667,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.9409463405609131,
+                        0.08181190490722656,
+                        -0.5803806781768799
+                    ],
+                    "rotation": [
+                        0.5826280117034912,
+                        0.3940458595752716,
+                        0.07198336720466614,
+                        0.7071710228919983
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999998807907104,
+                        0.9999998211860657
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3671729454,
+            "layer": "Default",
+            "name": "Bip001 L Finger0",
+            "parent": 3188938943,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.5172443389892578,
+                        1.1920928955078125e-07,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        9.973329717638535e-09,
+                        1.5731416169728618e-08,
+                        0.07839310169219971,
+                        0.9969225525856018
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3705559422,
+            "layer": "Default",
+            "name": "Bip001 L Finger01",
+            "parent": 3671729454,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.30469608306884766,
+                        0.0,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        1.4677311810373794e-08,
+                        2.5731552444341332e-09,
+                        0.1726815402507782,
+                        0.9849777221679688
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 889423146,
+            "layer": "Default",
+            "name": "Bip001 L Finger02",
+            "parent": 3705559422,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.770775318145752,
+                        0.00036072731018066406,
+                        -0.0414586067199707
+                    ],
+                    "rotation": [
+                        -0.08671318739652634,
+                        -0.06371613591909409,
+                        0.1964249312877655,
+                        0.9745965003967285
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999998807907104,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1175441128,
+            "layer": "Default",
+            "name": "Bip001 L Finger1",
+            "parent": 3188938943,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.3415369987487793,
+                        4.76837158203125e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -0.08033391833305359,
+                        -0.021903494372963905,
+                        0.26213955879211426,
+                        0.9614309668540955
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3826952547,
+            "layer": "Default",
+            "name": "Bip001 L Finger11",
+            "parent": 1175441128,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.25260353088378906,
+                        -4.76837158203125e-07,
+                        -2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        -0.07959894835948944,
+                        -0.024439839646220207,
+                        0.29249438643455505,
+                        0.9526351690292358
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 438944261,
+            "layer": "Default",
+            "name": "Bip001 L Finger12",
+            "parent": 3826952547,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.2678813934326172,
+                        -0.09735965728759766,
+                        -0.8784303665161133
+                    ],
+                    "rotation": [
+                        -0.6390175819396973,
+                        -0.064629927277565,
+                        0.7450319528579712,
+                        0.18001922965049744
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0000001192092896,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1762495560,
+            "layer": "Default",
+            "name": "Bip001 R Clavicle",
+            "parent": 408474293,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.9862537384033203,
+                        -4.76837158203125e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.4713248312473297,
+                        -0.3375436067581177,
+                        -0.10736998915672302,
+                        0.8077059984207153
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 4081681083,
+            "layer": "Default",
+            "name": "Bip001 R UpperArm",
+            "parent": 1762495560,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.375837802886963,
+                        3.5762786865234375e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.27229419350624084,
+                        0.9622140526771545
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1211382331,
+            "layer": "Default",
+            "name": "Bip001 R Forearm",
+            "parent": 4081681083,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.8464140892028809,
+                        -9.5367431640625e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.5602364540100098,
+                        0.06963128596544266,
+                        0.1695353388786316,
+                        0.8078022003173828
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1395854311,
+            "layer": "Default",
+            "name": "Bip001 R Hand",
+            "parent": 1211382331,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.940946102142334,
+                        0.08181238174438477,
+                        0.5803805589675903
+                    ],
+                    "rotation": [
+                        -0.5531933903694153,
+                        -0.3449387848377228,
+                        0.19145211577415466,
+                        0.7337168455123901
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999998807907104,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3872187511,
+            "layer": "Default",
+            "name": "Bip001 R Finger0",
+            "parent": 1395854311,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.517244815826416,
+                        0.0,
+                        -2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.23338103294372559,
+                        0.9723853468894958
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1140858875,
+            "layer": "Default",
+            "name": "Bip001 R Finger01",
+            "parent": 3872187511,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.30469560623168945,
+                        1.1920928955078125e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        9.531002653773157e-09,
+                        3.1927779531315537e-08,
+                        0.17268142104148865,
+                        0.9849777221679688
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0000001192092896,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 2028378021,
+            "layer": "Default",
+            "name": "Bip001 R Finger02",
+            "parent": 1140858875,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.770775556564331,
+                        0.00036144256591796875,
+                        0.041458725929260254
+                    ],
+                    "rotation": [
+                        0.00510763842612505,
+                        0.19857686758041382,
+                        0.39499667286872864,
+                        0.8969497084617615
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 3424851961,
+            "layer": "Default",
+            "name": "Bip001 R Finger1",
+            "parent": 1395854311,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.3415369987487793,
                         0.0,
                         0.0
                     ],
                     "rotation": [
-                        -0.19855600595474243,
-                        0.5607047080993652,
-                        0.7577487230300903,
-                        -0.26833298802375793
+                        -2.6954577236892874e-08,
+                        -1.2713349484272385e-08,
+                        0.4265892207622528,
+                        0.904445469379425
                     ],
                     "scale": [
+                        0.9999998807907104,
                         1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1399315252,
+            "layer": "Default",
+            "name": "Bip001 R Finger11",
+            "parent": 3424851961,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.25260305404663086,
+                        -4.76837158203125e-07,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        -1.6042795536463927e-08,
+                        2.511588270692755e-08,
+                        0.5383067727088928,
+                        0.8427489399909973
+                    ],
+                    "scale": [
+                        0.9999997615814209,
                         0.9999999403953552,
                         0.9999999403953552
                     ],
                     "type": 0
                 }
             ],
-            "id": 4114891083,
+            "id": 346430859,
             "layer": "Default",
-            "name": "Camera001_$AssimpFbx$_Rotation",
-            "parent": 173773043,
-            "static": true,
+            "name": "Bip001 R Finger12",
+            "parent": 1399315252,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1724,29 +898,59 @@
             "components": [
                 {
                     "position": [
-                        0.0,
-                        0.0,
+                        1.1019048690795898,
+                        -9.5367431640625e-07,
                         0.0
                     ],
                     "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
+                        -0.3316132426261902,
+                        -0.046233125030994415,
+                        -0.46153590083122253,
+                        0.8215106129646301
                     ],
                     "scale": [
+                        1.0000001192092896,
                         1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1959552510,
+            "layer": "Default",
+            "name": "Bip001 Head",
+            "parent": 408474293,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.1927947849035263,
+                        0.020197272300720215,
+                        -9.5367431640625e-07
+                    ],
+                    "rotation": [
+                        0.587548553943634,
+                        0.808784008026123,
+                        0.020709311589598656,
+                        0.015043343417346478
+                    ],
+                    "scale": [
+                        1.0000001192092896,
                         1.0,
                         1.0
                     ],
                     "type": 0
                 }
             ],
-            "id": 2962468394,
+            "id": 4222907094,
             "layer": "Default",
-            "name": "Camera001",
-            "parent": 4114891083,
-            "static": true,
+            "name": "Bone001",
+            "parent": 1959552510,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1754,29 +958,59 @@
             "components": [
                 {
                     "position": [
-                        -28.13262176513672,
-                        20.873329162597656,
-                        -35.064212799072266
+                        -0.6281051635742188,
+                        -0.3175039291381836,
+                        1.153568983078003
+                    ],
+                    "rotation": [
+                        0.27084267139434814,
+                        0.9550502300262451,
+                        0.04375331476330757,
+                        -0.11228958517313004
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999998807907104,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 239802823,
+            "layer": "Default",
+            "name": "Bip001 L Thigh",
+            "parent": 1344060770,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.6564340591430664,
+                        1.1920928955078125e-07,
+                        2.384185791015625e-07
                     ],
                     "rotation": [
                         0.0,
                         0.0,
-                        0.0,
-                        1.0
+                        -0.3290940523147583,
+                        0.944297194480896
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
+                        0.9999998807907104,
+                        1.0000001192092896,
                         1.0
                     ],
                     "type": 0
                 }
             ],
-            "id": 3464850165,
+            "id": 2596314771,
             "layer": "Default",
-            "name": "Camera001.Target_$AssimpFbx$_Translation",
-            "parent": 2045726058,
-            "static": true,
+            "name": "Bip001 L Calf",
+            "parent": 239802823,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1784,29 +1018,29 @@
             "components": [
                 {
                     "position": [
-                        0.0,
-                        0.0,
+                        3.3164162635803223,
+                        -1.4901161193847656e-07,
                         0.0
                     ],
                     "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
+                        0.13742436468601227,
+                        -0.15049974620342255,
+                        0.19602574408054352,
+                        0.9591862559318542
                     ],
                     "scale": [
                         1.0,
-                        1.0,
-                        1.0
+                        0.9999997615814209,
+                        1.0000001192092896
                     ],
                     "type": 0
                 }
             ],
-            "id": 113592467,
+            "id": 605671557,
             "layer": "Default",
-            "name": "Camera001.Target_$AssimpFbx$_PreRotation",
-            "parent": 3464850165,
-            "static": true,
+            "name": "Bip001 L Foot",
+            "parent": 2596314771,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1814,29 +1048,59 @@
             "components": [
                 {
                     "position": [
-                        0.0,
-                        0.0,
+                        0.8066026568412781,
+                        1.325963020324707,
                         0.0
                     ],
                     "rotation": [
-                        -0.1985560655593872,
-                        0.5607047080993652,
-                        0.7577487230300903,
-                        -0.2683330476284027
+                        -1.498483754858171e-07,
+                        6.930894755896588e-07,
+                        0.7071072459220886,
+                        0.7071062922477722
                     ],
                     "scale": [
+                        1.0000001192092896,
                         1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1376596376,
+            "layer": "Default",
+            "name": "Bip001 L Toe0",
+            "parent": 605671557,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -0.6281051635742188,
+                        -0.31749773025512695,
+                        -1.1535696983337402
+                    ],
+                    "rotation": [
+                        0.46175748109817505,
+                        0.8620431423187256,
+                        0.01532698329538107,
+                        0.208391010761261
+                    ],
+                    "scale": [
+                        0.9999998807907104,
                         0.9999999403953552,
                         1.0
                     ],
                     "type": 0
                 }
             ],
-            "id": 2702705001,
+            "id": 3517185354,
             "layer": "Default",
-            "name": "Camera001.Target_$AssimpFbx$_Rotation",
-            "parent": 113592467,
-            "static": true,
+            "name": "Bip001 R Thigh",
+            "parent": 1344060770,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1844,29 +1108,29 @@
             "components": [
                 {
                     "position": [
-                        0.0,
-                        0.0,
+                        2.6564340591430664,
+                        2.384185791015625e-07,
                         0.0
                     ],
                     "rotation": [
                         0.0,
                         0.0,
-                        0.0,
-                        1.0
+                        -0.46143847703933716,
+                        0.8871722221374512
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        0.9999999403953552
                     ],
                     "type": 0
                 }
             ],
-            "id": 430169000,
+            "id": 598919434,
             "layer": "Default",
-            "name": "Camera001.Target",
-            "parent": 2702705001,
-            "static": true,
+            "name": "Bip001 R Calf",
+            "parent": 3517185354,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1874,29 +1138,29 @@
             "components": [
                 {
                     "position": [
-                        -66.72126770019531,
-                        141.9341278076172,
-                        6.204137662280118e-06
+                        3.3164165019989014,
+                        -2.384185791015625e-07,
+                        2.384185791015625e-07
                     ],
                     "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
+                        -0.04051082581281662,
+                        0.14072474837303162,
+                        0.12133371829986572,
+                        0.9817502498626709
                     ],
                     "scale": [
-                        1.0,
-                        1.0,
-                        1.0
+                        1.0000001192092896,
+                        0.9999999403953552,
+                        0.9999998807907104
                     ],
                     "type": 0
                 }
             ],
-            "id": 4016403373,
+            "id": 3346014193,
             "layer": "Default",
-            "name": "Spot001_$AssimpFbx$_Translation",
-            "parent": 2045726058,
-            "static": true,
+            "name": "Bip001 R Foot",
+            "parent": 598919434,
+            "static": false,
             "tag": "Untagged"
         },
         {
@@ -1904,239 +1168,29 @@
             "components": [
                 {
                     "position": [
-                        0.0,
-                        0.0,
-                        0.0
+                        0.8066027164459229,
+                        1.3259632587432861,
+                        4.76837158203125e-07
                     ],
                     "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
+                        -7.0458042955579e-08,
+                        2.8779032845704933e-07,
+                        0.7071072459220886,
+                        0.7071062922477722
                     ],
                     "scale": [
+                        0.9999999403953552,
                         1.0,
-                        1.0,
-                        1.0
+                        0.9999999403953552
                     ],
                     "type": 0
                 }
             ],
-            "id": 2720081971,
+            "id": 1269621895,
             "layer": "Default",
-            "name": "Spot001_$AssimpFbx$_PreRotation",
-            "parent": 4016403373,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.15443940460681915,
-                        -0.15443937480449677,
-                        -0.6900351047515869,
-                        0.6900351643562317
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 4005933028,
-            "layer": "Default",
-            "name": "Spot001_$AssimpFbx$_Rotation",
-            "parent": 2720081971,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2679421552,
-            "layer": "Default",
-            "name": "Spot001_$AssimpFbx$_PostRotation",
-            "parent": 4005933028,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 3232405747,
-            "layer": "Default",
-            "name": "Spot001",
-            "parent": 2679421552,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        28.890945434570313,
-                        -60.96388244628906,
-                        -2.6648158382158726e-06
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2259264246,
-            "layer": "Default",
-            "name": "Spot001.Target_$AssimpFbx$_Translation",
-            "parent": 2045726058,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        -0.7071067690849304,
-                        0.0,
-                        0.0,
-                        0.7071067690849304
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 1404815474,
-            "layer": "Default",
-            "name": "Spot001.Target_$AssimpFbx$_PreRotation",
-            "parent": 2259264246,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.7071068286895752,
-                        0.0,
-                        0.0,
-                        0.7071067094802856
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 2045229893,
-            "layer": "Default",
-            "name": "Spot001.Target_$AssimpFbx$_Rotation",
-            "parent": 1404815474,
-            "static": true,
-            "tag": "Untagged"
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 0
-                }
-            ],
-            "id": 341131090,
-            "layer": "Default",
-            "name": "Spot001.Target",
-            "parent": 2045229893,
-            "static": true,
+            "name": "Bip001 R Toe0",
+            "parent": 3346014193,
+            "static": false,
             "tag": "Untagged"
         }
     ]

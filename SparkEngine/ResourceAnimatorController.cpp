@@ -1,4 +1,11 @@
+#include "Application.h"
+#include "ModuleResources.h"
+#include "ModuleTime.h"
+
+#include "ResourceAnimation.h"
+
 #include "ResourceAnimatorController.h"
+
 
 
 ResourceAnimatorController::ResourceAnimatorController(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_ANIMATOR)
@@ -9,6 +16,125 @@ ResourceAnimatorController::ResourceAnimatorController(uint id) : Resource(id, R
 ResourceAnimatorController::~ResourceAnimatorController()
 {
 	ax::NodeEditor::DestroyEditor(ed_context);
+}
+
+void ResourceAnimatorController::PlayClip(std::string name, uint resource_id, bool loop)
+{
+	Instance* new_instance = new Instance();
+
+	new_instance->clip = FindClip(name);
+	new_instance->loop = loop;
+	new_instance->next = current_playing;
+
+	current_playing = new_instance;
+}
+
+void ResourceAnimatorController::Update()
+{
+	if (current_playing)
+	{
+		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip.GetResource());
+
+		if (animation && animation->GetDuration() > 0) {
+
+			current_playing->time += App->time->DeltaTime();
+			
+			LOG("current time: %f animation duration: %f", current_playing->time, (float)animation->GetDuration());
+			if (current_playing->time >= animation->GetDuration()) {
+
+				if (current_playing->loop)
+					current_playing->time = 0;
+				else
+					current_playing->time = animation->GetDuration();
+			}
+		}
+	}
+}
+
+void ResourceAnimatorController::Stop()
+{
+	if (current_playing) {
+		current_playing = nullptr;
+	}
+}
+
+bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 & position, Quat & rotation, float3 & scale)
+{
+	if (current_playing)
+	{
+		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip.GetResource());
+
+		if (animation)
+		{
+			uint channel_index = animation->GetChannelIndex(channel_name);
+
+			if (channel_index < animation->num_channels) {
+
+				float3 next_position, next_scale;
+				Quat next_rotation;
+				float previous_key_time, next_key_time, t = 0;
+
+				float time_in_ticks = current_playing->time * animation->ticks_per_second;
+
+				if (animation->channels[channel_index].num_position_keys > 1)
+				{
+					for (int i = 0; i < animation->channels[channel_index].num_position_keys; i++)
+					{
+						if (time_in_ticks < animation->channels[channel_index].position_keys[i + 1].time) {
+							position = animation->channels[channel_index].position_keys[i].value;
+							next_position = animation->channels[channel_index].position_keys[i + 1].value;
+							next_key_time = animation->channels[channel_index].position_keys[i + 1].time;
+							t = (float)((double)time_in_ticks / next_key_time);
+							break;
+						}
+					}
+
+					position = float3::Lerp(position, next_position, t);
+
+				}else
+					position = animation->channels[channel_index].position_keys[0].value;
+
+				if (animation->channels[channel_index].num_rotation_keys > 1)
+				{
+					for (int i = 0; i < animation->channels[channel_index].num_rotation_keys; i++)
+					{
+						if (time_in_ticks < animation->channels[channel_index].rotation_keys[i + 1].time) {
+							rotation = animation->channels[channel_index].rotation_keys[i].value;
+							next_rotation = animation->channels[channel_index].rotation_keys[i + 1].value;
+							next_key_time = animation->channels[channel_index].rotation_keys[i + 1].time;
+							t = (float)((double)time_in_ticks / next_key_time);
+							break;
+						}
+					}
+
+					rotation = Quat::Slerp(rotation, next_rotation, t);
+
+
+				}else
+					rotation = animation->channels[channel_index].rotation_keys[0].value;
+
+
+
+				for (int i = 0; i < animation->channels[channel_index].num_scale_keys; i++)
+				{
+					if (time_in_ticks < animation->channels[channel_index].scale_keys[i + 1].time) {
+						scale = animation->channels[channel_index].scale_keys[i].value;
+						next_scale = animation->channels[channel_index].scale_keys[i + 1].value;
+						next_key_time = animation->channels[channel_index].scale_keys[i + 1].time;
+						t = (float)((double)time_in_ticks / next_key_time);
+						break;
+					}
+				}
+
+				scale = float3::Lerp(scale, next_scale, t);
+
+				return true;
+			}else 
+				return false;
+		}else
+			return false;
+	}else
+		return false;
 }
 
 void ResourceAnimatorController::AddClip(std::string name, uint id, bool loop)
@@ -32,6 +158,14 @@ void ResourceAnimatorController::RemoveClip(std::string name)
 	}
 }
 
+Clip ResourceAnimatorController::FindClip(std::string name)
+{
+	for (std::vector<Clip>::iterator it = clips.begin(); it != clips.end(); ++it) {
+		if (it->GetName() == name)
+			return (*it);
+	}
+}
+
 void ResourceAnimatorController::AddState(std::string name, Clip * clip)
 {
 	State new_state(name, clip);
@@ -44,6 +178,14 @@ void ResourceAnimatorController::RemoveState(std::string name)
 		if (it->GetName() == name) {
 			it = states.erase(it);
 		}
+	}
+}
+
+State ResourceAnimatorController::FindState(std::string name)
+{
+	for (std::vector<State>::iterator it = states.begin(); it != states.end(); ++it) {
+		if (it->GetName() == name)
+			return (*it);
 	}
 }
 

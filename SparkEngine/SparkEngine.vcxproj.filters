@@ -438,9 +438,6 @@
     <ClInclude Include="ResourceBone.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatorController.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentAnimator.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
@@ -467,7 +464,7 @@
     </ClInclude>
     <ClInclude Include="ResourceAnimatorController.h">
       <Filter>Sources\Resources</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="ComponentBone.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
@@ -725,9 +722,6 @@
     <ClCompile Include="ResourceBone.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatorController.cpp">
-      <Filter>Sources\Containers</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentAnimator.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
@@ -748,7 +742,7 @@
     </ClCompile>
     <ClCompile Include="ResourceAnimatorController.cpp">
       <Filter>Sources\Resources</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="ComponentBone.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>

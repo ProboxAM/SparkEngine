@@ -77,8 +77,8 @@ uint AnimationImporter::Import(const char * file, const aiAnimation * anim, uint
 
 		for (uint j = 0; j < channel.num_rotation_keys; j++)
 		{
-			Quat rotation = { anim->mChannels[i]->mRotationKeys[j].mValue.w, anim->mChannels[i]->mRotationKeys[j].mValue.x,
-				anim->mChannels[i]->mRotationKeys[j].mValue.y, anim->mChannels[i]->mRotationKeys[j].mValue.z };
+			Quat rotation = { anim->mChannels[i]->mRotationKeys[j].mValue.x, anim->mChannels[i]->mRotationKeys[j].mValue.y,
+				anim->mChannels[i]->mRotationKeys[j].mValue.z, anim->mChannels[i]->mRotationKeys[j].mValue.w };
 			double value = anim->mChannels[i]->mRotationKeys[j].mTime;
 			quatKey key = quatKey(rotation, value);
 
@@ -212,7 +212,7 @@ bool AnimationImporter::Load(ResourceAnimation* resource)
 		//Load name
 		bytes = name_size;
 		resource->channels[i].name.resize(bytes);
-		memcpy(&resource->channels[i].name, cursor, bytes);
+		memcpy(&resource->channels[i].name[0], cursor, bytes);
 		cursor += bytes;
 
 		//Load num position, scale, rotation keys

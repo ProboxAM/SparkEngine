@@ -6,14 +6,14 @@
     "Camera3D": {
         "focus_factor": 0.25,
         "fov": 1.0471975803375244,
-        "inputs": true,
+        "inputs": false,
         "movement_speed": 20.0
     },
     "Editor": {
         "atlas": "Settings/atlas.png",
         "icon_size": 128,
         "image_size": 63,
-        "mode": true,
+        "mode": false,
         "text_size": 20
     },
     "Importer": {
