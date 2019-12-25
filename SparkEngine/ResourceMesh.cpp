@@ -118,14 +118,12 @@ void ResourceMesh::Load()
 	App->importer->mesh->Load(this);
 }
 
-void ResourceMesh::Copy(ResourceMesh * copy)
+void ResourceMesh::Reset()
 {
-	uint bytes = sizeof(float3) * total_vertices;
-	memcpy(vertices, copy->vertices, bytes);
+	memset(vertices, 0, total_vertices * sizeof(float3));
 
-	if (total_normal)
+	if (total_normal > 0)
 	{
-		bytes = sizeof(float3) * total_normal;
-		memcpy(normal, copy->normal, bytes);
+		memset(normal, 0, total_normal * sizeof(float3));
 	}
 }

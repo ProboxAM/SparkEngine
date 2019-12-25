@@ -38,7 +38,6 @@ public:
 private:
 	void AttachBone(ComponentTransform * bone_transform);
 	void UpdateDeformableMesh();
-	void ResetDeformableMesh();
 
 private:
 	ResourceMesh* mesh = nullptr;

@@ -6,7 +6,7 @@
     "Camera3D": {
         "focus_factor": 0.25,
         "fov": 1.0471975803375244,
-        "inputs": false,
+        "inputs": true,
         "movement_speed": 20.0
     },
     "Editor": {

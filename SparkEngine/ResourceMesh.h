@@ -39,7 +39,7 @@ public:
 	void PrepareBuffers();
 	void UnLoad();
 	void Load();
-	void Copy(ResourceMesh* copy);
+	void Reset();
 };
 
 #endif // !_MESH_H_

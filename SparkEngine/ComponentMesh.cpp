@@ -178,14 +178,14 @@ void ComponentMesh::AttachBone(ComponentTransform* bone_transform)
 
 void ComponentMesh::UpdateDeformableMesh()
 {
-	ResetDeformableMesh();
+	deformable_mesh->Reset();
 
 	for (std::vector<ComponentBone*>::iterator it = bones.begin(); it != bones.end(); ++it)
 	{
 		ResourceBone* r_bone = (ResourceBone*)(*it)->GetBone();
 
 		float4x4 matrix = (*it)->gameobject->transform->GetTransformMatrix();
-		matrix = gameobject->transform->GetTransformMatrix().Inverted() * matrix;
+		matrix = gameobject->transform->GetLocalTransformMatrix().Inverted() * matrix;
 		matrix = matrix * r_bone->matrix;
 
 		for (uint i = 0; i < r_bone->num_weights; i++)
@@ -207,9 +207,4 @@ void ComponentMesh::UpdateDeformableMesh()
 			}
 		}
 	}
-}
-
-void ComponentMesh::ResetDeformableMesh()
-{
-	deformable_mesh->Copy(mesh);
 }

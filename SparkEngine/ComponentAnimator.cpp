@@ -13,8 +13,8 @@
 ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameobject)
 {
 	animator_controller = (ResourceAnimatorController*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATOR, App->resources->GenerateNewUID());
-	App->resources->GetAndReference(3560868769);
-	animator_controller->AddClip("asd", 3560868769, true);
+	App->resources->GetAndReference(4190971176);
+	animator_controller->AddClip("asd", 4190971176, true);
 	animator_controller->PlayClip(animator_controller->FindClip("asd").GetName(), animator_controller->FindClip("asd").GetResource(), animator_controller->FindClip("asd").GetLoop());
 }
 
