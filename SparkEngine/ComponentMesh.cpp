@@ -132,7 +132,8 @@ bool ComponentMesh::Save(const nlohmann::json::iterator & it)
 		{"resource", mesh->GetID()},
 		{"debug_bb", debug_bounding_box},
 		{"debug_face_n", debug_face_normal },
-		{"debug_vertex_n", debug_vertex_normal }
+		{"debug_vertex_n", debug_vertex_normal },
+		{"root_bone_id", root_bone_id}
 	};
 
 	it.value().push_back(object);
@@ -148,6 +149,7 @@ bool ComponentMesh::Load(const nlohmann::json comp)
 	debug_bounding_box = comp["debug_bb"];
 	debug_face_normal = comp["debug_face_n"];
 	debug_vertex_normal = comp["debug_vertex_n"];
+	root_bone_id = comp["root_bone_id"];
 
 	return true;
 }
@@ -158,11 +160,16 @@ ResourceMesh * ComponentMesh::GetMesh()
 
 void ComponentMesh::AttachSkeleton(ComponentTransform* root)
 {
-	root_bone = root;
+	root_bone_id = root->gameobject->GetId();
 
 	//Duplicate mesh
 	deformable_mesh = new ResourceMesh(App->GenerateID(), mesh);
-	AttachBone(root_bone);
+	AttachBone(root);
+}
+
+void ComponentMesh::AttachSkeleton()
+{
+	AttachSkeleton(App->scene->gameobjects[root_bone_id]->transform);
 }
 
 void ComponentMesh::AttachBone(ComponentTransform* bone_transform)

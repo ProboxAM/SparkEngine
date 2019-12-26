@@ -260,3 +260,17 @@ bool ComponentTransform::Save(const nlohmann::json::iterator& it)
 
 	return true;
 }
+
+bool ComponentTransform::Load(const nlohmann::json comp)
+{
+	type = comp["type"];
+	float3 load_position = float3(comp["position"][0], comp["position"][1], comp["position"][2]);
+	Quat load_rotation = Quat(comp["rotation"][0], comp["rotation"][1], comp["rotation"][2], comp["rotation"][3]);
+	float3 load_scale = float3(comp["scale"][0], comp["scale"][1], comp["scale"][2]);
+
+	SetLocalPosition(load_position);
+	SetLocalRotation(load_rotation);
+	SetLocalScale(load_scale);
+
+	return true;
+}

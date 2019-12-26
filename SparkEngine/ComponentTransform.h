@@ -67,6 +67,7 @@ public:
 	void SetLocalScale(const float3 &scale);
 
 	bool Save(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json comp);
 
 public:
 	ComponentTransform(GameObject* gameobject);

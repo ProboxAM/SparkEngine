@@ -34,6 +34,7 @@ public:
 
 	ResourceMesh* GetMesh();
 	void AttachSkeleton(ComponentTransform* root);
+	void AttachSkeleton();
 
 private:
 	void AttachBone(ComponentTransform * bone_transform);
@@ -48,7 +49,7 @@ public:
 	bool debug_vertex_normal = false, debug_face_normal = false, debug_bounding_box = false;
 	bool to_draw = false;
 
-	ComponentTransform* root_bone = nullptr;
+	uint root_bone_id = 0;
 };
 
 #endif // !_COMPONENT_MESH_H_

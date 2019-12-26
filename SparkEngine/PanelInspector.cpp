@@ -112,7 +112,7 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("UV amount: " + std::to_string(c_mesh->GetUVAmount())).c_str());
 
-					if(c_mesh->root_bone) ImGui::Text("Root Bone: %s", c_mesh->root_bone->gameobject->GetName().c_str());
+					if(c_mesh->root_bone_id != 0) ImGui::Text("Root Bone: %s", App->scene->gameobjects[c_mesh->root_bone_id]->GetName().c_str());
 					//ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
 					//ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
 					ImGui::Checkbox("Bounding box", &c_mesh->debug_bounding_box);

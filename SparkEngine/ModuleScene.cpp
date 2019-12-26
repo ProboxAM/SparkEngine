@@ -176,6 +176,7 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 
 	std::ifstream i(file);
 	nlohmann::json j = nlohmann::json::parse(i);
+	std::vector<ComponentMesh*> loaded_meshes;
 
 	nlohmann::json game_objects = j.find("GameObjects").value();
 	for (nlohmann::json::iterator it = game_objects.begin(); it != game_objects.end(); ++it)
@@ -188,30 +189,24 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 
 		if (parent_id != 0)
 		{
-			float3 position, scale;
-			Quat rotation;
-			
-			//TODO: Clean this ////////////////////////
-			position = float3(object["components"][COMPONENT_TYPE::TRANSFORM]["position"][0], object["components"][COMPONENT_TYPE::TRANSFORM]["position"][1],
-				object["components"][COMPONENT_TYPE::TRANSFORM]["position"][2]);
-			rotation = Quat(object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][0], object["components"][0]["rotation"][1],
-				object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][2], object["components"][COMPONENT_TYPE::TRANSFORM]["rotation"][3]);
-			scale = float3(object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][0], object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][1],
-				object["components"][COMPONENT_TYPE::TRANSFORM]["scale"][2]);
-			///////////////////////////////////////////
-
 			GameObject* parent_go = gameobjects.find(parent_id)->second;
-			GameObject* go = CreateGameObject(parent_go, name, position, rotation, scale, id);
+			GameObject* go = CreateGameObject(parent_go, name, float3::zero, Quat::identity, float3::one, id);
 
 			for (nlohmann::json::iterator components_it = object["components"].begin(); components_it != object["components"].end(); ++components_it)
 			{
+				Component* comp;
 				nlohmann::json component = components_it.value();
+				COMPONENT_TYPE type = (COMPONENT_TYPE)component["type"];
 
-				if (component["type"] == COMPONENT_TYPE::TRANSFORM)
-					continue;
+				if (type != COMPONENT_TYPE::TRANSFORM)
+					comp = go->AddComponent(type);
+				else
+					comp = go->transform;
 
-				Component* comp = go->AddComponent(component["type"]);
 				comp->Load(component);
+
+				if (type == COMPONENT_TYPE::MESH)
+					loaded_meshes.push_back((ComponentMesh*)comp);
 			}
 
 			if (is_static)
@@ -222,6 +217,9 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 			root = CreateRootGameObject(id);
 		}
 	}
+
+	for each (ComponentMesh* c_mesh in loaded_meshes)
+		c_mesh->AttachSkeleton();
 
 	LOG("Finished loading scene.");
 
