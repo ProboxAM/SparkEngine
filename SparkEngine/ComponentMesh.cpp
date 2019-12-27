@@ -192,7 +192,7 @@ void ComponentMesh::UpdateDeformableMesh()
 		ResourceBone* r_bone = (ResourceBone*)(*it)->GetBone();
 
 		float4x4 matrix = (*it)->gameobject->transform->GetTransformMatrix();
-		matrix = gameobject->transform->GetLocalTransformMatrix().Inverted() * matrix;
+		matrix = gameobject->transform->GetTransformMatrix().Inverted() * matrix;
 		matrix = matrix * r_bone->matrix;
 
 		for (uint i = 0; i < r_bone->num_weights; i++)
