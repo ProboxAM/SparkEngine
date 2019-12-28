@@ -31,19 +31,21 @@ void PanelAnimator::Draw()
 		ax::NodeEditor::Begin("Animation controller Editor");
 
 		unique_id = 0;
-		pin_in_id = 10;
-		pin_out_id = 20;
-		link_id = 40;
+		pin_in_id = 100;
+		pin_out_id = 200;
+		link_id = 300;
 
 		// Start drawing nodes.
 		DrawStates();
 		DrawTransitions();
+		HandleDropLink();
 
 		HandleContextMenu();
 
 		ax::NodeEditor::Suspend();
 		ShowNewStatePopup();
 		ShowStatePopup();
+		ShowLinkPopup();
 		ax::NodeEditor::Resume();
 
 		ax::NodeEditor::End();
@@ -78,8 +80,6 @@ void PanelAnimator::DrawStates()
 		ImGui::Text("Out ->");
 		ax::NodeEditor::EndPin();
 		ax::NodeEditor::EndNode();
-
-		LOG("Node created with id: %i pin_in id: %i pin out id: %i", unique_id, pin_in_id, pin_out_id);
 	}
 }
 
@@ -100,6 +100,12 @@ void PanelAnimator::HandleContextMenu()
 		ImGui::OpenPopup("State popup");
 	}
 
+	if (ax::NodeEditor::ShowLinkContextMenu(&context_link_id)) {
+		selected_link_index = (uint)context_link_id;
+		selected_link_index = selected_link_index - 300 - 1;
+		ImGui::OpenPopup("Link popup");
+	}
+
 	ax::NodeEditor::Resume();	
 }
 
@@ -112,7 +118,6 @@ void PanelAnimator::DrawTransitions()
 		State* target = current_animator->FindState(current_animator->GetTransitions()[i]->GetTarget()->GetName());
 
 		ax::NodeEditor::Link(++link_id, source->pin_out_id, target->pin_in_id);
-		LOG("link with node id: %i pin_out_source %i and node target id %i pin_in_target %i", source->id, source->pin_out_id, target->id, target->pin_in_id);
 	}	
 	ax::NodeEditor::PopStyleVar(1);
 }
@@ -164,6 +169,82 @@ void PanelAnimator::CreateState()
 
 	name.append(std::to_string(aux));
 	current_animator->AddState(name, nullptr);
+
+	if (new_node_id != ax::NodeEditor::PinId::Invalid)
+	{
+		State* target_state = current_animator->GetStates().back();
+		current_animator->AddTransition(source_state, target_state, false, 0);
+	}
+}
+
+void PanelAnimator::HandleDropLink()
+{
+	if (ax::NodeEditor::BeginCreate())
+	{
+		ax::NodeEditor::PinId start_pin_id = 0, end_pin_id = 0;
+
+		if (ax::NodeEditor::QueryNewLink(&start_pin_id, &end_pin_id)) {
+
+			if (start_pin_id && end_pin_id)
+			{
+				bool start_is_input, end_is_input;
+
+				if ((uint)start_pin_id > 100 && (uint)start_pin_id < 200)
+					start_is_input = true;
+				else
+					start_is_input = false;
+
+				if ((uint)end_pin_id > 100 && (uint)end_pin_id < 200)
+					end_is_input = true;
+				else
+					end_is_input = false;
+
+				State* start_node = current_animator->FindStateFromPinId(start_pin_id.Get());
+				State* end_node = current_animator->FindStateFromPinId(end_pin_id.Get());
+
+				if (start_pin_id == end_pin_id)
+					ax::NodeEditor::RejectNewItem(ImColor(255, 0, 0), 2.0f);
+				else if (start_is_input && end_is_input)
+					ax::NodeEditor::RejectNewItem(ImColor(255, 0, 0), 2.0f);
+				else if (start_node == end_node)
+					ax::NodeEditor::RejectNewItem(ImColor(255, 0, 0), 2.0f);
+				else {
+					if (ax::NodeEditor::AcceptNewItem(ImColor(0, 255, 0), 4.0f))
+					{
+						if (start_is_input)
+							current_animator->AddTransition(end_node, start_node, false, 0);
+						else
+							current_animator->AddTransition(start_node, end_node, false, 0);
+					}
+				}
+
+			}
+		}
+
+		if (ax::NodeEditor::QueryNewNode(&new_node_id))
+		{
+			bool pin_is_input;
+
+			if ((uint)new_node_id > 100 && (uint)new_node_id < 200)
+				pin_is_input = true;
+			else
+				pin_is_input = false;
+
+			if (!pin_is_input)
+			{
+				if (ax::NodeEditor::AcceptNewItem())
+				{
+					source_state = current_animator->FindStateFromPinId((uint)new_node_id);
+					ax::NodeEditor::Suspend();
+					new_node_pos = ImGui::GetMousePos();
+					ImGui::OpenPopup("States popup");
+					ax::NodeEditor::Resume();
+				}
+			}
+		}
+	}
+
+	ax::NodeEditor::EndCreate();
 }
 
 void PanelAnimator::ShowNewStatePopup()
@@ -171,6 +252,16 @@ void PanelAnimator::ShowNewStatePopup()
 	if (ImGui::BeginPopup("States popup")) {
 		if (ImGui::Selectable("NewState")) {
 			CreateState();
+		}
+		ImGui::EndPopup();
+	}
+}
+
+void PanelAnimator::ShowLinkPopup()
+{
+	if (ImGui::BeginPopup("Link popup")) {
+		if (ImGui::Selectable("Delete Transition")) {
+			current_animator->RemoveTransition(current_animator->GetTransitions()[selected_link_index]->GetSource()->GetName(), current_animator->GetTransitions()[selected_link_index]->GetTarget()->GetName());
 		}
 		ImGui::EndPopup();
 	}

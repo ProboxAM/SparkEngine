@@ -190,9 +190,19 @@ void ResourceAnimatorController::AddState(std::string name, ResourceAnimation* c
 
 void ResourceAnimatorController::RemoveState(std::string name)
 {
+	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
+		if ((*it)->GetSource()->GetName() == name || (*it)->GetTarget()->GetName() == name) {
+			delete (*it);
+			it = transitions.erase(it);
+			break;
+		}
+	}
+
 	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
 		if ((*it)->GetName() == name) {
+			delete (*it);
 			it = states.erase(it);
+			break;
 		}
 	}
 }
@@ -201,6 +211,22 @@ State* ResourceAnimatorController::FindState(std::string name)
 {
 	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
 		if ((*it)->GetName() == name)
+			return (*it);
+	}
+}
+
+State * ResourceAnimatorController::FindState(uint id)
+{
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
+		if ((*it)->id == id)
+			return (*it);
+	}
+}
+
+State * ResourceAnimatorController::FindStateFromPinId(uint pin_id)
+{
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
+		if ((*it)->pin_in_id == pin_id || (*it)->pin_out_id == pin_id)
 			return (*it);
 	}
 }
@@ -216,7 +242,9 @@ void ResourceAnimatorController::RemoveTransition(std::string source_name, std::
 {
 	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
 		if ((*it)->GetSource()->GetName() == source_name && (*it)->GetTarget()->GetName() == target_name) {
+			delete (*it);
 			it = transitions.erase(it);
+			break;
 		}
 	}
 }

@@ -20,9 +20,11 @@ public:
 	void DrawStates();
 	void DrawTransitions();
 	void HandleContextMenu();
-	void ShowStatePopup();
 	void CreateState();
+	void HandleDropLink();
+	void ShowStatePopup();
 	void ShowNewStatePopup();
+	void ShowLinkPopup();
 	void Start();
 	bool IsInside(const float2& pos) const;
 
@@ -36,14 +38,19 @@ private:
 	ImVec2 screen_pos;
 	float w, h;
 	bool clip_select = false;
-	int pin_in_id = 10;
-	int pin_out_id = 20;
-	int link_id = 40;
+	int pin_in_id = 100;
+	int pin_out_id = 200;
+	int link_id = 300;
 	int unique_id = 1;
 	ImVec2 new_node_pos;
 
 	std::string context_node;
 	ax::NodeEditor::NodeId context_node_id;
+	uint selected_link_index = 0;
+
+	//creation management
+	ax::NodeEditor::PinId new_node_id = 0;
+	State* source_state = nullptr;
 };
 
 #endif // !__PANEL_ANIMATOR_H_
