@@ -1,0 +1,26 @@
+{
+    "name": "Animator Controller",
+    "states": [
+        {
+            "clip": 0,
+            "name": "Pepe",
+            "speed": 1.0
+        },
+        {
+            "clip": 0,
+            "name": "hehe",
+            "speed": 1.0
+        },
+        {
+            "clip": 0,
+            "name": "Pepe",
+            "speed": 1.0
+        },
+        {
+            "clip": 0,
+            "name": "hehe",
+            "speed": 1.0
+        }
+    ],
+    "transitions": null
+}

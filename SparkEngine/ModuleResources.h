@@ -11,6 +11,7 @@ public:
 	~ModuleResources();
 
 	bool Start();
+	bool CleanUp();
 
 	bool ImportFileToAssets(const char* path);
 	uint ImportFile(const char* new_file_in_assets, Resource::RESOURCE_TYPE type, MetaFile* meta = nullptr);
@@ -24,6 +25,7 @@ public:
 	std::map<uint, Resource*> GetResources();
 	std::vector<Resource*> GetResources(Resource::RESOURCE_TYPE type);
 	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);
+	void CreateAsset(Resource::RESOURCE_TYPE type);
 
 private:
 	void RecursiveLoadAssets(std::string directory);

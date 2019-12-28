@@ -1,8 +1,14 @@
 #include "Application.h"
 #include "ModuleResources.h"
 #include "ModuleTime.h"
+#include "ModuleImporter.h"
+#include "AnimatorControllerImporter.h"
+#include "MetaFile.h"
 
 #include "ResourceAnimation.h"
+
+#include <fstream>
+#include <iomanip>
 
 #include "ResourceAnimatorController.h"
 
@@ -11,6 +17,7 @@
 ResourceAnimatorController::ResourceAnimatorController(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_ANIMATOR)
 {
 	ed_context = ax::NodeEditor::CreateEditor();
+	name = "Animator Controller";
 }
 
 ResourceAnimatorController::~ResourceAnimatorController()
@@ -29,7 +36,6 @@ void ResourceAnimatorController::Update()
 
 			current_state->time += App->time->DeltaTime();
 			
-			LOG("current time: %f animation duration: %f", current_state->time, (float)animation->GetDuration());
 			if (current_state->time >= animation->GetDuration()) {
 
 				if (current_state->GetClip()->loops)
@@ -44,6 +50,39 @@ void ResourceAnimatorController::Update()
 void ResourceAnimatorController::Stop()
 {
 	current_state = nullptr;
+}
+
+void ResourceAnimatorController::SaveAsset()
+{
+	nlohmann::json j_states;
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it)
+	{
+		nlohmann::json j_state = {
+			{"name", (*it)->GetName()},
+			{"speed", (*it)->GetSpeed()},
+			{"clip", (*it)->GetClip()?(*it)->GetClip()->GetID():0}
+		};
+		j_states.push_back(j_state);
+	}
+
+	nlohmann::json j_transitions;
+	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+	{
+		nlohmann::json j_transition = {
+			{ "source", (*it)->GetSource()->GetName() },
+			{ "target", (*it)->GetTarget()->GetName() }
+		};
+		j_transitions.push_back(j_transition);
+	}
+
+	nlohmann::json file = {
+		{ "name", name },
+		{ "states", j_states},
+		{ "transitions", j_transitions}
+	};
+
+	std::ofstream o(meta->original_file);
+	o << std::setw(4) << file << std::endl;
 }
 
 void ResourceAnimatorController::Play()
@@ -87,7 +126,6 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 							next_position = animation->channels[channel_index].position_keys[i + 1].value;
 							next_key_time = animation->channels[channel_index].position_keys[i + 1].time;
 							t = (float)((double)time_in_ticks / next_key_time);
-							LOG("CURRENT T IS %f", t);
 							break;
 						}
 					}
@@ -140,9 +178,10 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 		return false;
 }
 
-void ResourceAnimatorController::AddState(std::string name, ResourceAnimation* clip)
+void ResourceAnimatorController::AddState(std::string name, ResourceAnimation* clip, float speed)
 {
 	State* new_state = new State(name, clip);
+	new_state->SetSpeed(speed);
 	states.push_back(new_state);
 
 	if (!default_state)
@@ -192,6 +231,20 @@ std::string ResourceAnimatorController::GetName()
 	return name;
 }
 
+void ResourceAnimatorController::UnLoad()
+{
+
+}
+
+void ResourceAnimatorController::Load()
+{
+	App->importer->anim_controller->Load(this);
+}
+
+void ResourceAnimatorController::Reset()
+{
+}
+
 State::State()
 {
 }
@@ -200,6 +253,11 @@ State::State(std::string name, ResourceAnimation * clip)
 {
 	this->name = name;
 	this->clip = clip;
+}
+
+void State::SetSpeed(float speed)
+{
+	this->speed = speed;
 }
 
 void State::SetName(std::string name)
@@ -211,6 +269,11 @@ void State::SetClip(ResourceAnimation * clip)
 {
 	clip->AddReference();
 	this->clip = clip;
+}
+
+float State::GetSpeed()
+{
+	return speed;
 }
 
 std::string State::GetName()

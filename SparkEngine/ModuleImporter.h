@@ -9,6 +9,7 @@ class TextureImporter;
 class ModelImporter;
 class AnimationImporter;
 class BoneImporter;
+class AnimatorControllerImporter;
 
 class ModuleImporter : public Module
 {
@@ -29,6 +30,7 @@ public:
 	ModelImporter* model;
 	AnimationImporter* animation;
 	BoneImporter* bone;
+	AnimatorControllerImporter* anim_controller;
 };
 
 #endif
