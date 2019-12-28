@@ -34,7 +34,7 @@ private:
 
 	void DrawFiles();
 	void DrawPathRecursive(Project_Node* node);
-	void ManageClicksForItem(const std::string &file);
+	void ManageClicksForItem(const std::string &file, uint uid = 0);
 	void ChangeFolder();
 	void GetAllFiles();
 	void CleanOldFiles();

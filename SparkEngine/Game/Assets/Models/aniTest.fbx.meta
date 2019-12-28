@@ -3,14 +3,14 @@
         {
             "end_tick": 40,
             "id": 1697329230,
-            "loops": false,
+            "loops": true,
             "name": "Pepega",
             "start_tick": 0
         },
         {
             "end_tick": 119,
             "id": 1697329230,
-            "loops": false,
+            "loops": true,
             "name": "Walk",
             "start_tick": 39
         },

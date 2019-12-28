@@ -462,6 +462,7 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 				if(start_tick >= 0 && start_tick < anim_meta->end_tick) anim_meta->start_tick = (uint)start_tick;
 			if (ImGui::DragInt("End", &end_tick, 1.0F, anim_meta->start_tick + 1, meta->max_ticks))
 				if (end_tick > anim_meta->start_tick && end_tick <= meta->max_ticks) anim_meta->end_tick = (uint)end_tick;
+			ImGui::Checkbox("Loops", &anim_meta->loops);
 			ImGui::Separator();
 			ImGui::PopID();
 		}
