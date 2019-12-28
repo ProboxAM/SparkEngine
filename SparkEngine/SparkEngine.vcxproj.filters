@@ -483,6 +483,9 @@
     <ClInclude Include="TextureMetaFile.h">
       <Filter>Sources\Containers\MetaFile</Filter>
     </ClInclude>
+    <ClInclude Include="PanelAnimation.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -772,6 +775,9 @@
     </ClCompile>
     <ClCompile Include="TextureMetaFile.cpp">
       <Filter>Sources\Containers\MetaFile</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelAnimation.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

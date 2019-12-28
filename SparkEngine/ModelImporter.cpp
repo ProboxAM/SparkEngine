@@ -187,6 +187,7 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ModelMeta
 	meta->exported_file = output_file;
 	meta->original_file = file;
 	meta->file = std::string(file) + ".meta";
+	meta->loaded = true;
 	SaveMeta(meta);
 
 	aiReleaseImport(scene);
@@ -341,6 +342,7 @@ bool ModelImporter::SaveMeta(ModelMetaFile* meta)
 			{ "name",anim_meta->name },
 			{ "start_tick",anim_meta->start_tick },
 			{ "end_tick",anim_meta->end_tick },
+			{ "max_tick",anim_meta->max_tick},
 			{ "loops",anim_meta->loops },
 		};
 		animations_obj.push_back(anim_obj);
@@ -422,6 +424,7 @@ bool ModelImporter::LoadMeta(const char* file, ModelMetaFile* meta)
 		anim_meta->name = anim.value()["name"].get<std::string>();
 		anim_meta->start_tick = anim.value()["start_tick"];
 		anim_meta->end_tick = anim.value()["end_tick"];
+		anim_meta->max_tick = anim.value()["max_tick"];
 		anim_meta->loops = anim.value()["loops"];
 		anim_meta->loaded = true;
 

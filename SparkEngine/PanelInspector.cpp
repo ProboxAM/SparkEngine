@@ -472,6 +472,7 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 			new_anim->name = "New Clip";
 			new_anim->max_tick = meta->max_ticks;
 			new_anim->end_tick = meta->max_ticks;
+			new_anim->id = App->GenerateID();
 			meta->animations.push_back(new_anim);
 		}
 		ImGui::SameLine();
@@ -486,6 +487,13 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 			App->importer->model->SaveMeta(meta);
 			LOG("Reimporting model with new settings...");
 			App->resources->ImportFile(meta->original_file.c_str(), Resource::RESOURCE_TYPE::R_MODEL, meta);
+
+			for each (AnimationMetaFile* anim_meta in meta->animations)
+			{
+				ResourceAnimation* r_anim = (ResourceAnimation*) App->resources->Get(anim_meta->id);
+				if (!r_anim->IsLoaded())
+					r_anim->AddReference();
+			}
 		}
 	}
 }

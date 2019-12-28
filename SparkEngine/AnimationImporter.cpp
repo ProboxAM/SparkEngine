@@ -27,38 +27,46 @@ AnimationImporter::~AnimationImporter()
 
 AnimationMetaFile* AnimationImporter::Import(const char * file, const aiAnimation * anim, AnimationMetaFile* meta)
 {
+	bool new_meta = false;
 	if (!meta)
 	{
+		new_meta = true;
 		meta = new AnimationMetaFile();
 	}
 
 	bool needs_reload = false;
-	ResourceAnimation* resource = (ResourceAnimation*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, meta->loaded? meta->id:App->GenerateID(), needs_reload);
+	ResourceAnimation* resource = (ResourceAnimation*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, new_meta? App->GenerateID():meta->id, needs_reload);
 
 	//Load Animation info
-	if (meta->loaded)
+	if (!new_meta)
 	{
 		resource->name = meta->name;
 		resource->tick_duration = meta->end_tick - meta->start_tick;
 		resource->loops = meta->loops;
+		resource->start_tick = meta->start_tick;
+		resource->end_tick = meta->end_tick;		
 	}
 	else
 	{
 		resource->name = anim->mName.C_Str();
 		resource->tick_duration = anim->mDuration;
 		resource->loops = false;
+		resource->start_tick = 0;
+		resource->end_tick = anim->mDuration;
+
 		meta->name = resource->name;
+		meta->start_tick = 0;
 		meta->end_tick = resource->tick_duration;
 		meta->loops = false;
 		meta->id = resource->GetID();
+		meta->max_tick = anim->mDuration;
 	}
 	resource->ticks_per_second = anim->mTicksPerSecond;
-	meta->max_tick = anim->mDuration;
+	resource->max_tick = anim->mDuration;
 
 	//Load Channels
 	resource->num_channels = anim->mNumChannels;
 	resource->channels = new ResourceAnimation::Channel[resource->num_channels];
-
 	uint start_tick = meta->loaded ? meta->start_tick : 0;
 	for (uint i = 0; i < resource->num_channels; i++)
 	{
@@ -71,11 +79,6 @@ AnimationMetaFile* AnimationImporter::Import(const char * file, const aiAnimatio
 
 		for (uint j = 0; j < channel.num_position_keys; j++)
 		{
-			if (anim->mChannels[i]->mPositionKeys[j].mTime < start_tick)
-				continue;
-			else if (anim->mChannels[i]->mPositionKeys[j].mTime > resource->tick_duration)
-				break;
-
 			float3 position = float3(anim->mChannels[i]->mPositionKeys[j].mValue.x, anim->mChannels[i]->mPositionKeys[j].mValue.y,
 				anim->mChannels[i]->mPositionKeys[j].mValue.z);
 			double value = anim->mChannels[i]->mPositionKeys[j].mTime;
@@ -90,11 +93,6 @@ AnimationMetaFile* AnimationImporter::Import(const char * file, const aiAnimatio
 
 		for (uint j = 0; j < channel.num_scale_keys; j++)
 		{
-			if (anim->mChannels[i]->mPositionKeys[j].mTime < start_tick)
-				continue;
-			else if (anim->mChannels[i]->mPositionKeys[j].mTime > resource->tick_duration)
-				break;
-
 			float3 scale = float3(anim->mChannels[i]->mScalingKeys[j].mValue.x, anim->mChannels[i]->mScalingKeys[j].mValue.y,
 				anim->mChannels[i]->mScalingKeys[j].mValue.z);
 			double value = anim->mChannels[i]->mScalingKeys[j].mTime;
@@ -109,11 +107,6 @@ AnimationMetaFile* AnimationImporter::Import(const char * file, const aiAnimatio
 
 		for (uint j = 0; j < channel.num_rotation_keys; j++)
 		{
-			if (anim->mChannels[i]->mPositionKeys[j].mTime < start_tick)
-				continue;
-			else if (anim->mChannels[i]->mPositionKeys[j].mTime > resource->tick_duration)
-				break;
-
 			Quat rotation = { anim->mChannels[i]->mRotationKeys[j].mValue.x, anim->mChannels[i]->mRotationKeys[j].mValue.y,
 				anim->mChannels[i]->mRotationKeys[j].mValue.z, anim->mChannels[i]->mRotationKeys[j].mValue.w };
 			double value = anim->mChannels[i]->mRotationKeys[j].mTime;
@@ -129,13 +122,14 @@ AnimationMetaFile* AnimationImporter::Import(const char * file, const aiAnimatio
 	if (!needs_reload) 
 		resource->UnLoad();
 	resource->SetFile(file);
+	meta->loaded = true;
 
 	return meta;
 }
 
 bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 {
-	uint size = sizeof(uint) + anim->name.size() + sizeof(uint) * 3;
+	uint size = sizeof(uint) + anim->name.size() + sizeof(uint) * 6;
 	for (uint i = 0; i < anim->num_channels; i++)
 	{
 		size += sizeof(uint) + anim->channels[i].name.size() + sizeof(uint) * 3 +
@@ -156,9 +150,15 @@ bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 
 	// Store duration, ticks and num channels
 	bytes = sizeof(uint);
+	memcpy(cursor, &anim->start_tick, bytes);
+	cursor += bytes;
+	memcpy(cursor, &anim->end_tick, bytes);
+	cursor += bytes;
 	memcpy(cursor, &anim->tick_duration, bytes);
 	cursor += bytes;
 	memcpy(cursor, &anim->ticks_per_second, bytes);
+	cursor += bytes;
+	memcpy(cursor, &anim->max_tick, bytes);
 	cursor += bytes;
 	memcpy(cursor, &anim->num_channels, bytes);
 	cursor += bytes;
@@ -230,9 +230,15 @@ bool AnimationImporter::Load(ResourceAnimation* resource)
 
 	//Load channel nums, duration and ticks per second
 	bytes = sizeof(uint);
+	memcpy(&resource->start_tick, cursor, bytes);
+	cursor += bytes;
+	memcpy(&resource->end_tick, cursor, bytes);
+	cursor += bytes;
 	memcpy(&resource->tick_duration, cursor, bytes);
 	cursor += bytes;
 	memcpy(&resource->ticks_per_second, cursor, bytes);
+	cursor += bytes;
+	memcpy(&resource->max_tick, cursor, bytes);
 	cursor += bytes;
 	memcpy(&resource->num_channels, cursor, bytes);
 	cursor += bytes;
