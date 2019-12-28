@@ -6,6 +6,7 @@
 
 #include "NodeEditor/Include/imgui_node_editor.h"
 
+#include "ResourceAnimation.h"
 #include "ResourceAnimatorController.h"
 
 #include "ComponentAnimator.h"
@@ -14,13 +15,8 @@ ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameob
 {
 	animator_controller = (ResourceAnimatorController*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATOR, App->resources->GenerateNewUID());
 	App->resources->GetAndReference(4190971176);
-	animator_controller->AddClip("asd", 4190971176, true);
-	animator_controller->AddClip("PENE", 4190971176, true);
-	animator_controller->AddClip("AXELTONTO", 4190971176, true);
-	animator_controller->AddClip("H3H3", 4190971176, true);
-	animator_controller->PlayClip(animator_controller->FindClip("asd")->GetName(), animator_controller->FindClip("asd")->GetResource(), animator_controller->FindClip("asd")->GetLoop());
-	animator_controller->AddState("default state", animator_controller->FindClip("asd"));
-	animator_controller->AddState("default state2", animator_controller->FindClip("PENE"));
+	animator_controller->AddState("default state", nullptr);
+	animator_controller->AddState("default state2", nullptr);
 	animator_controller->AddTransition(animator_controller->GetStates()[0], animator_controller->GetStates()[1], false, 0);
 }
 
@@ -39,8 +35,7 @@ void ComponentAnimator::Update()
 
 void ComponentAnimator::PlayState(std::string name)
 {
-	State* state_to_play = animator_controller->FindState(name);
-	animator_controller->PlayClip(state_to_play->GetClip()->GetName(), state_to_play->GetClip()->GetResource(), state_to_play->GetClip()->GetLoop());
+	animator_controller->Play(name);
 }
 
 void ComponentAnimator::UpdateAnimation(GameObject * go_to_update)
@@ -59,6 +54,11 @@ void ComponentAnimator::UpdateAnimation(GameObject * go_to_update)
 	{
 		UpdateAnimation(go_to_update->transform->GetChildren()[i]->gameobject);
 	}
+}
+
+void ComponentAnimator::OnPlay()
+{
+	animator_controller->Play();
 }
 
 ResourceAnimatorController * ComponentAnimator::GetResourceAnimatorController()

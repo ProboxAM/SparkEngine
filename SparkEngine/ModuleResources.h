@@ -22,7 +22,7 @@ public:
 	Resource* CreateResource(Resource::RESOURCE_TYPE type, uint id, bool& needs_reload);
 	uint GetIDFromMeta(std::string file);
 	std::map<uint, Resource*> GetResources();
-	//std::map<uint, Resource*> GetResources(Resource::RESOURCE_TYPE type);
+	std::vector<Resource*> GetResources(Resource::RESOURCE_TYPE type);
 	Resource::RESOURCE_TYPE GetTypeFromExtension(std::string extension);
 
 private:

@@ -173,6 +173,20 @@ bool GameObject::isStatic() const
 	return is_static;
 }
 
+void GameObject::OnPlay()
+{
+	for each (Component* component in components)
+	{
+		component->OnPlay();
+	}
+
+	std::vector<ComponentTransform*>childs = transform->GetChildren();
+	for each (ComponentTransform* child in childs)
+	{
+		child->gameobject->OnPlay();
+	}
+}
+
 void GameObject::SetStatic(bool state)
 {
 	is_static = state;

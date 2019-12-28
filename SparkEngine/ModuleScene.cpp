@@ -229,6 +229,8 @@ bool ModuleScene::LoadScene(std::string file, bool temp)
 void ModuleScene::OnPlay()
 {
 	SaveScene(true);
+
+	root->OnPlay();
 }
 
 void ModuleScene::OnStop()
