@@ -13,9 +13,15 @@
 ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameobject)
 {
 	animator_controller = (ResourceAnimatorController*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATOR, App->resources->GenerateNewUID());
-	App->resources->GetAndReference(3827686497);
-	animator_controller->AddClip("asd", 3827686497, true);
-	animator_controller->PlayClip(animator_controller->FindClip("asd").GetName(), animator_controller->FindClip("asd").GetResource(), animator_controller->FindClip("asd").GetLoop());
+	App->resources->GetAndReference(4190971176);
+	animator_controller->AddClip("asd", 4190971176, true);
+	animator_controller->AddClip("PENE", 4190971176, true);
+	animator_controller->AddClip("AXELTONTO", 4190971176, true);
+	animator_controller->AddClip("H3H3", 4190971176, true);
+	animator_controller->PlayClip(animator_controller->FindClip("asd")->GetName(), animator_controller->FindClip("asd")->GetResource(), animator_controller->FindClip("asd")->GetLoop());
+	animator_controller->AddState("default state", animator_controller->FindClip("asd"));
+	animator_controller->AddState("default state2", animator_controller->FindClip("PENE"));
+	animator_controller->AddTransition(animator_controller->GetStates()[0], animator_controller->GetStates()[1], false, 0);
 }
 
 ComponentAnimator::~ComponentAnimator()
@@ -33,8 +39,8 @@ void ComponentAnimator::Update()
 
 void ComponentAnimator::PlayState(std::string name)
 {
-	State state_to_play = animator_controller->FindState(name);
-	animator_controller->PlayClip(state_to_play.GetClip()->GetName(), state_to_play.GetClip()->GetResource(), state_to_play.GetClip()->GetLoop());
+	State* state_to_play = animator_controller->FindState(name);
+	animator_controller->PlayClip(state_to_play->GetClip()->GetName(), state_to_play->GetClip()->GetResource(), state_to_play->GetClip()->GetLoop());
 }
 
 void ComponentAnimator::UpdateAnimation(GameObject * go_to_update)

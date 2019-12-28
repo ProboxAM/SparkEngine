@@ -35,6 +35,9 @@ private:
 	Clip* clip;
 
 public:
+	uint pin_in_id, pin_out_id, id;
+
+public:
 	State();
 	State(std::string name, Clip* clip);
 
@@ -77,7 +80,7 @@ class ResourceAnimatorController:
 
 	struct Instance
 	{
-		Clip clip;
+		Clip* clip;
 		float time = 0;
 		bool     loop = true;
 		float    speed = 1.0;
@@ -90,9 +93,9 @@ class ResourceAnimatorController:
 	Instance* current_playing = nullptr;
 
 
-	std::vector<Clip> clips;
-	std::vector<State> states;
-	std::vector<Transition> transitions;
+	std::vector<Clip*> clips;
+	std::vector<State*> states;
+	std::vector<Transition*> transitions;
 	uint entry_node = 0;
 
 private:
@@ -116,23 +119,24 @@ public:
 	//Clips
 	void AddClip(std::string name, uint id, bool loop);
 	void RemoveClip(std::string name);
-	Clip FindClip(std::string name);
+	Clip* FindClip(std::string name);
 
 	uint GetNumClips() const { return clips.size(); }
-	std::vector<Clip> GetClips() const { return clips; }
+	std::vector<Clip*> GetClips() const { return clips; }
 
 	//States
 	void AddState(std::string name, Clip* clip);
 	void RemoveState(std::string name);
-	State FindState(std::string name);
+	State* FindState(std::string name);
 
 	uint GetNumStates() const {return states.size(); }
-	std::vector<State> GetStates() const { return states; }
+	std::vector<State*> GetStates()  { return states; }
 
 	//Transitions
 	void AddTransition(State* source, State* target, bool trigger, uint blend);
 	void RemoveTransition(std::string source_name, std::string target_name);
-	std::vector<Transition> GetTransitions() const { return transitions; }
+	std::vector<Transition*> GetTransitions() const { return transitions; }
+	uint GetNumTransitions() const { return transitions.size(); }
 
 	uint GetDefaultNode() const { return entry_node; };
 
