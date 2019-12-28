@@ -19,11 +19,6 @@ public:
 		quatKey* rotation_keys;
 	};
 
-	struct AnimationMetaFile : public MetaFile
-	{
-		bool loops = false;
-	};
-
 public:
 
 	ResourceAnimation(uint id);
@@ -35,10 +30,10 @@ public:
 	uint GetChannelIndex(std::string name);
 	
 	void UnLoad();
-
 	void Load();
 
 public:
+	bool loops = false;
 	std::string name = "";
 	uint tick_duration = 0;
 	uint ticks_per_second = 0;

@@ -2,10 +2,11 @@
 #define _ANIMATION_IMPORTER_H
 
 #include "Importer.h"
+#include "ResourceAnimation.h"
 
-class ResourceAnimation;
 struct aiScene;
 struct aiAnimation;
+class AnimationMetaFile;
 
 class AnimationImporter :
 	public Importer
@@ -14,7 +15,7 @@ public:
 	AnimationImporter();
 	~AnimationImporter();
 
-	uint Import(const char* file, const aiAnimation* anim, uint id);
+	AnimationMetaFile* Import(const char* file, const aiAnimation* anim, AnimationMetaFile* meta = nullptr);
 	bool SaveAnimation(ResourceAnimation* anim);
 
 	bool Load(ResourceAnimation* resource);

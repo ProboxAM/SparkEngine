@@ -19,6 +19,8 @@
 #include "PanelAnimator.h"
 #include "MeshImporter.h"
 
+#include "TextureMetaFile.h"
+
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 #include "ImGui/imgui_stdlib.h"
@@ -79,7 +81,7 @@ bool ModuleEditor::Start()
 	atlas = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
 	atlas->SetExportedFile(atlas_path);
 	atlas->SetFile(atlas_path);
-	atlas->meta = new ResourceTexture::TextureMetaFile();
+	atlas->meta = new TextureMetaFile();
 	atlas->AddReference();
 
 	return true;

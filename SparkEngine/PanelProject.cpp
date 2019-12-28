@@ -10,6 +10,9 @@
 #include "ResourceMesh.h"
 #include "ResourceAnimation.h"
 
+#include "ModelMetaFile.h"
+#include "AnimationMetaFile.h"
+
 #include "PanelProject.h"
 
 PanelProject::PanelProject(bool active): Panel(active)
@@ -228,7 +231,7 @@ void PanelProject::DrawFiles()
 void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 {
 	uint id = App->resources->GetID(current_node->full_path + file);
-	ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*)App->resources->Get(id)->meta;
+	ModelMetaFile* meta = (ModelMetaFile*)App->resources->Get(id)->meta;
 	for each (uint mesh_id in meta->meshes)
 	{
 		if (mesh_id == 0)
@@ -252,9 +255,9 @@ void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 		ImGui::EndChild();
 		childs++;
 	}
-	for each (uint animation_id in meta->animations)
+	for each (AnimationMetaFile* anim_meta in meta->animations)
 	{
-		if (animation_id == 0)
+		if (anim_meta->id == 0)
 			continue;
 
 		ImGui::SameLine();
@@ -262,7 +265,7 @@ void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
-			ImGui::SetDragDropPayload("ASSET", &animation_id, sizeof(uint));
+			ImGui::SetDragDropPayload("ASSET", &anim_meta->id, sizeof(uint));
 			ImGui::EndDragDropSource();
 		}
 
@@ -270,7 +273,7 @@ void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 			ImVec2(0 / App->editor->atlas->width, (float)App->editor->icon_size / App->editor->atlas->height),
 			ImVec2((float)App->editor->icon_size / App->editor->atlas->width, 0));
 
-		ImGui::Text(((ResourceAnimation*)App->resources->Get(animation_id))->name.c_str());
+		ImGui::Text(anim_meta->name.c_str());
 
 		ImGui::EndChild();
 		childs++;

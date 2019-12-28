@@ -123,7 +123,8 @@ bool MeshImporter::Load(ResourceMesh* resource)
 
 uint MeshImporter::Import(const char* file, const aiMesh* mesh, uint id, std::string name)
 {
-	ResourceMesh* resource = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, id);
+	bool needs_reload = false;
+	ResourceMesh* resource = (ResourceMesh*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_MESH, id, needs_reload);
 	resource->name = name;
 
 	//Load vertices
@@ -159,32 +160,12 @@ uint MeshImporter::Import(const char* file, const aiMesh* mesh, uint id, std::st
 		}
 	}
 
-
-	//DEBUG NORMAL VERTEX
-	//resource->debug_vertex_normals.push_back(resource->vertices[i]);
-	//resource->debug_vertex_normals.push_back(resource->vertices[i] + (resource->normal[i].Normalized() * DEBUG_NORMAL_LENGTH));
-
-	//Calculate center of face
-	/*float center_x = (resource->vertices[face.mIndices[0]].x + resource->vertices[face.mIndices[1]].x + resource->vertices[face.mIndices[2]].x) / 3;
-	float center_y = (resource->vertices[face.mIndices[0]].y + resource->vertices[face.mIndices[1]].y + resource->vertices[face.mIndices[2]].y) / 3;
-	float center_z = (resource->vertices[face.mIndices[0]].z + resource->vertices[face.mIndices[1]].z + resource->vertices[face.mIndices[2]].z) / 3;
-
-	float3 center = float3(center_x, center_y, center_z);
-
-	//Calculate normal of face. Create 2 vector from face edges and calculate normal with cross product
-	float3 edge_1 = (resource->vertices[face.mIndices[1]] - resource->vertices[face.mIndices[0]]);
-	float3 edge_2 = (resource->vertices[face.mIndices[2]] - resource->vertices[face.mIndices[0]]);
-
-	float3 normal;
-	normal.x = (edge_1.y * edge_2.z) - (edge_1.z * edge_2.y);
-	normal.y = (edge_1.z * edge_2.x) - (edge_1.x * edge_2.z);
-	normal.z = (edge_1.x * edge_2.y) - (edge_1.y * edge_2.x);
-
-	resource->debug_face_normals.push_back(center);*/
-
 	LOG("New mesh with %d vertices", resource->total_vertices);
 	SaveMesh(resource);
-	resource->UnLoad();
+	if (!needs_reload)
+		resource->UnLoad();
+	else
+		resource->PrepareBuffers();
 	resource->SetFile(file);
 
 	return resource->GetID();

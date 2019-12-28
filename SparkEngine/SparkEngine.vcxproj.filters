@@ -55,6 +55,9 @@
     <Filter Include="Sources\NodeEditor">
       <UniqueIdentifier>{0d8d5ca3-cff5-4ec7-91ca-5569b8cd2e8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Containers\MetaFile">
+      <UniqueIdentifier>{a55c3bbd-a70c-4cd3-a63b-1bcf0f5925b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -468,6 +471,18 @@
     <ClInclude Include="ComponentBone.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="MetaFile.h">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationMetaFile.h">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelMetaFile.h">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureMetaFile.h">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -745,6 +760,18 @@
     </ClCompile>
     <ClCompile Include="ComponentBone.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MetaFile.cpp">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationMetaFile.cpp">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelMetaFile.cpp">
+      <Filter>Sources\Containers\MetaFile</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureMetaFile.cpp">
+      <Filter>Sources\Containers\MetaFile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

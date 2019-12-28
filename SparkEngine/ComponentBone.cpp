@@ -22,15 +22,13 @@ void ComponentBone::Draw()
 	if (!debug_draw)
 		return;
 
-	App->renderer3D->DrawSphere(gameobject->transform->GetPosition(), 1);
+	App->renderer3D->DrawSphere(gameobject->transform->GetPosition(), gameobject->transform->GetScale().x * 0.5f);
 }
 
 void ComponentBone::AddBone(ResourceBone * b)
 {
 	if(b)
 		bone = b;
-
-	debug_draw = true;
 }
 
 uint ComponentBone::GetBoneID()

@@ -17,6 +17,10 @@
 #include "ResourceMesh.h"
 #include "PanelAnimator.h"
 
+#include "ModelMetaFile.h"
+#include "AnimationMetaFile.h"
+#include "TextureMetaFile.h"
+
 #include "ImGui/imgui_stdlib.h"
 
 #include <iomanip>
@@ -112,10 +116,15 @@ void PanelInspector::Draw()
 					ImGui::SameLine();
 					ImGui::TextColored({ 255, 255, 0, 255 }, ("UV amount: " + std::to_string(c_mesh->GetUVAmount())).c_str());
 
-					if(c_mesh->root_bone_id != 0) ImGui::Text("Root Bone: %s", App->scene->gameobjects[c_mesh->root_bone_id]->GetName().c_str());
-					//ImGui::Checkbox("Vertex normals: ", &c_mesh->debug_vertex_normal);
-					//ImGui::Checkbox("Face normals: ", &c_mesh->debug_face_normal);
 					ImGui::Checkbox("Bounding box", &c_mesh->debug_bounding_box);
+
+					if (c_mesh->root_bone_id != 0)
+					{
+						ImGui::Text("Root Bone: %s", App->scene->gameobjects[c_mesh->root_bone_id]->GetName().c_str());
+						bool debug_skeleton = c_mesh->debug_skeleton;
+						if (ImGui::Checkbox("Debug Skeleton", &debug_skeleton))
+							c_mesh->SetDebugSkeleton(debug_skeleton);
+					}
 				}
 			}
 			if (comp[i]->type == COMPONENT_TYPE::TEXTURE)
@@ -258,7 +267,7 @@ void PanelInspector::Draw()
 
 void PanelInspector::ShowTextureImportSettings(Resource* res)
 {
-	ResourceTexture::TextureMetaFile* meta = (ResourceTexture::TextureMetaFile*) res->meta;
+	TextureMetaFile* meta = (TextureMetaFile*) res->meta;
 
 	
 	ImGui::BeginChild("settings", { ImGui::GetWindowWidth() / 2, ImGui::GetWindowHeight() / 2 }, false, ImGuiWindowFlags_NoScrollWithMouse);
@@ -272,7 +281,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	{
 		for (int i = 0; i < 3; i++)
 			if (ImGui::Selectable(compressions[i]))
-				meta->compression = (ResourceTexture::TextureMetaFile::TEXTURE_COMPRESSION) i;
+				meta->compression = (TextureMetaFile::TEXTURE_COMPRESSION) i;
 		ImGui::EndPopup();
 	}
 
@@ -287,7 +296,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	{
 		for (int i = 0; i < 4; i++)
 			if (ImGui::Selectable(wrap_modes[i]))
-				meta->wrap_s = (ResourceTexture::TextureMetaFile::TEXTURE_WRAP_MODE) i;
+				meta->wrap_s = (TextureMetaFile::TEXTURE_WRAP_MODE) i;
 		ImGui::EndPopup();
 	}
 	ImGui::PopID();
@@ -301,7 +310,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	{
 		for (int i = 0; i < 4; i++)
 			if (ImGui::Selectable(wrap_modes[i]))
-				meta->wrap_t = (ResourceTexture::TextureMetaFile::TEXTURE_WRAP_MODE) i;
+				meta->wrap_t = (TextureMetaFile::TEXTURE_WRAP_MODE) i;
 		ImGui::EndPopup();
 	}
 	ImGui::PopID();
@@ -317,7 +326,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	{
 		for (int i = 0; i < 2; i++)
 			if (ImGui::Selectable(filter_modes[i]))
-				meta->min_filter = (ResourceTexture::TextureMetaFile::TEXTURE_FILTER_MODE) i;
+				meta->min_filter = (TextureMetaFile::TEXTURE_FILTER_MODE) i;
 		ImGui::EndPopup();
 	}
 	ImGui::PopID();
@@ -331,7 +340,7 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 	{
 		for (int i = 0; i < 2; i++)
 			if (ImGui::Selectable(filter_modes[i]))
-				meta->mag_filter = (ResourceTexture::TextureMetaFile::TEXTURE_FILTER_MODE) i;
+				meta->mag_filter = (TextureMetaFile::TEXTURE_FILTER_MODE) i;
 		ImGui::EndPopup();
 	}
 	ImGui::PopID();
@@ -357,58 +366,125 @@ void PanelInspector::ShowTextureImportSettings(Resource* res)
 
 void PanelInspector::ShowModelImportSettings(Resource* res)
 {
-	ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*) res->meta;
+	ModelMetaFile* meta = (ModelMetaFile*) res->meta;
 
-	const char* presets[] = { "Max Quality", "Quality", "Fast", "Custom" };
-
-	ImGui::Text("Import Preset: ");
-	ImGui::SameLine();
-	if (ImGui::Button(presets[meta->GetSelectedPreset()]))
-		ImGui::OpenPopup("Import_preset");
-	if (ImGui::BeginPopup("Import_preset"))
+	ImGui::PushID("Model_Button");
+	if (selected_model_import_section == ModelImportSettingSection::I_MODEL)
 	{
-		for (int i = 0; i < 4; i++)
-			if (ImGui::Selectable(presets[i]))
-				meta->SetImportSettings((ResourceModel::ModelMetaFile::MODEL_IMPORT_SETTING)i);
-		ImGui::EndPopup();
-	}
-
-	bool disabled = meta->GetSelectedPreset() != ResourceModel::ModelMetaFile::CUSTOM;
-	if (disabled)
-	{
-		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
 		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
 	}
+	if (ImGui::Button("Model"))
+		selected_model_import_section = ModelImportSettingSection::I_MODEL;
+	else if (selected_model_import_section == ModelImportSettingSection::I_MODEL) ImGui::PopStyleVar();
+	ImGui::PopID();
 
-	ImGui::Checkbox("Generate Smooth Normals", &meta->gen_smooth_normals);
-	ImGui::Checkbox("Optimize Meshes", &meta->optimize_meshes);
-	ImGui::Checkbox("Join Vertices", &meta->join_vertices);
-	ImGui::Checkbox("Validate Structures", &meta->validate_structures);
-	ImGui::Checkbox("Split Large Meshes", &meta->split_large_meshes);
-	ImGui::Checkbox("Generate UV Coords", &meta->gen_uv_coords);
-	ImGui::Checkbox("Limit Bone Weights", &meta->limit_bone_weigths);
-	ImGui::Checkbox("Remove Redundant Mats", &meta->remove_redundant_mats);
-	ImGui::Checkbox("Triangulate", &meta->triangulate);
-	ImGui::Checkbox("Sort by Type", &meta->sort_by_type);
-	ImGui::Checkbox("Improve Cache Locality", &meta->improve_cache_locality);
-	ImGui::Checkbox("Find Degenerates", &meta->find_degenerates);
-	ImGui::Checkbox("Find Invalid Data", &meta->find_invalid_data);
-	ImGui::Checkbox("Find Instances", &meta->find_instances);
-
-	if (disabled)
-	{
-		ImGui::PopItemFlag();
-		ImGui::PopStyleVar();
-	}
-
-	ImGui::Separator();
-	if (ImGui::Button("Save")) {
-		App->importer->model->SaveMeta(meta);
-		LOG("Reimporting model with new settings...");
-		App->resources->ImportFile(meta->original_file.c_str(), Resource::RESOURCE_TYPE::R_MODEL, meta);
-	}
 	ImGui::SameLine();
-	if (ImGui::Button("Reset")) {
-		meta->SetDefault();
+
+	ImGui::PushID("Animation_Button");
+	if (selected_model_import_section == ModelImportSettingSection::I_ANIMATION)
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+	}
+	if (ImGui::Button("Animation"))
+		selected_model_import_section = ModelImportSettingSection::I_ANIMATION;
+	else if (selected_model_import_section == ModelImportSettingSection::I_ANIMATION) ImGui::PopStyleVar();
+	ImGui::PopID();
+
+	if (selected_model_import_section == ModelImportSettingSection::I_MODEL)
+	{
+		const char* presets[] = { "Max Quality", "Quality", "Fast", "Custom" };
+
+		ImGui::Text("Import Preset: ");
+		ImGui::SameLine();
+		if (ImGui::Button(presets[meta->GetSelectedPreset()]))
+			ImGui::OpenPopup("Import_preset");
+		if (ImGui::BeginPopup("Import_preset"))
+		{
+			for (int i = 0; i < 4; i++)
+				if (ImGui::Selectable(presets[i]))
+					meta->SetImportSettings((ModelMetaFile::MODEL_IMPORT_SETTING)i);
+			ImGui::EndPopup();
+		}
+
+		bool disabled = meta->GetSelectedPreset() != ModelMetaFile::CUSTOM;
+		if (disabled)
+		{
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+		}
+
+		ImGui::Checkbox("Generate Smooth Normals", &meta->gen_smooth_normals);
+		ImGui::Checkbox("Optimize Meshes", &meta->optimize_meshes);
+		ImGui::Checkbox("Join Vertices", &meta->join_vertices);
+		ImGui::Checkbox("Validate Structures", &meta->validate_structures);
+		ImGui::Checkbox("Split Large Meshes", &meta->split_large_meshes);
+		ImGui::Checkbox("Generate UV Coords", &meta->gen_uv_coords);
+		ImGui::Checkbox("Limit Bone Weights", &meta->limit_bone_weigths);
+		ImGui::Checkbox("Remove Redundant Mats", &meta->remove_redundant_mats);
+		ImGui::Checkbox("Triangulate", &meta->triangulate);
+		ImGui::Checkbox("Sort by Type", &meta->sort_by_type);
+		ImGui::Checkbox("Improve Cache Locality", &meta->improve_cache_locality);
+		ImGui::Checkbox("Find Degenerates", &meta->find_degenerates);
+		ImGui::Checkbox("Find Invalid Data", &meta->find_invalid_data);
+		ImGui::Checkbox("Find Instances", &meta->find_instances);
+
+		if (disabled)
+		{
+			ImGui::PopItemFlag();
+			ImGui::PopStyleVar();
+		}
+
+		ImGui::Separator();
+		if (ImGui::Button("Apply")) {
+			App->importer->model->SaveMeta(meta);
+			LOG("Reimporting model with new settings...");
+			App->resources->ImportFile(meta->original_file.c_str(), Resource::RESOURCE_TYPE::R_MODEL, meta);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Reset")) {
+			meta->SetDefault();
+		}
+	}
+	else
+	{
+		ImGui::Checkbox("Import Animation", &meta->import_animation);
+		ImGui::Separator();
+		static std::string clip_name;
+		for each (AnimationMetaFile* anim_meta in meta->animations)
+		{
+			ImGui::PushID(anim_meta);
+			clip_name = anim_meta->name;
+			if (ImGui::InputText("Clip Name", &clip_name, ImGuiInputTextFlags_AutoSelectAll))
+				anim_meta->name = clip_name;
+			int start_tick = (int)anim_meta->start_tick;
+			int end_tick = (int)anim_meta->end_tick;
+			if (ImGui::DragInt("Start", &start_tick, 1.0F, 0, anim_meta->end_tick - 1))
+				if(start_tick >= 0 && start_tick < anim_meta->end_tick) anim_meta->start_tick = (uint)start_tick;
+			if (ImGui::DragInt("End", &end_tick, 1.0F, anim_meta->start_tick + 1, meta->max_ticks))
+				if (end_tick > anim_meta->start_tick && end_tick <= meta->max_ticks) anim_meta->end_tick = (uint)end_tick;
+			ImGui::Separator();
+			ImGui::PopID();
+		}
+		if (ImGui::Button("+"))
+		{
+			AnimationMetaFile* new_anim = new AnimationMetaFile();
+			new_anim->name = "New Clip";
+			new_anim->max_tick = meta->max_ticks;
+			new_anim->end_tick = meta->max_ticks;
+			meta->animations.push_back(new_anim);
+		}
+		ImGui::SameLine();
+		if(ImGui::Button("-") && meta->animations.size() > 0)
+		{
+			delete meta->animations[meta->animations.size()-1];
+			meta->animations.pop_back();
+		}
+
+		ImGui::Separator();
+		if (ImGui::Button("Apply")) {
+			App->importer->model->SaveMeta(meta);
+			LOG("Reimporting model with new settings...");
+			App->resources->ImportFile(meta->original_file.c_str(), Resource::RESOURCE_TYPE::R_MODEL, meta);
+		}
 	}
 }

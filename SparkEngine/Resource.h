@@ -5,6 +5,8 @@
 #include "Globals.h"
 #include <string>
 
+class MetaFile;
+
 class Resource
 {
 public:
@@ -18,18 +20,6 @@ public:
 		R_ANIMATOR,
 		R_BONE,
 		R_NONE
-	};
-
-	struct MetaFile {
-		bool loaded = false;
-
-		int modification_date;
-		std::string file;
-		std::string original_file;
-		std::string exported_file;
-		uint id;
-
-		virtual void SetDefault() {}
 	};
 
 public:

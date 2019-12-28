@@ -19,6 +19,7 @@ public:
 
 	void SetDebugVertexNormal();
 	void SetDebugFaceNormal();
+	void SetDebugSkeleton(bool value);
 
 	void SetDebugBoundingBox();
 
@@ -46,7 +47,7 @@ private:
 	std::vector<ComponentBone*> bones;
 
 public:
-	bool debug_vertex_normal = false, debug_face_normal = false, debug_bounding_box = false;
+	bool debug_skeleton = false, debug_bounding_box = false;
 	bool to_draw = false;
 
 	uint root_bone_id = 0;

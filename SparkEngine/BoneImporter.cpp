@@ -25,7 +25,8 @@ BoneImporter::~BoneImporter()
 
 uint BoneImporter::Import(const char* file, const aiBone* bone, uint id)
 {
-	ResourceBone* resource = (ResourceBone*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_BONE, id);
+	bool needs_reload = false;
+	ResourceBone* resource = (ResourceBone*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_BONE, id, needs_reload);
 
 	resource->name = bone->mName.C_Str();
 	resource->matrix = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
@@ -41,11 +42,11 @@ uint BoneImporter::Import(const char* file, const aiBone* bone, uint id)
 	{
 		memcpy(&resource->weights[i], &bone->mWeights[i].mWeight, sizeof(float));
 		memcpy(&resource->vertex_ids[i], &bone->mWeights[i].mVertexId, sizeof(uint));
-		LOG("%u %u", resource->vertex_ids[i], bone->mWeights[i].mVertexId);
 	}
 
 	SaveBone(resource);
-	resource->UnLoad();
+	if (!needs_reload)
+		resource->UnLoad();
 	resource->SetFile(file);
 
 	return resource->GetID();
