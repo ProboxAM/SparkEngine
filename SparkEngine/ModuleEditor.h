@@ -46,6 +46,7 @@ public:
 	void SaveScene();
 	void ReloadProjectWindow();
 	bool IsInsideSceneWindow(const float2 &pos);
+	bool IsInsideAnimatorWindow(const float2 &pos);
 	std::vector<Panel*> GetPanels() {
 		return panels;
 	}

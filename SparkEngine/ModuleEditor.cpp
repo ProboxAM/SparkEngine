@@ -55,11 +55,11 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[ABOUT] = new PanelAbout(false);
 	panels[HIERARCHY] = new PanelHierarchy(true);
 	panels[INSPECTOR] = new PanelInspector(true);
+	panels[P_ANIMATOR] = new PanelAnimator(true);
 	panels[SCENE] = new PanelScene(true);
 	panels[GAME] = new PanelGame(true);
 	panels[PROJECT] = new PanelProject(true);
 	panels[RESOURCES] = new PanelResources(true);
-	panels[P_ANIMATOR] = new PanelAnimator(true);
 
 	Load(it);
 
@@ -385,6 +385,11 @@ void ModuleEditor::ReloadProjectWindow()
 bool ModuleEditor::IsInsideSceneWindow(const float2 &pos)
 {
 	return ((PanelScene*)panels[SCENE])->IsInside(pos);
+}
+
+bool ModuleEditor::IsInsideAnimatorWindow(const float2 & pos)
+{
+	return ((PanelAnimator*)panels[ANIMATOR])->IsInside(pos);
 }
 
 Panel * ModuleEditor::GetPanel(Panel_Type type)

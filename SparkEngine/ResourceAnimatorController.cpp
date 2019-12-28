@@ -33,7 +33,7 @@ void ResourceAnimatorController::Update()
 {
 	if (current_playing)
 	{
-		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip.GetResource());
+		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip->GetResource());
 
 		if (animation && animation->GetDuration() > 0) {
 
@@ -62,7 +62,7 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 {
 	if (current_playing)
 	{
-		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip.GetResource());
+		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip->GetResource());
 
 		if (animation)
 		{
@@ -139,67 +139,67 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 
 void ResourceAnimatorController::AddClip(std::string name, uint id, bool loop)
 {
-	Clip new_clip(name, id, loop);
+	Clip* new_clip = new Clip(name, id, loop);
 	clips.push_back(new_clip);
 }
 
 void ResourceAnimatorController::RemoveClip(std::string name)
 {
-	for (std::vector<State>::iterator it = states.begin(); it != states.end(); ++it) {
-		if (it->GetClip()->GetName() == name) {
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
+		if ((*it)->GetClip()->GetName() == name) {
 			it = states.erase(it);
 		}
 	}
 
-	for (std::vector<Clip>::iterator it = clips.begin(); it != clips.end(); ++it) {
-		if (it->GetName() == name) {
+	for (std::vector<Clip*>::iterator it = clips.begin(); it != clips.end(); ++it) {
+		if ((*it)->GetName() == name) {
 			it = clips.erase(it);
 		}
 	}
 }
 
-Clip ResourceAnimatorController::FindClip(std::string name)
+Clip* ResourceAnimatorController::FindClip(std::string name)
 {
-	for (std::vector<Clip>::iterator it = clips.begin(); it != clips.end(); ++it) {
-		if (it->GetName() == name)
+	for (std::vector<Clip*>::iterator it = clips.begin(); it != clips.end(); ++it) {
+		if ((*it)->GetName() == name)
 			return (*it);
 	}
 }
 
 void ResourceAnimatorController::AddState(std::string name, Clip * clip)
 {
-	State new_state(name, clip);
+	State* new_state = new State(name, clip);
 	states.push_back(new_state);
 }
 
 void ResourceAnimatorController::RemoveState(std::string name)
 {
-	for (std::vector<State>::iterator it = states.begin(); it != states.end(); ++it) {
-		if (it->GetName() == name) {
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
+		if ((*it)->GetName() == name) {
 			it = states.erase(it);
 		}
 	}
 }
 
-State ResourceAnimatorController::FindState(std::string name)
+State* ResourceAnimatorController::FindState(std::string name)
 {
-	for (std::vector<State>::iterator it = states.begin(); it != states.end(); ++it) {
-		if (it->GetName() == name)
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
+		if ((*it)->GetName() == name)
 			return (*it);
 	}
 }
 
 void ResourceAnimatorController::AddTransition(State * source, State * target, bool trigger, uint blend)
 {
-	Transition new_transition(source, target, trigger, blend);
+	Transition* new_transition = new Transition(source, target, trigger, blend);
 
 	transitions.push_back(new_transition);
 }
 
 void ResourceAnimatorController::RemoveTransition(std::string source_name, std::string target_name)
 {
-	for (std::vector<Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
-		if (it->GetSource()->GetName() == source_name && it->GetTarget()->GetName() == target_name) {
+	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
+		if ((*it)->GetSource()->GetName() == source_name && (*it)->GetTarget()->GetName() == target_name) {
 			it = transitions.erase(it);
 		}
 	}
@@ -278,7 +278,7 @@ void State::SetClip(Clip * clip)
 
 std::string State::GetName()
 {
-	return std::string();
+	return name;
 }
 
 Clip * State::GetClip()
