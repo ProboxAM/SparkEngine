@@ -1,20 +1,28 @@
 {
     "animations": [
         {
-            "end_tick": 28,
+            "end_tick": 46,
             "id": 2391643307,
-            "loops": false,
+            "loops": true,
             "max_tick": 119,
-            "name": "Take 001",
+            "name": "Idle",
             "start_tick": 0
         },
         {
-            "end_tick": 84,
+            "end_tick": 71,
             "id": 1321185006,
+            "loops": true,
+            "max_tick": 119,
+            "name": "Walk",
+            "start_tick": 47
+        },
+        {
+            "end_tick": 119,
+            "id": 3827686497,
             "loops": false,
             "max_tick": 119,
-            "name": "New Clip",
-            "start_tick": 43
+            "name": "Attack",
+            "start_tick": 72
         }
     ],
     "bones": {
@@ -69,7 +77,7 @@
     "meshes": [
         1686905640
     ],
-    "modification_date": 1576841145,
+    "modification_date": 1573584367,
     "optimize_meshes": true,
     "original_file": "Assets/Models/aniTest.fbx",
     "remove_redundant_mats": true,

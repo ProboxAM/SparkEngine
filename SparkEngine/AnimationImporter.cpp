@@ -129,7 +129,7 @@ AnimationMetaFile* AnimationImporter::Import(const char * file, const aiAnimatio
 
 bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 {
-	uint size = sizeof(uint) + anim->name.size() + sizeof(uint) * 6;
+	uint size = sizeof(uint) + anim->name.size() + sizeof(uint) * 6 + sizeof(bool);
 	for (uint i = 0; i < anim->num_channels; i++)
 	{
 		size += sizeof(uint) + anim->channels[i].name.size() + sizeof(uint) * 3 +
@@ -161,6 +161,10 @@ bool AnimationImporter::SaveAnimation(ResourceAnimation* anim)
 	memcpy(cursor, &anim->max_tick, bytes);
 	cursor += bytes;
 	memcpy(cursor, &anim->num_channels, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(bool);
+	memcpy(cursor, &anim->loops, bytes);
 	cursor += bytes;
 
 	// Store channels
@@ -241,6 +245,10 @@ bool AnimationImporter::Load(ResourceAnimation* resource)
 	memcpy(&resource->max_tick, cursor, bytes);
 	cursor += bytes;
 	memcpy(&resource->num_channels, cursor, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(bool);
+	memcpy(&resource->loops, cursor, bytes);
 	cursor += bytes;
 
 	resource->channels = new ResourceAnimation::Channel[resource->num_channels];

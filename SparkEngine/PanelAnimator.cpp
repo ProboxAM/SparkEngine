@@ -1,9 +1,11 @@
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleResources.h"
 #include "ModuleInput.h"
 #include "MathGeoLib/Geometry/AABB2D.h"
 
 #include "ResourceAnimatorController.h"
+#include "ResourceAnimation.h"
 
 #include "PanelAnimator.h"
 
@@ -64,7 +66,7 @@ void PanelAnimator::DrawStates()
 		ImGui::Text(current_animator->GetStates()[i]->GetName().c_str());
 
 		if(current_animator->GetStates()[i]->GetClip())
-			ImGui::Text(current_animator->GetStates()[i]->GetClip()->GetName().c_str());
+			ImGui::Text(current_animator->GetStates()[i]->GetClip()->name.c_str());
 		else
 			ImGui::Text("No clip selected");
 
@@ -139,9 +141,11 @@ void PanelAnimator::ShowStatePopup(){
 
 		ImGui::Separator();
 
-		for (int i = 0; i < current_animator->GetClips().size(); i++) {
-			if (ImGui::Selectable(current_animator->GetClips()[i]->GetName().c_str())) {
-				current_animator->FindState(context_node)->SetClip(current_animator->GetClips()[i]);
+		std::vector<Resource*> clips = App->resources->GetResources(Resource::RESOURCE_TYPE::R_ANIMATION);
+
+		for (int i = 0; i < clips.size(); i++) {
+			if (ImGui::Selectable(((ResourceAnimation*)clips[i])->name.c_str())) {
+				current_animator->FindState(context_node)->SetClip((ResourceAnimation*)clips[i]);
 				ImGui::CloseCurrentPopup();
 			}
 		}

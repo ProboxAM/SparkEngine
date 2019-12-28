@@ -7,46 +7,29 @@
 
 #include <vector>
 
-class Clip
-{
-private:
-	std::string      name;
-	uint             resource_id = 0;
-	bool             loop = false;
-
-public:
-	Clip();
-	Clip(std::string name, uint resource_id, bool loop);
-
-public:
-	void SetName(std::string name);
-	void SetResource(uint resource_id);
-	void SetLoop(bool loop);
-
-	std::string GetName();
-	uint GetResource();
-	bool GetLoop();
-};
+class ResourceAnimation;
 
 class State
 {
 private:
 	std::string name;
-	Clip* clip;
+	float speed = 1.0;
+	ResourceAnimation* clip;
 
 public:
 	uint pin_in_id, pin_out_id, id;
+	float time = 0;
 
 public:
 	State();
-	State(std::string name, Clip* clip);
+	State(std::string name, ResourceAnimation* clip);
 
 public:
 	void SetName(std::string name);
-	void SetClip(Clip* clip);
+	void SetClip(ResourceAnimation* clip);
 
 	std::string GetName();
-	Clip* GetClip();
+	ResourceAnimation* GetClip();
 };
 
 class Transition
@@ -74,29 +57,12 @@ public:
 };
 
 
-class ResourceAnimatorController:
-	public Resource
+class ResourceAnimatorController: public Resource
 {
-
-	struct Instance
-	{
-		Clip* clip;
-		float time = 0;
-		bool     loop = true;
-		float    speed = 1.0;
-
-		Instance* next = nullptr;
-		uint fade_duration = 0;
-		uint fade_time = 0;
-	};
-
-	Instance* current_playing = nullptr;
-
-
-	std::vector<Clip*> clips;
+	State* current_state = nullptr;
 	std::vector<State*> states;
 	std::vector<Transition*> transitions;
-	uint entry_node = 0;
+	State* default_state = nullptr;
 
 private:
 	ax::NodeEditor::EditorContext* ed_context = nullptr;
@@ -109,23 +75,17 @@ public:
 public:
 
 	//AnimationHandle
-	void PlayClip(std::string name, uint resource_id, bool loop);
+	void Play();
+	void Play(std::string state_name);
 	void Update();
 	void Stop();
+
 
 	//Transform
 	bool GetTransform(std::string channel_name, float3 &position, Quat &rotation, float3 &scale);
 
-	//Clips
-	void AddClip(std::string name, uint id, bool loop);
-	void RemoveClip(std::string name);
-	Clip* FindClip(std::string name);
-
-	uint GetNumClips() const { return clips.size(); }
-	std::vector<Clip*> GetClips() const { return clips; }
-
 	//States
-	void AddState(std::string name, Clip* clip);
+	void AddState(std::string name, ResourceAnimation* clip);
 	void RemoveState(std::string name);
 	State* FindState(std::string name);
 	State* FindState(uint id);
@@ -140,7 +100,7 @@ public:
 	std::vector<Transition*> GetTransitions() const { return transitions; }
 	uint GetNumTransitions() const { return transitions.size(); }
 
-	uint GetDefaultNode() const { return entry_node; };
+	State* GetDefaultNode() const { return default_state; };
 
 	ax::NodeEditor::EditorContext* GetEditorContext();
 

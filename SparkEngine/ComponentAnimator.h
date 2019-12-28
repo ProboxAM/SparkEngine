@@ -16,6 +16,7 @@ public:
 
 	void PlayState(std::string name);
 	void UpdateAnimation(GameObject* go_to_update);
+	void OnPlay();
 
 	ResourceAnimatorController* GetResourceAnimatorController();
 

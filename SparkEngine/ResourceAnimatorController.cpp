@@ -18,34 +18,24 @@ ResourceAnimatorController::~ResourceAnimatorController()
 	ax::NodeEditor::DestroyEditor(ed_context);
 }
 
-void ResourceAnimatorController::PlayClip(std::string name, uint resource_id, bool loop)
-{
-	Instance* new_instance = new Instance();
-
-	new_instance->clip = FindClip(name);
-	new_instance->loop = loop;
-	new_instance->next = current_playing;
-
-	current_playing = new_instance;
-}
 
 void ResourceAnimatorController::Update()
 {
-	if (current_playing)
+	if (current_state)
 	{
-		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip->GetResource());
+		ResourceAnimation* animation = current_state->GetClip();
 
 		if (animation && animation->GetDuration() > 0) {
 
-			current_playing->time += App->time->DeltaTime();
+			current_state->time += App->time->DeltaTime();
 			
-			LOG("current time: %f animation duration: %f", current_playing->time, (float)animation->GetDuration());
-			if (current_playing->time >= animation->GetDuration()) {
+			LOG("current time: %f animation duration: %f", current_state->time, (float)animation->GetDuration());
+			if (current_state->time >= animation->GetDuration()) {
 
-				if (current_playing->loop)
-					current_playing->time = 0;
+				if (current_state->GetClip()->loops)
+					current_state->time = 0;
 				else
-					current_playing->time = animation->GetDuration();
+					current_state->time = animation->GetDuration();
 			}
 		}
 	}
@@ -53,16 +43,28 @@ void ResourceAnimatorController::Update()
 
 void ResourceAnimatorController::Stop()
 {
-	if (current_playing) {
-		current_playing = nullptr;
+	current_state = nullptr;
+}
+
+void ResourceAnimatorController::Play()
+{
+	current_state = default_state;
+}
+
+void ResourceAnimatorController::Play(std::string state_name)
+{
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it)
+	{
+		if ((*it)->GetName() == state_name)
+			current_state = (*it);
 	}
 }
 
 bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 & position, Quat & rotation, float3 & scale)
 {
-	if (current_playing)
+	if (current_state)
 	{
-		ResourceAnimation* animation = (ResourceAnimation*)App->resources->Get(current_playing->clip->GetResource());
+		ResourceAnimation* animation = current_state->GetClip();
 
 		if (animation)
 		{
@@ -74,7 +76,7 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 				Quat next_rotation;
 				float previous_key_time, next_key_time, t = 0;
 
-				float time_in_ticks = current_playing->time * animation->ticks_per_second;
+				float time_in_ticks = animation->start_tick + (current_state->time * animation->ticks_per_second);
 
 				if (animation->channels[channel_index].num_position_keys > 1)
 				{
@@ -85,6 +87,7 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 							next_position = animation->channels[channel_index].position_keys[i + 1].value;
 							next_key_time = animation->channels[channel_index].position_keys[i + 1].time;
 							t = (float)((double)time_in_ticks / next_key_time);
+							LOG("CURRENT T IS %f", t);
 							break;
 						}
 					}
@@ -137,39 +140,13 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 		return false;
 }
 
-void ResourceAnimatorController::AddClip(std::string name, uint id, bool loop)
-{
-	Clip* new_clip = new Clip(name, id, loop);
-	clips.push_back(new_clip);
-}
-
-void ResourceAnimatorController::RemoveClip(std::string name)
-{
-	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it) {
-		if ((*it)->GetClip()->GetName() == name) {
-			it = states.erase(it);
-		}
-	}
-
-	for (std::vector<Clip*>::iterator it = clips.begin(); it != clips.end(); ++it) {
-		if ((*it)->GetName() == name) {
-			it = clips.erase(it);
-		}
-	}
-}
-
-Clip* ResourceAnimatorController::FindClip(std::string name)
-{
-	for (std::vector<Clip*>::iterator it = clips.begin(); it != clips.end(); ++it) {
-		if ((*it)->GetName() == name)
-			return (*it);
-	}
-}
-
-void ResourceAnimatorController::AddState(std::string name, Clip * clip)
+void ResourceAnimatorController::AddState(std::string name, ResourceAnimation* clip)
 {
 	State* new_state = new State(name, clip);
 	states.push_back(new_state);
+
+	if (!default_state)
+		default_state = new_state;
 }
 
 void ResourceAnimatorController::RemoveState(std::string name)
@@ -243,52 +220,11 @@ std::string ResourceAnimatorController::GetName()
 	return name;
 }
 
-Clip::Clip()
-{
-}
-
-Clip::Clip(std::string name, uint resource_id, bool loop)
-{
-	this->name = name;
-	this->resource_id = resource_id;
-	this->loop = loop;
-}
-
-void Clip::SetName(std::string name)
-{
-	this->name = name;
-}
-
-void Clip::SetResource(uint resource_id)
-{
-	this->resource_id = resource_id;
-}
-
-void Clip::SetLoop(bool loop)
-{
-	this->loop = loop;
-}
-
-std::string Clip::GetName()
-{
-	return name;
-}
-
-uint Clip::GetResource()
-{
-	return resource_id;
-}
-
-bool Clip::GetLoop()
-{
-	return loop;
-}
-
 State::State()
 {
 }
 
-State::State(std::string name, Clip * clip)
+State::State(std::string name, ResourceAnimation * clip)
 {
 	this->name = name;
 	this->clip = clip;
@@ -299,8 +235,9 @@ void State::SetName(std::string name)
 	this->name = name;
 }
 
-void State::SetClip(Clip * clip)
+void State::SetClip(ResourceAnimation * clip)
 {
+	clip->AddReference();
 	this->clip = clip;
 }
 
@@ -309,7 +246,7 @@ std::string State::GetName()
 	return name;
 }
 
-Clip * State::GetClip()
+ResourceAnimation * State::GetClip()
 {
 	return clip;
 }

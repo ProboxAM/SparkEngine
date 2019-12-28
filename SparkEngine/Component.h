@@ -23,6 +23,7 @@ public:
 	virtual void Disable() { active = false; }
 	virtual bool Save(const nlohmann::json::iterator& it) { return true; }
 	virtual bool Load(const nlohmann::json comp) { return true; }
+	virtual void OnPlay() {}
 };
 
 #endif // !_COMPONENT_H_

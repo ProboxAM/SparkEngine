@@ -44,6 +44,7 @@ public:
 
 	bool isActive() const;
 	bool isStatic() const;
+	void OnPlay();
 	void SetStatic(bool state);
 	void SetActive(bool active);
 	bool CompareTag(const std::string &tag);

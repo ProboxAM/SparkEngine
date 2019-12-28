@@ -352,17 +352,18 @@ std::map<uint, Resource*> ModuleResources::GetResources()
 	return resources;
 }
 
-//std::map<uint, Resource*> ModuleResources::GetResources(Resource::RESOURCE_TYPE type)
-//{
-//	std::map<uint, Resource*> ret;
-//
-//	for (int i = 0; i < resources.size(); i++) {
-//		if (resources[i]->GetType() == type)
-//			ret.emplace(resources[i]);
-//	}
-//
-//	return ret;
-//}
+std::vector<Resource*> ModuleResources::GetResources(Resource::RESOURCE_TYPE type)
+{
+	std::vector<Resource*> ret;
+
+	for(std::map<uint,Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
+	{
+		if(it->second->GetType() == type)
+			ret.push_back(it->second);
+	}
+
+	return ret;
+}
 
 bool ModuleResources::LoadMeta(const char* file, MetaFile* meta, Resource::RESOURCE_TYPE type)
 {
