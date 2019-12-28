@@ -372,10 +372,15 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 	if (selected_model_import_section == ModelImportSettingSection::I_MODEL)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+		if (ImGui::Button("Model"))
+			selected_model_import_section = ModelImportSettingSection::I_MODEL;
+		ImGui::PopStyleVar();
 	}
-	if (ImGui::Button("Model"))
-		selected_model_import_section = ModelImportSettingSection::I_MODEL;
-	else if (selected_model_import_section == ModelImportSettingSection::I_MODEL) ImGui::PopStyleVar();
+	else
+	{
+		if (ImGui::Button("Model"))
+			selected_model_import_section = ModelImportSettingSection::I_MODEL;
+	}
 	ImGui::PopID();
 
 	ImGui::SameLine();
@@ -384,10 +389,15 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 	if (selected_model_import_section == ModelImportSettingSection::I_ANIMATION)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+		if (ImGui::Button("Animation"))
+			selected_model_import_section = ModelImportSettingSection::I_ANIMATION;
+		ImGui::PopStyleVar();
 	}
-	if (ImGui::Button("Animation"))
-		selected_model_import_section = ModelImportSettingSection::I_ANIMATION;
-	else if (selected_model_import_section == ModelImportSettingSection::I_ANIMATION) ImGui::PopStyleVar();
+	else
+	{
+		if (ImGui::Button("Animation"))
+			selected_model_import_section = ModelImportSettingSection::I_ANIMATION;
+	}
 	ImGui::PopID();
 
 	if (selected_model_import_section == ModelImportSettingSection::I_MODEL)

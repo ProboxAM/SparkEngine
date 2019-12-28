@@ -74,7 +74,8 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 				Quat next_rotation;
 				float previous_key_time, next_key_time, t = 0;
 
-				float time_in_ticks = current_playing->time * animation->ticks_per_second;
+				float time_in_ticks = animation->start_tick + (current_playing->time * animation->ticks_per_second);
+				LOG("CURRENT TICK IS %f", time_in_ticks);
 
 				if (animation->channels[channel_index].num_position_keys > 1)
 				{
@@ -85,6 +86,7 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 							next_position = animation->channels[channel_index].position_keys[i + 1].value;
 							next_key_time = animation->channels[channel_index].position_keys[i + 1].time;
 							t = (float)((double)time_in_ticks / next_key_time);
+							LOG("CURRENT T IS %f", t);
 							break;
 						}
 					}
