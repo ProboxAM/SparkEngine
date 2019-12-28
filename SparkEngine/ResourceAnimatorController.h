@@ -128,6 +128,8 @@ public:
 	void AddState(std::string name, Clip* clip);
 	void RemoveState(std::string name);
 	State* FindState(std::string name);
+	State* FindState(uint id);
+	State* FindStateFromPinId(uint pin_id);
 
 	uint GetNumStates() const {return states.size(); }
 	std::vector<State*> GetStates()  { return states; }
