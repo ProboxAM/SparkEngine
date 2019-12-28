@@ -2,6 +2,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleResources.h"
 #include "ResourceTexture.h"
+#include "TextureMetaFile.h"
 
 #include "glew\glew.h"
 #define ILUT_USE_OPENGL
@@ -57,7 +58,7 @@ bool TextureImporter::Load(ResourceTexture* tex)
 {
 	uint image_id;
 
-	ResourceTexture::TextureMetaFile* meta = (ResourceTexture::TextureMetaFile*) tex->meta;
+	TextureMetaFile* meta = (TextureMetaFile*) tex->meta;
 	ilGenImages(1, &image_id); // Grab a new image name.
 	ilBindImage(image_id);
 	if (ilLoadImage(tex->GetExportedFile()))
@@ -109,7 +110,7 @@ bool TextureImporter::Import(const void * buffer, uint size, std::string & outpu
 	return true;
 }
 
-bool TextureImporter::Import(const char* import_file, std::string& output_file, ResourceTexture::TextureMetaFile*& meta)
+bool TextureImporter::Import(const char* import_file, std::string& output_file, TextureMetaFile*& meta)
 {
 	bool ret = false;
 
@@ -130,7 +131,7 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 			{
 				if (!meta) //If there was no meta, we create a new one for this resource and generate id.
 				{
-					ResourceTexture::TextureMetaFile* new_meta_file = new ResourceTexture::TextureMetaFile();
+					TextureMetaFile* new_meta_file = new TextureMetaFile();
 					meta = new_meta_file;
 					meta->id = App->GenerateID();
 				}				
@@ -190,7 +191,7 @@ void TextureImporter::LoadDefault(ResourceTexture* resource)
 	resource->SetFile("Checkers");
 }
 
-bool TextureImporter::LoadMeta(const char * file, ResourceTexture::TextureMetaFile* meta)
+bool TextureImporter::LoadMeta(const char * file, TextureMetaFile* meta)
 {
 	std::ifstream i(file);
 	nlohmann::json json = nlohmann::json::parse(i);
@@ -212,7 +213,7 @@ bool TextureImporter::LoadMeta(const char * file, ResourceTexture::TextureMetaFi
 	return true;
 }
 
-bool TextureImporter::SaveMeta(ResourceTexture::TextureMetaFile* meta)
+bool TextureImporter::SaveMeta(TextureMetaFile* meta)
 {
 	nlohmann::json meta_file;
 	meta_file = {

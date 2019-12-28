@@ -17,7 +17,10 @@
 #include "PanelResources.h"
 #include "PanelGame.h"
 #include "PanelAnimator.h"
+#include "PanelAnimation.h"
 #include "MeshImporter.h"
+
+#include "TextureMetaFile.h"
 
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
@@ -60,6 +63,8 @@ bool ModuleEditor::Init(const nlohmann::json::iterator& it)
 	panels[GAME] = new PanelGame(true);
 	panels[PROJECT] = new PanelProject(true);
 	panels[RESOURCES] = new PanelResources(true);
+	panels[P_ANIMATOR] = new PanelAnimator(true);
+	panels[P_ANIMATION] = new PanelAnimation(false);
 
 	Load(it);
 
@@ -79,7 +84,7 @@ bool ModuleEditor::Start()
 	atlas = (ResourceTexture*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_TEXTURE, App->GenerateID());
 	atlas->SetExportedFile(atlas_path);
 	atlas->SetFile(atlas_path);
-	atlas->meta = new ResourceTexture::TextureMetaFile();
+	atlas->meta = new TextureMetaFile();
 	atlas->AddReference();
 
 	return true;
@@ -191,6 +196,8 @@ update_status ModuleEditor::Update()
 				panels[RESOURCES]->Activate();
 			if (ImGui::MenuItem("Animator", nullptr, panels[P_ANIMATOR]->IsActive()))
 				panels[P_ANIMATOR]->Activate();
+			if (ImGui::MenuItem("Animation", nullptr, panels[P_ANIMATION]->IsActive()))
+				panels[P_ANIMATION]->Activate();
 			ImGui::EndMenu();
 		}
 

@@ -4,11 +4,14 @@
 #include "Importer.h"
 
 #include "ResourceModel.h"
+#include "ResourceAnimation.h"
 #include "nlohmann\json.hpp"
 #include <map>
 
 class aiNode;
 class aiScene;
+class ModelMetaFile;
+class AnimationMetaFile;
 
 class ModelImporter :
 	public Importer
@@ -20,12 +23,12 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	bool Import(const char * file, std::string & output_file, ResourceModel::ModelMetaFile*& meta);
+	bool Import(const char * file, std::string & output_file, ModelMetaFile*& meta);
 	bool Load(ResourceModel* resource);
 	bool Save(std::string file, const std::vector<ResourceModel::ModelNode>& nodes);
 
-	bool SaveMeta(ResourceModel::ModelMetaFile* meta);
-	bool LoadMeta(const char* file, ResourceModel::ModelMetaFile* meta);
+	bool SaveMeta(ModelMetaFile* meta);
+	bool LoadMeta(const char* file, ModelMetaFile* meta);
 
 private:
 	bool LoadNode(nlohmann::json::iterator it, ResourceModel* resource);
@@ -35,7 +38,7 @@ private:
 private:
 	std::vector<uint> meshes;
 	std::map<std::string, uint> bones;
-	std::vector<uint> animations;
+	std::vector<AnimationMetaFile*> animations;
 };
 
 #endif // !_MODEL_IMPORTER_H_

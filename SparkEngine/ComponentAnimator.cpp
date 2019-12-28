@@ -66,3 +66,25 @@ ResourceAnimatorController * ComponentAnimator::GetResourceAnimatorController()
 	return animator_controller;
 }
 
+bool ComponentAnimator::Save(const nlohmann::json::iterator & it)
+{
+	nlohmann::json object = {
+		{ "active", active },
+		{ "type", type },
+		{ "controller",animator_controller->GetID() }
+	};
+
+	it.value().push_back(object);
+
+	return true;
+}
+
+bool ComponentAnimator::Load(const nlohmann::json comp)
+{
+	active = comp["active"];
+	type = comp["type"];
+	animator_controller = (ResourceAnimatorController*)App->resources->GetAndReference(comp["controller"]);
+
+	return true;
+}
+

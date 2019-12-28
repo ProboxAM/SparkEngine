@@ -3,6 +3,7 @@
 
 #include "Importer.h"
 #include "ResourceTexture.h"
+class TextureMetaFile;
 
 class TextureImporter :
 	public Importer
@@ -15,13 +16,13 @@ public:
 	bool CleanUp();
 	bool Start();
 
-	bool Import(const char* file, std::string& output_file, ResourceTexture::TextureMetaFile*& meta);
+	bool Import(const char* file, std::string& output_file, TextureMetaFile*& meta);
 	bool Import(const void* buffer, uint size, std::string& output_file);
 
 	bool Load(ResourceTexture* resource);
 	void LoadDefault(ResourceTexture* resource);
-	bool SaveMeta(ResourceTexture::TextureMetaFile* meta);
-	bool LoadMeta(const char * file, ResourceTexture::TextureMetaFile* meta);
+	bool SaveMeta(TextureMetaFile* meta);
+	bool LoadMeta(const char * file, TextureMetaFile* meta);
 
 	int version;
 	uint checkers;

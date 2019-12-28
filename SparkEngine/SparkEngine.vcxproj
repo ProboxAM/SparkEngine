@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AnimationImporter.h" />
+    <ClInclude Include="AnimationMetaFile.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="BoneImporter.h" />
     <ClInclude Include="Color.h" />
@@ -112,6 +113,8 @@
     <ClInclude Include="Importer.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="MetaFile.h" />
+    <ClInclude Include="ModelMetaFile.h" />
     <ClInclude Include="ModuleImporter.h" />
     <ClInclude Include="ModuleResources.h" />
     <ClInclude Include="ModuleTime.h" />
@@ -121,6 +124,7 @@
     <ClInclude Include="NodeEditor\Source\imgui_canvas.h" />
     <ClInclude Include="NodeEditor\Source\imgui_extra_math.h" />
     <ClInclude Include="NodeEditor\Source\imgui_node_editor_internal.h" />
+    <ClInclude Include="PanelAnimation.h" />
     <ClInclude Include="PanelAnimator.h" />
     <ClInclude Include="PanelGame.h" />
     <ClInclude Include="PanelProject.h" />
@@ -213,10 +217,12 @@
     <ClInclude Include="Par\par_shapes.h" />
     <ClInclude Include="pcg_random.hpp" />
     <ClInclude Include="ResourceTexture.h" />
+    <ClInclude Include="TextureMetaFile.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationImporter.cpp" />
+    <ClCompile Include="AnimationMetaFile.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BoneImporter.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -241,12 +247,15 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MetaFile.cpp" />
+    <ClCompile Include="ModelMetaFile.cpp" />
     <ClCompile Include="ModuleResources.cpp" />
     <ClCompile Include="ModuleTime.cpp" />
     <ClCompile Include="NodeEditor\Source\crude_json.cpp" />
     <ClCompile Include="NodeEditor\Source\imgui_canvas.cpp" />
     <ClCompile Include="NodeEditor\Source\imgui_node_editor.cpp" />
     <ClCompile Include="NodeEditor\Source\imgui_node_editor_api.cpp" />
+    <ClCompile Include="PanelAnimation.cpp" />
     <ClCompile Include="PanelAnimator.cpp" />
     <ClCompile Include="PanelGame.cpp" />
     <ClCompile Include="PanelProject.cpp" />
@@ -307,6 +316,7 @@
     <ClCompile Include="PanelHierarchy.cpp" />
     <ClCompile Include="PanelInspector.cpp" />
     <ClCompile Include="PanelScene.cpp" />
+    <ClCompile Include="TextureMetaFile.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

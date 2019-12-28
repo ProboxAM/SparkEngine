@@ -17,6 +17,13 @@ public:
 private:
 	void ShowTextureImportSettings(Resource* res);
 	void ShowModelImportSettings(Resource* res);
+
+	enum class ModelImportSettingSection {
+		I_MODEL,
+		I_ANIMATION
+	};
+
+	ModelImportSettingSection selected_model_import_section = ModelImportSettingSection::I_MODEL;
 };
 
 #endif // !_PANEL_INSPECTOR_H_

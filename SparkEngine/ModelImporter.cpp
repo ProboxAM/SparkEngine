@@ -8,7 +8,12 @@
 #include "AnimationImporter.h"
 #include "BoneImporter.h"
 
+#include "ResourceAnimation.h"
+
 #include "ModelImporter.h"
+
+#include "ModelMetaFile.h"
+#include "AnimationMetaFile.h"
 
 #include <fstream>
 #include <iomanip>
@@ -101,7 +106,7 @@ bool ModelImporter::LoadNode(nlohmann::json::iterator it, ResourceModel* resourc
 }
 
 
-bool ModelImporter::Import(const char* file, std::string& output_file, ResourceModel::ModelMetaFile*& meta)
+bool ModelImporter::Import(const char* file, std::string& output_file, ModelMetaFile*& meta)
 {
 	LOG("Importing Model %s", file);
 	uint flags = aiProcessPreset_TargetRealtime_MaxQuality;
@@ -109,8 +114,9 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 		flags = meta->GetImportSettings();
 	else //If there was no meta, we create a new one for this resource and generate id.
 	{
-		meta = new ResourceModel::ModelMetaFile();
+		meta = new ModelMetaFile();
 		meta->id = App->GenerateID();
+		meta->import_animation = true;
 	}
 
 	const aiScene* scene = aiImportFile(file, flags);
@@ -120,14 +126,14 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 		return false;
 	}
 
+	//import meshes
 	if (scene->HasMeshes())
 	{
-		//import meshes
 		uint num_meshes = scene->mNumMeshes;
 		for (int i = 0; i < num_meshes; i++)
 		{
 			uint mesh_uid = meta->loaded ? meta->meshes[i] : App->GenerateID();
-			meshes.push_back(App->importer->mesh->Import(file, scene->mMeshes[i], mesh_uid, "monkahmm"));
+			meshes.push_back(App->importer->mesh->Import(file, scene->mMeshes[i], mesh_uid, scene->mMeshes[i]->mName.C_Str()));
 			//import bones of mesh
 			if (scene->mMeshes[i]->HasBones())
 			{
@@ -142,12 +148,24 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	}
 
 	//import animations
-	if (scene->HasAnimations())
+	if (scene->HasAnimations() && meta->import_animation)
 	{
 		for (int i = 0; i < scene->mNumAnimations; i++)
 		{
-			animations.push_back(App->importer->animation->Import(file, scene->mAnimations[i], meta->loaded ? meta->animations[i] : App->GenerateID()));
+			if (meta->loaded)
+			{
+				for each (AnimationMetaFile* anim in meta->animations)
+				{
+					animations.push_back(anim);
+					App->importer->animation->Import(file, scene->mAnimations[i], anim);
+				}
+			}
+			else
+			{
+				animations.push_back(App->importer->animation->Import(file, scene->mAnimations[i]));
+			}		
 		}
+		meta->max_ticks = animations[0]->max_tick;
 	}
 
 	//create nodes
@@ -169,8 +187,8 @@ bool ModelImporter::Import(const char* file, std::string& output_file, ResourceM
 	meta->exported_file = output_file;
 	meta->original_file = file;
 	meta->file = std::string(file) + ".meta";
+	meta->loaded = true;
 	SaveMeta(meta);
-
 
 	aiReleaseImport(scene);
 	meshes.clear();
@@ -312,14 +330,31 @@ bool ModelImporter::Save(std::string file, const std::vector<ResourceModel::Mode
 	return true;
 }
 
-bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
+bool ModelImporter::SaveMeta(ModelMetaFile* meta)
 {
 	nlohmann::json meta_file;
+
+	nlohmann::json animations_obj;
+	for each (AnimationMetaFile* anim_meta in meta->animations)
+	{
+		nlohmann::json anim_obj = {
+			{ "id",anim_meta->id },
+			{ "name",anim_meta->name },
+			{ "start_tick",anim_meta->start_tick },
+			{ "end_tick",anim_meta->end_tick },
+			{ "max_tick",anim_meta->max_tick},
+			{ "loops",anim_meta->loops },
+		};
+		animations_obj.push_back(anim_obj);
+	}
+
 	meta_file = {
 		{ "original_file", meta->original_file },
 		{ "exported_file", meta->exported_file},
 		{ "id", meta->id },
 		{ "modification_date", meta->modification_date },
+		{ "import_animation", meta->import_animation},
+		{ "max_ticks", meta->max_ticks},
 		{ "setting", meta->setting },
 		{ "find_instances", meta->find_instances },
 		{ "validate_structures", meta->validate_structures },
@@ -337,7 +372,7 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 		{ "find_degenerates", meta->find_degenerates },
 		{ "find_invalid_data", meta->find_invalid_data },
 		{ "meshes", meta->meshes},
-		{ "animations",meta->animations},
+		{ "animations", animations_obj},
 		{ "bones", meta->bones }
 	};
 
@@ -347,7 +382,7 @@ bool ModelImporter::SaveMeta(ResourceModel::ModelMetaFile* meta)
 	return true;
 }
 
-bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* meta)
+bool ModelImporter::LoadMeta(const char* file, ModelMetaFile* meta)
 {
 	std::ifstream i(file);
 	nlohmann::json json = nlohmann::json::parse(i);
@@ -375,9 +410,26 @@ bool ModelImporter::LoadMeta(const char* file, ResourceModel::ModelMetaFile* met
 	meta->find_degenerates = json["find_degenerates"];
 	meta->find_invalid_data = json["find_invalid_data"];
 
+	meta->import_animation = json["import_animation"];
+	meta->max_ticks = json["max_ticks"];
+
 	meta->meshes = json["meshes"].get<std::vector<uint>>();
-	meta->animations = json["animations"].get<std::vector<uint>>();
 	meta->bones = json["bones"].get<std::map<std::string, uint>>();
+
+	nlohmann::json animations_obj = json["animations"];
+	for(nlohmann::json::iterator anim = animations_obj.begin(); anim!=animations_obj.end(); ++anim)
+	{
+		AnimationMetaFile* anim_meta = new AnimationMetaFile();
+		anim_meta->id = anim.value()["id"];
+		anim_meta->name = anim.value()["name"].get<std::string>();
+		anim_meta->start_tick = anim.value()["start_tick"];
+		anim_meta->end_tick = anim.value()["end_tick"];
+		anim_meta->max_tick = anim.value()["max_tick"];
+		anim_meta->loops = anim.value()["loops"];
+		anim_meta->loaded = true;
+
+		meta->animations.push_back(anim_meta);
+	}
 
 	meta->loaded = true;
 

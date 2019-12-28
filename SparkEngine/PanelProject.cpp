@@ -10,6 +10,9 @@
 #include "ResourceMesh.h"
 #include "ResourceAnimation.h"
 
+#include "ModelMetaFile.h"
+#include "AnimationMetaFile.h"
+
 #include "PanelProject.h"
 
 PanelProject::PanelProject(bool active): Panel(active)
@@ -228,7 +231,7 @@ void PanelProject::DrawFiles()
 void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 {
 	uint id = App->resources->GetID(current_node->full_path + file);
-	ResourceModel::ModelMetaFile* meta = (ResourceModel::ModelMetaFile*)App->resources->Get(id)->meta;
+	ModelMetaFile* meta = (ModelMetaFile*)App->resources->Get(id)->meta;
 	for each (uint mesh_id in meta->meshes)
 	{
 		if (mesh_id == 0)
@@ -246,15 +249,26 @@ void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 		ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
 			ImVec2((float)256 / App->editor->atlas->width, (float)App->editor->icon_size * 2 / App->editor->atlas->height),
 			ImVec2(1.0f, (float)App->editor->icon_size / App->editor->atlas->height));
+		ManageClicksForItem(std::to_string(mesh_id).c_str(), mesh_id);
 
 		ImGui::Text(std::to_string(mesh_id).c_str());
+		ManageClicksForItem(std::to_string(mesh_id).c_str(), mesh_id);
+
+		if (selected_item == std::to_string(mesh_id).c_str())
+		{
+			ImGui::SetCursorPos(ImVec2(0, 0));
+			ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 75, 255, 55));
+			ImGui::BeginChild("Selected", ImVec2(image_size, image_size + text_size), true, ImGuiWindowFlags_NoInputs);
+			ImGui::EndChild();
+			ImGui::PopStyleColor();
+		}
 
 		ImGui::EndChild();
 		childs++;
 	}
-	for each (uint animation_id in meta->animations)
+	for each (AnimationMetaFile* anim_meta in meta->animations)
 	{
-		if (animation_id == 0)
+		if (anim_meta->id == 0)
 			continue;
 
 		ImGui::SameLine();
@@ -262,15 +276,26 @@ void PanelProject::DrawResourceNodes(const std::string & file, uint &childs)
 
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
-			ImGui::SetDragDropPayload("ASSET", &animation_id, sizeof(uint));
+			ImGui::SetDragDropPayload("ASSET", &anim_meta->id, sizeof(uint));
 			ImGui::EndDragDropSource();
 		}
 
 		ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
 			ImVec2(0 / App->editor->atlas->width, (float)App->editor->icon_size / App->editor->atlas->height),
 			ImVec2((float)App->editor->icon_size / App->editor->atlas->width, 0));
+		ManageClicksForItem(anim_meta->name.c_str(), anim_meta->id);
 
-		ImGui::Text(((ResourceAnimation*)App->resources->Get(animation_id))->name.c_str());
+		ImGui::Text(anim_meta->name.c_str());
+		ManageClicksForItem(anim_meta->name.c_str(), anim_meta->id);
+
+		if (selected_item == anim_meta->name.c_str())
+		{
+			ImGui::SetCursorPos(ImVec2(0, 0));
+			ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 75, 255, 55));
+			ImGui::BeginChild("Selected", ImVec2(image_size, image_size + text_size), true, ImGuiWindowFlags_NoInputs);
+			ImGui::EndChild();
+			ImGui::PopStyleColor();
+		}
 
 		ImGui::EndChild();
 		childs++;
@@ -290,7 +315,7 @@ void PanelProject::DrawPathRecursive(Project_Node* node)
 	}
 }
 
-void PanelProject::ManageClicksForItem(const std::string &item)
+void PanelProject::ManageClicksForItem(const std::string &item, uint uid)
 {
 	if (ImGui::IsItemClicked())
 	{
@@ -327,7 +352,7 @@ void PanelProject::ManageClicksForItem(const std::string &item)
 		{
 			selected_item = item;
 
-			uint id = App->resources->GetID(current_node->full_path + item);
+			uint id = uid == 0 ? App->resources->GetID(current_node->full_path + item):uid;
 			selected_resource = App->resources->Get(id);
 
 			App->scene->selected_gameobject = nullptr;

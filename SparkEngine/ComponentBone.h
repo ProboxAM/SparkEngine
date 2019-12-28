@@ -19,6 +19,9 @@ public:
 	uint GetBoneID();
 	ResourceBone* GetBone();
 
+	bool Save(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json comp);
+
 private:
 	ResourceBone* bone = nullptr;
 };

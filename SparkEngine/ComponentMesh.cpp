@@ -38,18 +38,17 @@ void ComponentMesh::Update()
 
 void ComponentMesh::Draw()
 {
+	if (!active)
+		return;
+
 	if (deformable_mesh)
 		UpdateDeformableMesh();
 
 	ComponentTexture* c_tex = (ComponentTexture*)gameobject->GetComponent(COMPONENT_TYPE::TEXTURE);
 	float4x4 transform = gameobject->transform->GetTransformMatrix();
 
-	static bool test = true;
-	if (App->input->GetKey(SDLK_F1) == KEY_REPEAT)
-		test = !test;
-
 	if (mesh && to_draw) {
-		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform, test?deformable_mesh:nullptr);
+		App->renderer3D->DrawMesh(mesh, c_tex->active ? c_tex->GetTexture() : nullptr, transform, deformable_mesh);
 		if (App->scene->selected_gameobject == gameobject)
 			if (App->renderer3D->debug_draw)
 				App->renderer3D->DrawOutline(deformable_mesh?deformable_mesh:mesh, { 0.9f, 1.f, 0.1f }, transform);
@@ -57,10 +56,6 @@ void ComponentMesh::Draw()
 
 	if (App->renderer3D->debug_draw)
 	{
-		if (debug_vertex_normal)
-			App->renderer3D->DebugVertexNormals(mesh, transform);
-		if (debug_face_normal)
-			App->renderer3D->DebugFaceNormals(mesh, transform);
 		if (debug_bounding_box) {
 			static float3 corners[8];
 			gameobject->aabb.GetCornerPoints(corners);
@@ -79,16 +74,6 @@ void ComponentMesh::AddMesh(ResourceMesh * mesh)
 	gameobject->aabb = GetAABB();
 	gameobject->obb = GetAABB();
 	gameobject->UpdateBBox();
-}
-
-void ComponentMesh::SetDebugVertexNormal()
-{
-	debug_vertex_normal = !debug_vertex_normal;
-}
-
-void ComponentMesh::SetDebugFaceNormal()
-{
-	debug_face_normal = !debug_face_normal;
 }
 
 void ComponentMesh::SetDebugBoundingBox()
@@ -116,6 +101,15 @@ int ComponentMesh::GetIndicesAmount()
 	return mesh->total_indices;
 }
 
+void ComponentMesh::SetDebugSkeleton(bool value)
+{
+	debug_skeleton = value;
+	for each (ComponentBone* bone in bones)
+	{
+		bone->debug_draw = debug_skeleton;
+	}
+}
+
 AABB ComponentMesh::GetAABB()
 {
 	AABB bounding_box;
@@ -131,8 +125,7 @@ bool ComponentMesh::Save(const nlohmann::json::iterator & it)
 		{"type", type},
 		{"resource", mesh->GetID()},
 		{"debug_bb", debug_bounding_box},
-		{"debug_face_n", debug_face_normal },
-		{"debug_vertex_n", debug_vertex_normal }
+		{"root_bone_id", root_bone_id}
 	};
 
 	it.value().push_back(object);
@@ -146,8 +139,7 @@ bool ComponentMesh::Load(const nlohmann::json comp)
 	type = comp["type"];
 	AddMesh((ResourceMesh*)App->resources->GetAndReference(comp["resource"]));
 	debug_bounding_box = comp["debug_bb"];
-	debug_face_normal = comp["debug_face_n"];
-	debug_vertex_normal = comp["debug_vertex_n"];
+	root_bone_id = comp["root_bone_id"];
 
 	return true;
 }
@@ -158,11 +150,16 @@ ResourceMesh * ComponentMesh::GetMesh()
 
 void ComponentMesh::AttachSkeleton(ComponentTransform* root)
 {
-	root_bone = root;
+	root_bone_id = root->gameobject->GetId();
 
 	//Duplicate mesh
 	deformable_mesh = new ResourceMesh(App->GenerateID(), mesh);
-	AttachBone(root_bone);
+	AttachBone(root);
+}
+
+void ComponentMesh::AttachSkeleton()
+{
+	AttachSkeleton(App->scene->gameobjects[root_bone_id]->transform);
 }
 
 void ComponentMesh::AttachBone(ComponentTransform* bone_transform)
@@ -185,7 +182,7 @@ void ComponentMesh::UpdateDeformableMesh()
 		ResourceBone* r_bone = (ResourceBone*)(*it)->GetBone();
 
 		float4x4 matrix = (*it)->gameobject->transform->GetTransformMatrix();
-		matrix = gameobject->transform->GetLocalTransformMatrix().Inverted() * matrix;
+		matrix = gameobject->transform->GetTransformMatrix().Inverted() * matrix;
 		matrix = matrix * r_bone->matrix;
 
 		for (uint i = 0; i < r_bone->num_weights; i++)

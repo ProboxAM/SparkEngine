@@ -19,6 +19,9 @@ public:
 
 	ResourceAnimatorController* GetResourceAnimatorController();
 
+	bool Save(const nlohmann::json::iterator& it);
+	bool Load(const nlohmann::json comp);
+
 private:
 	ResourceAnimatorController* animator_controller;
 

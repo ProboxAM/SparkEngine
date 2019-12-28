@@ -3,6 +3,10 @@
 #include "ModuleEditor.h"
 #include "ModuleImporter.h"
 
+#include "ModelMetaFile.h"
+#include "TextureMetaFile.h"
+#include "AnimationMetaFile.h"
+
 #include "ModelImporter.h"
 #include "TextureImporter.h"
 #include "MeshImporter.h"
@@ -63,7 +67,7 @@ bool ModuleResources::ImportFileToAssets(const char * path)
 	return true;
 }
 
-uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type, Resource::MetaFile* meta)
+uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESOURCE_TYPE type, MetaFile* meta)
 {
 	LOG("Importing file %s", new_file_in_assets);
 
@@ -73,10 +77,10 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 	switch (type)
 	{
 	case Resource::R_TEXTURE:
-		import_success = App->importer->texture->Import(new_file_in_assets, output_file, (ResourceTexture::TextureMetaFile*&) meta);
+		import_success = App->importer->texture->Import(new_file_in_assets, output_file, (TextureMetaFile*&) meta);
 		break;
 	case Resource::R_MODEL:
-		import_success = App->importer->model->Import(new_file_in_assets, output_file, (ResourceModel::ModelMetaFile*&) meta);
+		import_success = App->importer->model->Import(new_file_in_assets, output_file, (ModelMetaFile*&) meta);
 		break;
 	case Resource::R_SCENE:
 		return 0;
@@ -137,19 +141,64 @@ uint ModuleResources::GetID(std::string file)
 	return 0;
 }
 
-Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
+Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id, bool& needs_reload)
 {
 	Resource* r = nullptr;
 	
 	std::map<uint,Resource*>::iterator it = resources.find(id);
 	if (it != resources.end())
 	{
-		r = it->second;
+		r = it->second;	
 		if (r->IsLoaded())
 		{
-			LOG("Reloading resource %u", id);
-			r->ReLoad();
-		}		
+			r->UnLoad();
+			needs_reload = true;
+		}
+	}
+	else
+	{
+		switch (type)
+		{
+		case Resource::R_TEXTURE:
+			r = new ResourceTexture(id);
+			break;
+		case Resource::R_MESH:
+			r = new ResourceMesh(id);
+			break;
+		case Resource::R_MODEL:
+			r = new ResourceModel(id);
+			break;
+		case Resource::R_SCENE:
+			break;
+		case Resource::R_ANIMATION:
+			r = new ResourceAnimation(id);
+			break;
+		case Resource::R_ANIMATOR:
+			r = new ResourceAnimatorController(id);
+			break;
+		case Resource::R_BONE:
+			r = new ResourceBone(id);
+			break;
+		case Resource::R_NONE:
+			break;
+		default:
+			break;
+		}
+		if (r != nullptr)
+			resources.emplace(id, r);
+	}
+
+	return r;
+}
+
+Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
+{
+	Resource* r = nullptr;
+
+	std::map<uint, Resource*>::iterator it = resources.find(id);
+	if (it != resources.end())
+	{
+		r = it->second;
 	}
 	else
 	{
@@ -228,7 +277,7 @@ void ModuleResources::RecursiveLoadAssets(std::string directory)
 				meta_file = expected_meta_file;
 			}
 			//Load meta
-			Resource::MetaFile* meta = CreateMeta(meta_file.c_str(), type);
+			MetaFile* meta = CreateMeta(meta_file.c_str(), type);
 			LoadMeta(meta_file.c_str(), meta, type);
 
 			if (meta->original_file != asset_file)
@@ -254,7 +303,7 @@ void ModuleResources::RecursiveLoadAssets(std::string directory)
 		RecursiveLoadAssets(directory + folder + "/");
 }
 
-bool ModuleResources::ImportedLibraryFilesExist(Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
+bool ModuleResources::ImportedLibraryFilesExist(MetaFile* meta, Resource::RESOURCE_TYPE type)
 {
 	bool ret = false;
 
@@ -265,7 +314,7 @@ bool ModuleResources::ImportedLibraryFilesExist(Resource::MetaFile* meta, Resour
 		break;
 	case Resource::RESOURCE_TYPE::R_MODEL:
 	{
-		ResourceModel::ModelMetaFile* model_meta = (ResourceModel::ModelMetaFile*) meta;
+		ModelMetaFile* model_meta = (ModelMetaFile*) meta;
 		for each (uint mesh in model_meta->meshes)
 		{
 			if (mesh != 0)
@@ -315,15 +364,15 @@ std::map<uint, Resource*> ModuleResources::GetResources()
 //	return ret;
 //}
 
-bool ModuleResources::LoadMeta(const char* file, Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
+bool ModuleResources::LoadMeta(const char* file, MetaFile* meta, Resource::RESOURCE_TYPE type)
 {
 	switch (type)
 	{
 	case Resource::RESOURCE_TYPE::R_TEXTURE:
-		App->importer->texture->LoadMeta(file, (ResourceTexture::TextureMetaFile*) meta);
+		App->importer->texture->LoadMeta(file, (TextureMetaFile*) meta);
 		break;
 	case Resource::RESOURCE_TYPE::R_MODEL:
-		App->importer->model->LoadMeta(file, (ResourceModel::ModelMetaFile*) meta);
+		App->importer->model->LoadMeta(file, (ModelMetaFile*) meta);
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:
 		break;
@@ -336,16 +385,16 @@ bool ModuleResources::LoadMeta(const char* file, Resource::MetaFile* meta, Resou
 	return true;
 }
 
-Resource::MetaFile* ModuleResources::CreateMeta(const char* file, Resource::RESOURCE_TYPE type)
+MetaFile* ModuleResources::CreateMeta(const char* file, Resource::RESOURCE_TYPE type)
 {
-	Resource::MetaFile* meta;
+	MetaFile* meta;
 	switch (type)
 	{
 	case Resource::RESOURCE_TYPE::R_TEXTURE:
-		meta = new ResourceTexture::TextureMetaFile();
+		meta = new TextureMetaFile();
 		break;
 	case Resource::RESOURCE_TYPE::R_MODEL:
-		meta = new ResourceModel::ModelMetaFile();
+		meta = new ModelMetaFile();
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:
 
@@ -359,7 +408,7 @@ Resource::MetaFile* ModuleResources::CreateMeta(const char* file, Resource::RESO
 	return meta;
 }
 
-void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource::RESOURCE_TYPE type)
+void ModuleResources::CreateResourcesFromMeta(MetaFile* meta, Resource::RESOURCE_TYPE type)
 {
 	Resource* resource;
 	switch (type)
@@ -371,7 +420,7 @@ void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource
 	{
 		resource = CreateResource(type, meta->id);
 
-		ResourceModel::ModelMetaFile* model_meta = (ResourceModel::ModelMetaFile*) meta;
+		ModelMetaFile* model_meta = (ModelMetaFile*) meta;
 		for each (uint mesh in model_meta->meshes)
 		{
 			if (mesh != 0)
@@ -381,12 +430,12 @@ void ModuleResources::CreateResourcesFromMeta(Resource::MetaFile* meta, Resource
 				mesh_resource->SetFile(meta->original_file);
 			}			
 		}
-		for each (uint animation in model_meta->animations)
+		for each (AnimationMetaFile* anim_meta in model_meta->animations)
 		{
-			if (animation != 0)
+			if (anim_meta->id != 0)
 			{
-				Resource* animation_resource = CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, animation);
-				animation_resource->SetExportedFile(LIBRARY_ANIMATION_FOLDER + std::to_string(animation) + ANIM_EXTENSION);
+				Resource* animation_resource = CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, anim_meta->id);
+				animation_resource->SetExportedFile(LIBRARY_ANIMATION_FOLDER + std::to_string(anim_meta->id) + ANIM_EXTENSION);
 				animation_resource->SetFile(meta->original_file);
 			}
 		}
