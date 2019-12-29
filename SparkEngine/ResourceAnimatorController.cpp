@@ -87,7 +87,8 @@ void ResourceAnimatorController::SaveAsset()
 		nlohmann::json j_transition = {
 			{ "source", (*it)->GetSource()->GetName() },
 			{ "target", (*it)->GetTarget()->GetName() },
-			{ "trigger", (*it)->GetTrigger() }
+			{ "trigger", (*it)->GetTrigger() },
+			{ "blend", (*it)->GetBlend()}
 		};
 		j_transitions.push_back(j_transition);
 	}

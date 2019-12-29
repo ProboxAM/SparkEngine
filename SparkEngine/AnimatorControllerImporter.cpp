@@ -68,6 +68,7 @@ bool AnimatorControllerImporter::Import(const char * file, std::string & output_
 			new_transition.source = transition.value()["source"].get<std::string>();
 			new_transition.target = transition.value()["target"].get<std::string>();
 			new_transition.trigger_num = transition.value()["trigger"];
+			new_transition.blend = transition.value()["blend"];
 
 			transitions.push_back(new_transition);
 		}
@@ -175,7 +176,12 @@ bool AnimatorControllerImporter::Load(ResourceAnimatorController* resource)
 		memcpy(&tmp_trigger, cursor, bytes);
 		cursor += bytes;
 
-		resource->AddTransition(resource->FindState(tmp_source), resource->FindState(tmp_target), 0, tmp_trigger);
+		bytes = sizeof(uint);
+		uint tmp_blend;
+		memcpy(&tmp_blend, cursor, bytes);
+		cursor += bytes;
+
+		resource->AddTransition(resource->FindState(tmp_source), resource->FindState(tmp_target), tmp_blend, tmp_trigger);
 	}
 
 	LOG("Loaded Anim Controller %s", resource->GetExportedFile());
@@ -206,6 +212,7 @@ bool AnimatorControllerImporter::Save(std::string file, ResourceAnimatorControll
 		new_transition.source = (*it)->GetSource()->GetName();
 		new_transition.target = (*it)->GetTarget()->GetName();
 		new_transition.trigger_num = (*it)->GetTrigger();
+		new_transition.blend = (*it)->GetBlend();
 
 		transitions.push_back(new_transition);
 	}
@@ -234,7 +241,7 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<Tmp_State> s
 	}
 	for (std::vector<Tmp_Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
 	{
-		size += sizeof(uint) + (*it).source.size() + sizeof(uint) + (*it).target.size() + sizeof(uint);
+		size += sizeof(uint) + (*it).source.size() + sizeof(uint) + (*it).target.size() + sizeof(uint) * 2;
 	}
 	// Allocate
 	char* data = new char[size];
@@ -300,6 +307,10 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<Tmp_State> s
 
 		bytes = sizeof(uint);
 		memcpy(cursor, &(*it).trigger_num, bytes);
+		cursor += bytes;
+
+		bytes = sizeof(uint);
+		memcpy(cursor, &(*it).blend, bytes);
 		cursor += bytes;
 	}
 
