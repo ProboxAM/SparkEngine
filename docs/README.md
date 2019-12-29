@@ -23,6 +23,10 @@ The code is written in C++.
 * Resource Management.
 * Resource Import settings.
 * Skinning.
+* Bones import and Skeleton attachment.
+* Animation import.
+* Animation import settings ( Creation of clips ).
+* Animator Controller own file. Import/Save/Load of that file.
 
 ![Marc](images/marc_image.jpg)
 
