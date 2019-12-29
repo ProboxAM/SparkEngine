@@ -77,7 +77,7 @@ The code is written in C++.
 
 ## Video
 
-<iframe width="560" height="315" src="https://youtu.be/w7u863bj8Dc" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="427" height="240" src="https://youtu.be/w7u863bj8Dc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Repository
 
