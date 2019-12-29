@@ -286,7 +286,9 @@ void ModuleResources::CreateAsset(Resource::RESOURCE_TYPE type)
 	{
 		ResourceAnimatorController* r = (ResourceAnimatorController*)CreateResource(type, App->GenerateID());
 		r->meta = new MetaFile();
-		r->meta->original_file = App->fsystem->GetUniqueFile(App->editor->GetProjectPanelPath() + r->GetName() + ANIM_CONTROLLER_EXTENSION);
+		std::string file;
+		r->meta->original_file = App->fsystem->GetUniqueFile(App->editor->GetProjectPanelPath() + r->GetName() + ANIM_CONTROLLER_EXTENSION, file);
+		r->name = file;
 		r->SaveAsset();
 		App->editor->ReloadProjectWindow();
 	}

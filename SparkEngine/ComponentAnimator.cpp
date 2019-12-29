@@ -13,7 +13,7 @@
 
 ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameobject)
 {
-
+	animator_controller = nullptr;
 }
 
 ComponentAnimator::~ComponentAnimator()
@@ -23,6 +23,9 @@ ComponentAnimator::~ComponentAnimator()
 
 void ComponentAnimator::Update()
 {
+	if (!animator_controller)
+		return;
+
 	animator_controller->Update();
 
 	if (gameobject && App->IsPlay())
@@ -60,6 +63,15 @@ void ComponentAnimator::OnPlay()
 ResourceAnimatorController * ComponentAnimator::GetResourceAnimatorController()
 {
 	return animator_controller;
+}
+
+void ComponentAnimator::SetAnimatorController(ResourceAnimatorController* controller)
+{
+	if (animator_controller)
+		animator_controller->RemoveReference();
+
+	animator_controller = controller;
+	animator_controller->AddReference();
 }
 
 bool ComponentAnimator::Save(const nlohmann::json::iterator & it)

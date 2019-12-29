@@ -4,6 +4,7 @@
 #include "Panel.h"
 
 class Resource;
+class ComponentAnimator;
 
 class PanelInspector :
 	public Panel
@@ -24,6 +25,7 @@ private:
 	};
 
 	ModelImportSettingSection selected_model_import_section = ModelImportSettingSection::I_MODEL;
+	ComponentAnimator* selected_animator;
 };
 
 #endif // !_PANEL_INSPECTOR_H_
