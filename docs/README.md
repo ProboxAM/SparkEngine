@@ -75,19 +75,24 @@ The code is written in C++.
 * If theres a transition to another animation and the transition is triggered, both animation transforms will blend for smoother results.
 
 * Editor gif
+
 ![eg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/editorgif.gif)
 
 * In-game gif
-![eg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/gamegif.gif)
+
+![gg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/gamegif.gif)
 
 * Innovation Animation Controller editor gif
-![eg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_02.gif)
+
+![i1g](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_02.gif)
 
 * Innovation Key viewer
-![eg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_03.jpg)
+
+![i2g](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_03.jpg)
 
 * Innovation Manage clips gif
-![eg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_01.gif)
+
+![i3g](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_01.gif)
 
 ## Video
 
