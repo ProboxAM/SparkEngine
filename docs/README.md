@@ -76,23 +76,23 @@ The code is written in C++.
 
 * Editor gif
 
-![eg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/editorgif.gif)
+<img src="https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/editorgif.gif">
 
 * In-game gif
 
-![gg](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/gamegif.gif)
+<img src="https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/gamegif.gif">
 
 * Innovation Animation Controller editor gif
 
-![i1g](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_02.gif)
+<img src="https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_02.gif">
 
 * Innovation Key viewer
 
-![i2g](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_03.jpg)
+<img src="https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_03.jpg">
 
 * Innovation Manage clips gif
 
-![i3g](https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_01.gif)
+<img src="https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/innovation_01.gif">
 
 ## Video
 
