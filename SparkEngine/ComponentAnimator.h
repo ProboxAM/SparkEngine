@@ -20,6 +20,8 @@ public:
 
 	ResourceAnimatorController* GetResourceAnimatorController();
 
+	void SetAnimatorController(ResourceAnimatorController * controller);
+
 	bool Save(const nlohmann::json::iterator& it);
 	bool Load(const nlohmann::json comp);
 

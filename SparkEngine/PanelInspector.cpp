@@ -164,24 +164,17 @@ void PanelInspector::Draw()
 
 			if (comp[i]->type == COMPONENT_TYPE::ANIMATOR)
 			{
-				//if (ImGui::CollapsingHeader("Animator")) {
-				//	//if (ImGui::Selectable("Animator Controller")) {
-				//	//	
-				//	//	ImGui::OpenPopup("Select Animator Controller");
-
-				//	//	if (ImGui::BeginPopup("Select Animator Controller"))
-				//	//	{
-				//	//	/*	std::map<uint, Resource*> animator_controllers = App->resources->GetResources(Resource::RESOURCE_TYPE::R_ANIMATOR);
-
-				//	//		for (int i = 0; i < animator_controllers.size(); i++) {
-				//	//			if (ImGui::Selectable(animator_controllers[i]->get)) {
-				//	//				App->scene->selected_gameobject->AddComponent(COMPONENT_TYPE::CAMERA);
-				//	//			}
-				//	//		}
-				//	//		ImGui::EndPopup();*/
-				//	//	}
-				//	//}
-				//}
+				ComponentAnimator* c_anim = (ComponentAnimator*)go->GetComponent(COMPONENT_TYPE::ANIMATOR);
+				if (ImGui::CollapsingHeader("Animator")) {
+					if (ImGui::Selectable("Animator Controller")) {				
+						ImGui::OpenPopup("Select Animator Controller");
+						selected_animator = c_anim;
+					}
+					if (c_anim->GetResourceAnimatorController())
+						ImGui::Text(c_anim->GetResourceAnimatorController()->name.c_str());
+					else
+						ImGui::Text("No Controller");
+				}
 			}
 
 			if (comp[i]->type == COMPONENT_TYPE::CAMERA)
@@ -231,8 +224,6 @@ void PanelInspector::Draw()
 
 			if (ImGui::Selectable("Animator")) {
 				ComponentAnimator* ca = (ComponentAnimator*)App->scene->selected_gameobject->AddComponent(COMPONENT_TYPE::ANIMATOR);
-				PanelAnimator* pa = (PanelAnimator*)App->editor->GetPanel(Panel_Type::P_ANIMATOR);
-				pa->SetCurrentResourceAnimatorController(ca->GetResourceAnimatorController());
 			}
 
 			ImGui::EndPopup();
@@ -261,6 +252,22 @@ void PanelInspector::Draw()
 		}
 		else
 			ImGui::Separator();
+	}
+
+	if (ImGui::BeginPopup("Select Animator Controller"))
+	{
+		ImGui::Text("Animator Controllers");
+		ImGui::Separator();
+
+		std::vector<Resource*> animator_controllers = App->resources->GetResources(Resource::RESOURCE_TYPE::R_ANIMATOR);
+
+		for (int i = 0; i < animator_controllers.size(); i++) {
+			if (ImGui::Selectable(((ResourceAnimatorController*)animator_controllers[i])->name.c_str())) {
+				selected_animator->SetAnimatorController((ResourceAnimatorController*)animator_controllers[i]);
+				ImGui::CloseCurrentPopup();
+			}
+		}
+		ImGui::EndPopup();
 	}
 	ImGui::End();
 }

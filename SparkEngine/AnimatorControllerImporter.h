@@ -10,14 +10,15 @@ class AnimatorControllerImporter :
 	public Importer
 {
 private:
-	struct State {
+	struct Tmp_State {
 		uint clip;
 		std::string name;
 		float speed;
 	};
-	struct Transition {
+	struct Tmp_Transition {
 		std::string source;
 		std::string target;
+		uint trigger_num;
 	};
 
 public:
@@ -34,11 +35,11 @@ public:
 	bool LoadMeta(const char* file, MetaFile* meta);
 
 private:
-	bool Save(std::string file, std::vector<State> states, std::vector<Transition> transitions, std::string name);
+	bool Save(std::string file, std::vector<Tmp_State> states, std::vector<Tmp_Transition> transitions, std::string name);
 
 private:
-	std::vector<State> states;
-	std::vector<Transition> transitions;
+	std::vector<Tmp_State> states;
+	std::vector<Tmp_Transition> transitions;
 	std::string name;
 };
 

@@ -202,6 +202,31 @@ bool ModuleFileSystem::ExistsRecursive(const char * file, const char* starting_p
 	return ret;
 }
 
+std::string ModuleFileSystem::GetUniqueFile(std::string wanted_file, std::string& new_file)
+{
+	std::string ret;
+	if (Exists(wanted_file.c_str()))
+	{
+		std::string dir, file, extension;
+		SplitFilePath(wanted_file.c_str(), &dir, &file, &extension);
+		std::vector<std::string> files, folders;
+		GetFilesOfExtension(dir.c_str(), files, extension);
+
+		new_file = file + std::to_string(files.size());
+		ret = dir + file + std::to_string(files.size()) + "." + extension;
+	}
+	else
+	{
+		std::string dir, file;
+		SplitFilePath(wanted_file.c_str(), &dir, &file);
+		new_file = file;
+		ret = wanted_file;
+	}
+
+
+	return ret;
+}
+
 bool ModuleFileSystem::HasExtension(const char* path, std::string extension) const
 {
 	std::string path_extension;

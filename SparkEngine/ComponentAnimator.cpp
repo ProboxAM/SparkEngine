@@ -13,11 +13,7 @@
 
 ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameobject)
 {
-	animator_controller = (ResourceAnimatorController*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATOR, App->resources->GenerateNewUID());
-	App->resources->GetAndReference(4190971176);
-	animator_controller->AddState("default state", nullptr);
-	animator_controller->AddState("default state2", nullptr);
-	animator_controller->AddTransition(animator_controller->GetStates()[0], animator_controller->GetStates()[1], 0);
+	animator_controller = nullptr;
 }
 
 ComponentAnimator::~ComponentAnimator()
@@ -27,6 +23,9 @@ ComponentAnimator::~ComponentAnimator()
 
 void ComponentAnimator::Update()
 {
+	if (!animator_controller)
+		return;
+
 	animator_controller->Update();
 
 	if (gameobject && App->IsPlay())
@@ -64,6 +63,15 @@ void ComponentAnimator::OnPlay()
 ResourceAnimatorController * ComponentAnimator::GetResourceAnimatorController()
 {
 	return animator_controller;
+}
+
+void ComponentAnimator::SetAnimatorController(ResourceAnimatorController* controller)
+{
+	if (animator_controller)
+		animator_controller->RemoveReference();
+
+	animator_controller = controller;
+	animator_controller->AddReference();
 }
 
 bool ComponentAnimator::Save(const nlohmann::json::iterator & it)

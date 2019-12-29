@@ -39,6 +39,7 @@ public:
 	void GetFilesOfExtension(const char* directory, std::vector<std::string> & file_list, std::string extension);
 	void GetFolder(const char* path, std::string* folder);
 	bool ExistsRecursive(const char* file, const char* start_path, std::string& full_path);
+	std::string GetUniqueFile(std::string wanted_file, std::string& new_file);
 
 	// Open for Read/Write
 	unsigned int Load(const char* path, const char* file, char** buffer) const;

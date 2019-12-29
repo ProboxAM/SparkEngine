@@ -4,6 +4,7 @@
 #include "ModuleFileSystem.h"
 #include "MetaFile.h"
 #include "ResourceAnimatorController.h"
+#include "ResourceAnimation.h"
 #include "nlohmann\json.hpp"
 #include <fstream>
 #include <iomanip>
@@ -49,7 +50,7 @@ bool AnimatorControllerImporter::Import(const char * file, std::string & output_
 	{
 		for (nlohmann::json::iterator state = states_obj.begin(); state != states_obj.end(); ++state)
 		{
-			State new_state;
+			Tmp_State new_state;
 			new_state.clip = state.value()["clip"];
 			new_state.name = state.value()["name"].get<std::string>();
 			new_state.speed = state.value()["speed"];
@@ -61,11 +62,12 @@ bool AnimatorControllerImporter::Import(const char * file, std::string & output_
 	nlohmann::json transitions_obj = j_file["transitions"];
 	if (!transitions_obj.is_null())
 	{
-		for (nlohmann::json::iterator transition = states_obj.begin(); transition != states_obj.end(); ++transition)
+		for (nlohmann::json::iterator transition = transitions_obj.begin(); transition != transitions_obj.end(); ++transition)
 		{
-			Transition new_transition;
+			Tmp_Transition new_transition;
 			new_transition.source = transition.value()["source"].get<std::string>();
 			new_transition.target = transition.value()["target"].get<std::string>();
+			new_transition.trigger_num = transition.value()["trigger"];
 
 			transitions.push_back(new_transition);
 		}
@@ -142,7 +144,7 @@ bool AnimatorControllerImporter::Load(ResourceAnimatorController* resource)
 		resource->AddState(tmp_name, (ResourceAnimation*)App->resources->GetAndReference(clip_id), speed);
 	}
 
-	for (std::vector<Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+	for (int i =0; i<num_transitions;++i)
 	{
 		//Load name size
 		uint bytes = sizeof(uint);
@@ -168,7 +170,12 @@ bool AnimatorControllerImporter::Load(ResourceAnimatorController* resource)
 		memcpy(&tmp_target[0], cursor, bytes);
 		cursor += bytes;
 
-		resource->AddTransition(resource->FindState(tmp_source), resource->FindState(tmp_target), 10);
+		bytes = sizeof(uint);
+		uint tmp_trigger;
+		memcpy(&tmp_trigger, cursor, bytes);
+		cursor += bytes;
+
+		resource->AddTransition(resource->FindState(tmp_source), resource->FindState(tmp_target), 0, tmp_trigger);
 	}
 
 	LOG("Loaded Anim Controller %s", resource->GetExportedFile());
@@ -179,20 +186,55 @@ bool AnimatorControllerImporter::Load(ResourceAnimatorController* resource)
 
 bool AnimatorControllerImporter::Save(std::string file, ResourceAnimatorController * resource)
 {
+	name = resource->name;
+
+	std::vector<State*> r_states = resource->GetStates();
+	for (std::vector<State*>::iterator it = r_states.begin(); it != r_states.end(); ++it)
+	{
+		Tmp_State new_state;
+		new_state.clip = (*it)->GetClip() ? (*it)->GetClip()->GetID() : 0;
+		new_state.name = (*it)->GetName();
+		new_state.speed = (*it)->GetSpeed();
+
+		states.push_back(new_state);
+	}
+
+	std::vector<Transition*> r_transitions = resource->GetTransitions();
+	for (std::vector<Transition*>::iterator it = r_transitions.begin(); it != r_transitions.end(); ++it)
+	{
+		Tmp_Transition new_transition;
+		new_transition.source = (*it)->GetSource()->GetName();
+		new_transition.target = (*it)->GetTarget()->GetName();
+		new_transition.trigger_num = (*it)->GetTrigger();
+
+		transitions.push_back(new_transition);
+	}
+
+	std::string output_file = LIBRARY_ANIM_CONTROLLER_FOLDER + std::to_string(resource->meta->id) + ANIM_CONTROLLER_EXTENSION;
+	Save(output_file, states, transitions, name);
+	resource->SetFile(file);
+	resource->SetExportedFile(output_file);
+
+	App->fsystem->GetFileModificationDate(file.c_str(), resource->meta->modification_date);
+	resource->meta->exported_file = output_file;
+	resource->meta->file = std::string(file) + ".meta";
+	resource->meta->loaded = true;
+
+	SaveMeta(resource->meta);
 
 	return true;
 }
 
-bool AnimatorControllerImporter::Save(std::string file, std::vector<State> states, std::vector<Transition> transitions, std::string name)
+bool AnimatorControllerImporter::Save(std::string file, std::vector<Tmp_State> states, std::vector<Tmp_Transition> transitions, std::string name)
 {
 	uint size = sizeof(uint) + name.size() + sizeof(uint) * 2;
-	for (std::vector<State>::iterator it = states.begin(); it != states.end(); ++it)
+	for (std::vector<Tmp_State>::iterator it = states.begin(); it != states.end(); ++it)
 	{
 		size += sizeof(uint) + (*it).name.size() + sizeof(uint) + sizeof(float);
 	}
-	for (std::vector<Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+	for (std::vector<Tmp_Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
 	{
-		size += sizeof(uint) + (*it).source.size() + sizeof(uint) + (*it).target.size();
+		size += sizeof(uint) + (*it).source.size() + sizeof(uint) + (*it).target.size() + sizeof(uint);
 	}
 	// Allocate
 	char* data = new char[size];
@@ -216,7 +258,7 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<State> state
 	memcpy(cursor, &num_transitions, bytes);
 	cursor += bytes;
 
-	for (std::vector<State>::iterator it = states.begin(); it != states.end(); ++it)
+	for (std::vector<Tmp_State>::iterator it = states.begin(); it != states.end(); ++it)
 	{
 		// Store name size and name
 		bytes = sizeof(uint);
@@ -236,7 +278,7 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<State> state
 		cursor += bytes;
 	}
 
-	for (std::vector<Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+	for (std::vector<Tmp_Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
 	{
 		// Store name size and name
 		bytes = sizeof(uint);
@@ -254,6 +296,10 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<State> state
 		cursor += bytes;
 		bytes = (*it).target.size();
 		memcpy(cursor, (*it).target.c_str(), bytes);
+		cursor += bytes;
+
+		bytes = sizeof(uint);
+		memcpy(cursor, &(*it).trigger_num, bytes);
 		cursor += bytes;
 	}
 

@@ -31,7 +31,7 @@ void PanelProject::Start()
 	CreateTree(ASSETS_FOLDER);
 	current_node = project_tree[0];
 
-	GetAllFiles();
+	GetNewFiles();
 }
 
 void PanelProject::Reload()
