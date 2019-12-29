@@ -467,8 +467,6 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 	}
 	else
 	{
-		ImGui::Checkbox("Import Animation", &meta->import_animation);
-		ImGui::Separator();
 		static std::string clip_name;
 		for each (AnimationMetaFile* anim_meta in meta->animations)
 		{
@@ -496,7 +494,7 @@ void PanelInspector::ShowModelImportSettings(Resource* res)
 			meta->animations.push_back(new_anim);
 		}
 		ImGui::SameLine();
-		if(ImGui::Button("-") && meta->animations.size() > 0)
+		if(ImGui::Button("-") && meta->animations.size() > 1)
 		{
 			delete meta->animations[meta->animations.size()-1];
 			meta->animations.pop_back();
