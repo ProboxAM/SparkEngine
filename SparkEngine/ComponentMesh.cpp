@@ -27,8 +27,11 @@ ComponentMesh::ComponentMesh(GameObject* gameobject) : Component(gameobject)
 
 ComponentMesh::~ComponentMesh()
 {
-	mesh->RemoveReference();
-	mesh = nullptr;
+	if (mesh)
+	{
+		mesh->RemoveReference();
+		mesh = nullptr;
+	}
 }
 
 void ComponentMesh::Update()
@@ -112,10 +115,15 @@ void ComponentMesh::SetDebugSkeleton(bool value)
 
 AABB ComponentMesh::GetAABB()
 {
-	AABB bounding_box;
-	bounding_box.SetNegativeInfinity();
-	bounding_box.Enclose(mesh->vertices, mesh->total_vertices);
-	return bounding_box;
+	if (mesh)
+	{
+		AABB bounding_box;
+		bounding_box.SetNegativeInfinity();
+		bounding_box.Enclose(mesh->vertices, mesh->total_vertices);
+		return bounding_box;
+	}
+
+	return AABB::AABB();
 }
 
 bool ComponentMesh::Save(const nlohmann::json::iterator & it)
@@ -153,7 +161,8 @@ void ComponentMesh::AttachSkeleton(ComponentTransform* root)
 	root_bone_id = root->gameobject->GetId();
 
 	//Duplicate mesh
-	deformable_mesh = new ResourceMesh(App->GenerateID(), mesh);
+	if(mesh)
+		deformable_mesh = new ResourceMesh(App->GenerateID(), mesh);
 	AttachBone(root);
 }
 

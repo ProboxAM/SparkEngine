@@ -18,7 +18,8 @@ ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameob
 
 ComponentAnimator::~ComponentAnimator()
 {
-	animator_controller->RemoveReference();
+	if (animator_controller)
+		animator_controller->RemoveReference();
 }
 
 void ComponentAnimator::Update()
@@ -34,7 +35,8 @@ void ComponentAnimator::Update()
 
 void ComponentAnimator::PlayState(std::string name)
 {
-	animator_controller->Play(name);
+	if (animator_controller)
+		animator_controller->Play(name);
 }
 
 void ComponentAnimator::UpdateAnimation(GameObject * go_to_update)
@@ -57,7 +59,8 @@ void ComponentAnimator::UpdateAnimation(GameObject * go_to_update)
 
 void ComponentAnimator::OnPlay()
 {
-	animator_controller->Play();
+	if(animator_controller)
+		animator_controller->Play();
 }
 
 ResourceAnimatorController * ComponentAnimator::GetResourceAnimatorController()
