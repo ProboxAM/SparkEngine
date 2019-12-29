@@ -43,7 +43,7 @@ private:
 	State* source;
 	State* target;
 	uint trigger = -1;
-	unsigned blend = 200;
+	uint blend = 200;
 
 public:
 	Transition();
@@ -53,12 +53,12 @@ public:
 	void SetSource(State* source);
 	void SetTarget(State* target);
 	void SetTrigger(uint trigger);
-	void SetBlend(unsigned blend);
+	void SetBlend(uint blend);
 
 	State* GetSource();
 	State* GetTarget();
 	uint GetTrigger();
-	unsigned GetBlend();
+	uint GetBlend();
 };
 
 

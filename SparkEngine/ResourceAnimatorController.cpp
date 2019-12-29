@@ -96,7 +96,7 @@ void ResourceAnimatorController::CheckTriggers()
 	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
 		if (triggers[(*it)->GetTrigger()] == true) {
 			next_state = (*it)->GetTarget();
-			current_state->fade_duration = (float)((*it)->GetBlend());
+			current_state->fade_duration = (*it)->GetBlend();
 			triggers[(*it)->GetTrigger()] = false;
 		}
 	}
@@ -165,7 +165,7 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 
 bool ResourceAnimatorController::GetTransformState(State * state, std::string channel_name, float3 & position, Quat & rotation, float3 & scale)
 {
-	ResourceAnimation* animation = current_state->GetClip();
+	ResourceAnimation* animation = state->GetClip();
 
 	if (animation)
 	{
@@ -177,7 +177,7 @@ bool ResourceAnimatorController::GetTransformState(State * state, std::string ch
 			Quat next_rotation;
 			float previous_key_time, next_key_time, t = 0;
 
-			float time_in_ticks = animation->start_tick + (current_state->time * animation->ticks_per_second);
+			float time_in_ticks = animation->start_tick + (state->time * animation->ticks_per_second);
 
 			if (animation->channels[channel_index].num_position_keys > 1)
 			{
@@ -241,9 +241,9 @@ bool ResourceAnimatorController::GetTransformState(State * state, std::string ch
 				if (GetTransformState(next_state, channel_name, next_state_position, next_state_rotation, next_state_scale)) {
 					float fade_t = state->fade_time / state->fade_duration;
 
-					position = float3::Lerp(next_state_position, position, t);
-					rotation = Quat::Lerp(next_state_rotation, rotation, t);
-					scale = float3::Lerp(next_state_scale, scale, t);
+					position = float3::Lerp(position, next_state_position, fade_t);
+					rotation = Quat::Lerp(rotation, next_state_rotation, fade_t);
+					scale = float3::Lerp(scale, next_state_scale, fade_t);
 				}
 			}
 
@@ -442,7 +442,7 @@ void Transition::SetTrigger(uint trigger)
 	this->trigger = trigger;
 }
 
-void Transition::SetBlend(unsigned blend)
+void Transition::SetBlend(uint blend)
 {
 	this->blend = blend;
 }

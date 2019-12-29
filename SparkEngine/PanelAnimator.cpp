@@ -282,6 +282,14 @@ void PanelAnimator::ShowLinkPopup()
 
 		ImGui::Separator();
 
+		int blend_v = (int)current_animator->GetTransitions()[selected_link_index]->GetBlend();
+			
+		if (ImGui::InputInt("Blend value: ", &blend_v)) {
+			current_animator->GetTransitions()[selected_link_index]->SetBlend((uint)blend_v);
+		}
+
+		ImGui::Separator();
+
 		if (ImGui::Selectable("Delete Transition")) {
 			current_animator->RemoveTransition(current_animator->GetTransitions()[selected_link_index]->GetSource()->GetName(), current_animator->GetTransitions()[selected_link_index]->GetTarget()->GetName());
 		}
