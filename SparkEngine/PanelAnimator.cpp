@@ -289,10 +289,10 @@ void PanelAnimator::ShowLinkPopup()
 
 		ImGui::Separator();
 
-		int blend_v = (int)current_animator->GetTransitions()[selected_link_index]->GetBlend();
+		float blend_v = (float)current_animator->GetTransitions()[selected_link_index]->GetBlend();
 			
-		if (ImGui::InputInt("Blend value: ", &blend_v)) {
-			current_animator->GetTransitions()[selected_link_index]->SetBlend((uint)blend_v);
+		if (ImGui::InputFloat("Blend value: ", &blend_v)) {
+			current_animator->GetTransitions()[selected_link_index]->SetBlend(blend_v);
 		}
 
 		ImGui::Separator();

@@ -176,8 +176,8 @@ bool AnimatorControllerImporter::Load(ResourceAnimatorController* resource)
 		memcpy(&tmp_trigger, cursor, bytes);
 		cursor += bytes;
 
-		bytes = sizeof(uint);
-		uint tmp_blend;
+		bytes = sizeof(float);
+		float tmp_blend;
 		memcpy(&tmp_blend, cursor, bytes);
 		cursor += bytes;
 
@@ -246,7 +246,7 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<Tmp_State> s
 	}
 	for (std::vector<Tmp_Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
 	{
-		size += sizeof(uint) + (*it).source.size() + sizeof(uint) + (*it).target.size() + sizeof(uint) * 2;
+		size += sizeof(uint) + (*it).source.size() + sizeof(uint) + (*it).target.size() + sizeof(uint) + sizeof(float);
 	}
 	// Allocate
 	char* data = new char[size];
@@ -314,7 +314,7 @@ bool AnimatorControllerImporter::Save(std::string file, std::vector<Tmp_State> s
 		memcpy(cursor, &(*it).trigger_num, bytes);
 		cursor += bytes;
 
-		bytes = sizeof(uint);
+		bytes = sizeof(float);
 		memcpy(cursor, &(*it).blend, bytes);
 		cursor += bytes;
 	}

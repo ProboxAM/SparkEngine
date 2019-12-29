@@ -115,10 +115,6 @@ void ResourceAnimatorController::CheckTriggers()
 				triggers[(*it)->GetTrigger() - 1] = false;
 			}
 		}
-		else {
-			current_state->next_state = (*it)->GetTarget();
-			current_state->fade_duration = (*it)->GetBlend();
-		}
 	}
 }
 
@@ -333,14 +329,14 @@ State * ResourceAnimatorController::FindStateFromPinId(uint pin_id)
 	}
 }
 
-void ResourceAnimatorController::AddTransition(State * source, State * target, uint blend)
+void ResourceAnimatorController::AddTransition(State * source, State * target, float blend)
 {
 	Transition* new_transition = new Transition(source, target, blend);
 
 	transitions.push_back(new_transition);
 }
 
-void ResourceAnimatorController::AddTransition(State * source, State * target, uint blend, uint trigger)
+void ResourceAnimatorController::AddTransition(State * source, State * target, float blend, uint trigger)
 {
 	Transition* new_transition = new Transition(source, target, blend);
 	new_transition->SetTrigger(trigger);
@@ -456,7 +452,7 @@ Transition::Transition()
 {
 }
 
-Transition::Transition(State * source, State * target, unsigned blend)
+Transition::Transition(State * source, State * target, float blend)
 {
 	this->source = source;
 	this->target = target;
@@ -478,7 +474,7 @@ void Transition::SetTrigger(uint trigger)
 	this->trigger = trigger;
 }
 
-void Transition::SetBlend(uint blend)
+void Transition::SetBlend(float blend)
 {
 	this->blend = blend;
 }
@@ -498,7 +494,7 @@ uint Transition::GetTrigger()
 	return trigger;
 }
 
-unsigned Transition::GetBlend()
+float Transition::GetBlend()
 {
 	return blend;
 }

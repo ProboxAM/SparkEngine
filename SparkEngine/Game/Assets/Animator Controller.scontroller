@@ -1,0 +1,52 @@
+{
+    "name": "Animator Controller",
+    "states": [
+        {
+            "clip": 2391643307,
+            "name": "New state0",
+            "speed": 1.0
+        },
+        {
+            "clip": 1321185006,
+            "name": "New state1",
+            "speed": 1.0
+        },
+        {
+            "clip": 3827686497,
+            "name": "New state2",
+            "speed": 1.0
+        }
+    ],
+    "transitions": [
+        {
+            "blend": 0.5,
+            "source": "New state0",
+            "target": "New state1",
+            "trigger": 1
+        },
+        {
+            "blend": 0.5,
+            "source": "New state1",
+            "target": "New state0",
+            "trigger": 2
+        },
+        {
+            "blend": 0.15000000596046448,
+            "source": "New state0",
+            "target": "New state2",
+            "trigger": 3
+        },
+        {
+            "blend": 0.15000000596046448,
+            "source": "New state1",
+            "target": "New state2",
+            "trigger": 3
+        },
+        {
+            "blend": 0.10000000149011612,
+            "source": "New state2",
+            "target": "New state0",
+            "trigger": 0
+        }
+    ]
+}

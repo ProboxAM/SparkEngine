@@ -44,22 +44,22 @@ private:
 	State* source;
 	State* target;
 	uint trigger = 0;
-	uint blend = 2;
+	float blend = 2;
 
 public:
 	Transition();
-	Transition(State* source, State* target, unsigned blend);
+	Transition(State* source, State* target, float blend);
 
 public:
 	void SetSource(State* source);
 	void SetTarget(State* target);
 	void SetTrigger(uint trigger);
-	void SetBlend(uint blend);
+	void SetBlend(float blend);
 
 	State* GetSource();
 	State* GetTarget();
 	uint GetTrigger();
-	uint GetBlend();
+	float GetBlend();
 };
 
 
@@ -110,8 +110,8 @@ public:
 	std::vector<State*> GetStates()  { return states; }
 
 	//Transitions
-	void AddTransition(State* source, State* target, uint blend);
-	void AddTransition(State * source, State * target, uint blend, uint trigger);
+	void AddTransition(State* source, State* target, float blend);
+	void AddTransition(State * source, State * target, float blend, uint trigger);
 	void RemoveTransition(std::string source_name, std::string target_name);
 	std::vector<Transition*> GetTransitions() const { return transitions; }
 	uint GetNumTransitions() const { return transitions.size(); }
