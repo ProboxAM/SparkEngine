@@ -115,6 +115,7 @@ public:
 	void RemoveTransition(std::string source_name, std::string target_name);
 	std::vector<Transition*> GetTransitions() const { return transitions; }
 	uint GetNumTransitions() const { return transitions.size(); }
+	std::vector<Transition*> FindTransitionsFromSourceState(State* state);
 
 	State* GetDefaultNode() const { return default_state; };
 

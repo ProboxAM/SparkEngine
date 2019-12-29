@@ -65,7 +65,16 @@ void ResourceAnimatorController::UpdateState(State * state)
 		state->time += App->time->DeltaTime();
 
 		if (state->time >= animation->GetDuration()) {
-
+			if (!state->next_state) {
+				std::vector<Transition*> possible_transitions = FindTransitionsFromSourceState(state);
+				for (std::vector<Transition*>::iterator it = possible_transitions.begin(); it != possible_transitions.end(); ++it) {
+					if ((*it)->GetTrigger() == 0) {
+						state->next_state = (*it)->GetTarget();
+						state->fade_duration = (*it)->GetBlend();
+						break;
+					}
+				}
+			}
 			if (state->GetClip()->loops)
 				state->time = 0;
 			else
@@ -106,6 +115,10 @@ void ResourceAnimatorController::CheckTriggers()
 				current_state->fade_duration = (*it)->GetBlend();
 				triggers[(*it)->GetTrigger() - 1] = false;
 			}
+		}
+		else {
+			current_state->next_state = (*it)->GetTarget();
+			current_state->fade_duration = (*it)->GetBlend();
 		}
 	}
 }
@@ -342,6 +355,18 @@ void ResourceAnimatorController::RemoveTransition(std::string source_name, std::
 			break;
 		}
 	}
+}
+
+std::vector<Transition*> ResourceAnimatorController::FindTransitionsFromSourceState(State* state)
+{
+	std::vector<Transition*> ret;
+	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
+		if ((*it)->GetSource() == state) {
+			ret.push_back((*it));
+		}
+	}
+
+	return ret;
 }
 
 ax::NodeEditor::EditorContext * ResourceAnimatorController::GetEditorContext()
