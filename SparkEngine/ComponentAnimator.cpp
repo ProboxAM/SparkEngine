@@ -18,7 +18,7 @@ ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameob
 
 ComponentAnimator::~ComponentAnimator()
 {
-	delete animator_controller;
+	animator_controller->RemoveReference();
 }
 
 void ComponentAnimator::Update()
@@ -79,7 +79,7 @@ bool ComponentAnimator::Save(const nlohmann::json::iterator & it)
 	nlohmann::json object = {
 		{ "active", active },
 		{ "type", type },
-		{ "controller",animator_controller->GetID() }
+		{ "controller", animator_controller?animator_controller->GetID():0 }
 	};
 
 	it.value().push_back(object);
@@ -91,7 +91,9 @@ bool ComponentAnimator::Load(const nlohmann::json comp)
 {
 	active = comp["active"];
 	type = comp["type"];
-	animator_controller = (ResourceAnimatorController*)App->resources->GetAndReference(comp["controller"]);
+	uint c_id = comp["controller"];
+	if(c_id != 0)
+		animator_controller = (ResourceAnimatorController*)App->resources->GetAndReference(c_id);
 
 	return true;
 }

@@ -19,7 +19,6 @@ public:
 	void OnPlay();
 
 	ResourceAnimatorController* GetResourceAnimatorController();
-
 	void SetAnimatorController(ResourceAnimatorController * controller);
 
 	bool Save(const nlohmann::json::iterator& it);
