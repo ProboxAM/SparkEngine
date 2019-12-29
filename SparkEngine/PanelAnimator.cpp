@@ -314,8 +314,8 @@ void PanelAnimator::SetCurrentResourceAnimatorController(ResourceAnimatorControl
 {
 	if (current_animator)
 	{
-		current_animator->RemoveReference();
 		current_animator->SaveAsset();
+		current_animator->RemoveReference();
 	}
 
 	current_animator = animator;

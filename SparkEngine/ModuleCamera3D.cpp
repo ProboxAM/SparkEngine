@@ -8,8 +8,10 @@
 #include "ModuleEditor.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentAnimator.h"
 #include "ComponentCamera.h"
 #include "PanelScene.h"
+#include "PanelAnimator.h"
 #include "PanelProject.h"
 #include "ModuleCamera3D.h"
 
@@ -215,6 +217,13 @@ void ModuleCamera3D::HandleMouseClicking()
 		if (App->scene->selected_gameobject)
 		{
 			App->scene->user_selected_GO = true;
+
+			ComponentAnimator* c_anim = (ComponentAnimator*)App->scene->selected_gameobject->GetComponent(COMPONENT_TYPE::ANIMATOR);
+			if (c_anim && c_anim->GetResourceAnimatorController())
+			{
+				PanelAnimator* pa = (PanelAnimator*)App->editor->GetPanel(Panel_Type::P_ANIMATOR);
+				pa->SetCurrentResourceAnimatorController(c_anim->GetResourceAnimatorController());
+			}
 
 			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
 			panel_project->selected_item = "";

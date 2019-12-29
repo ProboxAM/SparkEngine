@@ -19,6 +19,7 @@ private:
 		std::string source;
 		std::string target;
 		uint trigger_num;
+		uint blend;
 	};
 
 public:
