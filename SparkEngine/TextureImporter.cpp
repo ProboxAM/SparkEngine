@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Globals.h"
 #include "ModuleFileSystem.h"
 #include "ModuleResources.h"
 #include "ResourceTexture.h"
@@ -150,7 +151,7 @@ bool TextureImporter::Import(const char* import_file, std::string& output_file, 
 		}
 		ilDeleteImages(1, &image_id);
 	}
-
+	LOG("%s", iluErrorString(ilGetError()));
 	return ret;
 }
 
