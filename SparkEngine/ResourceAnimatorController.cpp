@@ -2,6 +2,7 @@
 #include "ModuleResources.h"
 #include "ModuleTime.h"
 #include "ModuleImporter.h"
+#include "ModuleInput.h"
 #include "AnimatorControllerImporter.h"
 #include "MetaFile.h"
 
@@ -35,21 +36,52 @@ void ResourceAnimatorController::Update()
 {
 	if (current_state)
 	{
-		ResourceAnimation* animation = current_state->GetClip();
+		UpdateState(current_state);
+	}
 
-		if (animation && animation->GetDuration() > 0) {
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		triggers[0] = true;
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		triggers[1] = true;
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		triggers[2] = true;
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+		triggers[3] = true;
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+		triggers[4] = true;
+}
 
-			current_state->time += App->time->DeltaTime();
-			
-			if (current_state->time >= animation->GetDuration()) {
+void ResourceAnimatorController::UpdateState(State * state)
+{
+	ResourceAnimation* animation = state->GetClip();
 
-				if (current_state->GetClip()->loops)
-					current_state->time = 0;
-				else
-					current_state->time = animation->GetDuration();
-			}
+	CheckTriggers();
 
-			CheckTriggers();
+	if (animation && animation->GetDuration() > 0) {
+
+		state->time += App->time->DeltaTime();
+
+		if (state->time >= animation->GetDuration()) {
+
+			if (state->GetClip()->loops)
+				state->time = 0;
+			else
+				state->time = animation->GetDuration();
+		}
+
+	}
+
+	if (next_state) {
+
+		float to_end = state->fade_duration - state->fade_time;
+
+		if (to_end >= 0) {
+			state->fade_time += App->time->DeltaTime();
+			UpdateState(next_state);
+		}
+		else {
+			current_state = next_state;
+			next_state = nullptr;
 		}
 	}
 }
@@ -62,8 +94,10 @@ void ResourceAnimatorController::Stop()
 void ResourceAnimatorController::CheckTriggers()
 {
 	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
-		if ((*it)->GetTrigger() == true) {
+		if (triggers[(*it)->GetTrigger()] == true) {
 			next_state = (*it)->GetTarget();
+			current_state->fade_duration = (float)((*it)->GetBlend());
+			triggers[(*it)->GetTrigger()] = false;
 		}
 	}
 }
@@ -119,78 +153,102 @@ bool ResourceAnimatorController::GetTransform(std::string channel_name, float3 &
 {
 	if (current_state)
 	{
-		ResourceAnimation* animation = current_state->GetClip();
+		return GetTransformState(current_state, channel_name, position, rotation, scale);
+	}
+	
+	return false;
+}
 
-		if (animation)
-		{
-			uint channel_index = animation->GetChannelIndex(channel_name);
+bool ResourceAnimatorController::GetTransformState(State * state, std::string channel_name, float3 & position, Quat & rotation, float3 & scale)
+{
+	ResourceAnimation* animation = current_state->GetClip();
 
-			if (channel_index < animation->num_channels) {
+	if (animation)
+	{
+		uint channel_index = animation->GetChannelIndex(channel_name);
 
-				float3 next_position, next_scale;
-				Quat next_rotation;
-				float previous_key_time, next_key_time, t = 0;
+		if (channel_index < animation->num_channels) {
 
-				float time_in_ticks = animation->start_tick + (current_state->time * animation->ticks_per_second);
+			float3 next_position, next_scale;
+			Quat next_rotation;
+			float previous_key_time, next_key_time, t = 0;
 
-				if (animation->channels[channel_index].num_position_keys > 1)
+			float time_in_ticks = animation->start_tick + (current_state->time * animation->ticks_per_second);
+
+			if (animation->channels[channel_index].num_position_keys > 1)
+			{
+				for (int i = 0; i < animation->channels[channel_index].num_position_keys; i++)
 				{
-					for (int i = 0; i < animation->channels[channel_index].num_position_keys; i++)
-					{
-						if (time_in_ticks < animation->channels[channel_index].position_keys[i + 1].time) {
-							position = animation->channels[channel_index].position_keys[i].value;
-							next_position = animation->channels[channel_index].position_keys[i + 1].value;
-							next_key_time = animation->channels[channel_index].position_keys[i + 1].time;
-							t = (float)((double)time_in_ticks / next_key_time);
-							break;
-						}
-					}
-
-					position = float3::Lerp(position, next_position, t);
-
-				}else
-					position = animation->channels[channel_index].position_keys[0].value;
-
-				if (animation->channels[channel_index].num_rotation_keys > 1)
-				{
-					for (int i = 0; i < animation->channels[channel_index].num_rotation_keys; i++)
-					{
-						if (time_in_ticks < animation->channels[channel_index].rotation_keys[i + 1].time) {
-							rotation = animation->channels[channel_index].rotation_keys[i].value;
-							next_rotation = animation->channels[channel_index].rotation_keys[i + 1].value;
-							next_key_time = animation->channels[channel_index].rotation_keys[i + 1].time;
-							t = (float)((double)time_in_ticks / next_key_time);
-							break;
-						}
-					}
-
-					rotation = Quat::Slerp(rotation, next_rotation, t);
-
-
-				}else
-					rotation = animation->channels[channel_index].rotation_keys[0].value;
-
-
-
-				for (int i = 0; i < animation->channels[channel_index].num_scale_keys; i++)
-				{
-					if (time_in_ticks < animation->channels[channel_index].scale_keys[i + 1].time) {
-						scale = animation->channels[channel_index].scale_keys[i].value;
-						next_scale = animation->channels[channel_index].scale_keys[i + 1].value;
-						next_key_time = animation->channels[channel_index].scale_keys[i + 1].time;
+					if (time_in_ticks < animation->channels[channel_index].position_keys[i + 1].time) {
+						position = animation->channels[channel_index].position_keys[i].value;
+						next_position = animation->channels[channel_index].position_keys[i + 1].value;
+						next_key_time = animation->channels[channel_index].position_keys[i + 1].time;
 						t = (float)((double)time_in_ticks / next_key_time);
 						break;
 					}
 				}
 
-				scale = float3::Lerp(scale, next_scale, t);
+				position = float3::Lerp(position, next_position, t);
 
-				return true;
-			}else 
-				return false;
-		}else
+			}
+			else
+				position = animation->channels[channel_index].position_keys[0].value;
+
+			if (animation->channels[channel_index].num_rotation_keys > 1)
+			{
+				for (int i = 0; i < animation->channels[channel_index].num_rotation_keys; i++)
+				{
+					if (time_in_ticks < animation->channels[channel_index].rotation_keys[i + 1].time) {
+						rotation = animation->channels[channel_index].rotation_keys[i].value;
+						next_rotation = animation->channels[channel_index].rotation_keys[i + 1].value;
+						next_key_time = animation->channels[channel_index].rotation_keys[i + 1].time;
+						t = (float)((double)time_in_ticks / next_key_time);
+						break;
+					}
+				}
+
+				rotation = Quat::Slerp(rotation, next_rotation, t);
+
+
+			}
+			else
+				rotation = animation->channels[channel_index].rotation_keys[0].value;
+
+
+
+			for (int i = 0; i < animation->channels[channel_index].num_scale_keys; i++)
+			{
+				if (time_in_ticks < animation->channels[channel_index].scale_keys[i + 1].time) {
+					scale = animation->channels[channel_index].scale_keys[i].value;
+					next_scale = animation->channels[channel_index].scale_keys[i + 1].value;
+					next_key_time = animation->channels[channel_index].scale_keys[i + 1].time;
+					t = (float)((double)time_in_ticks / next_key_time);
+					break;
+				}
+			}
+
+			scale = float3::Lerp(scale, next_scale, t);
+
+
+			if (next_state) {
+				float3 next_state_position, next_state_scale;
+				Quat next_state_rotation;
+
+				if (GetTransformState(next_state, channel_name, next_state_position, next_state_rotation, next_state_scale)) {
+					float fade_t = state->fade_time / state->fade_duration;
+
+					position = float3::Lerp(next_state_position, position, t);
+					rotation = Quat::Lerp(next_state_rotation, rotation, t);
+					scale = float3::Lerp(next_state_scale, scale, t);
+				}
+			}
+
+			return true;
+		}
+		else
 			return false;
-	}else
+	}
+	else
 		return false;
 }
 

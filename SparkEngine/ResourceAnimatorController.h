@@ -21,6 +21,7 @@ private:
 public:
 	uint pin_in_id, pin_out_id, id;
 	float time = 0;
+	float fade_duration = 0, fade_time = 0;
 
 public:
 	State();
@@ -87,6 +88,7 @@ public:
 	void Play();
 	void Play(std::string state_name);
 	void Update();
+	void UpdateState(State* state);
 	void Stop();
 	std::vector<bool> GetTriggers() const { return triggers; }
 	void CheckTriggers();
@@ -95,6 +97,7 @@ public:
 
 	//Transform
 	bool GetTransform(std::string channel_name, float3 &position, Quat &rotation, float3 &scale);
+	bool GetTransformState(State* state, std::string channel_name, float3 &position, Quat &rotation, float3 &scale);
 
 	//States
 	void AddState(std::string name, ResourceAnimation* clip, float speed = 1.0F);

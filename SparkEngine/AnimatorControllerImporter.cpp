@@ -168,7 +168,7 @@ bool AnimatorControllerImporter::Load(ResourceAnimatorController* resource)
 		memcpy(&tmp_target[0], cursor, bytes);
 		cursor += bytes;
 
-		resource->AddTransition(resource->FindState(tmp_source), resource->FindState(tmp_target), true, 10);
+		resource->AddTransition(resource->FindState(tmp_source), resource->FindState(tmp_target), 10);
 	}
 
 	LOG("Loaded Anim Controller %s", resource->GetExportedFile());
