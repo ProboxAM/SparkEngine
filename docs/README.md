@@ -49,23 +49,27 @@ The code is written in C++.
 * Animator Controller state machine.
 * Animator editor.
 
-- Organization's Github: [ProboxAM](https://github.com/ProboxAM)
-- GitHub repository: [SparkEngine](https://github.com/ProboxAM/SparkEngine)
-
 ## Main core sub-systems
 
-*It has a hierarchy of gameObjects, each can have multiple components that define and complement them (transformation, mesh, material, animation, bone, camera).
-*Can manipulate their transformation directly from the scene panel through the usage of a guizmo.
-*Can freely add, remove and change parent and order of gameObjects into the hierarchy panel.
-*It has a file and resource systems, to manage asset files, imort them and store them as binaries for easily usage.
-*It is using a QuadTree to optimize frustum culling of static gameObjects.
-*It has scene serialization of json files through rapidjson library.n any game engine an easy-to-use UI is a must and, thanks to the ImGui library, this was super fast an simple to implement. The way we did it was having a GUI module that works as a manager for all ImGui panels. To approach the Inspector panel, we implemented an OnEditor method at each component so, when a game object is selected, we draw its components on the Inspector.
+* It has a hierarchy of gameObjects, each can have multiple components that define and complement them (transformation, mesh, material, animation, bone, camera).
+* Can manipulate their transformation directly from the scene panel through the usage of a guizmo.
+* Can freely add, remove and change parent and order of gameObjects into the hierarchy panel.
+* It has a file and resource systems, to manage asset files, imort them and store them as binaries for easily usage.
+* It is using a QuadTree to optimize frustum culling of static gameObjects.
+* It has scene serialization of json files through rapidjson library.n any game engine an easy-to-use UI is a must and, thanks to the ImGui library, this was super fast an simple to implement. The way we did it was having a GUI module that works as a manager for all ImGui panels. To approach the Inspector panel, we implemented an OnEditor method at each component so, when a game object is selected, we draw its components on the Inspector.
 
 ## Skeletal animation sub-system
 
 
 
 ## Video
+
+<iframe width="560" height="315" src="https://youtu.be/w7u863bj8Dc" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Repository
+
+- Organization's Github: [ProboxAM](https://github.com/ProboxAM)
+- GitHub repository: [SparkEngine](https://github.com/ProboxAM/SparkEngine)
 
 ### Tools used to develop the engine
 
