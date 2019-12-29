@@ -23,7 +23,7 @@
                     "type": 0
                 }
             ],
-            "id": 4256520895,
+            "id": 2548553582,
             "layer": "Default",
             "name": "Untitled",
             "parent": 0,
@@ -62,10 +62,10 @@
                     "type": 4
                 }
             ],
-            "id": 4190895661,
+            "id": 1870057495,
             "layer": "Default",
             "name": "Main Camera",
-            "parent": 4256520895,
+            "parent": 2548553582,
             "static": false,
             "tag": "Untagged"
         },
@@ -97,10 +97,10 @@
                     "type": 6
                 }
             ],
-            "id": 1381813514,
+            "id": 729789380,
             "layer": "Default",
             "name": "aniTest",
-            "parent": 4256520895,
+            "parent": 2548553582,
             "static": false,
             "tag": "Untagged"
         },
@@ -130,7 +130,7 @@
                     "active": true,
                     "debug_bb": false,
                     "resource": 1686905640,
-                    "root_bone_id": 2422460874,
+                    "root_bone_id": 3634561470,
                     "type": 1
                 },
                 {
@@ -140,10 +140,10 @@
                     "type": 2
                 }
             ],
-            "id": 2979838794,
+            "id": 1650349911,
             "layer": "Default",
             "name": "Object02",
-            "parent": 1381813514,
+            "parent": 729789380,
             "static": false,
             "tag": "Untagged"
         },
@@ -170,10 +170,10 @@
                     "type": 0
                 }
             ],
-            "id": 1576163323,
+            "id": 3641113491,
             "layer": "Default",
             "name": "transform1",
-            "parent": 1381813514,
+            "parent": 729789380,
             "static": false,
             "tag": "Untagged"
         },
@@ -206,10 +206,10 @@
                     "type": 5
                 }
             ],
-            "id": 2422460874,
+            "id": 3634561470,
             "layer": "Default",
             "name": "Bip001 Pelvis",
-            "parent": 1576163323,
+            "parent": 3641113491,
             "static": false,
             "tag": "Untagged"
         },
@@ -242,10 +242,10 @@
                     "type": 5
                 }
             ],
-            "id": 3686806043,
+            "id": 3322989647,
             "layer": "Default",
             "name": "Bip001 Spine",
-            "parent": 2422460874,
+            "parent": 3634561470,
             "static": false,
             "tag": "Untagged"
         },
@@ -278,10 +278,10 @@
                     "type": 5
                 }
             ],
-            "id": 3587444444,
+            "id": 1381609594,
             "layer": "Default",
             "name": "Bip001 Spine1",
-            "parent": 3686806043,
+            "parent": 3322989647,
             "static": false,
             "tag": "Untagged"
         },
@@ -314,10 +314,10 @@
                     "type": 5
                 }
             ],
-            "id": 3439702900,
+            "id": 1981809658,
             "layer": "Default",
             "name": "Bip001 Neck",
-            "parent": 3587444444,
+            "parent": 1381609594,
             "static": false,
             "tag": "Untagged"
         },
@@ -350,10 +350,10 @@
                     "type": 5
                 }
             ],
-            "id": 2607036652,
+            "id": 551077740,
             "layer": "Default",
             "name": "Bip001 L Clavicle",
-            "parent": 3439702900,
+            "parent": 1981809658,
             "static": false,
             "tag": "Untagged"
         },
@@ -386,10 +386,10 @@
                     "type": 5
                 }
             ],
-            "id": 898654995,
+            "id": 2868797830,
             "layer": "Default",
             "name": "Bip001 L UpperArm",
-            "parent": 2607036652,
+            "parent": 551077740,
             "static": false,
             "tag": "Untagged"
         },
@@ -422,10 +422,10 @@
                     "type": 5
                 }
             ],
-            "id": 123468169,
+            "id": 1719877711,
             "layer": "Default",
             "name": "Bip001 L Forearm",
-            "parent": 898654995,
+            "parent": 2868797830,
             "static": false,
             "tag": "Untagged"
         },
@@ -458,10 +458,10 @@
                     "type": 5
                 }
             ],
-            "id": 2093500357,
+            "id": 1018723495,
             "layer": "Default",
             "name": "Bip001 L Hand",
-            "parent": 123468169,
+            "parent": 1719877711,
             "static": false,
             "tag": "Untagged"
         },
@@ -494,10 +494,10 @@
                     "type": 5
                 }
             ],
-            "id": 692537003,
+            "id": 3603163689,
             "layer": "Default",
             "name": "Bip001 L Finger0",
-            "parent": 2093500357,
+            "parent": 1018723495,
             "static": false,
             "tag": "Untagged"
         },
@@ -530,10 +530,10 @@
                     "type": 5
                 }
             ],
-            "id": 2462266970,
+            "id": 1238778897,
             "layer": "Default",
             "name": "Bip001 L Finger01",
-            "parent": 692537003,
+            "parent": 3603163689,
             "static": false,
             "tag": "Untagged"
         },
@@ -566,10 +566,10 @@
                     "type": 5
                 }
             ],
-            "id": 484950829,
+            "id": 1853201082,
             "layer": "Default",
             "name": "Bip001 L Finger02",
-            "parent": 2462266970,
+            "parent": 1238778897,
             "static": false,
             "tag": "Untagged"
         },
@@ -602,10 +602,10 @@
                     "type": 5
                 }
             ],
-            "id": 3932498569,
+            "id": 37377089,
             "layer": "Default",
             "name": "Bip001 L Finger1",
-            "parent": 2093500357,
+            "parent": 1018723495,
             "static": false,
             "tag": "Untagged"
         },
@@ -638,10 +638,10 @@
                     "type": 5
                 }
             ],
-            "id": 3344016476,
+            "id": 381488566,
             "layer": "Default",
             "name": "Bip001 L Finger11",
-            "parent": 3932498569,
+            "parent": 37377089,
             "static": false,
             "tag": "Untagged"
         },
@@ -674,10 +674,10 @@
                     "type": 5
                 }
             ],
-            "id": 4109457664,
+            "id": 4128908994,
             "layer": "Default",
             "name": "Bip001 L Finger12",
-            "parent": 3344016476,
+            "parent": 381488566,
             "static": false,
             "tag": "Untagged"
         },
@@ -710,10 +710,10 @@
                     "type": 5
                 }
             ],
-            "id": 2757530679,
+            "id": 1477615308,
             "layer": "Default",
             "name": "Bip001 R Clavicle",
-            "parent": 3439702900,
+            "parent": 1981809658,
             "static": false,
             "tag": "Untagged"
         },
@@ -746,10 +746,10 @@
                     "type": 5
                 }
             ],
-            "id": 1409126169,
+            "id": 4261223490,
             "layer": "Default",
             "name": "Bip001 R UpperArm",
-            "parent": 2757530679,
+            "parent": 1477615308,
             "static": false,
             "tag": "Untagged"
         },
@@ -782,10 +782,10 @@
                     "type": 5
                 }
             ],
-            "id": 1495019067,
+            "id": 3535355132,
             "layer": "Default",
             "name": "Bip001 R Forearm",
-            "parent": 1409126169,
+            "parent": 4261223490,
             "static": false,
             "tag": "Untagged"
         },
@@ -818,10 +818,10 @@
                     "type": 5
                 }
             ],
-            "id": 2808934970,
+            "id": 707305361,
             "layer": "Default",
             "name": "Bip001 R Hand",
-            "parent": 1495019067,
+            "parent": 3535355132,
             "static": false,
             "tag": "Untagged"
         },
@@ -854,10 +854,10 @@
                     "type": 5
                 }
             ],
-            "id": 1040807309,
+            "id": 2401094594,
             "layer": "Default",
             "name": "Bip001 R Finger0",
-            "parent": 2808934970,
+            "parent": 707305361,
             "static": false,
             "tag": "Untagged"
         },
@@ -890,10 +890,10 @@
                     "type": 5
                 }
             ],
-            "id": 3107251915,
+            "id": 3820952528,
             "layer": "Default",
             "name": "Bip001 R Finger01",
-            "parent": 1040807309,
+            "parent": 2401094594,
             "static": false,
             "tag": "Untagged"
         },
@@ -926,10 +926,10 @@
                     "type": 5
                 }
             ],
-            "id": 1333685443,
+            "id": 1134794875,
             "layer": "Default",
             "name": "Bip001 R Finger02",
-            "parent": 3107251915,
+            "parent": 3820952528,
             "static": false,
             "tag": "Untagged"
         },
@@ -962,10 +962,10 @@
                     "type": 5
                 }
             ],
-            "id": 2022240010,
+            "id": 3655581114,
             "layer": "Default",
             "name": "Bip001 R Finger1",
-            "parent": 2808934970,
+            "parent": 707305361,
             "static": false,
             "tag": "Untagged"
         },
@@ -998,10 +998,10 @@
                     "type": 5
                 }
             ],
-            "id": 3139109288,
+            "id": 2924282373,
             "layer": "Default",
             "name": "Bip001 R Finger11",
-            "parent": 2022240010,
+            "parent": 3655581114,
             "static": false,
             "tag": "Untagged"
         },
@@ -1034,10 +1034,10 @@
                     "type": 5
                 }
             ],
-            "id": 3312499721,
+            "id": 246044531,
             "layer": "Default",
             "name": "Bip001 R Finger12",
-            "parent": 3139109288,
+            "parent": 2924282373,
             "static": false,
             "tag": "Untagged"
         },
@@ -1070,10 +1070,10 @@
                     "type": 5
                 }
             ],
-            "id": 1794195814,
+            "id": 3499157685,
             "layer": "Default",
             "name": "Bip001 Head",
-            "parent": 3439702900,
+            "parent": 1981809658,
             "static": false,
             "tag": "Untagged"
         },
@@ -1106,10 +1106,10 @@
                     "type": 5
                 }
             ],
-            "id": 2545860757,
+            "id": 3938466995,
             "layer": "Default",
             "name": "Bone001",
-            "parent": 1794195814,
+            "parent": 3499157685,
             "static": false,
             "tag": "Untagged"
         },
@@ -1142,10 +1142,10 @@
                     "type": 5
                 }
             ],
-            "id": 3218012913,
+            "id": 63362657,
             "layer": "Default",
             "name": "Bip001 L Thigh",
-            "parent": 3686806043,
+            "parent": 3322989647,
             "static": false,
             "tag": "Untagged"
         },
@@ -1178,10 +1178,10 @@
                     "type": 5
                 }
             ],
-            "id": 1092507484,
+            "id": 858101909,
             "layer": "Default",
             "name": "Bip001 L Calf",
-            "parent": 3218012913,
+            "parent": 63362657,
             "static": false,
             "tag": "Untagged"
         },
@@ -1214,10 +1214,10 @@
                     "type": 5
                 }
             ],
-            "id": 155955460,
+            "id": 2904095483,
             "layer": "Default",
             "name": "Bip001 L Foot",
-            "parent": 1092507484,
+            "parent": 858101909,
             "static": false,
             "tag": "Untagged"
         },
@@ -1250,10 +1250,10 @@
                     "type": 5
                 }
             ],
-            "id": 2126353145,
+            "id": 518700646,
             "layer": "Default",
             "name": "Bip001 L Toe0",
-            "parent": 155955460,
+            "parent": 2904095483,
             "static": false,
             "tag": "Untagged"
         },
@@ -1286,10 +1286,10 @@
                     "type": 5
                 }
             ],
-            "id": 1360579019,
+            "id": 3496629004,
             "layer": "Default",
             "name": "Bip001 R Thigh",
-            "parent": 3686806043,
+            "parent": 3322989647,
             "static": false,
             "tag": "Untagged"
         },
@@ -1322,10 +1322,10 @@
                     "type": 5
                 }
             ],
-            "id": 3238785723,
+            "id": 907352184,
             "layer": "Default",
             "name": "Bip001 R Calf",
-            "parent": 1360579019,
+            "parent": 3496629004,
             "static": false,
             "tag": "Untagged"
         },
@@ -1358,10 +1358,10 @@
                     "type": 5
                 }
             ],
-            "id": 2076636026,
+            "id": 3168094098,
             "layer": "Default",
             "name": "Bip001 R Foot",
-            "parent": 3238785723,
+            "parent": 907352184,
             "static": false,
             "tag": "Untagged"
         },
@@ -1394,10 +1394,10 @@
                     "type": 5
                 }
             ],
-            "id": 2462657944,
+            "id": 3319066481,
             "layer": "Default",
             "name": "Bip001 R Toe0",
-            "parent": 2076636026,
+            "parent": 3168094098,
             "static": false,
             "tag": "Untagged"
         }

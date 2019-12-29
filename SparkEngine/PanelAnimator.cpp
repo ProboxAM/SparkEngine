@@ -150,7 +150,9 @@ void PanelAnimator::ShowStatePopup(){
 			}
 		}
 
-		if (ImGui::Selectable("Delete"))
+		ImGui::Separator();
+
+		if (ImGui::Selectable("Delete State"))
 		{
 			ax::NodeEditor::DeleteNode(ax::NodeEditor::NodeId((context_node_id)));
 			current_animator->RemoveState(context_node);
@@ -173,7 +175,7 @@ void PanelAnimator::CreateState()
 	if (new_node_id != ax::NodeEditor::PinId::Invalid)
 	{
 		State* target_state = current_animator->GetStates().back();
-		current_animator->AddTransition(source_state, target_state, false, 0);
+		current_animator->AddTransition(source_state, target_state, 0);
 	}
 }
 
@@ -212,9 +214,9 @@ void PanelAnimator::HandleDropLink()
 					if (ax::NodeEditor::AcceptNewItem(ImColor(0, 255, 0), 4.0f))
 					{
 						if (start_is_input)
-							current_animator->AddTransition(end_node, start_node, false, 0);
+							current_animator->AddTransition(end_node, start_node, 0);
 						else
-							current_animator->AddTransition(start_node, end_node, false, 0);
+							current_animator->AddTransition(start_node, end_node, 0);
 					}
 				}
 
@@ -260,9 +262,31 @@ void PanelAnimator::ShowNewStatePopup()
 void PanelAnimator::ShowLinkPopup()
 {
 	if (ImGui::BeginPopup("Link popup")) {
+
+		if (current_animator->GetTransitions()[selected_link_index]->GetTrigger() != -1) {
+			std::string trigger_slot_selected = "Current Trigger slot: 0";
+			trigger_slot_selected.append(std::to_string(current_animator->GetTransitions()[selected_link_index]->GetTrigger()));
+			ImGui::Text(trigger_slot_selected.c_str());
+		}else
+			ImGui::Text("Select trigger slot");
+
+		ImGui::Separator();
+		
+		for (int i = 0; i < current_animator->GetTriggers().size(); ++i) {
+			std::string trigger_slot = "Trigger_slot 0";
+			trigger_slot.append(std::to_string(i));
+			if (ImGui::Selectable(trigger_slot.c_str())) {
+				current_animator->GetTransitions()[selected_link_index]->SetTrigger((uint)i);
+			}
+		}
+
+		ImGui::Separator();
+
 		if (ImGui::Selectable("Delete Transition")) {
 			current_animator->RemoveTransition(current_animator->GetTransitions()[selected_link_index]->GetSource()->GetName(), current_animator->GetTransitions()[selected_link_index]->GetTarget()->GetName());
 		}
+
+
 		ImGui::EndPopup();
 	}
 }

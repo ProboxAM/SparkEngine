@@ -11,6 +11,10 @@
 ResourceAnimatorController::ResourceAnimatorController(uint id) : Resource(id, Resource::RESOURCE_TYPE::R_ANIMATOR)
 {
 	ed_context = ax::NodeEditor::CreateEditor();
+
+	for (int i = 0; i < NUM_TRIGGERS; ++i) {
+		triggers.push_back(false);
+	}
 }
 
 ResourceAnimatorController::~ResourceAnimatorController()
@@ -37,6 +41,8 @@ void ResourceAnimatorController::Update()
 				else
 					current_state->time = animation->GetDuration();
 			}
+
+			CheckTriggers();
 		}
 	}
 }
@@ -44,6 +50,15 @@ void ResourceAnimatorController::Update()
 void ResourceAnimatorController::Stop()
 {
 	current_state = nullptr;
+}
+
+void ResourceAnimatorController::CheckTriggers()
+{
+	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
+		if ((*it)->GetTrigger() == true) {
+			next_state = (*it)->GetTarget();
+		}
+	}
 }
 
 void ResourceAnimatorController::Play()
@@ -192,9 +207,9 @@ State * ResourceAnimatorController::FindStateFromPinId(uint pin_id)
 	}
 }
 
-void ResourceAnimatorController::AddTransition(State * source, State * target, bool trigger, uint blend)
+void ResourceAnimatorController::AddTransition(State * source, State * target, uint blend)
 {
-	Transition* new_transition = new Transition(source, target, trigger, blend);
+	Transition* new_transition = new Transition(source, target, blend);
 
 	transitions.push_back(new_transition);
 }
@@ -255,11 +270,10 @@ Transition::Transition()
 {
 }
 
-Transition::Transition(State * source, State * target, bool trigger, unsigned blend)
+Transition::Transition(State * source, State * target, unsigned blend)
 {
 	this->source = source;
 	this->target = target;
-	this->trigger = trigger;
 	this->blend = blend;
 }
 
@@ -273,7 +287,7 @@ void Transition::SetTarget(State * target)
 	this->target = target;
 }
 
-void Transition::SetTrigger(bool trigger)
+void Transition::SetTrigger(uint trigger)
 {
 	this->trigger = trigger;
 }
@@ -293,7 +307,7 @@ State * Transition::GetTarget()
 	return target;
 }
 
-bool Transition::GetTrigger()
+uint Transition::GetTrigger()
 {
 	return trigger;
 }

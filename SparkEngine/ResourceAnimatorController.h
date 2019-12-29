@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#define NUM_TRIGGERS 5
+
 class ResourceAnimation;
 
 class State
@@ -37,33 +39,35 @@ class Transition
 private:
 	State* source;
 	State* target;
-	bool trigger;
+	uint trigger = -1;
 	unsigned blend = 200;
 
 public:
 	Transition();
-	Transition(State* source, State* target, bool trigger, unsigned blend);
+	Transition(State* source, State* target, unsigned blend);
 
 public:
 	void SetSource(State* source);
 	void SetTarget(State* target);
-	void SetTrigger(bool trigger);
+	void SetTrigger(uint trigger);
 	void SetBlend(unsigned blend);
 
 	State* GetSource();
 	State* GetTarget();
-	bool GetTrigger();
+	uint GetTrigger();
 	unsigned GetBlend();
 };
 
 
 class ResourceAnimatorController: public Resource
 {
+private:
 	State* current_state = nullptr;
+	State* next_state = nullptr;
 	std::vector<State*> states;
 	std::vector<Transition*> transitions;
 	State* default_state = nullptr;
-
+	std::vector<bool> triggers;
 private:
 	ax::NodeEditor::EditorContext* ed_context = nullptr;
 	std::string name = "New Animator Controller";
@@ -79,6 +83,8 @@ public:
 	void Play(std::string state_name);
 	void Update();
 	void Stop();
+	std::vector<bool> GetTriggers() const { return triggers; }
+	void CheckTriggers();
 
 
 	//Transform
@@ -95,7 +101,7 @@ public:
 	std::vector<State*> GetStates()  { return states; }
 
 	//Transitions
-	void AddTransition(State* source, State* target, bool trigger, uint blend);
+	void AddTransition(State* source, State* target, uint blend);
 	void RemoveTransition(std::string source_name, std::string target_name);
 	std::vector<Transition*> GetTransitions() const { return transitions; }
 	uint GetNumTransitions() const { return transitions.size(); }

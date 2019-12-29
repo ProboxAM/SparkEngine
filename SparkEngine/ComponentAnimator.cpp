@@ -17,7 +17,7 @@ ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameob
 	App->resources->GetAndReference(4190971176);
 	animator_controller->AddState("default state", nullptr);
 	animator_controller->AddState("default state2", nullptr);
-	animator_controller->AddTransition(animator_controller->GetStates()[0], animator_controller->GetStates()[1], false, 0);
+	animator_controller->AddTransition(animator_controller->GetStates()[0], animator_controller->GetStates()[1], 0);
 }
 
 ComponentAnimator::~ComponentAnimator()
