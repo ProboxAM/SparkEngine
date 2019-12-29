@@ -96,7 +96,7 @@ The code is written in C++.
 
 ## Video
 
-<iframe width="427" height="240" src="https://youtu.be/w7u863bj8Dc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="427" height="240" src="https://www.youtube.com/watch?v=w7u863bj8Dc&feature=youtu.be" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Repository
 
