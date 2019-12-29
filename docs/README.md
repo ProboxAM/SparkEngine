@@ -66,9 +66,7 @@ The code is written in C++.
 * The user can create clips of the imported animation and set the clip on loop.
 * He can also create an asset called Animation Controller. A state machine that allows the user to create different states and transitions between them. He can create/modify the name/select a clip resource/Delete a state, and Create/Set the trigger/Set the blend value/Delete a transition.
 
-
-
-# System in-depth
+### System in-depth
 
 * It reads animations and bones from a fbx file, then we link the bones to a mesh so we can modify it through skinning.
 * Then, when a animator component is attached to a game object and a Animator Controller to the component, the object bones will be updated from the animation key values in each frame when we hit play.
