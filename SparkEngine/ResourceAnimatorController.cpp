@@ -71,17 +71,19 @@ void ResourceAnimatorController::UpdateState(State * state)
 
 	}
 
-	if (next_state) {
+	if (state->next_state) {
 
 		float to_end = state->fade_duration - state->fade_time;
 
 		if (to_end >= 0) {
 			state->fade_time += App->time->DeltaTime();
-			UpdateState(next_state);
+			UpdateState(state->next_state);
 		}
 		else {
-			current_state = next_state;
-			next_state = nullptr;
+			current_state = state->next_state;
+			state->next_state = nullptr;
+			state->fade_time = 0;
+			state->fade_duration = 0;
 		}
 	}
 }
@@ -95,7 +97,7 @@ void ResourceAnimatorController::CheckTriggers()
 {
 	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
 		if (triggers[(*it)->GetTrigger()] == true) {
-			next_state = (*it)->GetTarget();
+			current_state->next_state = (*it)->GetTarget();
 			current_state->fade_duration = (*it)->GetBlend();
 			triggers[(*it)->GetTrigger()] = false;
 		}
@@ -235,15 +237,15 @@ bool ResourceAnimatorController::GetTransformState(State * state, std::string ch
 			scale = float3::Lerp(scale, next_scale, t);
 
 
-			if (next_state) {
+			if (state->next_state) {
 				float3 next_state_position, next_state_scale;
 				Quat next_state_rotation;
 
-				if (GetTransformState(next_state, channel_name, next_state_position, next_state_rotation, next_state_scale)) {
+				if (GetTransformState(state->next_state, channel_name, next_state_position, next_state_rotation, next_state_scale)) {
 					float fade_t = state->fade_time / state->fade_duration;
 
 					position = float3::Lerp(position, next_state_position, fade_t);
-					rotation = Quat::Lerp(rotation, next_state_rotation, fade_t);
+					rotation = Quat::Slerp(rotation, next_state_rotation, fade_t);
 					scale = float3::Lerp(scale, next_state_scale, fade_t);
 				}
 			}

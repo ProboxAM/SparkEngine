@@ -22,6 +22,7 @@ public:
 	uint pin_in_id, pin_out_id, id;
 	float time = 0;
 	float fade_duration = 0, fade_time = 0;
+	State* next_state = nullptr;
 
 public:
 	State();
@@ -66,7 +67,6 @@ class ResourceAnimatorController: public Resource
 {
 private:
 	State* current_state = nullptr;
-	State* next_state = nullptr;
 	std::vector<State*> states;
 	std::vector<Transition*> transitions;
 	State* default_state = nullptr;

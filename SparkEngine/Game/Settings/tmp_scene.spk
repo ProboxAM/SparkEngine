@@ -1,0 +1,1405 @@
+{
+    "GameObjects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1721633780,
+            "layer": "Default",
+            "name": "Untitled",
+            "parent": 0,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        1.0,
+                        -80.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "active_camera": true,
+                    "far_distance": 500.0,
+                    "fov": 1.0471975803375244,
+                    "frustum_culling": false,
+                    "near_distance": 0.10000000149011612,
+                    "type": 4
+                }
+            ],
+            "id": 2897644292,
+            "layer": "Default",
+            "name": "Main Camera",
+            "parent": 1721633780,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "controller": 2648135389,
+                    "type": 6
+                }
+            ],
+            "id": 439771097,
+            "layer": "Default",
+            "name": "aniTest",
+            "parent": 1721633780,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.7071067690849304,
+                        0.0,
+                        0.0,
+                        0.7071067690849304
+                    ],
+                    "scale": [
+                        2.5399999618530273,
+                        2.5399999618530273,
+                        2.5399999618530273
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_bb": false,
+                    "resource": 1686905640,
+                    "root_bone_id": 1434106728,
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "debug_tex": false,
+                    "resource": 4294967295,
+                    "type": 2
+                }
+            ],
+            "id": 2605882305,
+            "layer": "Default",
+            "name": "Object02",
+            "parent": 439771097,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -1.1161036491394043,
+                        15.688704490661621,
+                        -0.13840684294700623
+                    ],
+                    "rotation": [
+                        -0.44879189133644104,
+                        -0.330550879240036,
+                        -0.44800519943237305,
+                        0.6990088224411011
+                    ],
+                    "scale": [
+                        2.5399997234344482,
+                        2.5399997234344482,
+                        2.5399999618530273
+                    ],
+                    "type": 0
+                }
+            ],
+            "id": 1529373001,
+            "layer": "Default",
+            "name": "transform1",
+            "parent": 439771097,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.49999967217445374,
+                        -0.5000003576278687,
+                        -0.49999967217445374,
+                        0.5000002980232239
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999998807907104,
+                        0.9999998211860657
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1152435767,
+                    "type": 5
+                }
+            ],
+            "id": 1434106728,
+            "layer": "Default",
+            "name": "Bip001 Pelvis",
+            "parent": 1529373001,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.6278524398803711,
+                        0.3180011510848999,
+                        -1.7881393432617188e-07
+                    ],
+                    "rotation": [
+                        -2.082162382066599e-06,
+                        -6.900077096361201e-07,
+                        0.00039814418414607644,
+                        0.9999999403953552
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2555545362,
+                    "type": 5
+                }
+            ],
+            "id": 787650914,
+            "layer": "Default",
+            "name": "Bip001 Spine",
+            "parent": 1434106728,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.7980308532714844,
+                        -0.0013594627380371094,
+                        -0.0004953742027282715
+                    ],
+                    "rotation": [
+                        0.19542096555233002,
+                        -0.1498813033103943,
+                        0.32489684224128723,
+                        0.9131200909614563
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999998807907104,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2963213236,
+                    "type": 5
+                }
+            ],
+            "id": 1459634914,
+            "layer": "Default",
+            "name": "Bip001 Spine1",
+            "parent": 787650914,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.997201919555664,
+                        -0.2343611717224121,
+                        -4.172325134277344e-07
+                    ],
+                    "rotation": [
+                        -0.03127382695674896,
+                        0.1998259723186493,
+                        0.15219809114933014,
+                        0.9674333333969116
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1655369286,
+                    "type": 5
+                }
+            ],
+            "id": 553471284,
+            "layer": "Default",
+            "name": "Bip001 Neck",
+            "parent": 1459634914,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -0.4552736282348633,
+                        -0.09678840637207031,
+                        0.7976434230804443
+                    ],
+                    "rotation": [
+                        0.3141159415245056,
+                        -0.10387644916772842,
+                        0.9365183115005493,
+                        0.11607915163040161
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 513497332,
+                    "type": 5
+                }
+            ],
+            "id": 2777911117,
+            "layer": "Default",
+            "name": "Bip001 L Clavicle",
+            "parent": 553471284,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.9862539768218994,
+                        4.76837158203125e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -0.2448454648256302,
+                        0.3208892345428467,
+                        -0.12854091823101044,
+                        0.9058465957641602
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0000001192092896,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1144572325,
+                    "type": 5
+                }
+            ],
+            "id": 1234319430,
+            "layer": "Default",
+            "name": "Bip001 L UpperArm",
+            "parent": 2777911117,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.375838279724121,
+                        0.0,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.3277010917663574,
+                        0.9447814226150513
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1618699570,
+                    "type": 5
+                }
+            ],
+            "id": 848427357,
+            "layer": "Default",
+            "name": "Bip001 L Forearm",
+            "parent": 1234319430,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.846414566040039,
+                        2.384185791015625e-07,
+                        -4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -0.18265573680400848,
+                        0.041462939232587814,
+                        0.1005433201789856,
+                        0.9771431684494019
+                    ],
+                    "scale": [
+                        0.9999998211860657,
+                        0.9999998211860657,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 3489699682,
+                    "type": 5
+                }
+            ],
+            "id": 3901043939,
+            "layer": "Default",
+            "name": "Bip001 L Hand",
+            "parent": 848427357,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.9409463405609131,
+                        0.08181190490722656,
+                        -0.5803806781768799
+                    ],
+                    "rotation": [
+                        0.5826280117034912,
+                        0.3940458595752716,
+                        0.07198336720466614,
+                        0.7071710228919983
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999998807907104,
+                        0.9999998211860657
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2195793605,
+                    "type": 5
+                }
+            ],
+            "id": 1126924913,
+            "layer": "Default",
+            "name": "Bip001 L Finger0",
+            "parent": 3901043939,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.5172443389892578,
+                        1.1920928955078125e-07,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        9.973329717638535e-09,
+                        1.5731416169728618e-08,
+                        0.07839310169219971,
+                        0.9969225525856018
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1023389257,
+                    "type": 5
+                }
+            ],
+            "id": 3199318472,
+            "layer": "Default",
+            "name": "Bip001 L Finger01",
+            "parent": 1126924913,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.30469608306884766,
+                        0.0,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        1.4677311810373794e-08,
+                        2.5731552444341332e-09,
+                        0.1726815402507782,
+                        0.9849777221679688
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1365290708,
+                    "type": 5
+                }
+            ],
+            "id": 3624899215,
+            "layer": "Default",
+            "name": "Bip001 L Finger02",
+            "parent": 3199318472,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.770775318145752,
+                        0.00036072731018066406,
+                        -0.0414586067199707
+                    ],
+                    "rotation": [
+                        -0.08671318739652634,
+                        -0.06371613591909409,
+                        0.1964249312877655,
+                        0.9745965003967285
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999998807907104,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1616651892,
+                    "type": 5
+                }
+            ],
+            "id": 236422178,
+            "layer": "Default",
+            "name": "Bip001 L Finger1",
+            "parent": 3901043939,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.3415369987487793,
+                        4.76837158203125e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -0.08033391833305359,
+                        -0.021903494372963905,
+                        0.26213955879211426,
+                        0.9614309668540955
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 3518414256,
+                    "type": 5
+                }
+            ],
+            "id": 2760685421,
+            "layer": "Default",
+            "name": "Bip001 L Finger11",
+            "parent": 236422178,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.25260353088378906,
+                        -4.76837158203125e-07,
+                        -2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        -0.07959894835948944,
+                        -0.024439839646220207,
+                        0.29249438643455505,
+                        0.9526351690292358
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2410440936,
+                    "type": 5
+                }
+            ],
+            "id": 3780202875,
+            "layer": "Default",
+            "name": "Bip001 L Finger12",
+            "parent": 2760685421,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.2678813934326172,
+                        -0.09735965728759766,
+                        -0.8784303665161133
+                    ],
+                    "rotation": [
+                        -0.6390175819396973,
+                        -0.064629927277565,
+                        0.7450319528579712,
+                        0.18001922965049744
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0000001192092896,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 3265463746,
+                    "type": 5
+                }
+            ],
+            "id": 2661140561,
+            "layer": "Default",
+            "name": "Bip001 R Clavicle",
+            "parent": 553471284,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.9862537384033203,
+                        -4.76837158203125e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.4713248312473297,
+                        -0.3375436067581177,
+                        -0.10736998915672302,
+                        0.8077059984207153
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1018071226,
+                    "type": 5
+                }
+            ],
+            "id": 1537653317,
+            "layer": "Default",
+            "name": "Bip001 R UpperArm",
+            "parent": 2661140561,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.375837802886963,
+                        3.5762786865234375e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.27229419350624084,
+                        0.9622140526771545
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2921641021,
+                    "type": 5
+                }
+            ],
+            "id": 2101868805,
+            "layer": "Default",
+            "name": "Bip001 R Forearm",
+            "parent": 1537653317,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.8464140892028809,
+                        -9.5367431640625e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.5602364540100098,
+                        0.06963128596544266,
+                        0.1695353388786316,
+                        0.8078022003173828
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2996430955,
+                    "type": 5
+                }
+            ],
+            "id": 2084712663,
+            "layer": "Default",
+            "name": "Bip001 R Hand",
+            "parent": 2101868805,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.940946102142334,
+                        0.08181238174438477,
+                        0.5803805589675903
+                    ],
+                    "rotation": [
+                        -0.5531933903694153,
+                        -0.3449387848377228,
+                        0.19145211577415466,
+                        0.7337168455123901
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        0.9999998807907104,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 269433977,
+                    "type": 5
+                }
+            ],
+            "id": 709956644,
+            "layer": "Default",
+            "name": "Bip001 R Finger0",
+            "parent": 2084712663,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.517244815826416,
+                        0.0,
+                        -2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.23338103294372559,
+                        0.9723853468894958
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1815624573,
+                    "type": 5
+                }
+            ],
+            "id": 457528274,
+            "layer": "Default",
+            "name": "Bip001 R Finger01",
+            "parent": 709956644,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.30469560623168945,
+                        1.1920928955078125e-07,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        9.531002653773157e-09,
+                        3.1927779531315537e-08,
+                        0.17268142104148865,
+                        0.9849777221679688
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0000001192092896,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1459275230,
+                    "type": 5
+                }
+            ],
+            "id": 4132564294,
+            "layer": "Default",
+            "name": "Bip001 R Finger02",
+            "parent": 457528274,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.770775556564331,
+                        0.00036144256591796875,
+                        0.041458725929260254
+                    ],
+                    "rotation": [
+                        0.00510763842612505,
+                        0.19857686758041382,
+                        0.39499667286872864,
+                        0.8969497084617615
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 3470468802,
+                    "type": 5
+                }
+            ],
+            "id": 2717256034,
+            "layer": "Default",
+            "name": "Bip001 R Finger1",
+            "parent": 2084712663,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.3415369987487793,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -2.6954577236892874e-08,
+                        -1.2713349484272385e-08,
+                        0.4265892207622528,
+                        0.904445469379425
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2685511562,
+                    "type": 5
+                }
+            ],
+            "id": 2057467730,
+            "layer": "Default",
+            "name": "Bip001 R Finger11",
+            "parent": 2717256034,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.25260305404663086,
+                        -4.76837158203125e-07,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        -1.6042795536463927e-08,
+                        2.511588270692755e-08,
+                        0.5383067727088928,
+                        0.8427489399909973
+                    ],
+                    "scale": [
+                        0.9999997615814209,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 949891549,
+                    "type": 5
+                }
+            ],
+            "id": 3959640723,
+            "layer": "Default",
+            "name": "Bip001 R Finger12",
+            "parent": 2057467730,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        1.1019048690795898,
+                        -9.5367431640625e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.3316132426261902,
+                        -0.046233125030994415,
+                        -0.46153590083122253,
+                        0.8215106129646301
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 520589160,
+                    "type": 5
+                }
+            ],
+            "id": 3019918301,
+            "layer": "Default",
+            "name": "Bip001 Head",
+            "parent": 553471284,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.1927947849035263,
+                        0.020197272300720215,
+                        -9.5367431640625e-07
+                    ],
+                    "rotation": [
+                        0.587548553943634,
+                        0.808784008026123,
+                        0.020709311589598656,
+                        0.015043343417346478
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2742218313,
+                    "type": 5
+                }
+            ],
+            "id": 2421617428,
+            "layer": "Default",
+            "name": "Bone001",
+            "parent": 3019918301,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -0.6281051635742188,
+                        -0.3175039291381836,
+                        1.153568983078003
+                    ],
+                    "rotation": [
+                        0.27084267139434814,
+                        0.9550502300262451,
+                        0.04375331476330757,
+                        -0.11228958517313004
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999998807907104,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2504997607,
+                    "type": 5
+                }
+            ],
+            "id": 2903232471,
+            "layer": "Default",
+            "name": "Bip001 L Thigh",
+            "parent": 787650914,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.6564340591430664,
+                        1.1920928955078125e-07,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.3290940523147583,
+                        0.944297194480896
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0000001192092896,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2608307057,
+                    "type": 5
+                }
+            ],
+            "id": 640782978,
+            "layer": "Default",
+            "name": "Bip001 L Calf",
+            "parent": 2903232471,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        3.3164162635803223,
+                        -1.4901161193847656e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.13742436468601227,
+                        -0.15049974620342255,
+                        0.19602574408054352,
+                        0.9591862559318542
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999997615814209,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1265033299,
+                    "type": 5
+                }
+            ],
+            "id": 1755583562,
+            "layer": "Default",
+            "name": "Bip001 L Foot",
+            "parent": 640782978,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.8066026568412781,
+                        1.325963020324707,
+                        0.0
+                    ],
+                    "rotation": [
+                        -1.498483754858171e-07,
+                        6.930894755896588e-07,
+                        0.7071072459220886,
+                        0.7071062922477722
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        1.0,
+                        1.0000001192092896
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1820681589,
+                    "type": 5
+                }
+            ],
+            "id": 94085715,
+            "layer": "Default",
+            "name": "Bip001 L Toe0",
+            "parent": 1755583562,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        -0.6281051635742188,
+                        -0.31749773025512695,
+                        -1.1535696983337402
+                    ],
+                    "rotation": [
+                        0.46175748109817505,
+                        0.8620431423187256,
+                        0.01532698329538107,
+                        0.208391010761261
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        1.0
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1081488513,
+                    "type": 5
+                }
+            ],
+            "id": 542417942,
+            "layer": "Default",
+            "name": "Bip001 R Thigh",
+            "parent": 787650914,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        2.6564340591430664,
+                        2.384185791015625e-07,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        -0.46143847703933716,
+                        0.8871722221374512
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2482944675,
+                    "type": 5
+                }
+            ],
+            "id": 2479346654,
+            "layer": "Default",
+            "name": "Bip001 R Calf",
+            "parent": 542417942,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        3.3164165019989014,
+                        -2.384185791015625e-07,
+                        2.384185791015625e-07
+                    ],
+                    "rotation": [
+                        -0.04051082581281662,
+                        0.14072474837303162,
+                        0.12133371829986572,
+                        0.9817502498626709
+                    ],
+                    "scale": [
+                        1.0000001192092896,
+                        0.9999999403953552,
+                        0.9999998807907104
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 1094200988,
+                    "type": 5
+                }
+            ],
+            "id": 2806114518,
+            "layer": "Default",
+            "name": "Bip001 R Foot",
+            "parent": 2479346654,
+            "static": false,
+            "tag": "Untagged"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": [
+                        0.8066027164459229,
+                        1.3259632587432861,
+                        4.76837158203125e-07
+                    ],
+                    "rotation": [
+                        -7.0458042955579e-08,
+                        2.8779032845704933e-07,
+                        0.7071072459220886,
+                        0.7071062922477722
+                    ],
+                    "scale": [
+                        0.9999999403953552,
+                        1.0,
+                        0.9999999403953552
+                    ],
+                    "type": 0
+                },
+                {
+                    "active": true,
+                    "debug_draw": false,
+                    "resource": 2000176370,
+                    "type": 5
+                }
+            ],
+            "id": 444459571,
+            "layer": "Default",
+            "name": "Bip001 R Toe0",
+            "parent": 2806114518,
+            "static": false,
+            "tag": "Untagged"
+        }
+    ]
+}
