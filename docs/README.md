@@ -76,7 +76,7 @@ The code is written in C++.
 
 * Editor gif
 
-<img src="https://github.com/ProboxAM/SparkEngine/blob/master/docs/images/editorgif.gif">
+<img src="https://gfycat.com/euphorichonorableiaerismetalmark">
 
 * In-game gif
 
