@@ -76,7 +76,7 @@ The code is written in C++.
 
 * Editor gif
 
-<img src="https://gfycat.com/euphorichonorableiaerismetalmark">
+[Imgur](https://i.imgur.com/g1bZnmA.gifv)
 
 * In-game gif
 
@@ -96,7 +96,7 @@ The code is written in C++.
 
 ## Video
 
-<iframe width="500" height="350" src="https://www.youtube.com/embed/w7u863bj8Dc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="700" height="500" src="https://www.youtube.com/embed/w7u863bj8Dc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Repository
 
