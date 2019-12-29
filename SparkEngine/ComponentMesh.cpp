@@ -27,8 +27,11 @@ ComponentMesh::ComponentMesh(GameObject* gameobject) : Component(gameobject)
 
 ComponentMesh::~ComponentMesh()
 {
-	mesh->RemoveReference();
-	mesh = nullptr;
+	if (mesh)
+	{
+		mesh->RemoveReference();
+		mesh = nullptr;
+	}
 }
 
 void ComponentMesh::Update()
