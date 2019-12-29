@@ -1,0 +1,29 @@
+{
+    "name": "Animator Controller",
+    "states": [
+        {
+            "clip": 2391643307,
+            "name": "Idle_State",
+            "speed": 1.0
+        },
+        {
+            "clip": 1321185006,
+            "name": "Walk_State",
+            "speed": 1.0
+        }
+    ],
+    "transitions": [
+        {
+            "blend": 1,
+            "source": "Idle_State",
+            "target": "Walk_State",
+            "trigger": 1
+        },
+        {
+            "blend": 1,
+            "source": "Walk_State",
+            "target": "Idle_State",
+            "trigger": 2
+        }
+    ]
+}
