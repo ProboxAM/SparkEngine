@@ -29,7 +29,9 @@ public:
 public:
 	void SetName(std::string name);
 	void SetClip(ResourceAnimation* clip);
+	void SetSpeed(float speed);
 
+	float GetSpeed();
 	std::string GetName();
 	ResourceAnimation* GetClip();
 };
@@ -68,9 +70,12 @@ private:
 	std::vector<Transition*> transitions;
 	State* default_state = nullptr;
 	std::vector<bool> triggers;
+
+public:
+	std::string name = "New Animator Controller";
+	
 private:
 	ax::NodeEditor::EditorContext* ed_context = nullptr;
-	std::string name = "New Animator Controller";
 	
 public:
 	ResourceAnimatorController(uint id);
@@ -86,12 +91,13 @@ public:
 	std::vector<bool> GetTriggers() const { return triggers; }
 	void CheckTriggers();
 
+	void SaveAsset();
 
 	//Transform
 	bool GetTransform(std::string channel_name, float3 &position, Quat &rotation, float3 &scale);
 
 	//States
-	void AddState(std::string name, ResourceAnimation* clip);
+	void AddState(std::string name, ResourceAnimation* clip, float speed = 1.0F);
 	void RemoveState(std::string name);
 	State* FindState(std::string name);
 	State* FindState(uint id);
@@ -111,6 +117,10 @@ public:
 	ax::NodeEditor::EditorContext* GetEditorContext();
 
 	std::string GetName();
+
+	void UnLoad();
+	void Load();
+	void Reset();
 };
 
 #endif // !__ANIMATOR_CONTROLLER_H_

@@ -10,6 +10,7 @@
 #include "ModelImporter.h"
 #include "TextureImporter.h"
 #include "MeshImporter.h"
+#include "AnimatorControllerImporter.h"
 
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
@@ -40,6 +41,17 @@ bool ModuleResources::Start()
 	LOG("Loaded all resources");
 
 	CleanLibrary();
+
+	return true;
+}
+
+bool ModuleResources::CleanUp()
+{
+	for (std::map<uint, Resource*>::iterator it = resources.begin(); it != resources.end(); ++it)
+	{
+		if (it->second->GetType() == Resource::RESOURCE_TYPE::R_ANIMATOR)
+			((ResourceAnimatorController*)it->second)->SaveAsset();
+	}
 
 	return true;
 }
@@ -84,6 +96,9 @@ uint ModuleResources::ImportFile(const char * new_file_in_assets, Resource::RESO
 		break;
 	case Resource::R_SCENE:
 		return 0;
+		break;
+	case Resource::R_ANIMATOR:
+		import_success = App->importer->anim_controller->Import(new_file_in_assets, output_file, meta);
 		break;
 	case Resource::R_NONE:
 		break;
@@ -239,14 +254,50 @@ Resource* ModuleResources::CreateResource(Resource::RESOURCE_TYPE type, uint id)
 Resource::RESOURCE_TYPE ModuleResources::GetTypeFromExtension(std::string extension)
 {
 	App->fsystem->NormalizePath(extension);
-	if (extension == "png" ||extension == "tga" || extension == "dds" || extension == "jpg")
+	if (extension == "png" || extension == "tga" || extension == "dds" || extension == "jpg")
 		return Resource::RESOURCE_TYPE::R_TEXTURE;
 	else if (extension == "fbx")
 		return Resource::RESOURCE_TYPE::R_MODEL;
-	else if (extension=="spk")
+	else if (extension == "spk")
 		return Resource::RESOURCE_TYPE::R_SCENE;
+	else if (extension == "scontroller")
+		return Resource::RESOURCE_TYPE::R_ANIMATOR;
 
 	return Resource::RESOURCE_TYPE::R_NONE;
+}
+
+void ModuleResources::CreateAsset(Resource::RESOURCE_TYPE type)
+{
+	switch (type)
+	{
+	case Resource::R_TEXTURE:
+		break;
+	case Resource::R_MESH:
+		break;
+	case Resource::R_MODEL:
+		break;
+	case Resource::R_SCENE:
+		break;
+	case Resource::R_MATERIAL:
+		break;
+	case Resource::R_ANIMATION:
+		break;
+	case Resource::R_ANIMATOR:
+	{
+		ResourceAnimatorController* r = (ResourceAnimatorController*)CreateResource(type, App->GenerateID());
+		r->meta = new MetaFile();
+		r->meta->original_file = App->editor->GetProjectPanelPath() + r->GetName() + ANIM_CONTROLLER_EXTENSION;
+		r->SaveAsset();
+		App->editor->ReloadProjectWindow();
+	}
+		break;
+	case Resource::R_BONE:
+		break;
+	case Resource::R_NONE:
+		break;
+	default:
+		break;
+	}
 }
 
 void ModuleResources::RecursiveLoadAssets(std::string directory)
@@ -399,6 +450,9 @@ MetaFile* ModuleResources::CreateMeta(const char* file, Resource::RESOURCE_TYPE 
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:
 
+		break;
+	case Resource::RESOURCE_TYPE::R_ANIMATOR:
+		meta = new MetaFile();
 		break;
 	case Resource::RESOURCE_TYPE::R_NONE:
 		break;

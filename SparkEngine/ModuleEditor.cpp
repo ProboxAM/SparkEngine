@@ -176,7 +176,39 @@ update_status ModuleEditor::Update()
 			if (ImGui::MenuItem("Exit")) { App->exit = true; }
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("View"))
+		if (ImGui::BeginMenu("Assets"))
+		{
+			if (ImGui::BeginMenu("Create"))
+			{		
+				if (ImGui::MenuItem("Animator Controller"))
+					App->resources->CreateAsset(Resource::RESOURCE_TYPE::R_ANIMATOR);
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("GameObject"))
+		{
+			if (ImGui::BeginMenu("3D Object"))
+			{
+				if (ImGui::MenuItem("Cube"))
+					App->scene->CreatePrimitiveGameObject(P_CUBE);
+				if (ImGui::MenuItem("Sphere"))
+					App->scene->CreatePrimitiveGameObject(P_SPHERE);
+				if (ImGui::MenuItem("Cylinder"))
+					App->scene->CreatePrimitiveGameObject(P_CYLINDER);
+				if (ImGui::MenuItem("Plane"))
+					App->scene->CreatePrimitiveGameObject(P_PLANE);
+				if (ImGui::MenuItem("Cone"))
+					App->scene->CreatePrimitiveGameObject(P_CONE);
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::Selectable("Create Empty")) {
+				App->scene->CreateGameObject(App->scene->root);
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Window"))
 		{
 			if (ImGui::MenuItem("Configuration", nullptr, panels[CONFIG]->IsActive()))
 				panels[CONFIG]->Activate();
@@ -198,29 +230,6 @@ update_status ModuleEditor::Update()
 				panels[P_ANIMATOR]->Activate();
 			if (ImGui::MenuItem("Animation", nullptr, panels[P_ANIMATION]->IsActive()))
 				panels[P_ANIMATION]->Activate();
-			ImGui::EndMenu();
-		}
-
-		if (ImGui::BeginMenu("GameObject"))
-		{
-			if (ImGui::BeginMenu("3D Object"))
-			{
-				if (ImGui::MenuItem("Cube"))
-					App->scene->CreatePrimitiveGameObject(P_CUBE);
-				if (ImGui::MenuItem("Sphere"))
-					App->scene->CreatePrimitiveGameObject(P_SPHERE);
-				if (ImGui::MenuItem("Cylinder"))
-					App->scene->CreatePrimitiveGameObject(P_CYLINDER);
-				if (ImGui::MenuItem("Plane"))
-					App->scene->CreatePrimitiveGameObject(P_PLANE);
-				if (ImGui::MenuItem("Cone"))
-					App->scene->CreatePrimitiveGameObject(P_CONE);
-				ImGui::EndMenu();
-			}
-
-			if (ImGui::Selectable("Create Empty")) {
-				App->scene->CreateGameObject(App->scene->root);
-			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))

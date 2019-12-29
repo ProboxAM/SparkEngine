@@ -65,6 +65,7 @@ enum update_status
 #define LIBRARY_MODEL_FOLDER "Library/Models/"
 #define LIBRARY_MATERIAL_FOLDER "Library/Materials/"
 #define LIBRARY_STATE_MACHINE_FOLDER "Library/StateMachines/"
+#define LIBRARY_ANIM_CONTROLLER_FOLDER "Library/AnimControllers/"
 #define MESH_EXTENSION ".smesh"
 #define MODEL_EXTENSION ".smodel"
 #define TEXTURE_EXTENSION ".dds"
@@ -72,3 +73,4 @@ enum update_status
 #define SCENE_EXTENSION ".spk"
 #define ANIM_EXTENSION ".sanim"
 #define BONE_EXTENSION ".sbone"
+#define ANIM_CONTROLLER_EXTENSION ".scontroller"

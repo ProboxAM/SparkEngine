@@ -10,6 +10,8 @@
 #include "ResourceMesh.h"
 #include "ResourceAnimation.h"
 
+#include "PanelAnimator.h"
+
 #include "ModelMetaFile.h"
 #include "AnimationMetaFile.h"
 
@@ -194,6 +196,11 @@ void PanelProject::DrawFiles()
 				ImVec2((float)256 / App->editor->atlas->width, (float)App->editor->icon_size*2 / App->editor->atlas->height),
 				ImVec2(1.0f, (float)App->editor->icon_size / App->editor->atlas->height));
 			break;
+		case Resource::RESOURCE_TYPE::R_ANIMATOR:
+			ImGui::Image((ImTextureID)App->editor->atlas->buffer_id, ImVec2(image_size, image_size),
+				ImVec2((float)256 / App->editor->atlas->width, (float)App->editor->icon_size * 2 / App->editor->atlas->height),
+				ImVec2(1.0f, (float)App->editor->icon_size / App->editor->atlas->height));
+			break;
 		case Resource::RESOURCE_TYPE::R_TEXTURE:
 			uint id = App->resources->GetID(current_node->full_path + (*it));
 			ImGui::Image((ImTextureID)((ResourceTexture*)App->resources->Get(id))->buffer_id, ImVec2(image_size, image_size), ImVec2(0, 1), ImVec2(1, 0));
@@ -354,6 +361,11 @@ void PanelProject::ManageClicksForItem(const std::string &item, uint uid)
 
 			uint id = uid == 0 ? App->resources->GetID(current_node->full_path + item):uid;
 			selected_resource = App->resources->Get(id);
+			if (selected_resource && selected_resource->GetType() == Resource::RESOURCE_TYPE::R_ANIMATOR)
+			{
+				PanelAnimator* pa = (PanelAnimator*)App->editor->GetPanel(Panel_Type::P_ANIMATOR);
+				pa->SetCurrentResourceAnimatorController((ResourceAnimatorController*)selected_resource);
+			}
 
 			App->scene->selected_gameobject = nullptr;
 		}
