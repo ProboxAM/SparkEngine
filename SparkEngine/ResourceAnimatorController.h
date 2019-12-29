@@ -43,8 +43,8 @@ class Transition
 private:
 	State* source;
 	State* target;
-	uint trigger = -1;
-	uint blend = 200;
+	uint trigger = 0;
+	uint blend = 2;
 
 public:
 	Transition();

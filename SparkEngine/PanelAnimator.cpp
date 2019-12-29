@@ -241,7 +241,7 @@ void PanelAnimator::HandleDropLink()
 					new_node_pos = ImGui::GetMousePos();
 					ImGui::OpenPopup("States popup");
 					ax::NodeEditor::Resume();
-				}
+				}else new_node_id = ax::NodeEditor::PinId::Invalid;
 			}
 		}
 	}
@@ -254,6 +254,7 @@ void PanelAnimator::ShowNewStatePopup()
 	if (ImGui::BeginPopup("States popup")) {
 		if (ImGui::Selectable("NewState")) {
 			CreateState();
+			new_node_id = ax::NodeEditor::PinId::Invalid;
 		}
 		ImGui::EndPopup();
 	}
@@ -263,7 +264,7 @@ void PanelAnimator::ShowLinkPopup()
 {
 	if (ImGui::BeginPopup("Link popup")) {
 
-		if (current_animator->GetTransitions()[selected_link_index]->GetTrigger() != -1) {
+		if (current_animator->GetTransitions()[selected_link_index]->GetTrigger() > 0) {
 			std::string trigger_slot_selected = "Current Trigger slot: 0";
 			trigger_slot_selected.append(std::to_string(current_animator->GetTransitions()[selected_link_index]->GetTrigger()));
 			ImGui::Text(trigger_slot_selected.c_str());
@@ -274,10 +275,16 @@ void PanelAnimator::ShowLinkPopup()
 		
 		for (int i = 0; i < current_animator->GetTriggers().size(); ++i) {
 			std::string trigger_slot = "Trigger_slot 0";
-			trigger_slot.append(std::to_string(i));
+			trigger_slot.append(std::to_string(i + 1));
 			if (ImGui::Selectable(trigger_slot.c_str())) {
-				current_animator->GetTransitions()[selected_link_index]->SetTrigger((uint)i);
+				current_animator->GetTransitions()[selected_link_index]->SetTrigger(i + 1);
 			}
+		}
+
+		ImGui::Separator();
+
+		if (ImGui::Selectable("Reset trigger")) {
+			current_animator->GetTransitions()[selected_link_index]->SetTrigger(0);
 		}
 
 		ImGui::Separator();

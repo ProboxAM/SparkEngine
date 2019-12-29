@@ -24,6 +24,9 @@ ResourceAnimatorController::ResourceAnimatorController(uint id) : Resource(id, R
 	}
 	
 	name = "Animator Controller";
+
+	default_state = nullptr;
+
 }
 
 ResourceAnimatorController::~ResourceAnimatorController()
@@ -96,10 +99,13 @@ void ResourceAnimatorController::Stop()
 void ResourceAnimatorController::CheckTriggers()
 {
 	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
-		if (triggers[(*it)->GetTrigger()] == true) {
-			current_state->next_state = (*it)->GetTarget();
-			current_state->fade_duration = (*it)->GetBlend();
-			triggers[(*it)->GetTrigger()] = false;
+		if ((*it)->GetTrigger() > 0)
+		{
+			if (triggers[(*it)->GetTrigger() - 1] == true) {
+				current_state->next_state = (*it)->GetTarget();
+				current_state->fade_duration = (*it)->GetBlend();
+				triggers[(*it)->GetTrigger() - 1] = false;
+			}
 		}
 	}
 }
