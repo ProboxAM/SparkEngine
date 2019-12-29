@@ -74,6 +74,20 @@ The code is written in C++.
 * At the end of the animation, if the clip is setted to loop it will start again.
 * If theres a transition to another animation and the transition is triggered, both animation transforms will blend for smoother results.
 
+* Editor gif
+<img src="https://gph.is/g/4VxM8Bg" width="500">
+
+* In-game gif
+<img src="https://i.imgur.com/VrgteMT.gif" width="500">
+
+* Innovation Animation Controller editor gif
+<img src="https://i.imgur.com/yJ7HX97.gif" width="500">
+
+* Innovation Key viewer gif
+<img src="https://i.imgur.com/yJ7HX97.gif" width="500">
+
+* Innovation Manage clips gif
+<img src="https://gph.is/g/4VxM8Bg" width="500">
 
 ## Video
 
