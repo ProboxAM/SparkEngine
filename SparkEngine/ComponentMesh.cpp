@@ -159,7 +159,8 @@ void ComponentMesh::AttachSkeleton(ComponentTransform* root)
 
 void ComponentMesh::AttachSkeleton()
 {
-	AttachSkeleton(App->scene->gameobjects[root_bone_id]->transform);
+	if(root_bone_id != 0)
+		AttachSkeleton(App->scene->gameobjects[root_bone_id]->transform);
 }
 
 void ComponentMesh::AttachBone(ComponentTransform* bone_transform)

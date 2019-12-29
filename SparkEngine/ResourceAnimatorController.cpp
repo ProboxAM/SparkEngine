@@ -162,7 +162,10 @@ void ResourceAnimatorController::SaveAsset()
 
 void ResourceAnimatorController::Play()
 {
-	current_state = default_state;
+	if (default_state)
+	{
+		current_state = default_state;
+	}
 }
 
 void ResourceAnimatorController::Play(std::string state_name)
