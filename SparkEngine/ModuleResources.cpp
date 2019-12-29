@@ -286,7 +286,7 @@ void ModuleResources::CreateAsset(Resource::RESOURCE_TYPE type)
 	{
 		ResourceAnimatorController* r = (ResourceAnimatorController*)CreateResource(type, App->GenerateID());
 		r->meta = new MetaFile();
-		r->meta->original_file = App->editor->GetProjectPanelPath() + r->GetName() + ANIM_CONTROLLER_EXTENSION;
+		r->meta->original_file = App->fsystem->GetUniqueFile(App->editor->GetProjectPanelPath() + r->GetName() + ANIM_CONTROLLER_EXTENSION);
 		r->SaveAsset();
 		App->editor->ReloadProjectWindow();
 	}
@@ -374,12 +374,37 @@ bool ModuleResources::ImportedLibraryFilesExist(MetaFile* meta, Resource::RESOUR
 				ret = App->fsystem->Exists(mesh_file.c_str());
 
 				if (!ret)
-					break;
+					return false;
+			}
+		}
+		for each (AnimationMetaFile* anim in model_meta->animations)
+		{
+			if (anim->id != 0)
+			{
+				std::string anim_file = LIBRARY_ANIMATION_FOLDER + std::to_string(anim->id) + ANIM_EXTENSION;
+				ret = App->fsystem->Exists(anim_file.c_str());
+
+				if (!ret)
+					return false;
+			}
+		}
+		for (std::map<std::string, uint>::iterator it = model_meta->bones.begin(); it != model_meta->bones.end(); ++it)
+		{
+			if (it->second != 0)
+			{
+				std::string bone_file = LIBRARY_BONE_FOLDER + std::to_string(it->second) + BONE_EXTENSION;
+				ret = App->fsystem->Exists(bone_file.c_str());
+
+				if (!ret)
+					return false;
 			}
 		}
 	}
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:
+		break;
+	case Resource::RESOURCE_TYPE::R_ANIMATOR:
+		ret = App->fsystem->Exists(meta->exported_file.c_str());
 		break;
 	case Resource::RESOURCE_TYPE::R_NONE:
 		break;
@@ -425,6 +450,9 @@ bool ModuleResources::LoadMeta(const char* file, MetaFile* meta, Resource::RESOU
 		break;
 	case Resource::RESOURCE_TYPE::R_MODEL:
 		App->importer->model->LoadMeta(file, (ModelMetaFile*) meta);
+		break;
+	case Resource::RESOURCE_TYPE::R_ANIMATOR:
+		App->importer->anim_controller->LoadMeta(file, meta);
 		break;
 	case Resource::RESOURCE_TYPE::R_SCENE:
 		break;
@@ -492,6 +520,8 @@ void ModuleResources::CreateResourcesFromMeta(MetaFile* meta, Resource::RESOURCE
 				Resource* animation_resource = CreateResource(Resource::RESOURCE_TYPE::R_ANIMATION, anim_meta->id);
 				animation_resource->SetExportedFile(LIBRARY_ANIMATION_FOLDER + std::to_string(anim_meta->id) + ANIM_EXTENSION);
 				animation_resource->SetFile(meta->original_file);
+				animation_resource->Load();
+				animation_resource->UnLoad();
 			}
 		}
 		for (std::map<std::string, uint>::iterator it = model_meta->bones.begin(); it != model_meta->bones.end(); ++it)
@@ -505,8 +535,10 @@ void ModuleResources::CreateResourcesFromMeta(MetaFile* meta, Resource::RESOURCE
 	case Resource::RESOURCE_TYPE::R_SCENE:
 
 		break;
-	case Resource::RESOURCE_TYPE::R_NONE:
-		break;
+	case Resource::RESOURCE_TYPE::R_ANIMATOR:
+		resource = CreateResource(type, meta->id);
+		resource->SetFile(meta->original_file);
+		resource->SetExportedFile(meta->exported_file);
 	default:
 		break;
 	}

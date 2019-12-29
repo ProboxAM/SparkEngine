@@ -13,11 +13,7 @@
 
 ComponentAnimator::ComponentAnimator(GameObject * gameobject) : Component(gameobject)
 {
-	animator_controller = (ResourceAnimatorController*)App->resources->CreateResource(Resource::RESOURCE_TYPE::R_ANIMATOR, App->resources->GenerateNewUID());
-	App->resources->GetAndReference(4190971176);
-	animator_controller->AddState("default state", nullptr);
-	animator_controller->AddState("default state2", nullptr);
-	animator_controller->AddTransition(animator_controller->GetStates()[0], animator_controller->GetStates()[1], 0);
+
 }
 
 ComponentAnimator::~ComponentAnimator()

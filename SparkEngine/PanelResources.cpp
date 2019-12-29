@@ -18,7 +18,7 @@ void PanelResources::Draw()
 {
 	ImGui::Begin("Resources", &active);
 
-	const char* modes[] = { "All", "Loaded", "Not Loaded"};
+	const char* modes[] = { "All", "Loaded", "Not Loaded", "Mesh","Texture","Animation","Anim Controller","Bone"};
 
 	ImGui::Text("Show:");
 	ImGui::SameLine();
@@ -35,10 +35,43 @@ void PanelResources::Draw()
 	std::map<uint, Resource*> resources = App->resources->GetResources();
 	for(std::map<uint, Resource*>::const_iterator it = resources.begin(); it != resources.end(); ++it)
 	{
-		if (mode == Mode::LOADED && !it->second->IsLoaded())
-			continue;
-		else if (mode == Mode::NOT_LOADED && it->second->IsLoaded())
-			continue;
+		switch (mode)
+		{
+		case PanelResources::ALL:
+			break;
+		case PanelResources::LOADED:
+			if (!it->second->IsLoaded())
+				continue;
+			break;
+		case PanelResources::NOT_LOADED:
+			if (it->second->IsLoaded())
+				continue;
+			break;
+		case PanelResources::MESH:
+			if (it->second->GetType() != Resource::RESOURCE_TYPE::R_MESH)
+				continue;
+			break;
+		case PanelResources::TEXTURE:
+			if (it->second->GetType() != Resource::RESOURCE_TYPE::R_TEXTURE)
+				continue;
+			break;
+		case PanelResources::ANIMATION:
+			if (it->second->GetType() != Resource::RESOURCE_TYPE::R_ANIMATION)
+				continue;
+			break;
+		case PanelResources::BONE:
+			if (it->second->GetType() != Resource::RESOURCE_TYPE::R_BONE)
+				continue;
+			break;
+		case PanelResources::ANIMATOR:
+			if (it->second->GetType() != Resource::RESOURCE_TYPE::R_ANIMATOR)
+				continue;
+			break;
+		case PanelResources::TOTAL:
+			break;
+		default:
+			break;
+		}
 
 		ImGui::Separator();
 		ImGui::Text("Original file: %s", it->second->GetFile());

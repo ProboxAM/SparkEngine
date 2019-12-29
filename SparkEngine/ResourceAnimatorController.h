@@ -108,6 +108,7 @@ public:
 
 	//Transitions
 	void AddTransition(State* source, State* target, uint blend);
+	void AddTransition(State * source, State * target, uint blend, uint trigger);
 	void RemoveTransition(std::string source_name, std::string target_name);
 	std::vector<Transition*> GetTransitions() const { return transitions; }
 	uint GetNumTransitions() const { return transitions.size(); }
@@ -115,6 +116,7 @@ public:
 	State* GetDefaultNode() const { return default_state; };
 
 	ax::NodeEditor::EditorContext* GetEditorContext();
+	std::string GetTypeString() const;
 
 	std::string GetName();
 

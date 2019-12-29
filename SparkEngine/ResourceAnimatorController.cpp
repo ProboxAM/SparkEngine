@@ -86,7 +86,8 @@ void ResourceAnimatorController::SaveAsset()
 	{
 		nlohmann::json j_transition = {
 			{ "source", (*it)->GetSource()->GetName() },
-			{ "target", (*it)->GetTarget()->GetName() }
+			{ "target", (*it)->GetTarget()->GetName() },
+			{ "trigger", (*it)->GetTrigger() }
 		};
 		j_transitions.push_back(j_transition);
 	}
@@ -99,6 +100,9 @@ void ResourceAnimatorController::SaveAsset()
 
 	std::ofstream o(meta->original_file);
 	o << std::setw(4) << file << std::endl;
+
+	meta->id = id;
+	App->importer->anim_controller->Save(meta->original_file, this);
 }
 
 void ResourceAnimatorController::Play()
@@ -254,6 +258,14 @@ void ResourceAnimatorController::AddTransition(State * source, State * target, u
 	transitions.push_back(new_transition);
 }
 
+void ResourceAnimatorController::AddTransition(State * source, State * target, uint blend, uint trigger)
+{
+	Transition* new_transition = new Transition(source, target, blend);
+	new_transition->SetTrigger(trigger);
+
+	transitions.push_back(new_transition);
+}
+
 void ResourceAnimatorController::RemoveTransition(std::string source_name, std::string target_name)
 {
 	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it) {
@@ -270,6 +282,11 @@ ax::NodeEditor::EditorContext * ResourceAnimatorController::GetEditorContext()
 	return ed_context;
 }
 
+std::string ResourceAnimatorController::GetTypeString() const
+{
+	return "Animation Controller";
+}
+
 std::string ResourceAnimatorController::GetName()
 {
 	return name;
@@ -277,7 +294,18 @@ std::string ResourceAnimatorController::GetName()
 
 void ResourceAnimatorController::UnLoad()
 {
-
+	for (std::vector<State*>::iterator it = states.begin(); it != states.end(); ++it)
+	{
+		if ((*it)->GetClip())
+			(*it)->GetClip()->RemoveReference();
+		delete (*it);
+	}
+	states.clear();
+	for (std::vector<Transition*>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+	{
+		delete (*it);
+	}
+	transitions.clear();
 }
 
 void ResourceAnimatorController::Load()

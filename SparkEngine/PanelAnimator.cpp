@@ -304,5 +304,12 @@ bool PanelAnimator::IsInside(const float2 & pos) const
 
 void PanelAnimator::SetCurrentResourceAnimatorController(ResourceAnimatorController * animator)
 {
+	if (current_animator)
+	{
+		current_animator->RemoveReference();
+		current_animator->SaveAsset();
+	}
+
 	current_animator = animator;
+	current_animator->AddReference();
 }

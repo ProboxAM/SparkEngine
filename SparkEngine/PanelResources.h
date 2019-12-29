@@ -15,6 +15,11 @@ private:
 		ALL,
 		LOADED,
 		NOT_LOADED,
+		MESH,
+		TEXTURE,
+		ANIMATION,
+		ANIMATOR,
+		BONE,
 		TOTAL
 	};
 
