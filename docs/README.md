@@ -45,7 +45,7 @@ The code is written in C++.
 * Game Panel that displays the view and projection of the main active camera.
 * Module Camera3D.
 * Animation time management and interpolation between keys.
-* Animation blending.
+* Blending between animation.
 * Animator Controller state machine.
 * Animator editor.
 
@@ -60,6 +60,21 @@ The code is written in C++.
 
 ## Skeletal animation sub-system
 
+### Features
+
+* It allows the user to import fbx files that contain animations using Assimp.
+* The user can create clips of the imported animation and set the clip on loop.
+* He can also create an asset called Animation Controller. A state machine that allows the user to create different states and transitions between them. He can create/modify the name/select a clip resource/Delete a state, and Create/Set the trigger/Set the blend value/Delete a transition.
+
+
+
+# System in-depth
+
+* It reads animations and bones from a fbx file, then we link the bones to a mesh so we can modify it through skinning.
+* Then, when a animator component is attached to a game object and a Animator Controller to the component, the object bones will be updated from the animation key values in each frame when we hit play.
+* On update, every key frame for every bone, an update transform is called which interpolates the current key values with the next key values of every transform component (position, rotation, scale).
+* At the end of the animation, if the clip is setted to loop it will start again.
+* If theres a transition to another animation and the transition is triggered, both animation transforms will blend for smoother results.
 
 
 ## Video
