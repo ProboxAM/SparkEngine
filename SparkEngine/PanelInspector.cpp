@@ -264,6 +264,9 @@ void PanelInspector::Draw()
 		for (int i = 0; i < animator_controllers.size(); i++) {
 			if (ImGui::Selectable(((ResourceAnimatorController*)animator_controllers[i])->name.c_str())) {
 				selected_animator->SetAnimatorController((ResourceAnimatorController*)animator_controllers[i]);
+
+				PanelAnimator* pa = (PanelAnimator*)App->editor->GetPanel(Panel_Type::P_ANIMATOR);
+				pa->SetCurrentResourceAnimatorController((ResourceAnimatorController*)animator_controllers[i]);
 				ImGui::CloseCurrentPopup();
 			}
 		}

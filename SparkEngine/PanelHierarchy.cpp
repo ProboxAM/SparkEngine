@@ -2,8 +2,10 @@
 #include "ModuleScene.h"
 #include "ModuleEditor.h"
 #include "PanelProject.h"
+#include "PanelAnimator.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentAnimator.h"
 #include "PanelHierarchy.h"
 PanelHierarchy::PanelHierarchy(bool a) : Panel(a)
 {
@@ -57,6 +59,13 @@ void PanelHierarchy::DrawNode(ComponentTransform * ct)
 		{
 			App->scene->selected_gameobject = ct->gameobject;
 			node_flags |= ImGuiTreeNodeFlags_Selected;
+
+			ComponentAnimator* c_anim = (ComponentAnimator*)ct->gameobject->GetComponent(COMPONENT_TYPE::ANIMATOR);
+			if (c_anim && c_anim->GetResourceAnimatorController())
+			{
+				PanelAnimator* pa = (PanelAnimator*)App->editor->GetPanel(Panel_Type::P_ANIMATOR);
+				pa->SetCurrentResourceAnimatorController(c_anim->GetResourceAnimatorController());
+			}
 
 			PanelProject* panel_project = (PanelProject*)App->editor->GetPanel(Panel_Type::PROJECT);
 			panel_project->selected_item = "";

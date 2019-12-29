@@ -486,7 +486,9 @@
     <ClInclude Include="PanelAnimation.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatorControllerImporter.h" />
+    <ClInclude Include="AnimatorControllerImporter.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -780,7 +782,9 @@
     <ClCompile Include="PanelAnimation.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatorControllerImporter.cpp" />
+    <ClCompile Include="AnimatorControllerImporter.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

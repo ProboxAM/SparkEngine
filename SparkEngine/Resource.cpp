@@ -44,10 +44,12 @@ void Resource::AddReference()
 
 void Resource::RemoveReference()
 {
-	if (references > 0) references--;
-	if (references == 0)
-	{
-		UnLoad();
+	if (references > 0) {
+		references--;
+		if (references == 0)
+		{
+			UnLoad();
+		}
 	}
 }
 
