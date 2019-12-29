@@ -229,6 +229,11 @@ bool AnimatorControllerImporter::Save(std::string file, ResourceAnimatorControll
 
 	SaveMeta(resource->meta);
 
+
+	transitions.clear();
+	states.clear();
+	name.clear();
+
 	return true;
 }
 
