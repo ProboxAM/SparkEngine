@@ -37,21 +37,19 @@ ResourceAnimatorController::~ResourceAnimatorController()
 
 void ResourceAnimatorController::Update()
 {
-	if (current_state)
-	{
-		UpdateState(current_state);
-	}
+	if (App->IsPlay()) {
+		if (current_state)
+		{
+			UpdateState(current_state);
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		triggers[0] = true;
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		triggers[1] = true;
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-		triggers[2] = true;
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
-		triggers[3] = true;
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-		triggers[4] = true;
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+			triggers[2] = true;
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+			triggers[0] = true;
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_UP)
+			triggers[1] = true;
+	}
 }
 
 void ResourceAnimatorController::UpdateState(State * state)
@@ -94,6 +92,7 @@ void ResourceAnimatorController::UpdateState(State * state)
 		else {
 			current_state = state->next_state;
 			state->next_state = nullptr;
+			state->time = 0;
 			state->fade_time = 0;
 			state->fade_duration = 0;
 		}
